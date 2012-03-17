@@ -6,14 +6,17 @@
     function(details) {
         details.requestHeaders.push({
             name: "X-Forwarded-For", 
-            value: "youku.com"
+            value: "166.111.8.29"
         });
         return {requestHeaders: details.requestHeaders};
     },
 
     // url filters
     {
-        urls: ["http://*.youku.com/*"]
+        urls: [
+            "http://*.youku.com/*",
+            "http://*.tudou.com/*"
+        ]
     },
 
     // extraInfoSpec
