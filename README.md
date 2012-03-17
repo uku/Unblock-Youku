@@ -1,3 +1,3 @@
 Youku Unblocker
 ---------------
-A Chrome extension for viewing Youku online videos from overseas (without proxy!)
+A Chrome extension for viewing Youku/Tudou online videos from overseas (without proxy!)
