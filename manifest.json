@@ -8,7 +8,9 @@
   "permissions": [
     "webRequest", "webRequestBlocking",
     "http://*.youku.com/*",
-    "http://*.tudou.com/*"
+    "http://*.tudou.com/*",
+    "http://tudou.letv.com/*",
+    "http://*.tudou.letv.com/*"
   ],
   "background_page": "background.html"
 }

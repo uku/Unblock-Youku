@@ -1,12 +1,17 @@
 <!doctype html>
 
 <script>
+    ip_addr  = "166.111.";
+    ip_addr += Math.floor(Math.random() * 255);
+    ip_addr += '.';
+    ip_addr += Math.floor(Math.random() * 255);
+
     chrome.webRequest.onBeforeSendHeaders.addListener(
     // callback function
     function(details) {
         details.requestHeaders.push({
             name: "X-Forwarded-For", 
-            value: "166.111.8.29"
+            value: ip_addr
         });
         return {requestHeaders: details.requestHeaders};
     },
@@ -15,7 +20,9 @@
     {
         urls: [
             "http://*.youku.com/*",
-            "http://*.tudou.com/*"
+            "http://*.tudou.com/*",
+            "http://tudou.letv.com/*",
+            "http://*.tudou.letv.com/*"
         ]
     },
 
