@@ -10,7 +10,8 @@
     "http://*.youku.com/*",
     "http://*.tudou.com/*",
     "http://tudou.letv.com/*",
-    "http://*.tudou.letv.com/*"
+    "http://*.tudou.letv.com/*",
+    "http://*.xiami.com/*"
   ],
   "background_page": "background.html"
 }
