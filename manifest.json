@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "0.9",
+  "version": "1.0",
   "description": "A Chrome extension for viewing Youku/Tudou online videos from overseas (without proxy!)",
   "icons": { "16": "unblock-youku-16.png",
              "48": "unblock-youku-48.png",
