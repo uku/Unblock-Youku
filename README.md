@@ -2,13 +2,13 @@
 
 A Chrome extension for viewing Youku/Tudou online videos from overseas (without proxy!)
 
-### Download/Install
+### Install
 
 You can find this extension on Chrome Web Store at https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk
 
 ### License
 
-Released under MIT license
+Source code is released under MIT license
 
     Copyright (C) 2012 Bo Zhu http://fun.bozhu.me
 
