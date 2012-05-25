@@ -4,7 +4,7 @@ A Chrome extension for browsing Youku/Tudou/Xiami/Ku6/Xunlei online videos/audio
 
 ### Install
 
-You can find this extension on Chrome Web Store at https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk
+You can find this extension on Chrome Web Store at http://bit.ly/unblock-youku
 
 ### License
 
