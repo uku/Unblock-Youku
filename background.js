@@ -9,6 +9,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             name: "X-Forwarded-For", 
             value: unblock_youku.ip_addr
         });
+
         return {requestHeaders: details.requestHeaders};
     },
 
@@ -19,7 +20,8 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             "http://*.tudou.com/*",
             "http://tudou.letv.com/*",
             "http://*.tudou.letv.com/*",
-            "http://*.xiami.com/*"
+            "http://*.xiami.com/*",
+            "http://*.ku6.com/*"
         ]
     },
 
