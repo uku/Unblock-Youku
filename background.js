@@ -22,7 +22,8 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             "http://tudou.letv.com/*",
             "http://*.tudou.letv.com/*",
             "http://*.xiami.com/*",
-            "http://*.ku6.com/*"
+            "http://*.ku6.com/*",
+            "http://*.xunlei.com/*"
         ]
     },
 
