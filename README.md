@@ -1,6 +1,6 @@
 # Unblock Youku
 
-A Chrome extension for browsing Youku/Tudou/Xiami/Ku6/Xunlei online videos/audios from overseas, without proxy!
+A Google Chrome extension for smoothly surfing on many websites blocking visitors outside Mainland China.
 
 ### Install
 
