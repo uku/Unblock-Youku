@@ -1,21 +1,23 @@
 {
   "name": "Unblock Youku",
-  "version": "1.5",
+  "version": "2.0",
   "manifest_version": 2,
   "minimum_chrome_version": "18.0",
-  "description": "A Chrome extension for browsing Youku/Tudou/Xiami/Ku6/Xunlei online videos/audios from overseas, without proxy!",
+  "description": "To smoothly surf on many websites blocking visitors outside Mainland China.",
   "icons": { "16": "icons/unblock-youku-16.png",
              "48": "icons/unblock-youku-48.png",
             "128": "icons/unblock-youku-128.png"
   },
   "permissions": [
+    "proxy",
     "webRequest",
     "webRequestBlocking",
     "<all_urls>"
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "proxy.js",
+      "header.js"
     ]
   }
 }
