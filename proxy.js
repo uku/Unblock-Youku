@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host == "geo.js.kankan.xunlei.com"              ||' +
                    '        host == "v2.tudou.com"                          ||' +
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
-                   '        shExpMatch(url, "*.gougou.com/*")                 ' +
+                   '        shExpMatch(url, "http://*.gougou.com/*")          ' +
                    '    )                                                     ' +
                    '        return "PROXY ' + proxy_addr + ':80";             ' +
                    '    else                                                  ' +
