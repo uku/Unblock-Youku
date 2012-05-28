@@ -1,12 +1,12 @@
 var unblock_youku = {};  // namespace
-unblock_youku.ip_addr  = "220.181.111.";
+unblock_youku.ip_addr  = '220.181.111.';
 unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
 console.log('faked ip addr: ' + unblock_youku.ip_addr);
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         details.requestHeaders.push({
-            name: "X-Forwarded-For",
+            name: 'X-Forwarded-For',
             value: unblock_youku.ip_addr
         });
 
@@ -15,13 +15,12 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
     {
         urls: [
-        // TODO: why couldn't I find any video/audio is blocked now...
-            "http://*.xiami.com/*",
-            "http://*.ku6.com/*"
+            'http://*.xiami.com/*',  // xiami is not blocked in my place...
+            'http://*.ku6.com/*'     // couldn't find ku6's sub-domain for checking ip, but this should already work
         ]
     },
 
-    ["requestHeaders", "blocking"]);
+    ['requestHeaders', 'blocking']);
 // first addListener ends here
 
 
@@ -43,7 +42,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             name: 'X-Sogou-Tag',
             value: sogou_tag
         }, {
-            name: "X-Forwarded-For",
+            name: 'X-Forwarded-For',
             value: unblock_youku.ip_addr
         });
 
@@ -57,9 +56,9 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://data.video.qiyi.com/*',
             'http://web-play.pptv.com/*',
             'http://vv.video.qq.com/*',
-
             'http://geo.js.kankan.xunlei.com/*',
             'http://v2.tudou.com/*',
+
             'http://v.youku.com/player/*',
             'http://*.gougou.com/*'
         ]
