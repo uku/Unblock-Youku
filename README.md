@@ -1,6 +1,6 @@
 # Unblock Youku
 
-A Google Chrome extension for smoothly surfing on many websites blocking visitors outside Mainland China.
+A Google Chrome extension for smoothly surfing on many websites blocking visitors outside Mainland China
 
 ### Install
 

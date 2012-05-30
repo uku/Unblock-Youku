@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "manifest_version": 2,
   "minimum_chrome_version": "18.0",
-  "description": "To smoothly surf on many websites blocking visitors outside Mainland China.",
+  "description": "Let you smoothly surf on many websites blocking visitors outside Mainland China.",
   "icons": { "16": "icons/unblock-youku-16.png",
              "48": "icons/unblock-youku-48.png",
             "128": "icons/unblock-youku-128.png"
