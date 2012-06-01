@@ -43,7 +43,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
         var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
 
-        console.log(timestamp + ' ' + target_host + ' ' + sogou_tag);
+        console.log(timestamp + ' ' + target_host + ' ' + tag);
 
         details.requestHeaders.push({
             name: 'X-Sogou-Auth',
