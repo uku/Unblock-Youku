@@ -15,7 +15,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
     {
         urls: [
-            'http://*.xiami.com/*',  // xiami is not blocked in my place...
+            'http://*.xiami.com/*',  // xiami is blocked in HK and TW
             'http://*.ku6.com/*'     // couldn't find ku6's sub-domain for checking ip, but this should already work
         ]
     },
@@ -67,7 +67,31 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     ['requestHeaders', 'blocking']);
 // second addListener ends here
 
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function(details) {
+        if (!chrome.cookies) {
+            chrome.cookies = chrome.experimental.cookies;
+        }
+        chrome.cookies.set({
+            url: 'http://*.y.qq.com/*',
+            name: 'ip_limit',
+            value: '1',
+            domain: '.y.qq.com',
+            path: '/'
+        });
+        // cookie setting ends here
 
+        return {requestHeaders: details.requestHeaders};
+    },
+
+    {
+        urls: [
+            'http://*.y.qq.com/*',  // QQ music is blocked in HK and TW
+        ]
+    },
+
+    ['requestHeaders', 'blocking']);
+// third addListener ends here
 
 // based on http://xiaoxia.org/2011/03/10/depressed-research-about-sogou-proxy-server-authentication-protocol/
 function compute_sogou_tag(s) {
