@@ -1,7 +1,19 @@
 var unblock_youku = {};  // namespace
-unblock_youku.ip_addr  = '220.181.111.';
-unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
-console.log('faked ip addr: ' + unblock_youku.ip_addr);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    unblock_youku.ip_addr  = '220.181.111.';
+    unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
+    console.log('faked ip addr: ' + unblock_youku.ip_addr);
+
+    unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
+    var tmp_str;
+    for (var i = 0; i < 8; i++) {
+        tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
+        unblock_youku.sogou_auth = tmp_str.toUpperCase() + unblock_youku.sogou_auth;
+    }
+    console.log('sogou_auth: ' + unblock_youku.sogou_auth);
+});
 
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -29,19 +41,19 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         var timestamp = Math.round(details.timeStamp / 1000).toString(16);
         var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
-        var sogou_tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
+        var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
 
         console.log(timestamp + ' ' + target_host + ' ' + sogou_tag);
 
         details.requestHeaders.push({
             name: 'X-Sogou-Auth',
-            value: '4D61696E6C616E64696E67204578742E/30/853edc6d49ba4e27'
+            value: unblock_youku.sogou_auth
         }, {
             name: 'X-Sogou-Timestamp',
             value: timestamp
         }, {
             name: 'X-Sogou-Tag',
-            value: sogou_tag
+            value: tag
         }, {
             name: 'X-Forwarded-For',
             value: unblock_youku.ip_addr

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         proxy_addr = 'h' + (random_num - 16) + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
     // ctc and cnc do not work; don't know why
 
-    console.log('to use the proxy server ' + proxy_addr);
+    console.log('proxy server: ' + proxy_addr);
 
     var pac_data = 'function FindProxyForURL(url, host) {                     ' +
                    '    if (host == "hot.vrs.sohu.com"                      ||' +
