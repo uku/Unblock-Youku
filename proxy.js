@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "vv.video.qq.com"                      ||' +
                    '        host === "geo.js.kankan.xunlei.com"             ||' +
                    '        host === "v2.tudou.com"                         ||' +
+
+                   '        host === "requestb.in"                          ||' +
+
+                   '        shExpMatch(url, "http://*.pptv.com/*")          ||' +
+                   '        shExpMatch(url, "http://*.pplive.cn/*")         ||' +
+
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")          ' +
                    '    )                                                     ' +

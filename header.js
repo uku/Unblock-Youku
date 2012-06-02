@@ -67,10 +67,15 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://hot.vrs.sohu.com/*',
             'http://hot.vrs.letv.com/*',
             'http://data.video.qiyi.com/*',
-            'http://web-play.pptv.com/*',
             'http://vv.video.qq.com/*',
             'http://geo.js.kankan.xunlei.com/*',
             'http://v2.tudou.com/*',
+
+            'http://web-play.pptv.com/*',
+            'http://*.pptv.com/*',
+            'http://*.pplive.cn/*',
+            
+            'http://requestb.in/*',
 
             'http://v.youku.com/player/*',
             'http://*.gougou.com/*'
