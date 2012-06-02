@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 chrome.cookies.onChanged.addListener(function(info) {
-	console.log(JSON.stringify(info));
-
 	if (info.cause !== 'explicit')
 		return;
 
