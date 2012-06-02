@@ -13,16 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
                    '    if (host === "hot.vrs.sohu.com"                     ||' +
                    '        host === "hot.vrs.letv.com"                     ||' +
                    '        host === "data.video.qiyi.com"                  ||' +
-                   '        host === "web-play.pptv.com"                    ||' +
                    '        host === "vv.video.qq.com"                      ||' +
                    '        host === "geo.js.kankan.xunlei.com"             ||' +
                    '        host === "v2.tudou.com"                         ||' +
-
-                   '        host === "requestb.in"                          ||' +
-
-                   '        shExpMatch(url, "http://*.pptv.com/*")          ||' +
-                   '        shExpMatch(url, "http://*.pplive.cn/*")         ||' +
-
+                   '        host === "web-play.pptv.com"                    ||' +
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")          ' +
                    '    )                                                     ' +
