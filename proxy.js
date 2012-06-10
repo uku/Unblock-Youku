@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "geo.js.kankan.xunlei.com"             ||' +
                    '        host === "v2.tudou.com"                         ||' +
                    '        host === "web-play.pptv.com"                    ||' +
+
+                   '        shExpMatch(url, "http://*.pps.tv/*")            ||' +
+                   '        shExpMatch(url, "http://*.ppstv.com/*")         ||' +
+                   '        shExpMatch(url, "http://*.ppstream.com/*")      ||' +
+
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")          ' +
                    '    )                                                     ' +
