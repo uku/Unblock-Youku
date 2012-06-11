@@ -18,9 +18,11 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "v2.tudou.com"                         ||' +
                    '        host === "web-play.pptv.com"                    ||' +
 
-                   '        shExpMatch(url, "http://*.pps.tv/*")            ||' +
-                   '        shExpMatch(url, "http://*.ppstv.com/*")         ||' +
-                   '        shExpMatch(url, "http://*.ppstream.com/*")      ||' +
+                   '        shExpMatch(url, "http://dyn.ugc.pps.tv/*")       ||' +
+                   //'        shExpMatch(url, "http://*.ppstv.com/*")         ||' +
+                   //'        shExpMatch(url, "http://dp.ppstream.com/*")     ||' +
+                   //'        host === "dp.ugc.pps.tv"                        ||' +
+                   //'        host === "dp.ppstream.com"                      ||' +
 
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")          ' +

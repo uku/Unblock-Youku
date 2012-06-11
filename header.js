@@ -30,6 +30,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         urls: [
             'http://*.xiami.com/*',  // xiami is blocked in HK and TW
             'http://*.ku6.com/*'     // couldn't find ku6's sub-domain for checking ip, but this should already work
+            //'http://*.pps.tv/*'
         ]
     },
 
@@ -72,9 +73,11 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://v2.tudou.com/*',
             'http://web-play.pptv.com/*',
 
-            'http://*.pps.tv/*',
-            'http://*.ppstv.com/*',
-            'http://*.ppstream.com/*',
+            //'http://*.pps.tv/*',
+            //'http://*.ppstv.com/*',
+            //'http://dp.ugc.pps.tv/*',
+            //'http://dp.ppstream.com/*',
+            'http://dyn.ugc.pps.tv/*',
 
             'http://v.youku.com/player/*',
             'http://*.gougou.com/*'
