@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "v2.tudou.com"                         ||' +
                    '        host === "web-play.pptv.com"                    ||' +
                    '        host === "dyn.ugc.pps.tv"                       ||' +
+                   '        host === "s.plcloud.music.qq.com"               ||' +
                    '        shExpMatch(url, "http://v.youku.com/player/*")  ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")          ' +
                    '    )                                                     ' +

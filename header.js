@@ -72,6 +72,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://v2.tudou.com/*',
             'http://web-play.pptv.com/*',
             'http://dyn.ugc.pps.tv/*',
+            'http://s.plcloud.music.qq.com/*',
 
             'http://v.youku.com/player/*',
             'http://*.gougou.com/*'
