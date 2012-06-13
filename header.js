@@ -57,6 +57,9 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         }, {
             name: 'X-Forwarded-For',
             value: unblock_youku.ip_addr
+        }, {
+            name: 'X-Real-IP',
+            value: unblock_youku.ip_addr
         });
 
         return {requestHeaders: details.requestHeaders};
