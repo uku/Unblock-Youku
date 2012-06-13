@@ -75,6 +75,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://s.plcloud.music.qq.com/*',
             'http://inner.kandian.com/*',
 
+            'http://v.iask.com/v_play.php*',
             'http://v.youku.com/player/*',
             'http://*.gougou.com/*'
         ]
