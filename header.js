@@ -77,6 +77,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://dyn.ugc.pps.tv/*',
             'http://s.plcloud.music.qq.com/*',
             'http://inner.kandian.com/*',
+            'http://ipservice.163.com/*',
 
             'http://v.iask.com/v_play.php*',
             'http://v.youku.com/player/*',
