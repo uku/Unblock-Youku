@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        return "DRIECT";                                      ' +
                    '}';
 
-    var pac_config = {
+    var proxy_config = {
         mode: 'pac_script',
         pacScript: {
             data: pac_data
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     chrome.proxy.settings.set(
         {
-            value: pac_config,
+            value: proxy_config,
             scope: 'regular'
         },
         function () {}
