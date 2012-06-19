@@ -2,6 +2,9 @@
 
 A Google Chrome extension for smoothly surfing on many websites blocking visitors outside mainland China
 
+### Disclaimer
+Installing this extension, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
+
 ### Install
 
 You can find this extension on Chrome Web Store at http://bit.ly/unblock-youku
