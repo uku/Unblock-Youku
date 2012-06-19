@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "s.plcloud.music.qq.com"                   ||' +
                    '        host === "inner.kandian.com"                        ||' +
                    '        host === "ipservice.163.com"                        ||' +
+                   '        host === "zb.s.qq.com"                              ||' +
                    '        shExpMatch(url, "http://v.youku.com/player/*")      ||' +
                    '        shExpMatch(url, "http://v.iask.com/v_play.php*")    ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")              ' +
