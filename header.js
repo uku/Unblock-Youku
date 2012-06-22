@@ -79,6 +79,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             'http://inner.kandian.com/*',
             'http://ipservice.163.com/*',
             'http://zb.s.qq.com/*',
+            'http://ip.kankan.xunlei.com/*',
 
             'http://v.youku.com/player/*',
             'http://v.iask.com/v_play.php*',
