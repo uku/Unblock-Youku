@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
                    '        host === "inner.kandian.com"                        ||' +
                    '        host === "ipservice.163.com"                        ||' +
                    '        host === "zb.s.qq.com"                              ||' +
+                   '        host === "ip.kankan.xunlei.com"                     ||' +
                    '        shExpMatch(url, "http://v.youku.com/player/*")      ||' +
                    '        shExpMatch(url, "http://v.iask.com/v_play.php*")    ||' +
                    '        shExpMatch(url, "http://*.gougou.com/*")              ' +
