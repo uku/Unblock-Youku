@@ -18,7 +18,8 @@
   "background": {
     "scripts": [
       "proxy.js",
-      "header.js"
+      "header.js",
+      "redirect.js"
     ]
   }
 }
