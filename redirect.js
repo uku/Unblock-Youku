@@ -2,7 +2,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     function(details) {
         console.log('original url: ' + details.url);
         if (details.url.slice(-15) === 'crossdomain.xml') {
-            console.log("direct return");
+            console.log('directly pass');
             return {};
         }
 
@@ -28,6 +28,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             'http://inner.kandian.com/*',
             'http://ipservice.163.com/*',
             'http://zb.s.qq.com/*',
+            'http://ip.kankan.xunlei.com/*',
 
             'http://v.youku.com/player/*',
             'http://v.iask.com/v_play.php*'
