@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <title>Option Page for Unblock Youku</title>
+        <link rel="stylesheet" type="text/css" href="./static/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="./static/style.css"/>
+        <script type="text/javascript" src="./static/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="./static/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./static/script.js"></script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="setting">
+                <div>
+                    <strong>插件运行模式选择：</strong>
+                </div>
+                <div class="btn-group" data-toggle="buttons-radio" id="buttons">
+                    <button class="btn" id="lite">精简模式</button>
+                    <button class="btn" id="normal">普通模式</button>
+                    <button class="btn" id="redirect">转发模式</button>
+                </div>
+                <div class="alert alert-info text-block">
+                    注意，更改模式之后须手动关闭重启 Chrome
+                </div>
+                <div id="setting-description">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="top-row">精简模式</td>
+                                <td class="top-row">速度最快，但只对优酷、虾米等个别网站起效
+                            </tr>
+                            <tr>
+                                <td>普通模式</td>
+                                <td>速度适中，支持网站数量最多，<strong>推荐使用</strong>
+                            </tr>
+                            <tr>
+                                <td class="bottom-row">转发模式</td>
+                                <td class="bottom-row">速度最慢，但可以与其它代理插件同时使用
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-block">
+                        关于不同模式的详细区别，请<a href="https://github.com/zhuzhuor/Unblock-Youku/wiki" target="_blank">点击这里</a>查看
+                    </div>
+                </div>
+                <div class="text-block" id="feedback">
+                    如遇到问题和有任何建议，欢迎<a href="mailto:unblock-youku@zhuzhu.org" target="_blank">联系我们</a>
+                </div>    
+                <div class="text-block" id="rating">
+                    如您觉得插件好用，请<a href="https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews" target="_blank">帮我们打分</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

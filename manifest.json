@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "2.3.3",
+  "version": "2.4",
   "manifest_version": 2,
   "minimum_chrome_version": "18.0",
   "description": "Let you smoothly surf on many websites blocking visitors outside mainland China.",
@@ -16,10 +16,11 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": [
-      "proxy.js",
-      "header.js",
-      "redirect.js"
-    ]
+    "page": "background.html"
+  },
+  "browser_action": {
+    "default_icon": "icons/19.png",
+    "default_title": "Unblock Youku",
+    "default_popup": "popup.html"
   }
 }
