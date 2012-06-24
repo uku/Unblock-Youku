@@ -3,6 +3,10 @@ if (current_mode() === 'redirect') {
 
     chrome.webRequest.onBeforeRequest.addListener(
         function(details) {
+            if (current_mode() !== 'redirect') {  // after changing mode but not restart yet
+                return {};
+            }
+
             console.log('original url: ' + details.url);
             if (details.url.slice(-15) === 'crossdomain.xml') {
                 console.log('directly pass');

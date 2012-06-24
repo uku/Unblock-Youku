@@ -1,20 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    unblock_youku.ip_addr  = '114.114.';
-    unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
-    unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
-    console.log('faked ip addr: ' + unblock_youku.ip_addr);
-
-    unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
-    var tmp_str;
-    for (var i = 0; i < 8; i++) {
-        tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
-        unblock_youku.sogou_auth = tmp_str.toUpperCase() + unblock_youku.sogou_auth;
-    }
-    console.log('sogou_auth: ' + unblock_youku.sogou_auth);
-});
-
-
-
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         details.requestHeaders.push({
@@ -60,10 +43,12 @@ if (current_mode() === 'normal' || current_mode() === 'lite') {
                 });
             }
             
-            details.requestHeaders.push({
-                name: 'X-Forwarded-For',
-                value: unblock_youku.ip_addr
-            });
+            if (current_mode() === 'normal' || current_mode() === 'lite') {
+                details.requestHeaders.push({
+                    name: 'X-Forwarded-For',
+                    value: unblock_youku.ip_addr
+                });
+            }
 
             return {requestHeaders: details.requestHeaders};
         },
