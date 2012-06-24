@@ -1,5 +1,4 @@
 body {
-/*     font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif; */
     width: 30em;
     display: block;
     position: relative;
@@ -17,7 +16,7 @@ body {
 }
 
 .bottom-row {
-    border-bottom: 1px solid #DDDDDD    !important;
+    border-bottom: 1px solid #DDDDDD !important;
 }
 
 .text-block {
@@ -28,5 +27,3 @@ body {
 #rating {
     display: none;
 }
-
-

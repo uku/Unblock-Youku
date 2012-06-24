@@ -27,5 +27,6 @@
     "default_icon": "icons/19.png",
     "default_title": "Unblock Youku",
     "default_popup": "popup.html"
-  }
+  },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

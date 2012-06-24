@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var background = chrome.extension.getBackgroundPage();
 
+
     // set default button display
     switch (background.current_mode()) {
     case 'lite':
@@ -14,6 +15,7 @@ $(document).ready(function() {
         break;
     }
     
+
     // button actions
     $('#lite').click(function() {
         background.change_mode('lite');
@@ -27,5 +29,25 @@ $(document).ready(function() {
         background.change_mode('redirect');
         console.log('changed mode to redirect');
     });
+
+
+    var my_date = new Date();
+    if (!localStorage.first_time) {
+        localStorage.first_time = my_date.getTime();
+    } else {
+        if (my_date.getTime() - localStorage.first_time > 1000 * 60 * 60 * 24 * 3)
+            $('#rating').show(); // delay 3 days for the rating div to show up, hahaha
+    }
 });
 
+
+// google analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-30726750-4']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
