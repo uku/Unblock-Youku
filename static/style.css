@@ -1,0 +1,32 @@
+body {
+/*     font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif; */
+    width: 30em;
+    display: block;
+    position: relative;
+}
+
+.wrapper {
+    margin: 10px;
+    padding: 10px;
+}
+
+#buttons {
+    margin: 18px auto;
+    width: 19em;
+    clear: both;
+}
+
+.bottom-row {
+    border-bottom: 1px solid #DDDDDD    !important;
+}
+
+.text-block {
+    margin: 18px 0px;
+    text-align: center;
+}
+
+#rating {
+    display: none;
+}
+
+
