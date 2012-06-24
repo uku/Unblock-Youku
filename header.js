@@ -1,8 +1,6 @@
-var unblock_youku = {};  // namespace
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    unblock_youku.ip_addr  = '220.181.111.';
+    unblock_youku.ip_addr  = '114.114.';
+    unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
     unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
     console.log('faked ip addr: ' + unblock_youku.ip_addr);
 
@@ -35,32 +33,35 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     },
 
     ['requestHeaders', 'blocking']);
-// first addListener ends here
+// addListener ends here
 
 
-if (false) {
+if (current_mode() === 'normal' || current_mode() === 'lite') {
+    console.log('normal/lite mode is in effect now');
+
     chrome.webRequest.onBeforeSendHeaders.addListener(
         function(details) {
-            var timestamp = Math.round(details.timeStamp / 1000).toString(16);
-            var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
-            var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
+            if (current_mode() === 'normal') {
+                var timestamp = Math.round(details.timeStamp / 1000).toString(16);
+                var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
+                var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
 
-            console.log(timestamp + ' ' + target_host + ' ' + tag);
+                console.log(timestamp + ' ' + target_host + ' ' + tag);
 
+                details.requestHeaders.push({
+                    name: 'X-Sogou-Auth',
+                    value: unblock_youku.sogou_auth
+                }, {
+                    name: 'X-Sogou-Timestamp',
+                    value: timestamp
+                }, {
+                    name: 'X-Sogou-Tag',
+                    value: tag
+                });
+            }
+            
             details.requestHeaders.push({
-                name: 'X-Sogou-Auth',
-                value: unblock_youku.sogou_auth
-            }, {
-                name: 'X-Sogou-Timestamp',
-                value: timestamp
-            }, {
-                name: 'X-Sogou-Tag',
-                value: tag
-            }, {
                 name: 'X-Forwarded-For',
-                value: unblock_youku.ip_addr
-            }, {
-                name: 'X-Real-IP',
                 value: unblock_youku.ip_addr
             });
 
@@ -68,28 +69,11 @@ if (false) {
         },
 
         {
-            urls: [
-                'http://hot.vrs.sohu.com/*',
-                'http://hot.vrs.letv.com/*',
-                'http://data.video.qiyi.com/*',
-                'http://vv.video.qq.com/*',
-                'http://geo.js.kankan.xunlei.com/*',
-                'http://v2.tudou.com/*',
-                'http://web-play.pptv.com/*',
-                'http://dyn.ugc.pps.tv/*',
-                'http://s.plcloud.music.qq.com/*',
-                'http://inner.kandian.com/*',
-                'http://ipservice.163.com/*',
-                'http://zb.s.qq.com/*',
-
-                'http://v.youku.com/player/*',
-                'http://v.iask.com/v_play.php*',
-                'http://*.gougou.com/*'
-            ]
+            urls: unblock_youku.normal_url_list
         },
 
         ['requestHeaders', 'blocking']);
-    // second addListener ends here
+    // addListener ends here
 }
 
 

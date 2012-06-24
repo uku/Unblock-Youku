@@ -16,7 +16,12 @@
     "<all_urls>"
   ],
   "background": {
-    "page": "background.html"
+    "scripts": [
+      "config.js",
+      "header.js",
+      "proxy.js",
+      "redirect.js"
+    ]
   },
   "browser_action": {
     "default_icon": "icons/19.png",
