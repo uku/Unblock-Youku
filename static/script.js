@@ -20,14 +20,17 @@ $(document).ready(function() {
     $('#lite').click(function() {
         background.change_mode('lite');
         console.log('changed mode to lite');
+        _gaq.push(['_trackEvent', 'Mode Change', 'Lite']);
     });
     $('#normal').click(function() {
         background.change_mode('normal');
         console.log('changed mode to normal');
+        _gaq.push(['_trackEvent', 'Mode Change', 'Normal']);
     });
     $('#redirect').click(function() {
         background.change_mode('redirect');
         console.log('changed mode to redirect');
+        _gaq.push(['_trackEvent', 'Mode Change', 'Redirect']);
     });
 
 
@@ -47,7 +50,10 @@ _gaq.push(['_setAccount', 'UA-30726750-4']);
 _gaq.push(['_trackPageview']);
 
 (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
     ga.src = 'https://ssl.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
 })();
