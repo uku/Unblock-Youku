@@ -1,9 +1,3 @@
-if (current_mode() === 'normal') {
-    console.log('normal mode is in effect now');
-
-    document.addEventListener("DOMContentLoaded", setup_proxy);
-}
-
 function setup_proxy() {
     var random_num = Math.floor(Math.random() * (16 + 16));  // 0 ~ 15 edu and 0 ~ 15 dxt
     var proxy_addr;
@@ -34,6 +28,9 @@ function setup_proxy() {
         },
         function () {}
     );
+
+    console.log('proxy is set');
+
 }
 
 function clear_proxy() {
@@ -48,4 +45,6 @@ function clear_proxy() {
         },
         function () {}
     );
+    
+    console.log('proxy is removed (changed to system setting)');
 }

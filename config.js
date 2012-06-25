@@ -30,6 +30,24 @@ unblock_youku.proxy_pac_content = url2pac(unblock_youku.normal_url_list);
 unblock_youku.redirect_url_list = unblock_youku.general_url_list;
 
 
+// ip & id settings
+unblock_youku.ip_addr  = '114.114.';
+unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
+unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
+console.log('faked ip addr: ' + unblock_youku.ip_addr);
+
+unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
+(function () {
+    var tmp_str;
+    for (var i = 0; i < 8; i++) {
+        tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
+            unblock_youku.sogou_auth = tmp_str.toUpperCase() + unblock_youku.sogou_auth;
+    }
+    console.log('sogou_auth: ' + unblock_youku.sogou_auth);
+})();
+
+
+// functions
 function url2pac(url_list) {
     var s = '';
 
@@ -50,47 +68,68 @@ function url2pac(url_list) {
 }
 
 
-// mode settings
+// mode setting functions
 function current_mode() {
-    if (!localStorage.unblock_youku_mode)
+    if (!localStorage.unblock_youku_mode || (
+            localStorage.unblock_youku_mode !== 'lite'    && 
+            localStorage.unblock_youku_mode !== 'normal'  && 
+            localStorage.unblock_youku_mode !== 'redirect'))
         localStorage.unblock_youku_mode = 'normal';
 
     return localStorage.unblock_youku_mode;
 }
 
 
-function change_mode(mode_name) {
-    switch (mode_name) {
+function init_current_mode() {
+    switch (current_mode()) {
     case 'lite':
-        clear_proxy();
         localStorage.unblock_youku_mode = 'lite';
+        setup_header();
         break;
     case 'redirect':
-        clear_proxy();
         localStorage.unblock_youku_mode = 'redirect';
+        setup_redirect();
         break;
     default:
-        setup_proxy();
         localStorage.unblock_youku_mode = 'normal';
+        setup_header();
+        setup_proxy();
         break;
     }
-    console.log('changed mode to: ' + mode_name);
+    console.log('initialized the settings for the mode: ' + current_mode());
 }
 
 
-// preconfiguration settings
-unblock_youku.ip_addr  = '114.114.';
-unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
-unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
-console.log('faked ip addr: ' + unblock_youku.ip_addr);
+function change_mode(mode_name) {
+    if (mode_name === current_mode())
+        return;
 
-unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
-(function () {
-    var tmp_str;
-    for (var i = 0; i < 8; i++) {
-        tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
-            unblock_youku.sogou_auth = tmp_str.toUpperCase() + unblock_youku.sogou_auth;
+    // clear old settings
+    switch (current_mode()) {
+    case 'lite':
+        clear_header();
+        console.log('cleared settings for lite');
+        break;
+    case 'redirect':
+        clear_redirect();
+        console.log('cleared settings for redirect');
+        break;
+    case 'normal':
+        clear_proxy();
+        clear_header();
+        console.log('cleared settings for normal');
+        break;
+    default:
+        console.log('should never come here');
+        break;
     }
-    console.log('sogou_auth: ' + unblock_youku.sogou_auth);
-})();
+
+    // set up new settings
+    localStorage.unblock_youku_mode = mode_name;
+    init_current_mode();
+}
+
+
+// set up mode settings when chrome starts
+document.addEventListener("DOMContentLoaded", init_current_mode);
 

@@ -1,5 +1,5 @@
 body {
-    width: 30em;
+    width: 32em;
     display: block;
     position: relative;
 }
@@ -11,7 +11,7 @@ body {
 
 #buttons {
     margin: 18px auto;
-    width: 19em;
+    width: 18em;
     clear: both;
 }
 
@@ -26,4 +26,13 @@ body {
 
 #rating {
     display: none;
+}
+
+.icon {
+    vertical-align: text-bottom;
+    margin: 0px 1px;
+}
+
+#sharing a:hover {
+    text-decoration: none;
 }

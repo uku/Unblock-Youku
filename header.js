@@ -1,3 +1,56 @@
+function setup_header() {
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        header_modifier,
+        {
+            urls: unblock_youku.normal_url_list
+        },
+        ['requestHeaders', 'blocking']);
+    // addListener ends here
+    console.log('header_modifier is set');
+}
+
+function clear_header() {
+    // does this work? It's undocumented in Chrome dev docs
+    chrome.webRequest.onBeforeSendHeaders.removeListener(header_modifier);
+    console.log('header_modifier is removed');
+}
+
+
+function header_modifier(details) {
+    if (current_mode() !== 'normal' && current_mode() !== 'lite') {
+        console.log('something is wrong -- header_modifier is still invoked');
+        return {};
+    }
+
+    if (current_mode() === 'normal') {
+        var timestamp = Math.round(details.timeStamp / 1000).toString(16);
+        var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
+        var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
+
+        console.log(timestamp + ' ' + target_host + ' ' + tag);
+
+        details.requestHeaders.push({
+            name: 'X-Sogou-Auth',
+            value: unblock_youku.sogou_auth
+        }, {
+            name: 'X-Sogou-Timestamp',
+            value: timestamp
+        }, {
+            name: 'X-Sogou-Tag',
+            value: tag
+        });
+    }
+    
+    details.requestHeaders.push({
+        name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    });
+
+    return {requestHeaders: details.requestHeaders};
+}
+
+
+// extra sites to handle
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         details.requestHeaders.push({
@@ -17,49 +70,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
     ['requestHeaders', 'blocking']);
 // addListener ends here
-
-
-if (current_mode() === 'normal' || current_mode() === 'lite') {
-    console.log('normal/lite mode is in effect now');
-
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        function(details) {
-            if (current_mode() === 'normal') {
-                var timestamp = Math.round(details.timeStamp / 1000).toString(16);
-                var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
-                var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');
-
-                console.log(timestamp + ' ' + target_host + ' ' + tag);
-
-                details.requestHeaders.push({
-                    name: 'X-Sogou-Auth',
-                    value: unblock_youku.sogou_auth
-                }, {
-                    name: 'X-Sogou-Timestamp',
-                    value: timestamp
-                }, {
-                    name: 'X-Sogou-Tag',
-                    value: tag
-                });
-            }
-            
-            if (current_mode() === 'normal' || current_mode() === 'lite') {
-                details.requestHeaders.push({
-                    name: 'X-Forwarded-For',
-                    value: unblock_youku.ip_addr
-                });
-            }
-
-            return {requestHeaders: details.requestHeaders};
-        },
-
-        {
-            urls: unblock_youku.normal_url_list
-        },
-
-        ['requestHeaders', 'blocking']);
-    // addListener ends here
-}
 
 
 // based on http://xiaoxia.org/2011/03/10/depressed-research-about-sogou-proxy-server-authentication-protocol/
