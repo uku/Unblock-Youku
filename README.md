@@ -11,7 +11,7 @@ You can find this extension on Chrome Web Store at http://bit.ly/unblock-youku
 
 ### License
 
-Source code is released under MIT license
+Source code is released under MIT license (Bootstrap and jQuery used in the extension configuration page are under their own licenses)
 
     Copyright (C) 2012 Bo Zhu http://zhuzhu.org
 

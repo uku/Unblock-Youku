@@ -1,12 +1,12 @@
 {
   "name": "Unblock Youku",
-  "version": "2.4.0.2",
+  "version": "2.4.0.3",
   "manifest_version": 2,
   "minimum_chrome_version": "18.0",
   "description": "Let you smoothly surf on many websites blocking visitors outside mainland China.",
-  "icons": { "16": "icons/16.png",
-             "48": "icons/48.png",
-            "128": "icons/128.png"
+  "icons": { "16": "icons/icon16.png",
+             "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
   },
   "permissions": [
     "proxy",
@@ -24,7 +24,7 @@
     ]
   },
   "browser_action": {
-    "default_icon": "icons/19.png",
+    "default_icon": "icons/icon19.png",
     "default_title": "Unblock Youku",
     "default_popup": "popup.html"
   },
