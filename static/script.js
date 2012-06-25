@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
     // set default button display
-    switch (background.current_mode()) {
+    switch (background.get_current_mode()) {
     case 'lite':
         $('#lite').button('toggle');
         break;

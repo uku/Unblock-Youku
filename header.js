@@ -40,12 +40,14 @@ function clear_header() {
 
 
 function header_modifier(details) {
-    if (current_mode() !== 'normal' && current_mode() !== 'lite') {
+    var current_mode = get_current_mode();
+
+    if (current_mode !== 'normal' && current_mode !== 'lite') {
         console.log('something is wrong -- header_modifier is still invoked');
         return {};
     }
 
-    if (current_mode() === 'normal') {
+    if (current_mode === 'normal') {
         var timestamp = Math.round(details.timeStamp / 1000).toString(16);
         var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
         var tag = compute_sogou_tag(timestamp + target_host + 'SogouExplorerProxy');

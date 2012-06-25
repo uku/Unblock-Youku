@@ -40,7 +40,7 @@ function clear_redirect() {
 
 
 function http_redirector(details) {
-    if (current_mode() !== 'redirect') {
+    if (get_current_mode() !== 'redirect') {
         console.log('something is wrong: http_redirector is still invoked');
         return {};
     }

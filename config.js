@@ -92,7 +92,7 @@ function url2pac(url_list) {
 
 
 // mode setting functions
-function current_mode() {
+function get_current_mode() {
     if (!localStorage.unblock_youku_mode || (
             localStorage.unblock_youku_mode !== 'lite'    && 
             localStorage.unblock_youku_mode !== 'normal'  && 
@@ -103,32 +103,41 @@ function current_mode() {
 }
 
 
-function init_current_mode() {
-    switch (current_mode()) {
-    case 'lite':
-        localStorage.unblock_youku_mode = 'lite';
-        setup_header();
-        break;
-    case 'redirect':
-        localStorage.unblock_youku_mode = 'redirect';
-        setup_redirect();
-        break;
-    default:
+function set_current_mode(mode_name) {
+    if (mode_name === 'lite' || mode_name === 'redirect')
+        localStorage.unblock_youku_mode = mode_name;
+    else
         localStorage.unblock_youku_mode = 'normal';
-        setup_header();
-        setup_proxy();
-        break;
-    }
-    console.log('initialized the settings for the mode: ' + current_mode());
 }
 
 
-function change_mode(mode_name) {
-    if (mode_name === current_mode())
+function init_current_mode() {
+    switch (get_current_mode()) {
+    case 'lite':
+        setup_header();
+        break;
+    case 'redirect':
+        setup_redirect();
+        break;
+    case 'normal':
+        setup_header();
+        setup_proxy();
+        break;
+    default:
+        console.log('should never come here');
+        break;
+    }
+    console.log('initialized the settings for the mode: ' + get_current_mode());
+}
+
+
+function change_mode(new_mode) {
+    var current_mode = get_current_mode();
+    if (new_mode === current_mode)
         return;
 
     // clear old settings
-    switch (current_mode()) {
+    switch (current_mode) {
     case 'lite':
         clear_header();
         console.log('cleared settings for lite');
@@ -148,7 +157,7 @@ function change_mode(mode_name) {
     }
 
     // set up new settings
-    localStorage.unblock_youku_mode = mode_name;
+    set_current_mode(new_mode);
     init_current_mode();
 }
 
