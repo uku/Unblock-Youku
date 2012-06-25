@@ -54,10 +54,11 @@ unblock_youku.redirect_url_list = unblock_youku.general_url_list;
 
 
 // ip & id settings
-unblock_youku.ip_addr  = '114.114.';
-unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
+// unblock_youku.ip_addr  = '114.114.';
+unblock_youku.ip_addr  = '220.181.111.';
+// unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
 unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
-console.log('faked ip addr: ' + unblock_youku.ip_addr);
+console.log('ip addr: ' + unblock_youku.ip_addr);
 
 unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
 (function () {
