@@ -45,7 +45,10 @@ unblock_youku.general_url_list = [
 ];
 
 
-unblock_youku.normal_url_list = unblock_youku.general_url_list.concat(['http://*.gougou.com/*']);
+unblock_youku.normal_url_list = unblock_youku.general_url_list.concat([
+    'http://shop.xunlei.com/*',
+    'http://*.gougou.com/*'
+]);
 unblock_youku.proxy_pac_content = url2pac(unblock_youku.normal_url_list);
 // console.log('pac_content:\n' +  unblock_youku.proxy_pac_content);
 
