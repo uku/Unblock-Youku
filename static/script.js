@@ -5,13 +5,13 @@ $(document).ready(function() {
     // set default button display
     switch (background.get_current_mode()) {
     case 'lite':
-        $('#lite').button('toggle');
+        $('#lite').addClass('active');
         break;
     case 'redirect':
-        $('#redirect').button('toggle');
+        $('#redirect').addClass('active');
         break;
     default:
-        $('#normal').button('toggle');
+        $('#normal').addClass('active');
         break;
     }
     
