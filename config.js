@@ -166,6 +166,12 @@ function change_mode(new_mode) {
 }
 
 
+function init_unblock_youku() {
+    init_current_mode();
+    // to get an estimation for user numbers of different modes
+    _gaq.push(['_trackEvent', 'Init Mode', get_current_mode()]);
+}
+
 // set up mode settings when chrome starts
-document.addEventListener("DOMContentLoaded", init_current_mode);
+document.addEventListener("DOMContentLoaded", init_unblock_youku);
 

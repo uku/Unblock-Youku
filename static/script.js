@@ -20,17 +20,17 @@ $(document).ready(function() {
     $('#lite').click(function() {
         background.change_mode('lite');
         console.log('changed mode to lite');
-        _gaq.push(['_trackEvent', 'Mode Change', 'Lite']);
+        _gaq.push(['_trackEvent', 'Mode Change', background.get_current_mode() + ' => lite']);
     });
     $('#normal').click(function() {
         background.change_mode('normal');
         console.log('changed mode to normal');
-        _gaq.push(['_trackEvent', 'Mode Change', 'Normal']);
+        _gaq.push(['_trackEvent', 'Mode Change', background.get_current_mode() + ' => normal']);
     });
     $('#redirect').click(function() {
         background.change_mode('redirect');
         console.log('changed mode to redirect');
-        _gaq.push(['_trackEvent', 'Mode Change', 'Redirect']);
+        _gaq.push(['_trackEvent', 'Mode Change', background.get_current_mode() + ' => redirect']);
     });
 
 
