@@ -23,8 +23,6 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-30726750-4']);
-_gaq.push(['_setDomainName', 'background.html']);
-_gaq.push(['_setAllowLinker', true]);
 _gaq.push(['_trackPageview']);
 
 (function() {

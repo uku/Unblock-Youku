@@ -136,12 +136,12 @@ function init_current_mode() {
 
 
 function change_mode(new_mode) {
-    var current_mode = get_current_mode();
-    if (new_mode === current_mode)
+    var old_mode = get_current_mode();
+    if (new_mode === old_mode)
         return;
 
     // clear old settings
-    switch (current_mode) {
+    switch (old_mode) {
     case 'lite':
         clear_header();
         console.log('cleared settings for lite');
@@ -163,6 +163,9 @@ function change_mode(new_mode) {
     // set up new settings
     set_current_mode(new_mode);
     init_current_mode();
+
+    // track mode changes
+    _gaq.push(['_trackEvent', 'Change Mode', old_mode + ' -> ' + new_mode]);
 }
 
 
@@ -171,6 +174,7 @@ function init_unblock_youku() {
     // to get an estimation for user numbers of different modes
     _gaq.push(['_trackEvent', 'Init Mode', get_current_mode()]);
 }
+
 
 // set up mode settings when chrome starts
 document.addEventListener("DOMContentLoaded", init_unblock_youku);
