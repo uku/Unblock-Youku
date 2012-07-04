@@ -53,7 +53,8 @@ function http_redirector(details) {
 
     var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
     var target_path = details.url.slice('http://'.length + target_host.length);
-    var redirect_url = 'http://' + target_host + '.dot.zhuzhu.org' + target_path;
+    var redirect_url = 'http://' + target_host + '.uku.im' + target_path;
+    //var redirect_url = 'http://127.0.0.1.xip.io:8888' + details.url.substr(6);
     console.log('redirect url: ' + redirect_url);
 
     return {redirectUrl: redirect_url};

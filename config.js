@@ -33,6 +33,7 @@ unblock_youku.general_url_list = [
     'http://geo.js.kankan.xunlei.com/*',
     'http://v2.tudou.com/*',
     'http://web-play.pptv.com/*',
+    'http://web-play.pplive.cn/*',
     'http://dyn.ugc.pps.tv/*',
     'http://s.plcloud.music.qq.com/*',
     'http://inner.kandian.com/*',
@@ -169,10 +170,23 @@ function change_mode(new_mode) {
 }
 
 
+(function () {
+    var xhr = new XMLHttpRequest();
+    var url = chrome.extension.getURL('manifest.json');
+    xhr.open('GET', url, false);  // blocking
+    xhr.send();
+
+    var manifest = JSON.parse(xhr.responseText);
+    unblock_youku.version = manifest.version;
+    console.log('version: ' + unblock_youku.version);
+})();
+
+
 function init_unblock_youku() {
     init_current_mode();
-    // to get an estimation for user numbers of different modes
+
     _gaq.push(['_trackEvent', 'Init Mode', get_current_mode()]);
+    _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
 }
 
 
