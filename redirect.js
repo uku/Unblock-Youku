@@ -51,10 +51,13 @@ function http_redirector(details) {
         return {};
     }
 
-    var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
-    var target_path = details.url.slice('http://'.length + target_host.length);
-    var redirect_url = 'http://' + target_host + '.uku.im' + target_path;
-    //var redirect_url = 'http://127.0.0.1.xip.io:8888' + details.url.substr(6);
+    //var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
+    //var target_path = details.url.slice('http://'.length + target_host.length);
+    //var redirect_url = 'http://' + target_host + '.127.0.0.1.xip.io:8888' + target_path;
+    //var redirect_url = 'http://' + target_host + '.uku.im' + target_path;
+
+    //var redirect_url = 'http://127.0.0.1.xip.io:8888/?url=' + btoa(details.url);
+    var redirect_url = 'http://yo.uku.im/?url=' + btoa(details.url);
     console.log('redirect url: ' + redirect_url);
 
     return {redirectUrl: redirect_url};
