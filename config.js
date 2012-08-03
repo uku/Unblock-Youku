@@ -42,7 +42,8 @@ unblock_youku.general_url_list = [
     'http://ip.kankan.xunlei.com/*',
 
     'http://v.youku.com/player/*',
-    'http://v.iask.com/v_play.php*'
+    'http://v.iask.com/v_play.php*',
+    'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
 
 
