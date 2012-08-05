@@ -43,6 +43,11 @@ unblock_youku.general_url_list = [
 
     'http://v.youku.com/player/*',
     'http://v.iask.com/v_play.php*',
+    //'http://v.iask.com/v_play_ipad.cx.php*',
+    'http://int.dpool.sina.com.cn/iplookup*',
+    'http://kandian.com/player/getEpgInfo*',
+    'http://cdn.kandian.com/*',  // better to remove this later?
+
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
 
