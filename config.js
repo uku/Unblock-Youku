@@ -48,6 +48,13 @@ unblock_youku.general_url_list = [
     'http://kandian.com/player/getEpgInfo*',
     'http://cdn.kandian.com/*',  // better to remove this later?
 
+
+    'http://music.sina.com.cn/yueku/intro/*',
+    //'http://down.v.iask.com/*',
+    //'http://*.music.sina.com.cn/*',
+    //'http://*/*.music.sina.com.cn/*',
+    //'http://*/*/*.music.sina.com.cn/*',
+
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
 
@@ -87,12 +94,7 @@ function url2pac(url_list) {
 
     var hostname;
     for (var i = 0; i < url_list.length; i++) {
-        hostname = url_list[i].match(/:\/\/(.[^\/]+)/)[1];
-        if (url_list[i].length - 9 > hostname.length ||
-                url_list[i].split('*').length - 1 > 1)   // http://goo.gl/qGQw9
-            s += 'shExpMatch(url, "' + url_list[i] + '")';
-        else
-            s += 'host === "' + hostname + '"';
+        s += 'shExpMatch(url, "' + url_list[i] + '")';
 
         if (i < url_list.length - 1)
             s += '\t\t||\n';
