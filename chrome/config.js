@@ -21,87 +21,24 @@
  */
 
 
-var unblock_youku = {};  // namespace
+var unblock_youku = unblock_youku || {};  // namespace
 
 
-// url filter settings
-unblock_youku.general_url_list = [
-    'http://hot.vrs.sohu.com/*',
-    'http://hot.vrs.letv.com/*',
-    'http://data.video.qiyi.com/*',
-    'http://vv.video.qq.com/*',
-    'http://geo.js.kankan.xunlei.com/*',
-    'http://v2.tudou.com/*',
-    'http://web-play.pptv.com/*',
-    'http://web-play.pplive.cn/*',
-    'http://dyn.ugc.pps.tv/*',
-    'http://s.plcloud.music.qq.com/*',
-    'http://inner.kandian.com/*',
-    'http://ipservice.163.com/*',
-    'http://zb.s.qq.com/*',
-    'http://ip.kankan.xunlei.com/*',
-
-    'http://v.youku.com/player/*',
-    'http://v.iask.com/v_play.php*',
-    //'http://v.iask.com/v_play_ipad.cx.php*',
-    'http://int.dpool.sina.com.cn/iplookup*',
-    'http://kandian.com/player/getEpgInfo*',
-    'http://cdn.kandian.com/*',  // better to remove this later?
-
-
-    'http://music.sina.com.cn/yueku/intro/*',
-    //'http://down.v.iask.com/*',
-    //'http://*.music.sina.com.cn/*',
-    //'http://*/*.music.sina.com.cn/*',
-    //'http://*/*/*.music.sina.com.cn/*',
-
-    'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
-];
-
-
-unblock_youku.normal_url_list = unblock_youku.general_url_list.concat([
+unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://shop.xunlei.com/*',
     'http://*.gougou.com/*'
 ]);
 unblock_youku.proxy_pac_content = url2pac(unblock_youku.normal_url_list);
 // console.log('pac_content:\n' +  unblock_youku.proxy_pac_content);
 
-
-unblock_youku.redirect_url_list = unblock_youku.general_url_list;
+unblock_youku.redirect_url_list = unblock_youku.url_list;
 
 
 // ip & id settings
-// unblock_youku.ip_addr  = '114.114.';
-unblock_youku.ip_addr  = '220.181.111.';
-// unblock_youku.ip_addr += Math.floor(Math.random() * 255) + '.';
-unblock_youku.ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
+unblock_youku.ip_addr = new_random_ip();
 console.log('ip addr: ' + unblock_youku.ip_addr);
-
-unblock_youku.sogou_auth = '/30/853edc6d49ba4e27';
-(function () {
-    var tmp_str;
-    for (var i = 0; i < 8; i++) {
-        tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
-            unblock_youku.sogou_auth = tmp_str.toUpperCase() + unblock_youku.sogou_auth;
-    }
-    console.log('sogou_auth: ' + unblock_youku.sogou_auth);
-})();
-
-
-// functions
-function url2pac(url_list) {
-    var s = '';
-
-    var hostname;
-    for (var i = 0; i < url_list.length; i++) {
-        s += 'shExpMatch(url, "' + url_list[i] + '")';
-
-        if (i < url_list.length - 1)
-            s += '\t\t||\n';
-    }
-
-    return s;
-}
+unblock_youku.sogou_auth = new_sogou_auth_str();
+console.log('sogou_auth: ' + unblock_youku.sogou_auth);
 
 
 // mode setting functions

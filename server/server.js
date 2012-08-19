@@ -20,10 +20,12 @@
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
 
 
-// Yes, it's also a proxy server
-var support_proxy = true;
+var test = require('../common/tools');
+console.log(test.new_random_ip());
 
 
 // the base portions of domain names to be removed
@@ -51,7 +53,7 @@ function get_real_target(req_host, req_uri) {
     var real_target = {};
     req_host = req_host.split(':', 1)[0];
 
-    if (support_proxy && req_uri.startsWith('http')) {
+    if (req_uri.startsWith('http')) {
         real_target = url.parse(req_uri);
     } else {
         for (var i = 0; i < server_domains.length; i++) {
@@ -64,65 +66,66 @@ function get_real_target(req_host, req_uri) {
             }
         }
     }
-    if (!real_target.port)
+    if (!real_target.port) {
         real_target.port = 80;
+    }
     return real_target;
 }
 
 
-http.createServer(function(request, response) {
-    console.debug(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
-
-    if (request.url === '/favicon.ico') {
-        response.writeHead(404);
-        response.end();
-        return;
+if (cluster.isMaster) {
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
     }
+} else {
+    http.createServer(function(request, response) {
+        //console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
 
-    if (request.url === '/crossdomain.xml') {
-        response.writeHead(200, {
-            'Content-Type': 'text/xml'
-        });
-        response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
-            '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
-        return;
-    }
-
-    var target = get_real_target(request.headers.host, request.url);
-    if (!target.host) {
-        response.writeHead(403);
-        response.end();
-        return;
-    }
-
-    request.headers.host = target.hostname;
-    if (request.headers['proxy-connection']) {
-        request.headers.connection = request.headers['proxy-connection'];
-        delete request.headers['proxy-connection'];
-    }
-    var options = {
-        host: target.host,
-        hostname: target.hostname,
-        port: +target.port,
-        path: target.path,
-        method: request.method,
-        headers: request.headers
-    };
-    var proxy_req = http.request(options, function(res) {
-        response.writeHead(res.statusCode, res.headers);
-
-        res.on('data', function(chunk) {
-            response.write(chunk);
-        });
-        res.on('end', function() {
+        if (request.url === '/favicon.ico') {
+            response.writeHead(404);
             response.end();
-        });
-    });
+            return;
+        }
 
-    request.on('data', function(chunk) {
-        proxy_req.write(chunk);
-    });
-    request.on('end', function() {
-        proxy_req.end();
-    });
-}).listen(8888, '127.0.0.1');
+        if (request.url === '/crossdomain.xml') {
+            response.writeHead(200, {
+                'Content-Type': 'text/xml'
+            });
+            response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
+                '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+            return;
+        }
+
+        var target = get_real_target(request.headers.host, request.url);
+        if (!target.host) {
+            response.writeHead(403);
+            response.end();
+            return;
+        }
+
+        request.headers.host = target.host;
+        var options = {
+            hostname: 'h15.dxt.bj.ie.sogou.com',
+            path: target.href,
+            method: request.method,
+            headers: request.headers
+        };
+        var proxy_req = http.request(options, function(res) {
+            response.writeHead(res.statusCode, res.headers);
+
+            res.on('data', function(chunk) {
+                response.write(chunk);
+            });
+            res.on('end', function() {
+                response.end();
+            });
+        });
+
+        request.on('data', function(chunk) {
+            proxy_req.write(chunk);
+        });
+        request.on('end', function() {
+            proxy_req.end();
+        });
+    }).listen(8888, '127.0.0.1');
+}

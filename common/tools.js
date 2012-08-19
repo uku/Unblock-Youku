@@ -21,39 +21,28 @@
  */
 
 
-function setup_redirect() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        http_redirector,
-        {
-            urls: unblock_youku.redirect_url_list
-        },
-        ["blocking"]);
-    // addListener ends here
-    console.log('http_redirector is set');
+function new_random_ip() {
+    var ip_addr = '220.181.111.';
+    //ip_addr += Math.floor(Math.random() * 255) + '.';
+    ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
+    return ip_addr;
 }
 
 
-function clear_redirect() {
-    chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
-    console.log('http_redirector is removed');
-}
+function url2pac(url_list) {
+    var s = '';
 
+    var hostname;
+    for (var i = 0; i < url_list.length; i++) {
+        s += 'shExpMatch(url, "' + url_list[i] + '")';
 
-function http_redirector(details) {
-    if (get_current_mode() !== 'redirect') {
-        console.log('something is wrong: http_redirector is still invoked');
-        return {};
+        if (i < url_list.length - 1)
+            s += '\t\t||\n';
     }
 
-    console.log('original url: ' + details.url);
-    if (details.url.slice(-15) === 'crossdomain.xml') {
-        console.log('directly pass');
-        return {};
-    }
-
-    //var redirect_url = 'http://127.0.0.1.xip.io:8888/?url=' + btoa(details.url);
-    var redirect_url = 'http://yo.uku.im/?url=' + btoa(details.url);
-    console.log('redirect url: ' + redirect_url);
-
-    return {redirectUrl: redirect_url};
+    return s;
 }
+
+
+var exports = exports || {};
+exports.new_random_ip = new_random_ip;
