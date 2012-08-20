@@ -17,15 +17,6 @@
  */
 
 
-// allowed server domain names
-var server_domains = [
-    'yo.uku.im',
-    'ukutest-zhuzhuor.dotcloud.com',
-    '127.0.0.1',
-    '127.0.0.1.xip.io'
-];
-
-
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
@@ -50,24 +41,19 @@ if (typeof String.prototype.startsWith != 'function') {
 // }
 
 
-function get_real_target(req_host, req_uri) {
+function get_real_target(req_path) {
     var real_target = {};
-    req_host = req_host.split(':', 1)[0];
 
-    if (req_uri.startsWith('http')) {
-        real_target = url.parse(req_uri);
+    // the 'path' in proxy requests should always start with http
+    if (req_path.startsWith('http')) {
+        real_target = url.parse(req_path);
         real_target.is_proxy = true;
     } else {
-        for (var i = 0; i < server_domains.length; i++) {
-            if (req_host == server_domains[i]) {
-                var real_url = querystring.parse(url.parse(req_uri).query).url;
-                var buf = new Buffer(real_url, 'base64');
-                real_url = buf.toString();
-                real_target = url.parse(real_url);
-                real_target.is_proxy = false;
-                break;
-            }
-        }
+        var real_url = querystring.parse(url.parse(req_uri).query).url;
+        var buf = new Buffer(real_url, 'base64');
+        real_url = buf.toString();
+        real_target = url.parse(real_url);
+        real_target.is_proxy = false;
     }
     if (!real_target.port) {
         real_target.port = 80;
@@ -76,11 +62,8 @@ function get_real_target(req_host, req_uri) {
 }
 
 
-// console.log(url_list.regex_url_list);
 function is_valid_url(target_url) {
-    // console.log('got target_url: ' + target_url);
     for (var i in url_list.regex_url_list) {
-        // console.log(url_list.regex_url_list[i]);
         if (url_list.regex_url_list[i].test(target_url)) {
             return true;
         }
@@ -112,7 +95,7 @@ if (cluster.isMaster) {
             return;
         }
 
-        var target = get_real_target(request.headers.host, request.url);
+        var target = get_real_target(request.url);
         if (!target.host) {
             response.writeHead(403);
             response.end();
@@ -186,5 +169,5 @@ if (cluster.isMaster) {
         request.on('error', function(err) {
             console.log('Server Error: ' + err.message);
         });
-    }).listen(8888, '127.0.0.1');
+    }).listen(8080, '127.0.0.1');
 }
