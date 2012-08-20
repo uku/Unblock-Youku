@@ -43,9 +43,22 @@ function new_sogou_proxy_addr() {
 }
 
 
+// String.startsWith
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function(str) {
+        return this.slice(0, str.length) == str;
+    };
+}
+
+
 // based on http://goo.gl/th215
-function compute_sogou_tag(timestamp, target_url) {
-    var hostname = target_url.match(/^http:\/\/(.[^:\/]+)/)[1];
+function compute_sogou_tag(timestamp, target_link) {
+    var hostname;
+    if (target_link.startsWith('http://')) {
+        hostname = target_link.match(/^http:\/\/(.[^:\/]+)/)[1];
+    } else {
+        hostname = target_link;
+    }
     var s = timestamp + hostname + 'SogouExplorerProxy';
     var total_len = s.length;
     var numb_iter = Math.floor(total_len / 4);

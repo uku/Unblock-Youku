@@ -17,6 +17,14 @@
  */
 
 
+// allowed server domain names
+var server_domains = [
+    'yo.uku.im',
+    '127.0.0.1',
+    '127.0.0.1.xip.io'
+];
+
+
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
@@ -28,22 +36,14 @@ var url_list = require('../shared/urls');
 var shared_tools = require('../shared/tools');
 
 
-// allowed server domain names
-var server_domains = [
-    'yo.uku.im',
-    '127.0.0.1',
-    '127.0.0.1.xip.io'
-];
-
-
 // learnt from http://goo.gl/X8zmc
 if (typeof String.prototype.startsWith != 'function') {
-    String.prototype.startsWith = function (str){
+    String.prototype.startsWith = function(str) {
         return this.slice(0, str.length) == str;
     };
 }
 // if (typeof String.prototype.endsWith != 'function') {
-//     String.prototype.endsWith = function (str){
+//     String.prototype.endsWith = function(str) {
 //         return this.slice(-str.length) == str;
 //     };
 // }
@@ -58,7 +58,7 @@ function get_real_target(req_host, req_uri) {
         real_target.is_proxy = true;
     } else {
         for (var i = 0; i < server_domains.length; i++) {
-            if (req_host == base_domains[i]) {
+            if (req_host == server_domains[i]) {
                 var real_url = querystring.parse(url.parse(req_uri).query).url;
                 var buf = new Buffer(real_url, 'base64');
                 real_url = buf.toString();
@@ -94,7 +94,7 @@ if (cluster.isMaster) {
     }
 } else {
     http.createServer(function(request, response) {
-        console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
+        // console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
 
         if (request.url === '/favicon.ico') {
             response.writeHead(404);
@@ -119,12 +119,10 @@ if (cluster.isMaster) {
         }
 
         var req_options;
-        console.log(target.href);
-        console.log(is_valid_url(target.href));
         if (is_valid_url(target.href)) {
             var sogou_auth = sogou.new_sogou_auth_str();
             var timestamp = Math.round(new Date().getTime() / 1000).toString(16);
-            var sogou_tag = sogou.compute_sogou_tag(timestamp, request.url);
+            var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
             request.headers['X-Sogou-Auth'] = sogou_auth;
             request.headers['X-Sogou-Timestamp'] = timestamp;
@@ -157,7 +155,7 @@ if (cluster.isMaster) {
                 headers: request.headers
             };
         } else {
-            // neither proxy nor redirection
+            // neither proxy nor redirect
             response.writeHead(403);
             response.end();
             return;
@@ -165,15 +163,17 @@ if (cluster.isMaster) {
 
 
         var proxy_req = http.request(req_options, function(res) {
-            response.writeHead(res.statusCode, res.headers);
-
             res.on('data', function(chunk) {
                 response.write(chunk);
             });
             res.on('end', function() {
                 response.end();
             });
-            // need to handle error
+            res.on('error', function(err) {
+                console.log('Proxy Error: ' + err.message);
+            });
+
+            response.writeHead(res.statusCode, res.headers);
         });
 
         request.on('data', function(chunk) {
@@ -182,6 +182,8 @@ if (cluster.isMaster) {
         request.on('end', function() {
             proxy_req.end();
         });
-        // need to handle error
+        request.on('error', function(err) {
+            console.log('Server Error: ' + err.message);
+        });
     }).listen(8888, '127.0.0.1');
 }
