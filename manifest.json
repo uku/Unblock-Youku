@@ -17,9 +17,9 @@
   ],
   "background": {
     "scripts": [
-      "common/tools.js",
-      "common/urls.js",
-      "common/sogou.js",
+      "shared/tools.js",
+      "shared/urls.js",
+      "shared/sogou.js",
       "chrome/config.js",
       "chrome/header.js",
       "chrome/proxy.js",

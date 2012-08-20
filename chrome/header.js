@@ -1,16 +1,16 @@
-/* 
+/*
  * Copyright (C) 2012 Bo Zhu http://zhuzhu.org
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -43,16 +43,15 @@ function header_modifier(details) {
     var current_mode = get_current_mode();
 
     if (current_mode !== 'normal' && current_mode !== 'lite') {
-        console.log('something is wrong -- header_modifier is still invoked');
+        console.error('something is wrong -- header_modifier is still invoked');
         return {};
     }
 
     if (current_mode === 'normal') {
         var timestamp = Math.round(details.timeStamp / 1000).toString(16);
-        var target_host = details.url.match(/:\/\/(.[^\/]+)/)[1];
-        var tag = compute_sogou_tag(timestamp, target_host);
+        var tag = compute_sogou_tag(timestamp, details.url);
 
-        console.log(timestamp + ' ' + target_host + ' ' + tag);
+        console.log('t=' + timestamp + ' h=' + tag + ' ' + details.url);
 
         details.requestHeaders.push({
             name: 'X-Sogou-Auth',

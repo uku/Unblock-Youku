@@ -21,14 +21,14 @@ var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
 var cluster = require('cluster');
-var numCPUs = require('os').cpus().length;
+var num_CPUs = require('os').cpus().length;
+
+var sogou = require('../shared/sogou');
+var url_list = require('../shared/urls');
+var shared_tools = require('../shared/tools');
 
 
-var test = require('../common/tools');
-console.log(test.new_random_ip());
-
-
-// the base portions of domain names to be removed
+// allowed server domain names
 var server_domains = [
     'yo.uku.im',
     '127.0.0.1',
@@ -36,17 +36,17 @@ var server_domains = [
 ];
 
 
-// http://stackoverflow.com/questions/646628/javascript-startswith
+// learnt from http://goo.gl/X8zmc
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str){
         return this.slice(0, str.length) == str;
     };
 }
-if (typeof String.prototype.endsWith != 'function') {
-    String.prototype.endsWith = function (str){
-        return this.slice(-str.length) == str;
-    };
-}
+// if (typeof String.prototype.endsWith != 'function') {
+//     String.prototype.endsWith = function (str){
+//         return this.slice(-str.length) == str;
+//     };
+// }
 
 
 function get_real_target(req_host, req_uri) {
@@ -74,7 +74,7 @@ function get_real_target(req_host, req_uri) {
 
 
 if (cluster.isMaster) {
-    for (var i = 0; i < numCPUs; i++) {
+    for (var i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
 } else {
@@ -103,9 +103,23 @@ if (cluster.isMaster) {
             return;
         }
 
+        // check url
+
+        var sogou_auth = sogou.new_sogou_auth_str();
+        var timestamp = Math.round(new Date().getTime() / 1000).toString(16);
+        var sogou_tag = sogou.compute_sogou_tag(timestamp, request.url);
+
+        request.headers['X-Sogou-Auth'] = sogou_auth;
+        request.headers['X-Sogou-Timestamp'] = timestamp;
+        request.headers['X-Sogou-Tag'] = sogou_tag;
+
+        var random_ip = shared_tools.new_random_ip();
+        request.headers['X-Forwarded-For'] = random_ip;
+
         request.headers.host = target.host;
+        var proxy_server = sogou.new_sogou_proxy_addr();
         var options = {
-            hostname: 'h15.dxt.bj.ie.sogou.com',
+            hostname: proxy_server,
             path: target.href,
             method: request.method,
             headers: request.headers
@@ -119,6 +133,7 @@ if (cluster.isMaster) {
             res.on('end', function() {
                 response.end();
             });
+            // need to handle error
         });
 
         request.on('data', function(chunk) {
@@ -127,5 +142,6 @@ if (cluster.isMaster) {
         request.on('end', function() {
             proxy_req.end();
         });
+        // need to handle error
     }).listen(8888, '127.0.0.1');
 }

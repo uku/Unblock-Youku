@@ -1,16 +1,16 @@
-/* 
+/*
  * Copyright (C) 2012 Bo Zhu http://zhuzhu.org
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -32,8 +32,20 @@ function new_sogou_auth_str() {
 }
 
 
+function new_sogou_proxy_addr() {
+    var random_num = Math.floor(Math.random() * (16 + 16));  // 0 ~ 15 edu and 0 ~ 15 dxt
+    var proxy_addr;
+    if (random_num < 16)
+        proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // 0 ~ 15
+    else
+        proxy_addr = 'h' + (random_num - 16) + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
+    return proxy_addr;
+}
+
+
 // based on http://goo.gl/th215
-function compute_sogou_tag(timestamp, hostname) {
+function compute_sogou_tag(timestamp, target_url) {
+    var hostname = target_url.match(/^http:\/\/(.[^:\/]+)/)[1];
     var s = timestamp + hostname + 'SogouExplorerProxy';
     var total_len = s.length;
     var numb_iter = Math.floor(total_len / 4);
@@ -93,7 +105,7 @@ function compute_sogou_tag(timestamp, hostname) {
     hash += hash >>> 6;
     hash %= 0x100000000;
 
-    // learnt from http://stackoverflow.com/questions/6798111/bitwise-operations-on-32-bit-unsigned-ints
+    // learnt from http://goo.gl/oRJ0o
     hash = hash >>> 0;
 
     return ('00000000' + hash.toString(16)).slice(-8);
@@ -104,3 +116,4 @@ function compute_sogou_tag(timestamp, hostname) {
 var exports = exports || {};
 exports.new_sogou_auth_str = new_sogou_auth_str;
 exports.compute_sogou_tag = compute_sogou_tag;
+exports.new_sogou_proxy_addr = new_sogou_proxy_addr;

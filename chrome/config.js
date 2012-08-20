@@ -1,16 +1,16 @@
-/* 
+/*
  * Copyright (C) 2012 Bo Zhu http://zhuzhu.org
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -28,9 +28,6 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://shop.xunlei.com/*',
     'http://*.gougou.com/*'
 ]);
-unblock_youku.proxy_pac_content = url2pac(unblock_youku.normal_url_list);
-// console.log('pac_content:\n' +  unblock_youku.proxy_pac_content);
-
 unblock_youku.redirect_url_list = unblock_youku.url_list;
 
 
@@ -44,8 +41,8 @@ console.log('sogou_auth: ' + unblock_youku.sogou_auth);
 // mode setting functions
 function get_current_mode() {
     if (!localStorage.unblock_youku_mode || (
-            localStorage.unblock_youku_mode !== 'lite'    && 
-            localStorage.unblock_youku_mode !== 'normal'  && 
+            localStorage.unblock_youku_mode !== 'lite'    &&
+            localStorage.unblock_youku_mode !== 'normal'  &&
             localStorage.unblock_youku_mode !== 'redirect'))
         localStorage.unblock_youku_mode = 'normal';
 
