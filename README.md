@@ -1,13 +1,18 @@
 # Unblock Youku
 
-A Google Chrome extension for smoothly surfing on many websites blocking visitors outside mainland China
+This project has three-fold purposes.
+
+1. A Google Chrome extension for smoothly surfing on many websites blocking visitors outside mainland China. You can find this extension on Chrome Web Store at http://bit.ly/unblock-youku
+
+2. A local proxy server written in [node.js](http://node.js.org) for uses for other browers such as Firefox and Safari (not guaranteed).
+
+    $ node server/server.js
+
+3. A backend server to support the redirection mode of the Chrome extension.
 
 ### Disclaimer
-Installing this extension, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
 
-### Install
-
-You can find this extension on Chrome Web Store at http://bit.ly/unblock-youku
+By using/installing this software, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
 
 ### License
 
