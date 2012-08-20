@@ -169,5 +169,6 @@ if (cluster.isMaster) {
         request.on('error', function(err) {
             console.log('Server Error: ' + err.message);
         });
-    }).listen(8080, '127.0.0.1');
+    }).listen(8080); // WARNING: add 127.0.0.1 if it's only for local use
+    // }).listen(8080, '127.0.0.1');
 }
