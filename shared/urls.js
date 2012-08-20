@@ -57,6 +57,19 @@ unblock_youku.url_list = [
 ];
 
 
+unblock_youku.regex_url_list = [];
+(function() {
+    var re_str;
+    for (var i in unblock_youku.url_list) {
+        re_str = unblock_youku.url_list[i].replace(/\//g, '\\/');
+        re_str = re_str.replace(/\./g, '\\.');
+        re_str = re_str.replace(/\*/g, '.*');
+        unblock_youku.regex_url_list.push(new RegExp('^' + re_str, 'i'));
+    }
+})();
+// console.log(unblock_youku.regex_url_list);
+
+
 // also export as a node.js module
 var exports = exports || {};
-exports.url_list = unblock_youku.url_list;
+exports.regex_url_list = unblock_youku.regex_url_list;

@@ -55,6 +55,7 @@ function get_real_target(req_host, req_uri) {
 
     if (req_uri.startsWith('http')) {
         real_target = url.parse(req_uri);
+        real_target.is_proxy = true;
     } else {
         for (var i = 0; i < server_domains.length; i++) {
             if (req_host == base_domains[i]) {
@@ -62,6 +63,7 @@ function get_real_target(req_host, req_uri) {
                 var buf = new Buffer(real_url, 'base64');
                 real_url = buf.toString();
                 real_target = url.parse(real_url);
+                real_target.is_proxy = false;
                 break;
             }
         }
@@ -73,13 +75,26 @@ function get_real_target(req_host, req_uri) {
 }
 
 
+// console.log(url_list.regex_url_list);
+function is_valid_url(target_url) {
+    // console.log('got target_url: ' + target_url);
+    for (var i in url_list.regex_url_list) {
+        // console.log(url_list.regex_url_list[i]);
+        if (url_list.regex_url_list[i].test(target_url)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 if (cluster.isMaster) {
     for (var i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
 } else {
     http.createServer(function(request, response) {
-        //console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
+        console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
 
         if (request.url === '/favicon.ico') {
             response.writeHead(404);
@@ -103,28 +118,53 @@ if (cluster.isMaster) {
             return;
         }
 
-        // check url
+        var req_options;
+        console.log(target.href);
+        console.log(is_valid_url(target.href));
+        if (is_valid_url(target.href)) {
+            var sogou_auth = sogou.new_sogou_auth_str();
+            var timestamp = Math.round(new Date().getTime() / 1000).toString(16);
+            var sogou_tag = sogou.compute_sogou_tag(timestamp, request.url);
 
-        var sogou_auth = sogou.new_sogou_auth_str();
-        var timestamp = Math.round(new Date().getTime() / 1000).toString(16);
-        var sogou_tag = sogou.compute_sogou_tag(timestamp, request.url);
+            request.headers['X-Sogou-Auth'] = sogou_auth;
+            request.headers['X-Sogou-Timestamp'] = timestamp;
+            request.headers['X-Sogou-Tag'] = sogou_tag;
 
-        request.headers['X-Sogou-Auth'] = sogou_auth;
-        request.headers['X-Sogou-Timestamp'] = timestamp;
-        request.headers['X-Sogou-Tag'] = sogou_tag;
+            var random_ip = shared_tools.new_random_ip();
+            request.headers['X-Forwarded-For'] = random_ip;
 
-        var random_ip = shared_tools.new_random_ip();
-        request.headers['X-Forwarded-For'] = random_ip;
+            request.headers.host = target.host;
+            var proxy_server = sogou.new_sogou_proxy_addr();
+            req_options = {
+                hostname: proxy_server,
+                path: target.href,
+                method: request.method,
+                headers: request.headers
+            };
+        } else if (target.is_proxy) {
+            // serve as a normal proxy
+            if (request.headers['proxy-connection']) {
+                request.headers['connection'] = request.headers['proxy-connection'];
+                delete request.headers['proxy-connection'];
+            }
+            request.headers.host = target.host;
+            req_options = {
+                host: target.host,
+                hostname: target.hostname,
+                port: +target.port,
+                path: target.path,
+                method: request.method,
+                headers: request.headers
+            };
+        } else {
+            // neither proxy nor redirection
+            response.writeHead(403);
+            response.end();
+            return;
+        }
 
-        request.headers.host = target.host;
-        var proxy_server = sogou.new_sogou_proxy_addr();
-        var options = {
-            hostname: proxy_server,
-            path: target.href,
-            method: request.method,
-            headers: request.headers
-        };
-        var proxy_req = http.request(options, function(res) {
+
+        var proxy_req = http.request(req_options, function(res) {
             response.writeHead(res.statusCode, res.headers);
 
             res.on('data', function(chunk) {

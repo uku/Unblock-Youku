@@ -25,7 +25,7 @@ function setup_proxy() {
     console.log('to set up proxy');
     var proxy_addr = new_sogou_proxy_addr();
     var pac_data = url2pac(unblock_youku.normal_url_list, proxy_addr + ':80');
-    console.log(pac_data);
+    // console.log(pac_data);
 
     var proxy_config = {
         mode: 'pac_script',

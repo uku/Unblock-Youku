@@ -50,4 +50,4 @@ function url2pac(url_list, proxy_server) {
 
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
-exports.url2pac = url2pac;
+//exports.url2pac = url2pac;
