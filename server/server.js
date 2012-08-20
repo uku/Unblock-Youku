@@ -20,6 +20,7 @@
 // allowed server domain names
 var server_domains = [
     'yo.uku.im',
+    'ukutest-zhuzhuor.dotcloud.com',
     '127.0.0.1',
     '127.0.0.1.xip.io'
 ];
