@@ -49,7 +49,7 @@ function get_real_target(req_path) {
         real_target = url.parse(req_path);
         real_target.is_proxy = true;
     } else {
-        var real_url = querystring.parse(url.parse(req_uri).query).url;
+        var real_url = querystring.parse(url.parse(req_path).query).url;
         var buf = new Buffer(real_url, 'base64');
         real_url = buf.toString();
         real_target = url.parse(real_url);

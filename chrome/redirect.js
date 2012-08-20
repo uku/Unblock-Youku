@@ -51,7 +51,7 @@ function http_redirector(details) {
         return {};
     }
 
-    //var redirect_url = 'http://127.0.0.1.xip.io:8888/?url=' + btoa(details.url);
+    //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + btoa(details.url);
     var redirect_url = 'http://ukutest-zhuzhuor.dotcloud.com/?url=' + btoa(details.url);
     //var redirect_url = 'http://yo.uku.im/?url=' + btoa(details.url);
     console.log('redirect url: ' + redirect_url);
