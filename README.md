@@ -8,11 +8,11 @@ This project contains three-fold functionalities.
 
 2. _A local proxy server_ written in [node.js](http://node.js.org) for bypassing the mainland restriction _for other browsers such as Firefox and Safari_ (but not guaranteed).
 
-    * Run the proxy script locally: ```$ node server/server.js```
+   1. Run the proxy script locally: ```node server/server.js```
     
-    * Set (only) the HTTP proxy of your browser to ```127.0.0.1:8080```
+   2. Set (only) the HTTP proxy of your browser to ```127.0.0.1:8080```
     
-    For more instructions, please see [these examples](http://bit.ly/unblock-youku-proxy).
+   For more instructions, please see [these examples](http://bit.ly/unblock-youku-proxy).
 
 3. A backend server to support the redirection mode of the Chrome extension.
 
