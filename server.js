@@ -159,7 +159,6 @@ if (cluster.isMaster) {
             return;
         }
 
-
         var proxy_req = http.request(req_options, function(res) {
             res.on('data', function(chunk) {
                 response.write(chunk);
@@ -185,6 +184,11 @@ if (cluster.isMaster) {
         });
     }).listen(server_port, server_addr);
 
-    console.log('Listenting on ' + server_addr + ':' + server_port);
+    console.log('Listening on ' + server_addr + ':' + server_port);
 }
+
+
+process.on('uncaughtException', function (err) {
+    console.log('Caught exception: ' + err);
+});
 
