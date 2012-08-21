@@ -23,20 +23,17 @@ var querystring = require('querystring');
 var cluster = require('cluster');
 var num_CPUs = require('os').cpus().length;
 
-var sogou = require('../shared/sogou');
-var url_list = require('../shared/urls');
-var shared_tools = require('../shared/tools');
+var sogou = require('./shared/sogou');
+var url_list = require('./shared/urls');
+var shared_tools = require('./shared/tools');
 
 
 var server_addr, server_port;
-if (process.argv.length >= 3) {
-    server_addr = process.argv[2];
+if (process.env.VCAP_APP_PORT) {
+    server_addr = '0.0.0.0';
+    server_port = process.env.VCAP_APP_PORT;
 } else {
     server_addr = '127.0.0.1';
-}
-if (process.argv.length >= 4) {
-    server_port = +process.argv[3];
-} else {
     server_port = 8080;
 }
 
