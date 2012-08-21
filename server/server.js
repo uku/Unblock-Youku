@@ -28,6 +28,19 @@ var url_list = require('../shared/urls');
 var shared_tools = require('../shared/tools');
 
 
+var server_addr, server_port;
+if (process.argv.length >= 3) {
+    server_addr = process.argv[2];
+} else {
+    server_addr = '127.0.0.1';
+}
+if (process.argv.length >= 4) {
+    server_port = +process.argv[3];
+} else {
+    server_port = 8080;
+}
+
+
 // learnt from http://goo.gl/X8zmc
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function(str) {
@@ -76,6 +89,7 @@ if (cluster.isMaster) {
     for (var i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
+
 } else {
     http.createServer(function(request, response) {
         // console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
@@ -169,6 +183,8 @@ if (cluster.isMaster) {
         request.on('error', function(err) {
             console.log('Server Error: ' + err.message);
         });
-    }).listen(8080); // WARNING: add 127.0.0.1 if it's only for local use
-    // }).listen(8080, '127.0.0.1');
+    }).listen(server_port, server_addr);
+
+    console.log('Listenting on ' + server_addr + ':' + server_port);
 }
+
