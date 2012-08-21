@@ -29,9 +29,10 @@ var shared_tools = require('./shared/tools');
 
 
 var server_addr, server_port;
-if (process.env.VCAP_APP_PORT) {
+// appfog's documents and online sample codes are horrible
+if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
-    server_port = process.env.VCAP_APP_PORT;
+    server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
 } else {
     server_addr = '127.0.0.1';
     server_port = 8080;
@@ -60,10 +61,12 @@ function get_real_target(req_path) {
         real_target.is_proxy = true;
     } else {
         var real_url = querystring.parse(url.parse(req_path).query).url;
-        var buf = new Buffer(real_url, 'base64');
-        real_url = buf.toString();
-        real_target = url.parse(real_url);
-        real_target.is_proxy = false;
+        if (real_url) {
+            var buf = new Buffer(real_url, 'base64');
+            real_url = buf.toString();
+            real_target = url.parse(real_url);
+            real_target.is_proxy = false;
+        }
     }
     if (!real_target.port) {
         real_target.port = 80;

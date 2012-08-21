@@ -8,7 +8,7 @@ This project contains three-fold functionalities.
 
 2. _A local proxy server_ written in [node.js](http://node.js.org) for bypassing the mainland restriction _for other browsers such as Firefox and Safari_ (but not guaranteed).
 
-   1. Run the proxy script locally: ```node server/server.js```
+   1. Run the proxy script locally: ```node server.js```
     
    2. Set (only) the HTTP proxy of your browser to ```127.0.0.1:8080```
     

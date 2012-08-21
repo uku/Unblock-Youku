@@ -1,5 +1,0 @@
-www:
-  type: nodejs
-  approot: server
-  config:
-    node_version: v0.8.x
