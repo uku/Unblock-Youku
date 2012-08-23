@@ -28,14 +28,16 @@ var url_list = require('./shared/urls');
 var shared_tools = require('./shared/tools');
 
 
-var server_addr, server_port;
+var server_addr, server_port, to_proxy;
 // appfog's documents and online sample codes are horrible
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
+    to_proxy = false;
 } else {
     server_addr = '127.0.0.1';
     server_port = 8080;
+    to_proxy = true;
 }
 
 
@@ -58,14 +60,12 @@ function get_real_target(req_path) {
     // the 'path' in proxy requests should always start with http
     if (req_path.startsWith('http')) {
         real_target = url.parse(req_path);
-        real_target.is_proxy = true;
     } else {
         var real_url = querystring.parse(url.parse(req_path).query).url;
         if (real_url) {
             var buf = new Buffer(real_url, 'base64');
             real_url = buf.toString();
             real_target = url.parse(real_url);
-            real_target.is_proxy = false;
         }
     }
     if (!real_target.port) {
@@ -137,7 +137,7 @@ if (cluster.isMaster) {
                 method: request.method,
                 headers: request.headers
             };
-        } else if (target.is_proxy) {
+        } else if (to_proxy) {
             // serve as a normal proxy
             if (request.headers['proxy-connection']) {
                 request.headers['connection'] = request.headers['proxy-connection'];
