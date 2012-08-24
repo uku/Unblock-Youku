@@ -24,6 +24,7 @@
 function setup_proxy() {
     console.log('to set up proxy');
     var proxy_addr = new_sogou_proxy_addr();
+    console.log('using proxy: ' + proxy_addr);
     var pac_data = url2pac(unblock_youku.normal_url_list, proxy_addr + ':80');
     // console.log(pac_data);
 
@@ -41,8 +42,29 @@ function setup_proxy() {
         },
         function () {}
     );
-
     console.log('proxy is set');
+
+    console.log('to check if the proxy server is avaiable');
+    var xhr = new XMLHttpRequest();
+    //xhr.open('GET', 'http://httpbin.org/delay/3');
+    xhr.open('GET', 'http://' + proxy_addr);
+    xhr.timeout = 5000;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            clearTimeout(xhr_timer);
+        }
+    };
+    xhr.onerror = function(err) {
+        console.log(err);
+    }
+    xhr.send();
+
+    // test timeout
+    var xhr_timer = setTimeout(function() {
+        xhr.abort();
+        console.error(proxy_addr + ' timeout!');
+        setup_proxy(); // simply set up again
+    }, 5000);
 }
 
 function clear_proxy() {
