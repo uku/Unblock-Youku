@@ -25,22 +25,23 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 
 unblock_youku.url_list = [
+    'http://v.youku.com/player/*',
+    'http://v2.tudou.com/*',
+    'http://s.plcloud.music.qq.com/*',
+
     'http://hot.vrs.sohu.com/*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
     'http://vv.video.qq.com/*',
     'http://geo.js.kankan.xunlei.com/*',
-    'http://v2.tudou.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
     'http://dyn.ugc.pps.tv/*',
-    'http://s.plcloud.music.qq.com/*',
     'http://inner.kandian.com/*',
     'http://ipservice.163.com/*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
 
-    'http://v.youku.com/player/*',
     'http://v.iask.com/v_play.php*',
     //'http://v.iask.com/v_play_ipad.cx.php*',
     'http://int.dpool.sina.com.cn/iplookup*',
