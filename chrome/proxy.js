@@ -46,16 +46,16 @@ function setup_proxy() {
 
     console.log('to check if the proxy server is avaiable');
     var xhr = new XMLHttpRequest();
-    //xhr.open('GET', 'http://httpbin.org/delay/3');
+    //xhr.open('GET', 'http://httpbin.org/delay/13');
     xhr.open('GET', 'http://' + proxy_addr);
-    xhr.timeout = 5000;
+    xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             clearTimeout(xhr_timer);
         }
     };
     xhr.onerror = function(err) {
-        console.log(err);
+        console.error(err);
     }
     xhr.send();
 
@@ -64,7 +64,7 @@ function setup_proxy() {
         xhr.abort();
         console.error(proxy_addr + ' timeout!');
         setup_proxy(); // simply set up again
-    }, 5000);
+    }, 10000);  // 10s
 }
 
 function clear_proxy() {
