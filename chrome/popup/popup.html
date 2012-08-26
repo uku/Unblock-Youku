@@ -12,43 +12,39 @@
     <body>
         <div class="wrapper">
             <div id="setting">
-                <div>
-                    <strong>运行模式选择：</strong>
-                </div>
-                <div class="btn-group" data-toggle="buttons-radio" id="buttons">
-                    <button class="btn" id="lite">精简模式</button>
-                    <button class="btn" id="normal">普通模式</button>
-                    <button class="btn" id="redirect">转发模式</button>
-                </div>
+				<div>
+					<div id="mode_select"><strong></strong></div>
+					<div class="btn-group-wrapper">
+						<div class="btn-group" data-toggle="buttons-radio" id="buttons">
+							<button class="btn mode_lite" id="lite"></button>
+							<button class="btn mode_normal" id="normal"></button>
+							<button class="btn mode_redirect" id="redirect"></button>
+						</div>
+					</div>
+				</div>
                 <div id="setting-description">
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td>精简模式</td>
-                                <td>速度最快，但只对<abbr title="优酷、虾米、酷六、迅雷看看">优酷、虾米等个别网站</abbr>起效</td>
+                                <td class="mode_lite"></td>
+                                <td id="mode_lite_description"></td>
                             </tr>
                             <tr>
-                                <td>普通模式</td>
-                                <td>速度适中，支持网站数量最多，推荐使用</td>
+                                <td class="mode_normal"></td>
+                                <td id="mode_normal_description"></td>
                             </tr>
                             <tr>
-                                <td class="bottom-row">转发模式</td>
-                                <td class="bottom-row">速度非常慢...但可以与系统代理设置同时使用</td>
+                                <td class="mode_redirect bottom-row"></td>
+                                <td class="bottom-row" id="mode_redirect_description"></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="text-block">
-                        关于不同模式的详细介绍，请<a href="http://bit.ly/unblock-youku-modes" target="_blank">点击这里查看</a>
-                    </div>
+                    <div class="text-block" id="help"></div>
                 </div>
-                <div class="text-block" id="feedback">
-                    如遇到问题或有任何建议，欢迎<a href="mailto:unblock-youku@zhuzhu.org" target="_blank">联系我们</a>
-                </div>    
-                <div class="text-block" id="rating">
-                    如您觉得这个扩展好用，请<a href="https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews" target="_blank">帮我们打分</a>
-                </div>
+                <div class="text-block" id="feedback"></div>    
+                <div class="text-block" id="rating"></div>
                 <div class="text-block" id="sharing">
-                    <span>欢迎分享至</span>
+                    <span></span>
                     <span class="icon">
                         <a href="http://service.weibo.com/share/share.php?url=https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/details" target="_blank">
                             <img src="img/weibo.jpg" alt="" />

@@ -32,10 +32,14 @@ body {
     padding: 10px;
 }
 
+.btn-group-wrapper {
+	text-align: center;
+}
+
 #buttons {
     margin: 18px auto;
-    width: 18em;
     clear: both;
+	display: inline-block;
 }
 
 .bottom-row {
