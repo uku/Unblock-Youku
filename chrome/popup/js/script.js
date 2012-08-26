@@ -20,8 +20,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+function init() {
+  setText();
+}
+
+function setText() {
+	var getMsg = chrome.i18n.getMessage;
+	$('#mode_select strong').html(getMsg('mode_select'));
+	$('.mode_lite').html(getMsg('mode_lite'));
+	$('.mode_normal').html(getMsg('mode_normal'));
+	$('.mode_redirect').html(getMsg('mode_redirect'));
+	$('#mode_lite_description').html(getMsg('mode_lite_description'));
+	$('#mode_normal_description').html(getMsg('mode_normal_description'));
+	$('#mode_redirect_description').html(getMsg('mode_redirect_description'));
+	$('#help').html(getMsg('help'));
+	$('#feedback').html(getMsg('feedback'));
+	$('#rating').html(getMsg('rating'));
+	$('#sharing span:first-child').html(getMsg('sharing'));
+}
 
 $(document).ready(function() {
+	init();
     var background = chrome.extension.getBackgroundPage();
 
 
@@ -52,6 +71,12 @@ $(document).ready(function() {
         background.change_mode('redirect');
         console.log('changed mode to redirect');
     });
+	
+	// change language
+	$('#language_select').click(function() {
+		setLanguage();
+		console.log('change language to '+$(this).val());
+	});
 
 
     var my_date = new Date();

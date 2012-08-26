@@ -32,5 +32,6 @@
     "default_icon": "chrome/icons/icon19.png",
     "default_popup": "chrome/popup/popup.html"
   },
+  "default_locale": "zh_CN",
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
