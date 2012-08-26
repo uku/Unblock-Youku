@@ -20,9 +20,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-function init() {
-  setText();
-}
 
 function setText() {
 	var getMsg = chrome.i18n.getMessage;
@@ -39,10 +36,12 @@ function setText() {
 	$('#sharing span:first-child').html(getMsg('sharing'));
 }
 
-$(document).ready(function() {
-	init();
-    var background = chrome.extension.getBackgroundPage();
 
+$(document).ready(function() {
+    setText();
+
+
+    var background = chrome.extension.getBackgroundPage();
 
     // set default button display
     switch (background.get_current_mode()) {
