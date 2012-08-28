@@ -24,15 +24,15 @@
 		"message": "Even in case of extremely slow access speed、you can still use system proxy server"
 	},
 	"help": {
-		"message": "各モードの説明に関して、<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">こちらをクリックしてご覧ください</a>"
+		"message": "If you need help with any of the above modes, please click <a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">here</a> and have a look."
 	},
 	"feedback": {
-		"message": "もし質問やアドバイスがありましたら、<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">いつでもご連絡ください</a>"
+		"message": "If you have any questions or need advise、<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">don't hesitate to contact us at any time</a>"
 	},
 	"rating": {
-		"message": "このプラグインが役に立つと思われたら、<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">点数をお願い致します</a>"
+		"message": "If you find this plugin helpful、<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">please rate it.</a>"
 	},
 	"sharing": {
-		"message": "共有へようこそ"
+		"message": "You're welcome to share it"
 	}
 }
