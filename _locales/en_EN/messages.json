@@ -1,27 +1,27 @@
 {
 	"popup_title": {
-		"message": "Unblock Youku 設定"
+		"message": "Configure Unblock Youku"
 	},
 	"mode_select": {
-		"message": "動作モードを選択"
+		"message": "Select action mode"
 	},
 	"mode_lite": {
-		"message": "コンパクトモード"
+		"message": "Compact mode"
 	},
 	"mode_normal": {
-		"message": "通常モード"
+		"message": "Normal mode"
 	},
 	"mode_redirect": {
-		"message": "フォワードモード"
+		"message": "Forward mode"
 	},
 	"mode_lite_description": {
-		"message": "アクセススピードが最も速いが、<abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>など少数のサイトに限定"
+		"message": "Even in case of fast access speed、<abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>etc. limit to a minority of websites"
 	},
 	"mode_normal_description": {
-		"message": "アクセススピードが安定で、流暢に見られるサイトも最も多い。おすすめ"
+		"message": "Since access speed is stable, most websites are easy to browse. We recommend it."
 	},
 	"mode_redirect_description": {
-		"message": "アクセススピードが非常に遅いが、システムプロキシーサーバーと同時に使える"
+		"message": "Even in case of extremely slow access speed、you can still use system proxy server"
 	},
 	"help": {
 		"message": "各モードの説明に関して、<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">こちらをクリックしてご覧ください</a>"
