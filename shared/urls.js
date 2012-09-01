@@ -29,7 +29,8 @@ unblock_youku.url_list = [
     'http://v2.tudou.com/*',
     'http://s.plcloud.music.qq.com/*',
 
-    'http://hot.vrs.sohu.com/*',
+    'http://ting.baidu.com/data/music/songlink*',
+	'http://hot.vrs.sohu.com/*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
     'http://vv.video.qq.com/*',
