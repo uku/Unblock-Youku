@@ -30,6 +30,7 @@ unblock_youku.url_list = [
     'http://s.plcloud.music.qq.com/*',
 
     'http://ting.baidu.com/data/music/songlink*',
+    'http://ting.baidu.com/song/*/download',
     'http://hot.vrs.sohu.com/*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
