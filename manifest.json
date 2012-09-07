@@ -30,8 +30,9 @@
   "browser_action": {
     "default_title": "Unblock Youku",
     "default_icon": "chrome/icons/icon19.png",
-    "default_popup": "chrome/popup/popup.html"
+    "default_popup": "chrome/pages/popup.html"
   },
+  "options_page": "chrome/pages/options.html",
   "default_locale": "zh_CN",
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
