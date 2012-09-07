@@ -25,7 +25,10 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
-    'http://shop.xunlei.com/*',
+    //'http://shop.xunlei.com/*',
+    'http://ting.baidu.com/data/music/songlink*',
+    'http://ting.baidu.com/data/music/songinfo*',
+    'http://ting.baidu.com/song/*/download*',
     'http://*.gougou.com/*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;

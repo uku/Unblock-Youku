@@ -28,12 +28,10 @@ unblock_youku.url_list = [
     'http://v.youku.com/player/*',
     'http://v2.tudou.com/*',
     'http://s.plcloud.music.qq.com/*',
-
-    'http://ting.baidu.com/data/music/songlink*',
-    'http://ting.baidu.com/song/*/download',
     'http://hot.vrs.sohu.com/*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
+
     'http://vv.video.qq.com/*',
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
@@ -44,17 +42,16 @@ unblock_youku.url_list = [
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
 
+    'http://music.sina.com.cn/yueku/intro/*',
+    //'http://ting.baidu.com/data/music/songlink*',
+    //'http://ting.baidu.com/data/music/songinfo*',
+    //'http://ting.baidu.com/song/*/download*',
+
     'http://v.iask.com/v_play.php*',
     //'http://v.iask.com/v_play_ipad.cx.php*',
     'http://int.dpool.sina.com.cn/iplookup*',
     'http://kandian.com/player/getEpgInfo*',
-    'http://cdn.kandian.com/*',  // better to remove this later?
-
-    'http://music.sina.com.cn/yueku/intro/*',
-    //'http://down.v.iask.com/*',
-    //'http://*.music.sina.com.cn/*',
-    //'http://*/*.music.sina.com.cn/*',
-    //'http://*/*/*.music.sina.com.cn/*',
+    //'http://cdn.kandian.com/*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
