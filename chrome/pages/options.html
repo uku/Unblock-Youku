@@ -14,15 +14,16 @@
                         <legend>Custom backend server for Redirection Mode</legend>
                         <div class="input-append">
                             <span class="add-on">http://</span>
-                            <input class="input-medium" id="proxy_addr" type="text">
+                            <input class="input-medium" id="custom_server" type="text">
                             <span class="add-on">?url=</span>
                         </div>
                         <div class="form-actions">
-                            <button type="button" class="btn">Reset to Default</button>
-                            <button type="button" class="btn">Test</button>
-                            <button type="button" class="btn">Save</button>
+                            <button type="button" class="btn" id="reset">Reset to Default</button>
+                            <button type="button" class="btn" id="test">Test</button>
+                            <button type="button" class="btn" id="save">Save</button>
                         </div>
                     </form>
+                    <div id="message"></div>
                 </div>
             </div>
         </div>  <!-- container -->

@@ -24,6 +24,9 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 
+unblock_youku.default_server = 'yo.uku.im/proxy.php';  // default backend server for redirect mode
+
+
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',
     'http://ting.baidu.com/data/music/songlink*',
