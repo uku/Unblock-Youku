@@ -51,7 +51,7 @@ function http_redirector(details) {
         return {};
     }
 
-    var backend_server = localStorage.default_server || unblock_youku.default_server;
+    var backend_server = localStorage.custom_server || unblock_youku.default_server;
 
     //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + btoa(details.url);
     //var redirect_url = 'http://uku-test.aws.af.cm/?url=' + btoa(details.url);

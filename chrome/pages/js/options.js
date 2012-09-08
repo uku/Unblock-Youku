@@ -22,9 +22,7 @@
 
 
 var background = chrome.extension.getBackgroundPage();
-console.log(background.unblock_youku.default_server);
 var default_server = background.unblock_youku.default_server;
-console.log(default_server);
 
 
 $('document').ready(function() {
@@ -43,7 +41,7 @@ $('button#reset').click(function() {
 
 $('button#test').click(function() {
     var test_url = 'http://' + $('input#custom_server').val() + '?url=' + btoa('http://ipservice.163.com/isFromMainland');
-    $('#message').html('');
+    $('#message').html('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>Waiting...</div>');
     $.get(test_url, function(data) {
         if (data === 'true') {
             $('#message').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button>Test passed. Please remember to save the new configuration.</div>');
