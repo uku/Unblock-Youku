@@ -36,24 +36,34 @@ $('document').ready(function() {
 $('button#reset').click(function() {
     localStorage.custom_server = default_server;
     $('input#custom_server').val(localStorage.custom_server);
-    $('#message').html('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>Reset to default backend server.</div>');
+    show_message('info', 'Reset to default backend server.');
 });
 
 $('button#test').click(function() {
     var test_url = 'http://' + $('input#custom_server').val() + '?url=' + btoa('http://ipservice.163.com/isFromMainland');
-    $('#message').html('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>Waiting...</div>');
+    show_message('info', 'Waiting...');
     $.get(test_url, function(data) {
         if (data === 'true') {
-            $('#message').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button>Test passed. Please remember to save the new configuration.</div>');
+            show_message('success', 'Test passed. Please remember to save the new configuration.');
         } else {
+            show_message('error', 'Test failed! Perhaps your server isn\'t located in mainland China.');
         }
-    })
-    .error(function() {
-        $('#message').html('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>Test failed! Perhaps the server isn\'t working properly.</div>');
+    }).error(function() {
+        show_message('error', 'Test failed! Perhaps the server isn\'t working properly.');
     });
 });
 
 $('button#save').click(function() {
     localStorage.custom_server = $('input#custom_server').val();
-    $('#message').html('<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button>New configuration is saved.</div>');
+    show_message('info', 'New configuration is saved.');
 });
+
+
+function show_message(type, content) {
+    var alert_type = 'info';
+    if (type === 'success' || type === 'error') {
+        alert_type = type;
+    }
+
+    $('#message').html('<div class="alert alert-' + alert_type + '"><button type="button" class="close" data-dismiss="alert">×</button>' + content + '</div>');
+}
