@@ -1,0 +1,38 @@
+{
+	"popup_title": {
+		"message": "Configure Unblock Youku"
+	},
+	"mode_select": {
+		"message": "Select action mode"
+	},
+	"mode_lite": {
+		"message": "Compact mode"
+	},
+	"mode_normal": {
+		"message": "Normal mode"
+	},
+	"mode_redirect": {
+		"message": "Forward mode"
+	},
+	"mode_lite_description": {
+		"message": "The fastest access speed is limited to websites like <abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>"
+	},
+	"mode_normal_description": {
+		"message": "Since access speed is stable, most websites are easy to browse. We recommend it."
+	},
+	"mode_redirect_description": {
+		"message": "Even in case of extremely slow access speed、you can still use system proxy server"
+	},
+	"help": {
+		"message": "If you need help with any of the above modes, please click <a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">here</a> and have a look."
+	},
+	"feedback": {
+		"message": "If you have any questions or need advise、<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">don't hesitate to contact us at any time</a>"
+	},
+	"rating": {
+		"message": "If you find this plugin helpful、<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">please rate it.</a>"
+	},
+	"sharing": {
+		"message": "You're welcome to share it"
+	}
+}
