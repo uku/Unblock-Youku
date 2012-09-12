@@ -89,7 +89,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         urls: [
             'http://*.xiami.com/*',  // xiami is blocked in HK and TW
             'http://*.ku6.com/*',     // couldn't find ku6's sub-domain for checking ip, but this should already work
-            'http://www.zaobao.com/*'
         ]
     },
 
