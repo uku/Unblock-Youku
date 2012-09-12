@@ -1,0 +1,38 @@
+{
+	"popup_title": {
+		"message": "Configure Unblock Youku"
+	},
+	"mode_select": {
+		"message": "Select Mode"
+	},
+	"mode_lite": {
+		"message": "Lite"
+	},
+	"mode_normal": {
+		"message": "Normal"
+	},
+	"mode_redirect": {
+		"message": "Redirect"
+	},
+	"mode_lite_description": {
+		"message": "Fast, but applicable to only <abbr title=\"Xiami, Ku6 and Xunlei\">few websites</abbr>."
+	},
+	"mode_normal_description": {
+		"message": "Recommended. Applicable to the most websites."
+	},
+	"mode_redirect_description": {
+		"message": "Slow, but compatible with other proxy settings."
+	},
+	"help": {
+		"message": "For more information about different modes, you can <a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">read this</a>."
+	},
+	"feedback": {
+		"message": "If you have any questions, please don't hesitate to <a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">contact us</a>."
+	},
+	"rating": {
+		"message": "If you find this extension helpful, <a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">please help us to rate it.</a>"
+	},
+	"sharing": {
+		"message": "Welcome to share it via"
+	}
+}
