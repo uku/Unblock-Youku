@@ -15,7 +15,7 @@
 		"message": "Forward mode"
 	},
 	"mode_lite_description": {
-		"message": "Even in case of fast access speed、<abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>etc. limit to a minority of websites"
+		"message": "The fastest access speed is limited to websites like <abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>"
 	},
 	"mode_normal_description": {
 		"message": "Since access speed is stable, most websites are easy to browse. We recommend it."
