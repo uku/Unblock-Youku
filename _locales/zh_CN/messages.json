@@ -1,38 +1,41 @@
 {
-	"popup_title": {
-		"message": "Unblock Youku 设置"
-	},
-	"mode_select": {
-		"message": "运行模式选择："
-	},
-	"mode_lite": {
-		"message": "精简模式"
-	},
-	"mode_normal": {
-		"message": "普通模式"
-	},
-	"mode_redirect": {
-		"message": "转发模式"
-	},
-	"mode_lite_description": {
-		"message": "速度最快，但只对<abbr title=\"虾米、酷六、迅雷看看\">虾米等个别网站</abbr>起效"
-	},
-	"mode_normal_description": {
-		"message": "速度适中，支持网站数量最多，推荐使用"
-	},
-	"mode_redirect_description": {
-		"message": "速度非常慢...但可以与系统代理设置同时使用"
-	},
-	"help": {
-		"message": "关于不同模式的详细介绍，请<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">点击这里查看</a>"
-	},
-	"feedback": {
-		"message": "如遇到问题或有任何建议，欢迎<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">联系我们</a>"
-	},
-	"rating": {
-		"message": "如您觉得这个扩展好用，请<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">帮我们打分</a>"
-	},
-	"sharing": {
-		"message": "欢迎分享至"
-	}
+    "description": {
+        "message": "方便浏览优酷、土豆等有非大陆地区访问限制的网站（大陆用户无需安装此扩展）"
+    },
+    "popup_title": {
+	    "message": "Unblock Youku 设置"
+    },
+    "mode_select": {
+        "message": "运行模式选择："
+    },
+    "mode_lite": {
+        "message": "精简模式"
+    },
+    "mode_normal": {
+        "message": "普通模式"
+    },
+    "mode_redirect": {
+        "message": "转发模式"
+    },
+    "mode_lite_description": {
+        "message": "速度最快，但只对<abbr title=\"虾米、酷六、迅雷看看\">虾米等个别网站</abbr>起效"
+    },
+    "mode_normal_description": {
+        "message": "速度适中，支持网站数量最多，推荐使用"
+    },
+    "mode_redirect_description": {
+        "message": "速度非常慢...但可以与系统代理设置同时使用"
+    },
+    "help": {
+        "message": "关于不同模式的详细介绍，请<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">点击这里查看</a>"
+    },
+    "feedback": {
+        "message": "如遇到问题或有任何建议，欢迎<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">联系我们</a>"
+    },
+    "rating": {
+        "message": "如您觉得这个扩展好用，请<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">帮我们打分</a>"
+    },
+    "sharing": {
+        "message": "欢迎分享至"
+    }
 }

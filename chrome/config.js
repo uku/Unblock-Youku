@@ -24,14 +24,26 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 
+unblock_youku.default_server = 'yo.uku.im/proxy.php';  // default backend server for redirect mode
+
+
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',
     'http://ting.baidu.com/data/music/songlink*',
     'http://ting.baidu.com/data/music/songinfo*',
     'http://ting.baidu.com/song/*/download*',
-    'http://*.gougou.com/*'
+    'http://www.songtaste.com/*',
+    'http://songtaste.com/*',
+    'http://*.gougou.com/*',
+    'http://pay.youku.com/buy/redirect.html*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
+
+
+unblock_youku.header_extra_url_list = [
+    'http://*.xiami.com/*',  // xiami is blocked in HK and TW
+    'http://*.ku6.com/*'
+];
 
 
 // ip & id settings

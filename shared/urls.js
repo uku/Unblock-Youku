@@ -46,7 +46,6 @@ unblock_youku.url_list = [
     //'http://ting.baidu.com/data/music/songlink*',
     //'http://ting.baidu.com/data/music/songinfo*',
     //'http://ting.baidu.com/song/*/download*',
-    'http://www.songtaste.com/*',
 
     'http://v.iask.com/v_play.php*',
     //'http://v.iask.com/v_play_ipad.cx.php*',

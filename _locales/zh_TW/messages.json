@@ -1,38 +1,41 @@
 {
-	"popup_title": {
-		"message": "Unblock Youku 設置"
-	},
-	"mode_select": {
-		"message": "運行模式選擇："
-	},
-	"mode_lite": {
-		"message": "精簡模式"
-	},
-	"mode_normal": {
-		"message": "普通模式"
-	},
-	"mode_redirect": {
-		"message": "轉發模式"
-	},
-	"mode_lite_description": {
-		"message": "速度最快，但只對<abbr title=\"蝦米、酷六、迅雷看看\">蝦米等個別網站</abbr>起效"
-	},
-	"mode_normal_description": {
-		"message": "速度適中，支持網站數量最多，推薦使用"
-	},
-	"mode_redirect_description": {
-		"message": "速度非常慢...但可以與系統代理設置同時使用"
-	},
-	"help": {
-		"message": "關於不同模式的詳細介紹，請<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">點擊這裡查看</a>"
-	},
-	"feedback": {
-		"message": "如遇到問題或有任何建議，歡迎<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">聯繫我們</a>"
-	},
-	"rating": {
-		"message": "如您覺得這個擴充程式好用，請<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">幫我們打分</a>"
-	},
-	"sharing": {
-		"message": "歡迎分享至"
-	}
+    "description": {
+        "message": "方便瀏覽優酷、土豆等有非大陸地區訪問限制的網站（大陸用戶無需安裝此擴展）",
+    },
+    "popup_title": {
+        "message": "Unblock Youku 設置"
+    },
+    "mode_select": {
+        "message": "運行模式選擇："
+    },
+    "mode_lite": {
+        "message": "精簡模式"
+    },
+    "mode_normal": {
+        "message": "普通模式"
+    },
+    "mode_redirect": {
+        "message": "轉發模式"
+    },
+    "mode_lite_description": {
+        "message": "速度最快，但只對<abbr title=\"蝦米、酷六、迅雷看看\">蝦米等個別網站</abbr>起效"
+    },
+    "mode_normal_description": {
+        "message": "速度適中，支持網站數量最多，推薦使用"
+    },
+    "mode_redirect_description": {
+        "message": "速度非常慢...但可以與系統代理設置同時使用"
+    },
+    "help": {
+        "message": "關於不同模式的詳細介紹，請<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">點擊這裡查看</a>"
+    },
+    "feedback": {
+        "message": "如遇到問題或有任何建議，歡迎<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">聯繫我們</a>"
+    },
+    "rating": {
+        "message": "如您覺得這個擴充程式好用，請<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">幫我們打分</a>"
+    },
+    "sharing": {
+        "message": "歡迎分享至"
+    }
 }

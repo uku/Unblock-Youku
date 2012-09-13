@@ -1,38 +1,39 @@
 {
-  "name": "Unblock Youku",
-  "version": "2.5.1.3",
-  "manifest_version": 2,
-  "minimum_chrome_version": "18.0",
-  "description": "Let you smoothly surf on many websites blocking visitors outside mainland China.",
-  "icons": { "16": "chrome/icons/icon16.png",
-             "48": "chrome/icons/icon48.png",
-            "128": "chrome/icons/icon128.png"
-  },
-  "permissions": [
-    "proxy",
-    "webRequest",
-    "webRequestBlocking",
-    "cookies",
-    "<all_urls>"
-  ],
-  "background": {
-    "scripts": [
-      "shared/tools.js",
-      "shared/urls.js",
-      "shared/sogou.js",
-      "chrome/config.js",
-      "chrome/header.js",
-      "chrome/proxy.js",
-      "chrome/redirect.js",
-      "chrome/analytics.js"
-    ]
-  },
-  "browser_action": {
-    "default_title": "Unblock Youku",
-    "default_icon": "chrome/icons/icon19.png",
-    "default_popup": "chrome/pages/popup.html"
-  },
-  "options_page": "chrome/pages/options.html",
-  "default_locale": "zh_CN",
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+    "name": "Unblock Youku",
+    "version": "2.5.2.2",
+    "manifest_version": 2,
+    "minimum_chrome_version": "18.0",
+    "description": "__MSG_description__",
+    "icons": {
+        "16": "chrome/icons/icon16.png",
+        "48": "chrome/icons/icon48.png",
+        "128": "chrome/icons/icon128.png"
+    },
+    "permissions": [
+        "proxy",
+        "webRequest",
+        "webRequestBlocking",
+        "cookies",
+        "<all_urls>"
+    ],
+    "background": {
+        "scripts": [
+            "shared/tools.js",
+            "shared/urls.js",
+            "shared/sogou.js",
+            "chrome/config.js",
+            "chrome/header.js",
+            "chrome/proxy.js",
+            "chrome/redirect.js",
+            "chrome/analytics.js"
+        ]
+    },
+    "browser_action": {
+        "default_title": "Unblock Youku",
+        "default_icon": "chrome/icons/icon19.png",
+        "default_popup": "chrome/pages/popup.html"
+    },
+    "options_page": "chrome/pages/options.html",
+    "default_locale": "zh_CN",
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
