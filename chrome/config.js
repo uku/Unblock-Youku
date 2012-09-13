@@ -32,6 +32,7 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://ting.baidu.com/data/music/songlink*',
     'http://ting.baidu.com/data/music/songinfo*',
     'http://ting.baidu.com/song/*/download*',
+    "http://www.songtaste.com/*",
     'http://*.gougou.com/*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
