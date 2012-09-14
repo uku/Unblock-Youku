@@ -9,33 +9,33 @@
         "message": "Seleziona modalità d'azione"
     },
     "mode_lite": {
-        "message": "Modalità compatta"
+        "message": "Compatta"
     },
     "mode_normal": {
-        "message": "Modalità normale"
+        "message": "Normale"
     },
     "mode_redirect": {
-        "message": "Modalità avanzata"
+        "message": "Avanzata"
     },
     "mode_lite_description": {
-        "message": "La velocità massima d'accesso è riservata a siti come <abbr title=\"「蝦米」「酷六」「迅雷」\">「蝦米」</abbr>"
+        "message": "La velocità massima d'accesso è riservata a siti come <abbr title=\"Xiami, Ku6 and Xunlei\">Xiami</abbr>."
     },
     "mode_normal_description": {
         "message": "Se la velocità d'accesso è stabile, la maggior parte dei siti è facilmente navigabile. Raccomandiamo questa opzione."
     },
     "mode_redirect_description": {
-        "message": "In caso di velocità d'accesso estremamente lenta、è comunque possibile usare un server proxy di sistema"
+        "message": "In caso di velocità d'accesso estremamente lenta, è comunque possibile usare un server proxy di sistema."
     },
     "help": {
         "message": "Se desiderate aiuto in una qualsiasi delle modalità sopraelencate, cliccate <a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">qui</a> e date un'occhiata."
     },
     "feedback": {
-        "message": "Se avete domande o avete bisogno di consigli,<a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">non esitate a contattarci in qualunque momento.</a>"
+        "message": "Se avete domande o avete bisogno di consigli, <a href=\"mailto:unblock-youku@zhuzhu.org\" target=\"_blank\">non esitate a contattarci in qualunque momento</a>."
     },
     "rating": {
-        "message": "Se questo plugin vi sembra utile,<a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">dategli un voto.</a>"
+        "message": "Se questo plugin vi sembra utile, <a href=\"https://chrome.google.com/webstore/detail/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">dategli un voto</a>."
     },
     "sharing": {
-        "message": "Se volete condividere Unblock Youku siete i benvenuti."
+        "message": "Se volete condividere Unblock Youku siete i benvenuti.<br />"
     }
 }
