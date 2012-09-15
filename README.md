@@ -28,4 +28,7 @@ The source code for the server part is released under AGPL v3 or (at your option
 
 ##Credits
 
-[Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translation
+[Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian translation
+
+[Chiara De Liberato](http://www.chiaradeliberato.it/) - English translation
+
