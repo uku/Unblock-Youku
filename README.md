@@ -26,7 +26,7 @@ The source code for the Chrome extension and shared libs is released under MIT l
 
 The source code for the server part is released under AGPL v3 or (at your option) any later version.
 
-##Credits
+### Credits
 
 [@whuhacker](https://github.com/whuhacker) - Contributions to many important functionalities and improvements, and Japanese translation
 
