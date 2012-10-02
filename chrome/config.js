@@ -29,6 +29,7 @@ unblock_youku.default_server = 'yo.uku.im/proxy.php';  // default backend server
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',
+    'http://live.video.sina.com.cn/room/*',
     'http://music.baidu.com/data/music/songlink*',
     'http://music.baidu.com/data/music/songinfo*',
     'http://music.baidu.com/song/*/download*',
