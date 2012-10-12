@@ -24,7 +24,7 @@
         "message": "速度适中，支持网站数量最多，推荐使用"
     },
     "mode_redirect_description": {
-        "message": "速度非常慢...但可以与系统代理设置同时使用"
+        "message": "速度较慢，但可以与系统代理设置同时使用"
     },
     "help": {
         "message": "关于不同模式的详细介绍，请<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">点击这里查看</a>"

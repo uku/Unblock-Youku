@@ -14,17 +14,15 @@ This project contains three-fold functionalities.
     
    For more instructions, please see [these examples](http://bit.ly/unblock-youku-proxy).
 
-3. A backend server to support the redirection mode of the Chrome extension.
+3. _A backend server_ to support the redirection mode of the Chrome extension.
 
 ### Disclaimer
 
 Using/installing this software, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
 
-### Licenses
+### License
 
-The source code for the Chrome extension and shared libs is released under MIT license (Bootstrap and jQuery used in the extension popup page are under their own licenses).
-
-The source code for the server part is released under AGPL v3 or (at your option) any later version.
+The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0.html) or (at your option) any later version.
 
 ### Credits
 
