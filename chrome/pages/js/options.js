@@ -24,6 +24,9 @@ var default_server = background.unblock_youku.default_server;
 $('document').ready(function() {
     if (!localStorage.custom_server) {
         localStorage.custom_server = default_server;
+    } else if (localStorage.custom_server === 'yo.uku.im/proxy.php') {
+        // update to new domain name
+        localStorage.custom_server = default_server;
     }
     $('input#custom_server').val(localStorage.custom_server);
 });
