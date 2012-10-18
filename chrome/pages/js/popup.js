@@ -71,7 +71,7 @@ $(document).ready(function() {
 	// change language
 	$('#language_select').click(function() {
 		setLanguage();
-		console.log('change language to '+$(this).val());
+		console.log('change language to ' + $(this).val());
 	});
 
 
