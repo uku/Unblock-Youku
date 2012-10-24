@@ -2,7 +2,7 @@
     "name": "Unblock Youku",
     "version": "2.5.5.2",
     "manifest_version": 2,
-    "minimum_chrome_version": "18.0",
+    "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
     "icons": {
         "16": "chrome/icons/icon16.png",
@@ -14,6 +14,7 @@
         "webRequest",
         "webRequestBlocking",
         "cookies",
+        "storage",
         "<all_urls>"
     ],
     "background": {
@@ -21,6 +22,7 @@
             "shared/tools.js",
             "shared/urls.js",
             "shared/sogou.js",
+            "chrome/storage.js",
             "chrome/config.js",
             "chrome/header.js",
             "chrome/proxy.js",
