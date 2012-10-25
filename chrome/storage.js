@@ -19,24 +19,9 @@
 
 // have to use a callback function
 function get_storage(key, callback) {
-    // a little complicated
     if (chrome.storage) {
         chrome.storage.sync.get(key, function(items) {
-            var value = items[key];
-            if (typeof value === 'undefined') {
-                // preserve the existing settings
-                var local_value = localStorage[key];
-                if (typeof local_value !== 'undefined') {
-                    value = local_value;
-                    chrome.storage.sync.set({key: value}, function() {
-                        callback(value);
-                    });
-                } else {
-                    callback(value);
-                }
-            } else {
-                callback(value);
-            }
+            callback(items[key]);
         });
     } else {
         callback(localStorage[key]);
@@ -52,3 +37,37 @@ function set_storage(key, value, callback) {
         callback();
     }
 }
+
+
+(function migrate_storage(list_keys) {
+    if (!chrome.storage) {
+        return;
+    }
+
+    var old_keys = [];
+    for (var i in list_keys) {
+        var key = list_keys[i];
+        if (typeof localStorage[key] !== 'undefined') {
+            old_keys.push(key);
+        }
+    }
+
+    chrome.storage.sync.get(old_keys, function(items) {
+        var settings = {};
+        for (var i in old_keys) {
+            var key = old_keys[i];
+            if (typeof items[key] === 'undefined') {
+                settings[key] = localStorage[key];
+            }
+        }
+        if (Object.keys(settings).length > 0) {  // learnt from http://goo.gl/uMfJ0
+            chrome.storage.sync.set(settings, function() {
+                console.log('migrated old settings as follows');
+                console.log(settings);
+            });
+        }
+    });
+})(['unblock_youku_mode', 'test']);
+
+
+// also need to add the listener for the case that settings are synced and thus changed in background

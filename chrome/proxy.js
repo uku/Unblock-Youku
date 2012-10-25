@@ -52,13 +52,14 @@ function setup_proxy() {
     };
     xhr.onerror = function(err) {
         console.error(err);
-    }
+    };
     xhr.send();
 
     // test timeout
     var xhr_timer = setTimeout(function() {
         xhr.abort();
         console.error(proxy_addr + ' timeout!');
+        // rewrite this to a non-recursive call?
         setup_proxy(); // simply set up again
     }, 10000);  // 10s
 }

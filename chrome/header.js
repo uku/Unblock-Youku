@@ -38,11 +38,6 @@ function clear_header() {
 function header_modifier(details) {
     var current_mode = get_current_mode();
 
-    if (current_mode !== 'normal' && current_mode !== 'lite') {
-        console.error('something is wrong -- header_modifier is still invoked');
-        return {};
-    }
-
     if (current_mode === 'normal') {
         var timestamp = Math.round(details.timeStamp / 1000).toString(16);
         var tag = compute_sogou_tag(timestamp, details.url);
