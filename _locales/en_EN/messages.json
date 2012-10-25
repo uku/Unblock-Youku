@@ -1,4 +1,8 @@
 {
+        "description": {
+                "message": "Software which enables you to easily browse websites such as Youku、Tudou etc.,
+                if you live outside the Chinese continent and cannot open chinese websites from your browser."
+        },
 	"popup_title": {
 		"message": "Configure Unblock Youku"
 	},
