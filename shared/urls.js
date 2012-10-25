@@ -48,6 +48,8 @@ unblock_youku.url_list = [
     'http://int.dpool.sina.com.cn/iplookup*',
     'http://kandian.com/player/getEpgInfo*',
     //'http://cdn.kandian.com/*',
+    'http://220.181.61.229/*',
+    'http://61.135.183.46/*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
