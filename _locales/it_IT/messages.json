@@ -1,5 +1,9 @@
 {
-	"popup_title": {
+	
+     "description": {
+                "message": "Software per visualizzare in modo semplice siti web come Youku、Tudou ecc.,
+                nornalmente non visualizzabili sui browser al di fuori della Cina."
+     "popup_title": {
 		"message": "Configura Unblock Youku"
 	},
 	"mode_select": {
