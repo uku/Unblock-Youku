@@ -26,7 +26,9 @@ The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0
 
 ## Tanslations
 
-Currently we are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage translations. If you are interested in helping us translating some parts of the extension, or you want the extension to be available in additional languages(s), [please make a request here](https://webtranslateit.com/en/projects/4902-Unblock-Youku/invitation_request).
+We are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage our translations.
+
+If you are interested in helping us translating some parts of the extension, or you want the extension to be available in additional languages(s), [please make a request here](https://webtranslateit.com/en/projects/4902-Unblock-Youku/invitation_request).
 
 [![](https://webtranslateit.com/api/projects/5c5f1fc9841ce33c4e5ec608b59aeecc3bff1511/charts.png)](https://webtranslateit.com/en/projects/4902-Unblock-Youku)
 
