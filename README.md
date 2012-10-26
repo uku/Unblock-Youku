@@ -24,7 +24,7 @@ Using/installing this software, you agree that it is only for study purposes and
 
 The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0.html) or (at your option) any later version.
 
-## Tanslations
+## Translations
 
 We are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage our translations.
 
