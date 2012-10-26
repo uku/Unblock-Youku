@@ -16,15 +16,21 @@ This project contains three-fold functionalities.
 
 3. _A backend server_ to support the redirection mode of the Chrome extension.
 
-### Disclaimer
+## Disclaimer
 
 Using/installing this software, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
 
-### License
+## License
 
 The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0.html) or (at your option) any later version.
 
-### Credits
+## Tanslations
+
+Currently we are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage translations. If you are interested in helping us translating some parts of the extension, or you want the extension to be available in additional languages(s), [please make a request here](https://webtranslateit.com/en/projects/4902-Unblock-Youku/invitation_request).
+
+[![](https://webtranslateit.com/api/projects/5c5f1fc9841ce33c4e5ec608b59aeecc3bff1511/charts.png)](https://webtranslateit.com/en/projects/4902-Unblock-Youku)
+
+## Credits
 
 [@whuhacker](https://github.com/whuhacker) - Contributions to many important functionalities and improvements, and Japanese, German and French translations
 
