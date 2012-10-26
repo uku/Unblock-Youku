@@ -21,7 +21,7 @@
     "message": "速度最快，但只对<abbr title=\"虾米、酷六、迅雷看看\">虾米等个别网站</abbr>起效"
   },
   "mode_normal_description": {
-    "message": "速度适中，支持网站数量最多，推荐使用"
+    "message": "推荐使用。速度适中，支持网站数量最多"
   },
   "mode_redirect_description": {
     "message": "速度较慢，但可以与系统代理设置同时使用"
