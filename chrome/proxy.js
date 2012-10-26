@@ -17,7 +17,17 @@
  */
 
 
-function setup_proxy() {
+function setup_proxy(depth) {  // depth for recursion
+    if (typeof depth === 'undefined') {
+        console.log('1st time to call setup_proxy, set depth to 0');
+        depth = 0;
+    } else if (depth >= 10) {
+        console.log('reached the max retrial times of setup_proxy, simply abort');
+        return;
+    } else {
+        console.log((depth + 1) + 'th time to test proxy servers');
+    }
+
     console.log('to set up proxy');
     var proxy_addr = new_sogou_proxy_addr();
     console.log('using proxy: ' + proxy_addr);
@@ -42,7 +52,7 @@ function setup_proxy() {
 
     console.log('to check if the proxy server is avaiable');
     var xhr = new XMLHttpRequest();
-    //xhr.open('GET', 'http://httpbin.org/delay/13');
+    // xhr.open('GET', 'http://httpbin.org/delay/13');
     xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
@@ -52,14 +62,14 @@ function setup_proxy() {
     };
     xhr.onerror = function(err) {
         console.error(err);
-    }
+    };
     xhr.send();
 
     // test timeout
     var xhr_timer = setTimeout(function() {
         xhr.abort();
         console.error(proxy_addr + ' timeout!');
-        setup_proxy(); // simply set up again
+        setup_proxy(depth + 1); // simply set up again, recursively
     }, 10000);  // 10s
 }
 
