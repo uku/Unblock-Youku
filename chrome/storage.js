@@ -31,7 +31,9 @@ function get_storage(key, callback) {
 
 function set_storage(key, value, callback) {
     if (chrome.storage) {
-        chrome.storage.sync.set({key: value}, callback);
+        var obj = {};
+        obj[key] = value;  // can't just use {key: value}
+        chrome.storage.sync.set(obj, callback);
     } else {
         localStorage[key] = value;
         callback();
@@ -71,3 +73,19 @@ function set_storage(key, value, callback) {
 
 
 // also need to add the listener for the case that settings are synced and thus changed in background
+chrome.storage.onChanged.addListener(function(changes, area) {
+    if (typeof changes.unblock_youku_mode !== 'undefined') {
+        var mode_change = changes.unblock_youku_mode;
+
+        if (typeof mode_change.oldValue !== 'undefined') {
+            console.log('need to clear old settings');
+        }
+
+        if (typeof mode_change.newValue !== 'undefined') {
+            console.log('need to set up new mode');
+        } else {
+            console.log('should never reach here');
+        }
+    }
+});
+

@@ -74,13 +74,13 @@ function set_current_mode(mode_name) {
 function init_current_mode() {
     switch (get_current_mode()) {
     case 'lite':
-        setup_header();
+        setup_lite_header();
         break;
     case 'redirect':
         setup_redirect();
         break;
     case 'normal':
-        setup_header();
+        setup_normal_header();
         setup_proxy();
         break;
     default:
@@ -99,7 +99,7 @@ function change_mode(new_mode) {
     // clear old settings
     switch (old_mode) {
     case 'lite':
-        clear_header();
+        clear_lite_header();
         console.log('cleared settings for lite');
         break;
     case 'redirect':
@@ -108,7 +108,7 @@ function change_mode(new_mode) {
         break;
     case 'normal':
         clear_proxy();
-        clear_header();
+        clear_normal_header();
         console.log('cleared settings for normal');
         break;
     default:
