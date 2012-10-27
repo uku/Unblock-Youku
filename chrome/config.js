@@ -68,7 +68,7 @@ function get_mode_name(callback) {
                 current_mode !== 'lite'    &&
                 current_mode !== 'normal'  &&
                 current_mode !== 'redirect')) {
-            set_current_mode('normal', function() {
+            set_mode_name('normal', function() {
                 callback('normal');
             });
         } else {
