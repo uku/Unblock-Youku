@@ -50,9 +50,6 @@ function setup_proxy() {
             clearTimeout(xhr_timer);
         }
     };
-    xhr.onerror = function(err) {
-        console.warn(err);
-    };
     xhr.send();
 
     // test timeout

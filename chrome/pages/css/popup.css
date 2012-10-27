@@ -59,3 +59,7 @@ body {
 #sharing a:hover {
     text-decoration: none;
 }
+
+#version {
+    text-align: center;
+}

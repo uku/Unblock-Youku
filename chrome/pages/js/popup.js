@@ -20,17 +20,17 @@
 function setText() {
     var getMsg = chrome.i18n.getMessage;
 
-    $('#mode_select strong').html(getMsg('mode_select'));
+    $('div#mode_select strong').html(getMsg('mode_select'));
     $('.mode_lite').html(getMsg('mode_lite'));
     $('.mode_normal').html(getMsg('mode_normal'));
     $('.mode_redirect').html(getMsg('mode_redirect'));
-    $('#mode_lite_description').html(getMsg('mode_lite_description'));
-    $('#mode_normal_description').html(getMsg('mode_normal_description'));
-    $('#mode_redirect_description').html(getMsg('mode_redirect_description'));
-    $('#help').html(getMsg('help'));
-    $('#feedback').html(getMsg('feedback'));
-    $('#rating').html(getMsg('rating'));
-    $('#sharing span:first-child').html(getMsg('sharing'));
+    $('td#mode_lite_description').html(getMsg('mode_lite_description'));
+    $('td#mode_normal_description').html(getMsg('mode_normal_description'));
+    $('td#mode_redirect_description').html(getMsg('mode_redirect_description'));
+    $('div#help').html(getMsg('help'));
+    $('div#feedback').html(getMsg('feedback'));
+    $('div#rating').html(getMsg('rating'));
+    $('div#sharing span:first-child').html(getMsg('sharing'));
 }
 
 
@@ -43,27 +43,29 @@ $(document).ready(function() {
     background.get_mode_name(function(current_mode_name) {
         switch (current_mode_name) {
             case 'lite':
-                $('#lite').addClass('active');
+                $('button#lite').addClass('active');
                 break;
             case 'redirect':
-                $('#redirect').addClass('active');
+                $('button#redirect').addClass('active');
                 break;
             default:
-                $('#normal').addClass('active');
+                $('button#normal').addClass('active');
                 break;
         }
     });
+
+    $('div#version').html('<i class="icon-heart"></i> ' + background.unblock_youku.version);
     
     // button actions
-    $('#lite').click(function() {
+    $('button#lite').click(function() {
         console.log('to change mode to lite');
         background.change_mode('lite');
     });
-    $('#normal').click(function() {
+    $('button#normal').click(function() {
         console.log('to change mode to normal');
         background.change_mode('normal');
     });
-    $('#redirect').click(function() {
+    $('button#redirect').click(function() {
         console.log('to change mode to redirect');
         background.change_mode('redirect');
     });
@@ -72,7 +74,7 @@ $(document).ready(function() {
     if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();
     } else if (my_date.getTime() > localStorage.first_time + 1000 * 60 * 60 * 24 * 3) {
-        $('#rating').show(); // delay 3 days for the rating div to show up, hahaha
+        $('div#rating').show(); // delay 3 days for the rating div to show up, hahaha
     }
 });
 
