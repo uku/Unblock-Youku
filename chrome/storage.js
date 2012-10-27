@@ -56,18 +56,5 @@ function set_storage(key, value, callback) {
             });
         }
     });
-})(['unblock_youku_mode', 'test']);
-
-
-// also need to add the listener for the case that settings are synced and thus changed in background
-chrome.storage.onChanged.addListener(function(changes, area) {
-    if (typeof changes.unblock_youku_mode !== 'undefined') {
-        var mode_change = changes.unblock_youku_mode;
-
-        if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
-            console.log('need to clear old settings');
-            console.log('need to set up new mode');
-        }
-    }
-});
+})(['unblock_youku_mode', 'custom_server', 'test']);
 

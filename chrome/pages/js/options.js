@@ -21,19 +21,27 @@ var background = chrome.extension.getBackgroundPage();
 var default_server = background.unblock_youku.default_server;
 
 
+function set_custom_server(server_addr) {
+    localStorage.custom_server = server_addr;
+    background.set_storage('custom_server', server_addr, function() {
+        // can the callback function use the variable server_addr?
+        console.log('custom_server has been changed to ' + server_addr);
+    });
+}
+
+
 $('document').ready(function() {
-    if (!localStorage.custom_server) {
-        localStorage.custom_server = default_server;
+    if (typeof localStorage.custom_server === 'undefined') {
+        set_custom_server(default_server);
     } else if (localStorage.custom_server === 'yo.uku.im/proxy.php') {
-        // update to new domain name
-        localStorage.custom_server = default_server;
+        set_custom_server(default_server);
     }
     $('input#custom_server').val(localStorage.custom_server);
 });
 
 
 $('button#reset').click(function() {
-    localStorage.custom_server = default_server;
+    set_custom_server(default_server);
     $('input#custom_server').val(localStorage.custom_server);
     show_message('info', 'Reset to default backend server.');
 });
@@ -53,7 +61,7 @@ $('button#test').click(function() {
 });
 
 $('button#save').click(function() {
-    localStorage.custom_server = $('input#custom_server').val();
+    set_custom_server($('input#custom_server').val());
     show_message('info', 'New configuration is saved.');
 });
 

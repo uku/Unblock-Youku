@@ -37,50 +37,42 @@ function setText() {
 $(document).ready(function() {
     setText();
 
-
     var background = chrome.extension.getBackgroundPage();
 
     // set default button display
-    switch (background.get_current_mode()) {
-    case 'lite':
-        $('#lite').addClass('active');
-        break;
-    case 'redirect':
-        $('#redirect').addClass('active');
-        break;
-    default:
-        $('#normal').addClass('active');
-        break;
-    }
+    background.get_mode_name(function(current_mode_name) {
+        switch (current_mode_name) {
+            case 'lite':
+                $('#lite').addClass('active');
+                break;
+            case 'redirect':
+                $('#redirect').addClass('active');
+                break;
+            default:
+                $('#normal').addClass('active');
+                break;
+        }
+    });
     
-
     // button actions
     $('#lite').click(function() {
+        console.log('to change mode to lite');
         background.change_mode('lite');
-        console.log('changed mode to lite');
     });
     $('#normal').click(function() {
+        console.log('to change mode to normal');
         background.change_mode('normal');
-        console.log('changed mode to normal');
     });
     $('#redirect').click(function() {
+        console.log('to change mode to redirect');
         background.change_mode('redirect');
-        console.log('changed mode to redirect');
     });
 	
-	// change language
-	$('#language_select').click(function() {
-		setLanguage();
-		console.log('change language to ' + $(this).val());
-	});
-
-
     var my_date = new Date();
-    if (!localStorage.first_time) {
+    if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();
-    } else {
-        if (my_date.getTime() - localStorage.first_time > 1000 * 60 * 60 * 24 * 3)
-            $('#rating').show(); // delay 3 days for the rating div to show up, hahaha
+    } else if (my_date.getTime() > localStorage.first_time + 1000 * 60 * 60 * 24 * 3) {
+        $('#rating').show(); // delay 3 days for the rating div to show up, hahaha
     }
 });
 
