@@ -21,7 +21,7 @@ function setup_lite_header() {
     chrome.webRequest.onBeforeSendHeaders.addListener(
         lite_header_modifier,
         {
-            urls: unblock_youku.normal_url_list
+            urls: unblock_youku.normal_url_list  // the same url list as normal mode
         },
         ['requestHeaders', 'blocking']);
     // addListener ends here

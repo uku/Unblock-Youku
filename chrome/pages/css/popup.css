@@ -62,4 +62,5 @@ body {
 
 #version {
     text-align: center;
+    display: none;
 }
