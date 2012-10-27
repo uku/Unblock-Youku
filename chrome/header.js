@@ -17,51 +17,65 @@
  */
 
 
-function setup_header() {
+function setup_lite_header() {
     chrome.webRequest.onBeforeSendHeaders.addListener(
-        header_modifier,
+        lite_header_modifier,
+        {
+            urls: unblock_youku.normal_url_list  // the same url list as normal mode
+        },
+        ['requestHeaders', 'blocking']);
+    // addListener ends here
+    console.log('lite_header_modifier is set');
+}
+
+function setup_normal_header() {
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        normal_header_modifier,
         {
             urls: unblock_youku.normal_url_list
         },
         ['requestHeaders', 'blocking']);
     // addListener ends here
-    console.log('header_modifier is set');
-}
-
-function clear_header() {
-    // does this work? It's undocumented in Chrome dev docs
-    chrome.webRequest.onBeforeSendHeaders.removeListener(header_modifier);
-    console.log('header_modifier is removed');
+    console.log('normal_header_modifier is set');
 }
 
 
-function header_modifier(details) {
-    var current_mode = get_current_mode();
+function clear_lite_header() {
+    chrome.webRequest.onBeforeSendHeaders.removeListener(lite_header_modifier);
+    console.log('lite_header_modifier is removed');
+}
 
-    if (current_mode !== 'normal' && current_mode !== 'lite') {
-        console.error('something is wrong -- header_modifier is still invoked');
-        return {};
-    }
+function clear_normal_header() {
+    chrome.webRequest.onBeforeSendHeaders.removeListener(normal_header_modifier);
+    console.log('normal_header_modifier is removed');
+}
 
-    if (current_mode === 'normal') {
-        var timestamp = Math.round(details.timeStamp / 1000).toString(16);
-        var tag = compute_sogou_tag(timestamp, details.url);
 
-        console.log('t=' + timestamp + ' h=' + tag + ' ' + details.url);
-
-        details.requestHeaders.push({
-            name: 'X-Sogou-Auth',
-            value: unblock_youku.sogou_auth
-        }, {
-            name: 'X-Sogou-Timestamp',
-            value: timestamp
-        }, {
-            name: 'X-Sogou-Tag',
-            value: tag
-        });
-    }
-    
+function lite_header_modifier(details) {
     details.requestHeaders.push({
+        name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    });
+
+    return {requestHeaders: details.requestHeaders};
+}
+
+function normal_header_modifier(details) {
+    var timestamp = Math.round(details.timeStamp / 1000).toString(16);
+    var tag = compute_sogou_tag(timestamp, details.url);
+
+    console.log('t=' + timestamp + ' h=' + tag + ' ' + details.url);
+
+    details.requestHeaders.push({
+        name: 'X-Sogou-Auth',
+        value: unblock_youku.sogou_auth
+    }, {
+        name: 'X-Sogou-Timestamp',
+        value: timestamp
+    }, {
+        name: 'X-Sogou-Tag',
+        value: tag
+    }, {
         name: 'X-Forwarded-For',
         value: unblock_youku.ip_addr
     });

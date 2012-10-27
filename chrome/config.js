@@ -17,11 +17,10 @@
  */
 
 
+// ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
 
-
 unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // default backend server for redirect mode
-
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',
@@ -36,94 +35,15 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://pay.youku.com/buy/redirect.html*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
-
-
 unblock_youku.header_extra_url_list = [
     'http://*.xiami.com/*',  // xiami is blocked in HK and TW
     'http://*.ku6.com/*'
 ];
 
-
-// ip & id settings
 unblock_youku.ip_addr = new_random_ip();
 console.log('ip addr: ' + unblock_youku.ip_addr);
 unblock_youku.sogou_auth = new_sogou_auth_str();
 console.log('sogou_auth: ' + unblock_youku.sogou_auth);
-
-
-// mode setting functions
-function get_current_mode() {
-    if (!localStorage.unblock_youku_mode || (
-            localStorage.unblock_youku_mode !== 'lite'    &&
-            localStorage.unblock_youku_mode !== 'normal'  &&
-            localStorage.unblock_youku_mode !== 'redirect'))
-        localStorage.unblock_youku_mode = 'normal';
-
-    return localStorage.unblock_youku_mode;
-}
-
-
-function set_current_mode(mode_name) {
-    if (mode_name === 'lite' || mode_name === 'redirect')
-        localStorage.unblock_youku_mode = mode_name;
-    else
-        localStorage.unblock_youku_mode = 'normal';
-}
-
-
-function init_current_mode() {
-    switch (get_current_mode()) {
-    case 'lite':
-        setup_header();
-        break;
-    case 'redirect':
-        setup_redirect();
-        break;
-    case 'normal':
-        setup_header();
-        setup_proxy();
-        break;
-    default:
-        console.log('should never come here');
-        break;
-    }
-    console.log('initialized the settings for the mode: ' + get_current_mode());
-}
-
-
-function change_mode(new_mode) {
-    var old_mode = get_current_mode();
-    if (new_mode === old_mode)
-        return;
-
-    // clear old settings
-    switch (old_mode) {
-    case 'lite':
-        clear_header();
-        console.log('cleared settings for lite');
-        break;
-    case 'redirect':
-        clear_redirect();
-        console.log('cleared settings for redirect');
-        break;
-    case 'normal':
-        clear_proxy();
-        clear_header();
-        console.log('cleared settings for normal');
-        break;
-    default:
-        console.log('should never come here');
-        break;
-    }
-
-    // set up new settings
-    set_current_mode(new_mode);
-    init_current_mode();
-
-    // track mode changes
-    _gaq.push(['_trackEvent', 'Change Mode', old_mode + ' -> ' + new_mode]);
-}
-
 
 (function () {
     var xhr = new XMLHttpRequest();
@@ -137,14 +57,117 @@ function change_mode(new_mode) {
 })();
 
 
-function init_unblock_youku() {
-    init_current_mode();
+// ====== Configuration Functions ======
+function get_mode_name(callback) {
+    if (typeof callback === 'undefined') {
+        console.error('missing callback function in get_mode_name()');
+    }
 
-    _gaq.push(['_trackEvent', 'Init Mode', get_current_mode()]);
-    _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
+    get_storage('unblock_youku_mode', function(current_mode) {
+        if (typeof current_mode === 'undefined' || (
+                current_mode !== 'lite'    &&
+                current_mode !== 'normal'  &&
+                current_mode !== 'redirect')) {
+            set_mode_name('normal', function() {
+                callback('normal');
+            });
+        } else {
+            callback(current_mode);
+        }
+    });
 }
 
+function set_mode_name(mode_name, callback) {
+    if (typeof callback === 'undefined') {
+        console.error('missing callback function in set_mode_name()');
+    }
 
-// set up mode settings when chrome starts
-document.addEventListener("DOMContentLoaded", init_unblock_youku);
+    if (mode_name === 'lite' || mode_name === 'redirect') {
+        set_storage('unblock_youku_mode', mode_name, callback);
+    } else {
+        set_storage('unblock_youku_mode', 'normal', callback);
+    }
+}
+
+function clear_mode_settings(mode_name) {
+    switch (mode_name) {
+    case 'lite':
+        clear_lite_header();
+        console.log('cleared settings for lite');
+        break;
+    case 'redirect':
+        clear_redirect();
+        console.log('cleared settings for redirect');
+        break;
+    case 'normal':
+        clear_proxy();
+        clear_normal_header();
+        console.log('cleared settings for normal');
+        break;
+    default:
+        console.error('should never come here');
+        break;
+    }
+
+    console.log('cleared the settings for the mode: ' + mode_name);
+}
+
+function setup_mode_settings(mode_name) {
+    switch (mode_name) {
+    case 'lite':
+        setup_lite_header();
+        break;
+    case 'redirect':
+        setup_redirect();
+        break;
+    case 'normal':
+        setup_normal_header();
+        setup_proxy();
+        break;
+    default:
+        console.error('should never come here');
+        break;
+    }
+
+    console.log('initialized the settings for the mode: ' + mode_name);
+}
+
+function change_mode(new_mode_name) {
+    set_mode_name(new_mode_name, function() {});
+    // the storage change listener would take care about the setting changes
+}
+
+// in case settings are changed (or synced) in background
+chrome.storage.onChanged.addListener(function(changes, area) {
+    if (typeof changes.unblock_youku_mode !== 'undefined') {
+        var mode_change = changes.unblock_youku_mode;
+
+        // doesn't run if it's first time to migrate the old settings
+        if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
+            clear_mode_settings(mode_change.oldValue);
+            setup_mode_settings(mode_change.newValue);
+            _gaq.push(['_trackEvent', 'Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue]);
+        }
+    }
+
+    if (typeof changes.custom_server !== 'undefined') {
+        var server_change = changes.custom_server;
+        
+        if (typeof server_change.newValue !== 'undefined') {
+            // have to use a localStorage cache for using in the blocking webRequest listener
+            localStorage.custom_server = server_change.newValue;
+        }
+    }
+});
+
+
+// ====== Initialization ======
+document.addEventListener("DOMContentLoaded", function() {
+    get_mode_name(function(current_mode_name) {
+        setup_mode_settings(current_mode_name);
+
+        _gaq.push(['_trackEvent', 'Init Mode', current_mode_name]);
+        _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
+    });
+});
 

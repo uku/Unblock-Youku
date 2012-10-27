@@ -36,11 +36,6 @@ function clear_redirect() {
 
 
 function http_redirector(details) {
-    if (get_current_mode() !== 'redirect') {
-        console.error('something is wrong: http_redirector is still invoked');
-        return {};
-    }
-
     console.log('original url: ' + details.url);
     if (details.url.slice(-15) === 'crossdomain.xml') {
         console.log('directly pass');

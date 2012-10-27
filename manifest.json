@@ -14,6 +14,7 @@
         "webRequest",
         "webRequestBlocking",
         "cookies",
+        "storage",
         "<all_urls>"
     ],
     "background": {
@@ -21,6 +22,7 @@
             "shared/tools.js",
             "shared/urls.js",
             "shared/sogou.js",
+            "chrome/storage.js",
             "chrome/config.js",
             "chrome/header.js",
             "chrome/proxy.js",

@@ -60,16 +60,19 @@ function setup_proxy(depth) {  // depth for recursion
             clearTimeout(xhr_timer);
         }
     };
-    xhr.onerror = function(err) {
-        console.error(err);
-    };
     xhr.send();
 
     // test timeout
     var xhr_timer = setTimeout(function() {
         xhr.abort();
-        console.error(proxy_addr + ' timeout!');
-        setup_proxy(depth + 1); // simply set up again, recursively
+        console.warn(proxy_addr + ' timeout!');
+        get_mode_name(function(current_mode_name) {
+            if (current_mode_name === 'normal') {
+                setup_proxy(depth + 1); // simply set up again
+            } else {
+                console.warn('not in normal mode anymore, so abort the retrial');
+            }
+        });
     }, 10000);  // 10s
 }
 
