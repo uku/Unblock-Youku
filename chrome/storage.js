@@ -19,33 +19,20 @@
 
 // have to use a callback function
 function get_storage(key, callback) {
-    if (chrome.storage) {
-        chrome.storage.sync.get(key, function(items) {
-            callback(items[key]);
-        });
-    } else {
-        callback(localStorage[key]);
-    }
+    chrome.storage.sync.get(key, function(items) {
+        callback(items[key]);
+    });
 }
 
 
 function set_storage(key, value, callback) {
-    if (chrome.storage) {
-        var obj = {};
-        obj[key] = value;  // can't just use {key: value}
-        chrome.storage.sync.set(obj, callback);
-    } else {
-        localStorage[key] = value;
-        callback();
-    }
+    var obj = {};
+    obj[key] = value;  // can't just use {key: value}
+    chrome.storage.sync.set(obj, callback);
 }
 
 
 (function migrate_storage(list_keys) {
-    if (!chrome.storage) {
-        return;
-    }
-
     var old_keys = [];
     for (var i in list_keys) {
         var key = list_keys[i];
@@ -77,14 +64,9 @@ chrome.storage.onChanged.addListener(function(changes, area) {
     if (typeof changes.unblock_youku_mode !== 'undefined') {
         var mode_change = changes.unblock_youku_mode;
 
-        if (typeof mode_change.oldValue !== 'undefined') {
+        if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
             console.log('need to clear old settings');
-        }
-
-        if (typeof mode_change.newValue !== 'undefined') {
             console.log('need to set up new mode');
-        } else {
-            console.log('should never reach here');
         }
     }
 });
