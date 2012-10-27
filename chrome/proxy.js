@@ -42,7 +42,7 @@ function setup_proxy() {
 
     console.log('to check if the proxy server is avaiable');
     var xhr = new XMLHttpRequest();
-    //xhr.open('GET', 'http://httpbin.org/delay/13');
+    // xhr.open('GET', 'http://httpbin.org/delay/13');
     xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
@@ -51,16 +51,21 @@ function setup_proxy() {
         }
     };
     xhr.onerror = function(err) {
-        console.error(err);
+        console.warn(err);
     };
     xhr.send();
 
     // test timeout
     var xhr_timer = setTimeout(function() {
         xhr.abort();
-        console.error(proxy_addr + ' timeout!');
-        // rewrite this to a non-recursive call?
-        setup_proxy(); // simply set up again
+        console.warn(proxy_addr + ' timeout!');
+        get_mode_name(function(current_mode_name) {
+            if (current_mode_name === 'normal') {
+                setup_proxy(); // simply set up again
+            } else {
+                console.warn('not in normal mode anymore, so abort the retrial');
+            }
+        });
     }, 10000);  // 10s
 }
 
