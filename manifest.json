@@ -2,7 +2,7 @@
     "name": "Unblock Youku",
     "version": "2.5.6.1",
     "manifest_version": 2,
-    "minimum_chrome_version": "20.0",
+    "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
     "icons": {
         "16": "chrome/icons/icon16.png",
