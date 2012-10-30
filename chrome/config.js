@@ -32,7 +32,8 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://songtaste.com/*',
     'http://*.gougou.com/*',
     'http://www.yyets.com/*',
-    'http://pay.youku.com/buy/redirect.html*'
+    'http://pay.youku.com/buy/redirect.html*',
+    'http://v.pptv.com/show/*.html'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
 unblock_youku.header_extra_url_list = [
