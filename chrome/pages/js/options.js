@@ -21,29 +21,44 @@ var background = chrome.extension.getBackgroundPage();
 var default_server = background.unblock_youku.default_server;
 
 
-function set_custom_server(server_addr) {
-    localStorage.custom_server = server_addr;
-    background.set_storage('custom_server', server_addr, function() {
-        // can the callback function use the variable server_addr?
-        console.log('custom_server has been changed to ' + server_addr);
+function get_custom_server(callback) {
+    background.get_storage('custom_server', function(server_addr) {
+        if (typeof server_addr === 'undefined') {
+            callback(default_server);
+        } else {
+            callback(server_addr);
+        }
     });
+}
+
+function set_custom_server(server_addr, callback) {
+    if (server_addr === 'yo.uku.im/proxy.php' || server_addr === 'www.yōukù.com/proxy.php') {
+        remove_custom_server(callback);
+    } else {
+        // chrome.storage.sync.onChange listener will change localStorage as well
+        // localStorage.custom_server = server_addr;
+        background.set_storage('custom_server', server_addr, callback);
+    }
+}
+
+function remove_custom_server(callback) {
+    // localStorage.removeItem('custom_server');
+    background.remove_storage('custom_server', callback);
 }
 
 
 $('document').ready(function() {
-    if (typeof localStorage.custom_server === 'undefined') {
-        set_custom_server(default_server);
-    } else if (localStorage.custom_server === 'yo.uku.im/proxy.php') {
-        set_custom_server(default_server);
-    }
-    $('input#custom_server').val(localStorage.custom_server);
+    get_custom_server(function(server_addr) {
+        $('input#custom_server').val(server_addr);
+    });
 });
 
 
 $('button#reset').click(function() {
-    set_custom_server(default_server);
-    $('input#custom_server').val(localStorage.custom_server);
-    show_message('info', 'Reset to default backend server.');
+    remove_custom_server(function() {
+        $('input#custom_server').val(default_server);
+        show_message('info', 'Reset to default backend server.');
+    });
 });
 
 $('button#test').click(function() {
@@ -61,8 +76,9 @@ $('button#test').click(function() {
 });
 
 $('button#save').click(function() {
-    set_custom_server($('input#custom_server').val());
-    show_message('info', 'New configuration is saved.');
+    set_custom_server($('input#custom_server').val(), function() {
+        show_message('info', 'New configuration is saved.');
+    });
 });
 
 

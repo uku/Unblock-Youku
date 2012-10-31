@@ -21,6 +21,15 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // default backend server for redirect mode
+(function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://www.yōukù.com/favicon.ico', true);
+    xhr.onerror = function() {
+        unblock_youku.default_server = 'yo.uku.im/proxy.php';  // backup
+        console.warn('changed redirection server to yo.uku.im');
+    };
+    xhr.send();
+})();
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',
@@ -141,6 +150,9 @@ function change_mode(new_mode_name) {
 
 // in case settings are changed (or synced) in background
 chrome.storage.onChanged.addListener(function(changes, area) {
+    console.log('storage changes:');
+    console.log(changes);
+
     if (typeof changes.unblock_youku_mode !== 'undefined') {
         var mode_change = changes.unblock_youku_mode;
 
@@ -158,6 +170,8 @@ chrome.storage.onChanged.addListener(function(changes, area) {
         if (typeof server_change.newValue !== 'undefined') {
             // have to use a localStorage cache for using in the blocking webRequest listener
             localStorage.custom_server = server_change.newValue;
+        } else {
+            localStorage.removeItem('custom_server');
         }
     }
 });

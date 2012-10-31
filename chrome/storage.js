@@ -32,6 +32,11 @@ function set_storage(key, value, callback) {
 }
 
 
+function remove_storage(key, callback) {
+    chrome.storage.sync.remove(key, callback);
+}
+
+
 (function migrate_storage(list_keys) {
     var old_keys = [];
     for (var i in list_keys) {

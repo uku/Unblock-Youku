@@ -46,7 +46,7 @@ function setup_proxy(depth) {  // depth for recursion
             value: proxy_config,
             scope: 'regular'
         },
-        function () {}
+        function() {}
     );
     console.log('proxy is set');
 
