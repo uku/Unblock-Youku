@@ -13,7 +13,6 @@
         "proxy",
         "webRequest",
         "webRequestBlocking",
-        "cookies",
         "storage",
         "<all_urls>"
     ],
