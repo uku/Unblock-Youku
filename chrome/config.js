@@ -20,16 +20,8 @@
 // ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
 
-unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // default backend server for redirect mode
-(function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://www.yōukù.com/favicon.ico', true);
-    xhr.onerror = function() {
-        unblock_youku.default_server = 'yo.uku.im/proxy.php';  // backup
-        console.warn('changed redirection server to yo.uku.im');
-    };
-    xhr.send();
-})();
+unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // only for redirection mode
+unblock_youku.backup_server = 'yo.uku.im/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     //'http://shop.xunlei.com/*',

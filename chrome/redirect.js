@@ -26,6 +26,16 @@ function setup_redirect() {
         ["blocking"]);
     // addListener ends here
     console.log('http_redirector is set');
+
+    var xhr = new XMLHttpRequest();
+    unblock_youku.backend_server = unblock_youku.default_server;
+    xhr.open('GET', 'http://' + unblock_youku.backend_server + '?url=' + btoa('http://ipservice.163.com/isFromMainland'), true);
+    xhr.onerror = function() {
+        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
+        console.warn('changed redirection server to backup_server: ' + unblock_youku.backup_server);
+    };
+    console.log('to test the backend server: ' + unblock_youku.default_server);
+    xhr.send();
 }
 
 
@@ -44,7 +54,7 @@ function http_redirector(details) {
 
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
-        backend_server = unblock_youku.default_server;
+        backend_server = unblock_youku.backend_server;
     } else {
         backend_server = localStorage.custom_server;
     }
