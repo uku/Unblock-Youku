@@ -68,6 +68,28 @@ $(document).ready(function() {
         }
     });
 
+    background.get_storage('support_us', function(option) {
+        if (option === 'yes') {
+            $('#checkbox_support_us').prop('checked', true);
+        } else {
+            $('#checkbox_support_us').prop('checked', false);
+        }
+    });
+
+
+    $('#checkbox_support_us').click(function() {
+        if ($('#checkbox_support_us').prop('checked')) {
+            background.set_storage('support_us', 'yes', function() {
+                console.log('change to support us');
+            });
+        } else {
+            background.set_storage('support_us', 'no', function() {
+                console.log('change to not support us');
+            });
+        }
+    });
+
+    
     // button actions
     $('button#lite').click(function() {
         console.log('to change mode to lite');

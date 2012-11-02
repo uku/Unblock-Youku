@@ -1,5 +1,5 @@
 /*
- * Allow you smoothly surf on many websites blocking non-mainland visitors.
+ * Let you smoothly surf on many websites blocking non-mainland visitors.
  * Copyright (C) 2012 Bo Zhu http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,54 +17,17 @@
  */
 
 
-body {
-    width: 32em;
-    display: block;
-    position: relative;
-}
+chrome.storage.sync.get('support_us', function(items) {
+    if (items.support_us === 'yes') {
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.innerText = "var vglnk = {api_url: '//api.viglink.com/api', key: '0dff9ade2d1125af6c910069b6d6e155'};";
+        document.body.appendChild(s);
 
-.wrapper {
-    margin: 10px;
-    padding: 10px;
-}
-
-.btn-group-wrapper {
-	text-align: center;
-}
-
-#buttons {
-    margin: 15px auto;
-    clear: both;
-	display: inline-block;
-}
-
-.bottom-row {
-    border-bottom: 1px solid #DDDDDD !important;
-}
-
-.text-block {
-    margin-top: 15px;
-    text-align: center;
-}
-
-#rating {
-    display: none;
-}
-
-.icon {
-    vertical-align: text-bottom;
-    margin: 0 1px;
-}
-
-#sharing a:hover {
-    text-decoration: none;
-}
-
-#version {
-    text-align: center;
-    display: none;
-}
-
-div#setting {
-    margin-top: 15px;
-}
+        s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://cdn.viglink.com/api/vglnk.js';
+        document.body.appendChild(s);
+    }
+});

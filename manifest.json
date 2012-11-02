@@ -35,6 +35,20 @@
         "default_popup": "chrome/pages/popup.html"
     },
     "options_page": "chrome/pages/options.html",
+    "content_scripts": [{
+        "matches": ["http://*/*"],
+        "exclude_matches": [
+            "http://*.org/*",
+            "http://*.edu/*",
+            "http://*.edu.hk/*",
+            "http://*.edu.tw/*",
+            "http://*.ac.uk/*",
+            "http://*.ac.jp/*"
+        ],
+        "js": ["chrome/support/links.js"],
+        "run_at": "document_idle",
+        "all_frames": true
+    }],
     "default_locale": "en",
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
