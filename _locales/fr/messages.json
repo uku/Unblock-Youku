@@ -27,13 +27,13 @@
     "message": "Lent, mais compatible avec les autres configurations de proxy."
   },
   "help": {
-    "message": "Pour les informations sur les modes différents en détaillé, vous pouvez <a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">lire celui-ci</a>."
+    "message": "Pour les informations sur les modes différents en détaillé, vous pouvez <a href=\"http://ub.uku.im/modes\" target=\"_blank\">lire celui-ci</a>."
   },
   "feedback": {
     "message": "Si vous avez encore des questions, n'hésitez pas <a href=\"mailto:unblock-youku-popup@zhuzhu.org\" target=\"_blank\">nous contacter</a>."
   },
   "rating": {
-    "message": "Si vous trouvez cette extension utile, <a href=\"https://chrome.google.com/webstore/detail/unblock-youku/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">veuillez nous aider de donner votre remarques</a>."
+    "message": "Si vous trouvez cette extension utile, <a href=\"http://ub.uku.im/reviews\" target=\"_blank\">veuillez nous aider de donner votre remarques</a>."
   },
   "sharing": {
     "message": "Soyez bienvenu de le partager vers"

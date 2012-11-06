@@ -27,13 +27,13 @@
     "message": "速度較慢，但可以與系統代理設置同時使用"
   },
   "help": {
-    "message": "關於不同模式的詳細介紹，<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">請點擊這裡查看</a>"
+    "message": "關於不同模式的詳細介紹，<a href=\"http://ub.uku.im/modes\" target=\"_blank\">請點擊這裡查看</a>"
   },
   "feedback": {
-    "message": "如遇到問題或有任何建議，<a href=\"http://bit.ly/unblock-youku-feedback\" target=\"_blank\">歡迎聯繫我們</a>"
+    "message": "如遇到問題或有任何建議，<a href=\"http://ub.uku.im/feedback\" target=\"_blank\">歡迎聯繫我們</a>"
   },
   "rating": {
-    "message": "如您覺得這個擴充程式好用，<a href=\"https://chrome.google.com/webstore/detail/unblock-youku/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">請幫我們打分</a>"
+    "message": "如您覺得這個擴充程式好用，<a href=\"http://ub.uku.im/reviews\" target=\"_blank\">請幫我們打分</a>"
   },
   "sharing": {
     "message": "歡迎分享至"

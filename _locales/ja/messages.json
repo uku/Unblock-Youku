@@ -27,13 +27,13 @@
     "message": "アクセススピードが非常に遅いが、システムプロキシーサーバーと同時に使える"
   },
   "help": {
-    "message": "各モードの説明に関して、<a href=\"http://bit.ly/unblock-youku-modes\" target=\"_blank\">こちらをクリックしてご覧ください</a>"
+    "message": "各モードの説明に関して、<a href=\"http://ub.uku.im/modes\" target=\"_blank\">こちらをクリックしてご覧ください</a>"
   },
   "feedback": {
     "message": "もし質問やアドバイスがありましたら、<a href=\"mailto:unblock-youku-popup@zhuzhu.org\" target=\"_blank\">いつでもご連絡ください</a>"
   },
   "rating": {
-    "message": "このプラグインが役に立つと思われたら、<a href=\"https://chrome.google.com/webstore/detail/unblock-youku/pdnfnkhpgegpcingjbfihlkjeighnddk/reviews\" target=\"_blank\">点数をお願い致します</a>"
+    "message": "このプラグインが役に立つと思われたら、<a href=\"http://ub.uku.im/reviews\" target=\"_blank\">点数をお願い致します</a>"
   },
   "sharing": {
     "message": "共有へようこそ"
