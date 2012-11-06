@@ -4,7 +4,7 @@ This project contains three-fold functionalities.
 
 1. _A Google Chrome extension_ for smoothly surfing on many websites blocking visitors outside mainland China.
    
-   You can find this extension on Chrome Web Store at [http://bit.ly/unblock-youku](http://bit.ly/unblock-youku)
+   You can find this extension on Chrome Web Store at [http://ub.uku.im/chrome](http://ub.uku.im/chrome)
 
 2. _A local proxy server_ based on the non-blocking [Node.js](http://nodejs.org) for bypassing the mainland restriction _for other browsers such as Firefox and Safari_ (but not guaranteed).
 
@@ -12,7 +12,7 @@ This project contains three-fold functionalities.
     
    2. Set (only) the HTTP proxy of your browser to ```127.0.0.1:8080```
     
-   For more instructions, please see [these examples](http://bit.ly/unblock-youku-proxy).
+   For more instructions, please see [these examples](http://ub.uku.im/proxy).
 
 3. _A backend server_ to support the redirection mode of the Chrome extension.
 
