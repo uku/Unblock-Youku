@@ -163,7 +163,9 @@ chrome.storage.onChanged.addListener(function(changes, area) {
             // have to use a localStorage cache for using in the blocking webRequest listener
             localStorage.custom_server = server_change.newValue;
         } else {
-            localStorage.removeItem('custom_server');
+            if (typeof localStorage.custom_server !== 'undefined') {
+                localStorage.removeItem('custom_server');
+            }
         }
     }
 });
