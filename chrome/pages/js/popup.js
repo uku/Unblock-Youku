@@ -54,7 +54,17 @@ $(document).ready(function() {
         }
     });
 
-    $('div#version').html('<i class="icon-heart"></i> ' + background.unblock_youku.version);
+    // append system info to the wufoo feedback link
+    // such as extension version, chrome version, and os type
+    var locale = navigator.language.substr(0, 2);
+    if (locale === 'en' || locale === 'zh') {
+        // jQuery.browser is not always accurate
+        var system_info = 'Unblock Youku ' + background.unblock_youku.version + ' (' + locale.toUpperCase() + '); ' + navigator.userAgent;
+        console.log(system_info);
+
+        var feedback_url = $('#feedback a');
+        feedback_url.prop('href', feedback_url.prop('href') + '/def/field13=' + encodeURIComponent(system_info));
+    }
     
     // button actions
     $('button#lite').click(function() {
