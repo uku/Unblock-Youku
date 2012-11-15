@@ -94,6 +94,7 @@ $(document).ready(function() {
         }
     });
 
+    // $('div#version').html('<i class="icon-heart"></i> ' + background.unblock_youku.version);
     
     // button actions
     $('button#lite').click(function() {

@@ -43,7 +43,11 @@ body {
 }
 
 .text-block {
+<<<<<<< HEAD
     margin-top: 15px;
+=======
+    margin: 15px 0px;
+>>>>>>> 2feeb7b6a87b142e1e711128e1efb5bc8a4ffceb
     text-align: center;
 }
 
