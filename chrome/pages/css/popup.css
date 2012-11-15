@@ -68,3 +68,11 @@ body {
 div#setting {
     margin-top: 15px;
 }
+
+div#support_checkbox, div#support_message {
+    margin-top: 10px;
+}
+
+div#support_message {
+    line-height: 150%;
+}

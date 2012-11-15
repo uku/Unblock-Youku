@@ -31,6 +31,11 @@ function setText() {
     $('div#feedback').html(getMsg('feedback'));
     $('div#rating').html(getMsg('rating'));
     $('div#sharing span:first-child').html(getMsg('sharing'));
+    
+    $('div#support_title strong').html(getMsg('support_title'));
+    $('div#support_checkbox span').html(getMsg('support_checkbox_label'));
+
+    $('div#support_message').html(getMsg('support_message_no'));
 }
 
 
@@ -70,15 +75,15 @@ $(document).ready(function() {
 
     background.get_storage('support_us', function(option) {
         if (option === 'yes') {
-            $('#checkbox_support_us').prop('checked', true);
+            $('#support_checkbox input').prop('checked', true);
         } else {
-            $('#checkbox_support_us').prop('checked', false);
+            $('#support_checkbox input').prop('checked', false);
         }
     });
 
 
-    $('#checkbox_support_us').click(function() {
-        if ($('#checkbox_support_us').prop('checked')) {
+    $('#support_checkbox input').click(function() {
+        if ($('#support_checkbox input').prop('checked')) {
             background.set_storage('support_us', 'yes', function() {
                 console.log('change to support us');
             });

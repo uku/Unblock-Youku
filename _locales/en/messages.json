@@ -5,8 +5,20 @@
   "popup_title": {
     "message": "Configure Unblock Youku"
   },
+  "support_title": {
+    "message": "We Need Your Support"
+  },
+  "support_checkbox_label": {
+    "message": "Yes, I want to support this software."
+  },
+  "support_message_no": {
+    "message": "You only need to enable this to support us. Nothing else.<br />We are not show ads to annoy you, you don't need to pay us for anything, and we don't want your donation. For more discussions, <a href=\"http://ub.uku.im/viglink\" target=\"_blank\">please visit here</a>."
+  },
+  "support_message_yes": {
+    "message": "Thank you! Your support is highly appricated!"
+  },
   "mode_select": {
-    "message": "Select Mode"
+    "message": "Select Operation Mode"
   },
   "mode_lite": {
     "message": "Lite"
