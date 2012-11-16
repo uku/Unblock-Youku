@@ -47,41 +47,6 @@ function remove_custom_server(callback) {
 }
 
 
-$('document').ready(function() {
-    get_custom_server(function(server_addr) {
-        $('input#custom_server').val(server_addr);
-    });
-});
-
-
-$('button#reset').click(function() {
-    remove_custom_server(function() {
-        $('input#custom_server').val(default_server);
-        show_message('info', 'Reset to default backend server.');
-    });
-});
-
-$('button#test').click(function() {
-    var test_url = 'http://' + $('input#custom_server').val() + '?url=' + btoa('http://ipservice.163.com/isFromMainland');
-    show_message('info', 'Waiting...');
-    $.get(test_url, function(data) {
-        if (data === 'true') {
-            show_message('success', 'Test passed. Please remember to save the new configuration.');
-        } else {
-            show_message('error', 'Test failed! Perhaps your server isn\'t located in mainland China.');
-        }
-    }).error(function() {
-        show_message('error', 'Test failed! Perhaps the server isn\'t working properly.');
-    });
-});
-
-$('button#save').click(function() {
-    set_custom_server($('input#custom_server').val(), function() {
-        show_message('info', 'New configuration is saved.');
-    });
-});
-
-
 function show_message(type, content) {
     var alert_type = 'info';
     if (type === 'success' || type === 'error') {
@@ -90,3 +55,44 @@ function show_message(type, content) {
 
     $('#message').html('<div class="alert alert-' + alert_type + '"><button type="button" class="close" data-dismiss="alert">×</button>' + content + '</div>');
 }
+
+
+$('document').ready(function() {
+    get_custom_server(function(server_addr) {
+        $('input#custom_server').val(server_addr);
+    });
+
+
+    $('button#reset').click(function() {
+        remove_custom_server(function() {
+            $('input#custom_server').val(default_server);
+            show_message('info', 'Reset to default backend server.');
+        });
+    });
+
+    $('button#test').click(function() {
+        var test_url = 'http://' + $('input#custom_server').val() + '?url=' + btoa('http://ipservice.163.com/isFromMainland');
+        show_message('info', 'Waiting...');
+        $.get(test_url, function(data) {
+            if (data === 'true') {
+                show_message('success', 'Test passed. Please remember to save the new configuration.');
+            } else {
+                show_message('error', 'Test failed! Perhaps your server isn\'t located in mainland China.');
+            }
+        }).error(function() {
+            show_message('error', 'Test failed! Perhaps the server isn\'t working properly.');
+        });
+    });
+
+    $('button#save').click(function() {
+        set_custom_server($('input#custom_server').val(), function() {
+            show_message('info', 'New configuration is saved.');
+        });
+    });
+
+
+    $('#form_custom_server').submit(function() {
+        // prevent the default action of submitting a form
+        return false;
+    });
+});
