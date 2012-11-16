@@ -58,6 +58,13 @@ console.log('sogou_auth: ' + unblock_youku.sogou_auth);
     unblock_youku.version = manifest.version;
     console.log('version: ' + unblock_youku.version);
 })();
+// the lastest version to show NEW on the icon; it's usually a big update with new features
+unblock_youku.lastest_new_version = '2.6.0.0';
+get_storage('previous_new_version', function(version) {
+    if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
+        chrome.browserAction.setBadgeText({text: 'NEW'});
+    }
+});
 
 
 // ====== Configuration Functions ======
@@ -178,6 +185,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         _gaq.push(['_trackEvent', 'Init Mode', current_mode_name]);
         _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
+
+        get_storage('support_us', function(option) {
+            if (option === 'yes') {
+                _gaq.push(['_trackEvent', 'Init Support', 'Yes']);
+            } else {
+                _gaq.push(['_trackEvent', 'Init Support', 'No']);
+            }
+        });
     });
 });
 
