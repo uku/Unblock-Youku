@@ -17,30 +17,28 @@
  */
 
 
-function setText() {
-    var getMsg = chrome.i18n.getMessage;
+function set_i18n_text() {
+    var get_msg = chrome.i18n.getMessage;
 
-    $('div#mode_select strong').html(getMsg('mode_select'));
-    $('.mode_lite').html(getMsg('mode_lite'));
-    $('.mode_normal').html(getMsg('mode_normal'));
-    $('.mode_redirect').html(getMsg('mode_redirect'));
-    $('td#mode_lite_description').html(getMsg('mode_lite_description'));
-    $('td#mode_normal_description').html(getMsg('mode_normal_description'));
-    $('td#mode_redirect_description').html(getMsg('mode_redirect_description'));
-    $('div#help').html(getMsg('help'));
-    $('div#feedback').html(getMsg('feedback'));
-    $('div#rating').html(getMsg('rating'));
-    $('div#sharing span:first-child').html(getMsg('sharing'));
+    $('div#mode_select strong').html(get_msg('mode_select'));
+    $('.mode_lite').html(get_msg('mode_lite'));
+    $('.mode_normal').html(get_msg('mode_normal'));
+    $('.mode_redirect').html(get_msg('mode_redirect'));
+    $('td#mode_lite_description').html(get_msg('mode_lite_description'));
+    $('td#mode_normal_description').html(get_msg('mode_normal_description'));
+    $('td#mode_redirect_description').html(get_msg('mode_redirect_description'));
+    $('div#help').html(get_msg('help'));
+    $('div#feedback').html(get_msg('feedback'));
+    $('div#rating').html(get_msg('rating'));
+    $('div#sharing span:first-child').html(get_msg('sharing'));
     
-    $('div#support_title strong').html(getMsg('support_title'));
-    $('div#support_checkbox span').html(getMsg('support_checkbox_label'));
-
-    $('div#support_message').html(getMsg('support_message_no'));
+    $('div#support_title strong').html(get_msg('support_title'));
+    $('div#support_checkbox span').html(get_msg('support_checkbox_label'));
 }
 
 
 $(document).ready(function() {
-    setText();
+    set_i18n_text();
 
     var background = chrome.extension.getBackgroundPage();
 
@@ -73,28 +71,36 @@ $(document).ready(function() {
         }
     });
 
+
+    var pre_heart_icon = '<i class="icon-heart" style="color: PaleVioletRed;"></i>&nbsp;';
+
     background.get_storage('support_us', function(option) {
         if (option === 'yes') {
             $('#support_checkbox input').prop('checked', true);
+            $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
         } else {
             $('#support_checkbox input').prop('checked', false);
+            $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
         }
     });
-
 
     $('#support_checkbox input').click(function() {
         if ($('#support_checkbox input').prop('checked')) {
             background.set_storage('support_us', 'yes', function() {
                 console.log('change to support us');
+                $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
             });
         } else {
             background.set_storage('support_us', 'no', function() {
                 console.log('change to not support us');
+                $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
             });
         }
     });
 
-    // $('div#version').html('<i class="icon-heart"></i> ' + background.unblock_youku.version);
+
+    // $('div#version').html('Unblock Youku </i> ' + background.unblock_youku.version);
+ 
     
     // button actions
     $('button#lite').click(function() {

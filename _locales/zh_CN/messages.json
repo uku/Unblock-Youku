@@ -5,8 +5,20 @@
   "popup_title": {
     "message": "Unblock Youku 设置"
   },
+  "support_title": {
+    "message": "我们需要您的支持"
+  },
+  "support_checkbox_label": {
+    "message": "是的，我愿意支持支持这个软件"
+  },
+  "support_message_no": {
+    "message": "您只需开启这个选项来支持我们，无需其它。您无需付费<br />或捐款，也不会有恼人的植入广告。更多讨论请<a href=\"http://ub.uku.im/viglink\" target=\"_blank\">访问这里</a>"
+  },
+  "support_message_yes": {
+    "message": "非常感谢！您的支持就是我们前进的动力！"
+  },
   "mode_select": {
-    "message": "运行模式选择："
+    "message": "选择程序运行模式"
   },
   "mode_lite": {
     "message": "精简模式"
@@ -18,16 +30,16 @@
     "message": "转发模式"
   },
   "mode_lite_description": {
-    "message": "速度最快，但只对<abbr title=\"虾米、酷六、迅雷看看\">虾米等个别网站</abbr>起效"
+    "message": "连接速度最快，但只对<abbr title=\"虾米、酷六、迅雷看看\">虾米等个别网站</abbr>起效"
   },
   "mode_normal_description": {
-    "message": "推荐使用。速度适中，支持网站数量最多"
+    "message": "推荐使用。连接速度较快，支持网站数量最多"
   },
   "mode_redirect_description": {
-    "message": "速度较慢，但可以与系统代理设置同时使用"
+    "message": "连接速度较慢，但可以与系统代理设置同时使用"
   },
   "help": {
-    "message": "关于不同模式的详细介绍，<a href=\"http://ub.uku.im/modes\" target=\"_blank\">请点击这里查看</a>"
+    "message": "关于上述运行模式的详细介绍，<a href=\"http://ub.uku.im/modes\" target=\"_blank\">请点击这里查看</a>"
   },
   "feedback": {
     "message": "如遇到问题或有任何建议，<a href=\"http://ub.uku.im/feedback\" target=\"_blank\">欢迎联系我们</a>"

@@ -23,60 +23,60 @@ body {
     position: relative;
 }
 
-.wrapper {
+div.wrapper {
     margin: 10px;
     padding: 10px;
 }
 
-.btn-group-wrapper {
-	text-align: center;
-}
-
-#buttons {
-    margin: 15px auto;
-    clear: both;
-	display: inline-block;
-}
-
-.bottom-row {
-    border-bottom: 1px solid #DDDDDD !important;
-}
-
-.text-block {
-<<<<<<< HEAD
-    margin-top: 15px;
-=======
-    margin: 15px 0px;
->>>>>>> 2feeb7b6a87b142e1e711128e1efb5bc8a4ffceb
-    text-align: center;
-}
-
-#rating {
-    display: none;
-}
-
-.icon {
-    vertical-align: text-bottom;
-    margin: 0 1px;
-}
-
-#sharing a:hover {
-    text-decoration: none;
-}
-
-#version {
-    text-align: center;
-    display: none;
-}
-
-div#setting {
-    margin-top: 15px;
-}
-
+/* support us section */
 div#support_checkbox, div#support_message {
     margin-top: 10px;
 }
 
 div#support_message {
     line-height: 150%;
+}
+
+/* mode setting section */
+div#setting {
+    margin-top: 15px;
+}
+
+div.btn-group-wrapper {
+	text-align: center;
+}
+
+div#buttons {
+    margin: 15px auto;
+    clear: both;
+	display: inline-block;
+}
+
+td.bottom-row {
+    border-bottom: 1px solid #DDDDDD !important;
+}
+
+div.text-block {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* extra info and links */
+div#rating {
+    display: none;
+}
+
+span.icon {
+    vertical-align: text-bottom;
+    margin: 0 1px;
+}
+
+div#sharing a:hover {
+    text-decoration: none;
+}
+
+div#version {
+    margin-top: 15px;
+    text-align: center;
+    display: none;
 }

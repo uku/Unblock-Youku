@@ -45,7 +45,7 @@
             "http://*.ac.uk/*",
             "http://*.ac.jp/*"
         ],
-        "js": ["chrome/support/links.js"],
+        "js": ["chrome/content/links.js"],
         "run_at": "document_idle",
         "all_frames": true
     }],
