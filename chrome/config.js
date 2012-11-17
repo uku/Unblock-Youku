@@ -175,6 +175,16 @@ chrome.storage.onChanged.addListener(function(changes, area) {
             }
         }
     }
+
+    if (typeof changes.support_us !== 'undefined') {
+        var support_change = changes.support_us;
+
+        if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
+        } else {
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'}); 
+        }
+    }
 });
 
 
@@ -189,8 +199,10 @@ document.addEventListener("DOMContentLoaded", function() {
         get_storage('support_us', function(option) {
             if (option === 'yes') {
                 _gaq.push(['_trackEvent', 'Init Support', 'Yes']);
+                chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
             } else {
                 _gaq.push(['_trackEvent', 'Init Support', 'No']);
+                chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
             }
         });
     });
