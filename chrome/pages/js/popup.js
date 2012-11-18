@@ -102,7 +102,7 @@ $(document).ready(function() {
 
     chrome.browserAction.setBadgeText({text: ''});  // clear the text NEW
     background.get_storage('previous_new_version', function(version) {
-        if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
+        if (typeof version === 'undefined' || version !== background.unblock_youku.lastest_new_version) {
             background.set_storage('previous_new_version', background.unblock_youku.lastest_new_version);
         }
     });
