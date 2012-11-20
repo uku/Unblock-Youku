@@ -41,7 +41,8 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
 unblock_youku.redirect_url_list = unblock_youku.url_list;
 unblock_youku.header_extra_url_list = [
     'http://*.xiami.com/*',  // xiami is blocked in HK and TW
-    'http://*.ku6.com/*'
+    'http://*.ku6.com/*',
+    'http://kandian.com/player/getEpgInfo*'  // !!!
 ];
 
 unblock_youku.ip_addr = new_random_ip();

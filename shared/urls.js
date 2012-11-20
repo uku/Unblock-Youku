@@ -46,7 +46,7 @@ unblock_youku.url_list = [
     'http://v.iask.com/v_play.php*',
     //'http://v.iask.com/v_play_ipad.cx.php*',
     'http://int.dpool.sina.com.cn/iplookup*',
-    'http://kandian.com/player/getEpgInfo*',
+    //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
     'http://220.181.61.229/*',
     'http://61.135.183.46/*',

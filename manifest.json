@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.0.4",
+    "version": "2.6.0.5",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -42,6 +42,8 @@
             "http://*.edu/*",
             "http://*.edu.hk/*",
             "http://*.edu.tw/*",
+            "http://*.edu.au/*",
+            "http://*.edu.sg/*",
             "http://*.ac.uk/*",
             "http://*.ac.jp/*",
             "http://*.cn/*"
