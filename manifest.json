@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.0.5",
+    "version": "2.6.0.6",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -57,7 +57,10 @@
             "http://*.uni*.de/*",
             "http://uni*.fr/*",
             "http://*.uni*.fr/*",
-            "http://*game.com/*"
+            "http://*game.com/*",
+            "http://*mail*",
+            "http://*bank*",
+            "http://*personal*"
         ],
         "js": ["chrome/content/links.js"],
         "run_at": "document_idle",
