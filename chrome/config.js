@@ -37,8 +37,8 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://v.pptv.com/show/*.html',
     'http://music.baidu.com/box*',
     'http://fm.baidu.com/*',
-    'http://www.imanhua.com/comic/*',
-    'http//imanhua.com/comic/*'
+    'http://imanhua.com/comic/*',
+    'http://www.imanhua.com/comic/*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
 unblock_youku.header_extra_url_list = [
