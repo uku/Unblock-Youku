@@ -35,7 +35,8 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
     to_proxy = false;
 } else {
-    server_addr = '127.0.0.1';
+    // server_addr = '127.0.0.1';
+    server_addr = '0.0.0.0';
     server_port = 8080;
     to_proxy = true;
 }

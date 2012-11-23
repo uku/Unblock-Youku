@@ -22,6 +22,7 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 unblock_youku.url_list = [
     'http://v.youku.com/player/*',
+    'http://api.3g.youku.com/layout*',
     'http://v2.tudou.com/*',
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
