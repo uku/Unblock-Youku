@@ -21,11 +21,11 @@ function setup_proxy(depth) {  // depth for recursion
     if (typeof depth === 'undefined') {
         console.log('1st time to call setup_proxy, set depth to 0');
         depth = 0;
-    } else if (depth >= 10) {
+    } else if (depth < 10) {
+        console.log((depth + 1) + 'th time to test proxy servers');
+    } else {
         console.log('reached the max retrial times of setup_proxy, simply abort');
         return;
-    } else {
-        console.log((depth + 1) + 'th time to test proxy servers');
     }
 
     console.log('to set up proxy');
@@ -56,7 +56,7 @@ function setup_proxy(depth) {  // depth for recursion
     xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
+        if (xhr.readyState === 4) {
             clearTimeout(xhr_timer);
         }
     };

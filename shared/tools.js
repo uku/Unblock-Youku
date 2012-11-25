@@ -28,9 +28,10 @@ function new_random_ip() {
 function url2pac(url_list, proxy_server) {
     var s = 'function FindProxyForURL(url, host) {   \n' +
             '    if (';
-    for (var i = 0; i < url_list.length; i++) {
+    var i;
+    for (i = 0; i < url_list.length; i++) {
         s += 'shExpMatch(url, "' + url_list[i] + '")';
-        if (i == url_list.length - 1) {
+        if (i === url_list.length - 1) {
             s += ')\n';
         } else {
             s += ' ||\n\t\t';

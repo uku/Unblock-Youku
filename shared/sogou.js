@@ -19,8 +19,8 @@
 
 function new_sogou_auth_str() {
     var auth_str = '/30/853edc6d49ba4e27';
-    var tmp_str;
-    for (var i = 0; i < 8; i++) {
+    var i, tmp_str;
+    for (i = 0; i < 8; i++) {
         tmp_str = ('0000' + Math.floor(Math.random() * 65536).toString(16)).slice(-4);
         auth_str = tmp_str.toUpperCase() + auth_str;
     }
@@ -31,18 +31,19 @@ function new_sogou_auth_str() {
 function new_sogou_proxy_addr() {
     var random_num = Math.floor(Math.random() * (16 + 16));  // 0 ~ 15 edu and 0 ~ 15 dxt
     var proxy_addr;
-    if (random_num < 16)
+    if (random_num < 16) {
         proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // 0 ~ 15
-    else
+    } else {
         proxy_addr = 'h' + (random_num - 16) + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
+    }
     return proxy_addr;
 }
 
 
 // String.startsWith
-if (typeof String.prototype.startsWith != 'function') {
+if (typeof String.prototype.startsWith !== 'function') {
     String.prototype.startsWith = function(str) {
-        return this.slice(0, str.length) == str;
+        return this.slice(0, str.length) === str;
     };
 }
 
@@ -62,7 +63,8 @@ function compute_sogou_tag(timestamp, target_link) {
 
     var hash = total_len;  // output hash tag
 
-    for (var i = 0; i < numb_iter; i++) {
+    var i;
+    for (i = 0; i < numb_iter; i++) {
         low  = s.charCodeAt(4 * i + 1) * 256 + s.charCodeAt(4 * i);  // right most 16 bits in little-endian
         high = s.charCodeAt(4 * i + 3) * 256 + s.charCodeAt(4 * i + 2);  // left most
 

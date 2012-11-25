@@ -84,7 +84,8 @@ function remove_storage(key, callback) {
 
 (function migrate_storage(list_keys) {
     var old_keys = [];
-    for (var i in list_keys) {
+    var i;
+    for (i = 0; i < list_keys.length; i++) {
         var key = list_keys[i];
         if (typeof localStorage[key] !== 'undefined') {
             old_keys.push(key);
@@ -94,7 +95,8 @@ function remove_storage(key, callback) {
     try {
         chrome.storage.sync.get(old_keys, function(items) {
             var settings = {};
-            for (var i in old_keys) {
+            var i;
+            for (i = 0; i < old_keys.length; i++) {
                 var key = old_keys[i];
                 if (typeof items[key] === 'undefined') {
                     settings[key] = localStorage[key];
@@ -110,5 +112,5 @@ function remove_storage(key, callback) {
     } catch (err) {
         console.error(err);
     }
-})(['unblock_youku_mode', 'custom_server', 'test']);
+}(['unblock_youku_mode', 'custom_server', 'test']));
 

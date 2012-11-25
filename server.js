@@ -43,9 +43,9 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
 
 
 // learnt from http://goo.gl/X8zmc
-if (typeof String.prototype.startsWith != 'function') {
+if (typeof String.prototype.startsWith !== 'function') {
     String.prototype.startsWith = function(str) {
-        return this.slice(0, str.length) == str;
+        return this.slice(0, str.length) === str;
     };
 }
 // if (typeof String.prototype.endsWith != 'function') {
@@ -77,7 +77,8 @@ function get_real_target(req_path) {
 
 
 function is_valid_url(target_url) {
-    for (var i in url_list.regex_url_list) {
+    var i;
+    for (i = 0; i < url_list.regex_url_list.length; i++) {
         if (url_list.regex_url_list[i].test(target_url)) {
             return true;
         }
@@ -86,8 +87,11 @@ function is_valid_url(target_url) {
 }
 
 
+var my_date = new Date();
+
 if (cluster.isMaster) {
-    for (var i = 0; i < num_CPUs; i++) {
+    var i;
+    for (i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
 
@@ -120,7 +124,7 @@ if (cluster.isMaster) {
         var req_options;
         if (is_valid_url(target.href)) {
             var sogou_auth = sogou.new_sogou_auth_str();
-            var timestamp = Math.round(new Date().getTime() / 1000).toString(16);
+            var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
             request.headers['X-Sogou-Auth'] = sogou_auth;
@@ -140,8 +144,8 @@ if (cluster.isMaster) {
             };
         } else if (to_proxy) {
             // serve as a normal proxy
-            if (request.headers['proxy-connection']) {
-                request.headers['connection'] = request.headers['proxy-connection'];
+            if (typeof request.headers['proxy-connection'] !== 'undefined') {
+                request.headers.connection = request.headers['proxy-connection'];
                 delete request.headers['proxy-connection'];
             }
             request.headers.host = target.host;
@@ -189,7 +193,7 @@ if (cluster.isMaster) {
 }
 
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     console.log('Caught exception: ' + err);
 });
 

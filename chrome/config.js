@@ -61,7 +61,7 @@ console.log('sogou_auth: ' + unblock_youku.sogou_auth);
     var manifest = JSON.parse(xhr.responseText);
     unblock_youku.version = manifest.version;
     console.log('version: ' + unblock_youku.version);
-})();
+}());
 // the lastest version to show NEW on the icon; it's usually a big update with new features
 unblock_youku.lastest_new_version = '2.6.0.0';
 get_storage('previous_new_version', function(version) {

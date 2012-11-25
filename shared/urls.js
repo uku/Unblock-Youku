@@ -59,14 +59,14 @@ unblock_youku.url_list = [
 
 unblock_youku.regex_url_list = [];
 (function() {
-    var re_str;
-    for (var i in unblock_youku.url_list) {
+    var i, re_str;
+    for (i = 0; i < unblock_youku.url_list.length; i++) {
         re_str = unblock_youku.url_list[i].replace(/\//g, '\\/');
         re_str = re_str.replace(/\./g, '\\.');
         re_str = re_str.replace(/\*/g, '.*');
         unblock_youku.regex_url_list.push(new RegExp('^' + re_str, 'i'));
     }
-})();
+}());
 // console.log(unblock_youku.regex_url_list);
 
 
