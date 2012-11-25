@@ -21,12 +21,12 @@
             "shared/tools.js",
             "shared/urls.js",
             "shared/sogou.js",
+            "chrome/pages/js/analytics.js",
             "chrome/storage.js",
             "chrome/config.js",
             "chrome/header.js",
             "chrome/proxy.js",
-            "chrome/redirect.js",
-            "chrome/pages/js/analytics.js"
+            "chrome/redirect.js"
         ]
     },
     "browser_action": {

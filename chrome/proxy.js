@@ -60,6 +60,11 @@ function setup_proxy(depth) {  // depth for recursion
             clearTimeout(xhr_timer);
         }
     };
+    // http://goo.gl/ktYcx
+    // but still can't get rid of the annoying message "Failed to load resource"
+    // xhr.onerror = function(e) {
+    //    console.error('xhr error: ' + e.target.status);
+    // };
     xhr.send();
 
     // test timeout

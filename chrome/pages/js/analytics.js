@@ -29,3 +29,11 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ga, s);
 }());
+
+
+// see http://goo.gl/QLJu6 and http://goo.gl/aNH3H
+window.onerror = function(message, file, line) {
+    var msg = file + '(' + line + '): ' + message;
+    console.error(msg);
+    _gaq.push(['_trackEvent', 'Unknown Error', msg]);
+};
