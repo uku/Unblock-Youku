@@ -16,7 +16,9 @@
        "type": "git",
         "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
     },
-    "dependencies": {},
+    "dependencies": {
+        "nodefly": "stable"
+    },
     "engines": {
         "node": "0.8.x",
         "npm": "1.1.x"
