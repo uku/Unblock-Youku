@@ -72,4 +72,5 @@ unblock_youku.regex_url_list = [];
 
 // also export as a node.js module
 var exports = exports || {};
+exports.url_list = unblock_youku.url_list;
 exports.regex_url_list = unblock_youku.regex_url_list;

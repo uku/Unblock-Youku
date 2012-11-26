@@ -19,29 +19,56 @@
  */
 
 
+// change this to your own heroku domain name
+// such as 'my-youku.herokuapp.com'
+var custom_server_domain = '';
+
+
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
 var cluster = require('cluster');
-var num_CPUs = require('os').cpus().length;
+var os = require('os');
 
 var sogou = require('./shared/sogou');
 var url_list = require('./shared/urls');
 var shared_tools = require('./shared/tools');
 
 
-var server_addr, server_port, to_proxy;
-// appfog's documents and online sample codes are horrible
+function get_first_external_ip() {
+    // only return the first external ip, which should be fine for usual cases
+    var interfaces = os.networkInterfaces();
+    var i, j;
+    for (i in interfaces) {
+        if (interfaces.hasOwnProperty(i)) {
+            for (j = 0; j < interfaces[i].length; j++) {
+                var addr = interfaces[i][j];
+                if (addr.family === 'IPv4' && !addr.internal) {
+                    return addr.address;
+                }
+            }
+        }
+    }
+    return '127.0.0.1';  // no external ip, so bind internal ip
+}
+
+
+var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    to_proxy = false;
+    if (custom_server_domain) {
+        proxy_addr = custom_server_domain;
+    } else {
+        proxy_addr = 'yo.uku.im';
+    }
 } else {
     // server_addr = '127.0.0.1';
     server_addr = '0.0.0.0';
-    server_port = 8080;
-    to_proxy = true;
+    server_port = 8888;
+    proxy_addr = get_first_external_ip() + ':' + server_port;
 }
+var pac_file_content = shared_tools.url2pac(url_list.url_list, proxy_addr);
 
 
 // learnt from http://goo.gl/X8zmc
@@ -92,14 +119,16 @@ function is_valid_url(target_url) {
 var my_date = new Date();
 
 if (cluster.isMaster) {
-    var i;
+    var i, num_CPUs = os.cpus().length;
     for (i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
 
+    console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
+
 } else {
     http.createServer(function(request, response) {
-        // console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
+        console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
 
         if (request.url === '/favicon.ico') {
             response.writeHead(404);
@@ -113,6 +142,14 @@ if (cluster.isMaster) {
             });
             response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                 '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+            return;
+        }
+
+        if (request.url === '/proxy.pac') {
+            response.writeHead(200, {
+                'Content-Type': 'application/x-ns-proxy-autoconfig'
+            });
+            response.end(pac_file_content);
             return;
         }
 
@@ -144,23 +181,7 @@ if (cluster.isMaster) {
                 method: request.method,
                 headers: request.headers
             };
-        } else if (to_proxy) {
-            // serve as a normal proxy
-            if (typeof request.headers['proxy-connection'] !== 'undefined') {
-                request.headers.connection = request.headers['proxy-connection'];
-                delete request.headers['proxy-connection'];
-            }
-            request.headers.host = target.host;
-            req_options = {
-                host: target.host,
-                hostname: target.hostname,
-                port: +target.port,
-                path: target.path,
-                method: request.method,
-                headers: request.headers
-            };
         } else {
-            // neither proxy nor redirect
             response.writeHead(403);
             response.end();
             return;
@@ -174,7 +195,7 @@ if (cluster.isMaster) {
                 response.end();
             });
             res.on('error', function(err) {
-                console.log('Proxy Error: ' + err.message);
+                console.error('Proxy Error: ' + err.message);
             });
 
             response.writeHead(res.statusCode, res.headers);
@@ -187,7 +208,7 @@ if (cluster.isMaster) {
             proxy_req.end();
         });
         request.on('error', function(err) {
-            console.log('Server Error: ' + err.message);
+            console.error('Server Error: ' + err.message);
         });
     }).listen(server_port, server_addr);
 
@@ -195,7 +216,10 @@ if (cluster.isMaster) {
 }
 
 
+/*
 process.on('uncaughtException', function(err) {
-    console.log('Caught exception: ' + err);
+    console.error('Caught exception: ' + err);
 });
+*/
+
 

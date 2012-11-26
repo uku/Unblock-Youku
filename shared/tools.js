@@ -26,7 +26,7 @@ function new_random_ip() {
 
 
 function url2pac(url_list, proxy_server) {
-    var s = 'function FindProxyForURL(url, host) {   \n' +
+    var s = 'function FindProxyForURL(url, host) {       \n' +
             '    if (';
     var i;
     for (i = 0; i < url_list.length; i++) {
@@ -34,12 +34,13 @@ function url2pac(url_list, proxy_server) {
         if (i === url_list.length - 1) {
             s += ')\n';
         } else {
-            s += ' ||\n\t\t';
+            s += ' ||\n            ';
         }
     }
-    s +=    '    return "PROXY ' + proxy_server + '";\n' +
-            'else                                    \n' +
-            '    return "DRIECT";                    \n' +
+    s +=    '        return "PROXY ' + proxy_server + '";\n' +
+            '    } else {                                \n' +
+            '        return "DRIECT";                    \n' +
+            '    }                                       \n' +
             '}';
     return s;
 }
@@ -47,4 +48,4 @@ function url2pac(url_list, proxy_server) {
 
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
-//exports.url2pac = url2pac;
+exports.url2pac = url2pac;
