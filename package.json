@@ -1,0 +1,9 @@
+{
+  "name": "ub.uku.js",
+  "version": "1.0.1",
+  "dependencies": {},
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  }
+}
