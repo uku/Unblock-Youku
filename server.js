@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
  * Allow you smoothly surf on many websites blocking non-mainland visitors.
  * Copyright (C) 2012 Bo Zhu http://zhuzhu.org
