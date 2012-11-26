@@ -61,11 +61,6 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
         proxy_addr = custom_server_domain;
     } else {
         proxy_addr = 'yo.uku.im';
-        // monitor the server load
-        require('nodefly').profile(
-            '28ed8376c78ca2202f6a8acd0e203ac3',
-            ['Unblock Youku Server', 'Heroku']
-        );
     }
 } else {
     // server_addr = '127.0.0.1';
