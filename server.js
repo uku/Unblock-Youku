@@ -20,8 +20,8 @@
 
 
 // change this to your own heroku domain name
-// such as 'my-youku.herokuapp.com'
-var custom_server_domain = '';
+// such as 'my-uku.herokuapp.com'
+var heroku_app_domain = '';
 
 
 var http = require('http');
@@ -57,10 +57,10 @@ var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    if (custom_server_domain) {
-        proxy_addr = custom_server_domain;
+    if (heroku_app_domain) {
+        proxy_addr = heroku_app_domain + ':80';
     } else {
-        proxy_addr = 'yo.uku.im';
+        proxy_addr = 'yo.uku.im:80';
     }
 } else {
     // server_addr = '127.0.0.1';
