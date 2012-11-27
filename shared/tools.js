@@ -26,17 +26,7 @@ function new_random_ip() {
 
 
 function url2pac(url_list, proxy_server) {
-    var proxy_server_host = proxy_server.split(':')[0];  // remove the port number
-
     var s = 'function FindProxyForURL(url, host) {\n' +
-            '    if (host === "127.0.0.1" ||\n' +
-            '            isPlainHostName(host) ||\n' +
-            '            dnsDomainIs(host, "uku.im") ||\n' +
-            '            dnsDomainIs(host, "localhost") ||\n' +
-            '            dnsDomianIs(host, "ie.sogou.com") ||\n' +
-            '            host === "' + proxy_server_host + '") {\n' +
-            '        return "DIRECT";\n' + 
-            '    }\n' + 
             '    if (';
 
     var i;
