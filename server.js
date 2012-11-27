@@ -31,19 +31,24 @@ var shared_tools = require('./shared/tools');
 
 
 function get_first_external_ip() {
-    // only return the first external ip, which should be fine for usual cases
-    var interfaces = os.networkInterfaces();
-    var i, j;
-    for (i in interfaces) {
-        if (interfaces.hasOwnProperty(i)) {
-            for (j = 0; j < interfaces[i].length; j++) {
-                var addr = interfaces[i][j];
-                if (addr.family === 'IPv4' && !addr.internal) {
-                    return addr.address;
+    try {
+        // only return the first external ip, which should be fine for usual cases
+        var interfaces = os.networkInterfaces();
+        var i, j;
+        for (i in interfaces) {
+            if (interfaces.hasOwnProperty(i)) {
+                for (j = 0; j < interfaces[i].length; j++) {
+                    var addr = interfaces[i][j];
+                    if (addr.family === 'IPv4' && !addr.internal) {
+                        return addr.address;
+                    }
                 }
             }
         }
+    } catch (err) {
+        return '127.0.0.1';
     }
+
     return '127.0.0.1';  // no external ip, so bind internal ip
 }
 
@@ -52,7 +57,7 @@ var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    proxy_addr = 'uku.im';
+    proxy_addr = 'yo.uku.im';
 } else {
     // server_addr = '127.0.0.1';
     server_addr = '0.0.0.0';
@@ -139,7 +144,16 @@ if (cluster.isMaster) {
             return;
         }
 
-        var target = get_real_target(request.url);
+        var target;
+        if (request.url.startsWith('/proxy') || request.url.startsWith('http')) {
+            target = get_real_target(request.url);
+        } else if (typeof request.headers.host !== 'undefined'){
+            target = get_real_target(request.headers.host + request.url);
+        } else {
+            response.writeHead(404);
+            response.end();
+            return;
+        }
         if (!target.host) {
             response.writeHead(403);
             response.end();
