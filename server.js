@@ -19,12 +19,6 @@
  */
 
 
-// change this to your own heroku domain name
-// such as 'my-uku.herokuapp.com'
-//var heroku_app_domain = '';
-var heroku_app_domain = 'ubuku-test.herokuapp.com';
-
-
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
@@ -58,11 +52,7 @@ var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    if (heroku_app_domain) {
-        proxy_addr = heroku_app_domain + ':80';
-    } else {
-        proxy_addr = 'yo.uku.im:80';
-    }
+    proxy_addr = 'uku.im:80';
 } else {
     // server_addr = '127.0.0.1';
     server_addr = '0.0.0.0';
@@ -78,11 +68,6 @@ if (typeof String.prototype.startsWith !== 'function') {
         return this.slice(0, str.length) === str;
     };
 }
-// if (typeof String.prototype.endsWith != 'function') {
-//     String.prototype.endsWith = function(str) {
-//         return this.slice(-str.length) == str;
-//     };
-// }
 
 
 function get_real_target(req_path) {
