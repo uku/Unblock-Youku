@@ -26,22 +26,35 @@ function new_random_ip() {
 
 
 function url2pac(url_list, proxy_server) {
-    var s = 'function FindProxyForURL(url, host) {       \n' +
+    var proxy_server_host = proxy_server.split(':')[0];  // remove the port number
+
+    var s = 'function FindProxyForURL(url, host) {\n' +
+            '    if (host === "127.0.0.1" ||\n' +
+            '            isPlainHostName(host) ||\n' +
+            '            dnsDomainIs(host, "uku.im") ||\n' +
+            '            dnsDomainIs(host, "localhost") ||\n' +
+            '            dnsDomianIs(host, "ie.sogou.com") ||\n' +
+            '            host === "' + proxy_server_host + '") {\n' +
+            '        return "DIRECT";\n' + 
+            '    }\n' + 
             '    if (';
+
     var i;
     for (i = 0; i < url_list.length; i++) {
         s += 'shExpMatch(url, "' + url_list[i] + '")';
         if (i === url_list.length - 1) {
-            s += ')\n';
+            s += ') {\n';
         } else {
             s += ' ||\n            ';
         }
     }
-    s +=    '        return "PROXY ' + proxy_server + '";\n' +
-            '    } else {                                \n' +
-            '        return "DRIECT";                    \n' +
-            '    }                                       \n' +
-            '}';
+
+    s += '        return "PROXY ' + proxy_server + '";\n' +
+         '    }\n';
+
+    s += '    return "DIRECT";\n' +
+         '}';
+
     return s;
 }
 
