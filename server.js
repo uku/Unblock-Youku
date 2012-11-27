@@ -151,7 +151,7 @@ if (cluster.isMaster) {
         } else if (typeof request.headers.host !== 'undefined'){
             target = get_real_target('http://' + request.headers.host + request.url);
         } else {
-            response.writeHead(404);
+            response.writeHead(500);
             response.end();
             return;
         }
