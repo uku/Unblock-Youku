@@ -51,6 +51,7 @@ unblock_youku.url_list = [
     //'http://cdn.kandian.com/*',
     'http://220.181.61.229/*',
     'http://61.135.183.46/*',
+    'http://220.181.118.181/*',
     //'http://*/?prot=2&type=*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
