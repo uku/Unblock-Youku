@@ -22,7 +22,7 @@
 // change this to your own heroku domain name
 // such as 'my-uku.herokuapp.com'
 //var heroku_app_domain = '';
-var heroku_app_domain = 'uku-test.aws.af.cm';
+var heroku_app_domain = 'ubuku-test.herokuapp.com';
 
 
 var http = require('http');
