@@ -52,7 +52,7 @@ var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    proxy_addr = 'uku.im:80';
+    proxy_addr = 'uku.im';
 } else {
     // server_addr = '127.0.0.1';
     server_addr = '0.0.0.0';
