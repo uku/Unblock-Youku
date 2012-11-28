@@ -19,6 +19,9 @@
  */
 
 
+var for_debug = false;
+// var for_debug = true;
+
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
@@ -57,7 +60,7 @@ var server_addr, server_port, proxy_addr;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    //proxy_addr = 'yo.uku.im';
+    // proxy_addr = 'yo.uku.im';
     proxy_addr = 'proxy.uku.im';
 } else {
     // server_addr = '127.0.0.1';
@@ -179,6 +182,21 @@ if (cluster.isMaster) {
             req_options = {
                 hostname: proxy_server,
                 path: target.href,
+                method: request.method,
+                headers: request.headers
+            };
+        } else if (for_debug) {
+            // serve as a normal proxy
+            if (typeof request.headers['proxy-connection'] !== 'undefined') {
+                // request.headers.connection = request.headers['proxy-connection'];
+                delete request.headers['proxy-connection'];
+            }
+            request.headers.host = target.host;
+            req_options = {
+                host: target.host,
+                hostname: target.hostname,
+                port: +target.port,
+                path: target.path,
                 method: request.method,
                 headers: request.headers
             };
