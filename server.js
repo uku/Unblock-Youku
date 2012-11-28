@@ -19,8 +19,8 @@
  */
 
 
-var for_debug = false;
-// var for_debug = true;
+var dev_mode = false;
+// var dev_mode  = true;
 
 var http = require('http');
 var url = require('url');
@@ -185,7 +185,7 @@ if (cluster.isMaster) {
                 method: request.method,
                 headers: request.headers
             };
-        } else if (for_debug) {
+        } else if (dev_mode) {
             // serve as a normal proxy
             if (typeof request.headers['proxy-connection'] !== 'undefined') {
                 // request.headers.connection = request.headers['proxy-connection'];
