@@ -27,15 +27,32 @@ function setup_redirect() {
     // addListener ends here
     console.log('http_redirector is set');
 
-    var xhr = new XMLHttpRequest();
     unblock_youku.backend_server = unblock_youku.default_server;
+
+    console.log('to test the redirection server: ' + unblock_youku.default_server);
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://' + unblock_youku.backend_server + '?url=' + btoa('http://ipservice.163.com/isFromMainland'), true);
-    xhr.onerror = function() {
-        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
-        console.warn('changed redirection server to backup_server: ' + unblock_youku.backup_server);
+    xhr.timeout = 12000; // 12s
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            clearTimeout(xhr_timer);
+            console.log('the redirection server seems to be working fine: ' + unblock_youku.backend_server);
+        }
     };
-    console.log('to test the backend server: ' + unblock_youku.default_server);
+    xhr.onerror = function(err) {
+        console.warn(unblock_youku.default_server + ' ERROR! changed redirection server to backup_server: ' + unblock_youku.backup_server);
+        _gaq.push(['_trackEvent', 'Redirection Server Error', err.target.status]);
+        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
+        clearTimeout(xhr_timer);
+    };
     xhr.send();
+
+    var xhr_timer = setTimeout(function() {
+        xhr.abort();
+        console.warn(unblock_youku.default_server + ' TIMEOUT! changed redirection server to backup_server: ' + unblock_youku.backup_server);
+        _gaq.push(['_trackEvent', 'Redirection Server Timeout', unblock_youku.default_server]);
+        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
+    }, 10000);  // 10s
 }
 
 

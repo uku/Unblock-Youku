@@ -32,7 +32,7 @@ function setup_proxy(depth) {  // depth for recursion
     var proxy_addr = new_sogou_proxy_addr();
     console.log('using proxy: ' + proxy_addr);
     var pac_data = url2pac(unblock_youku.normal_url_list, proxy_addr + ':80');
-    console.log(pac_data);
+    // console.log(pac_data);
 
     var proxy_config = {
         mode: 'pac_script',
@@ -48,9 +48,8 @@ function setup_proxy(depth) {  // depth for recursion
         },
         function() {}
     );
-    console.log('proxy is set');
 
-    console.log('to check if the proxy server is avaiable');
+    console.log('to check if the proxy server is avaiable: ' + proxy_addr);
     var xhr = new XMLHttpRequest();
     // xhr.open('GET', 'http://httpbin.org/delay/13');
     xhr.open('GET', 'http://' + proxy_addr);
@@ -58,19 +57,21 @@ function setup_proxy(depth) {  // depth for recursion
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             clearTimeout(xhr_timer);
+            console.log('the proxy server seems to be working fine: ' + proxy_addr);
         }
     };
     // http://goo.gl/ktYcx
     // but still can't get rid of the annoying message "Failed to load resource"
-    // xhr.onerror = function(e) {
-    //    console.error('xhr error: ' + e.target.status);
-    // };
+    xhr.onerror = function(e) {
+        console.error('xhr error: ' + e.target.status);
+    };
     xhr.send();
 
     // test timeout
     var xhr_timer = setTimeout(function() {
         xhr.abort();
-        console.warn(proxy_addr + ' timeout!');
+        console.warn(proxy_addr + ' TIMEOUT!');
+        _gaq.push(['_trackEvent', 'Proxy Server Timeout', proxy_addr]);
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
                 setup_proxy(depth + 1); // simply set up again
