@@ -19,9 +19,6 @@
  */
 
 
-var dev_mode = false;
-// var dev_mode  = true;
-
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
@@ -56,17 +53,19 @@ function get_first_external_ip() {
 }
 
 
-var server_addr, server_port, proxy_addr;
+var server_addr, server_port, proxy_addr, run_locally;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     server_addr = '0.0.0.0';
     server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
     // proxy_addr = 'yo.uku.im';
     proxy_addr = 'proxy.uku.im';
+    run_locally = false;
 } else {
     // server_addr = '127.0.0.1';
     server_addr = '0.0.0.0';
     server_port = 8888;
     proxy_addr = get_first_external_ip() + ':' + server_port;
+    run_locally = true;
 }
 var pac_file_content = shared_tools.url2pac(url_list.url_list, proxy_addr);
 
@@ -185,7 +184,7 @@ if (cluster.isMaster) {
                 method: request.method,
                 headers: request.headers
             };
-        } else if (dev_mode) {
+        } else if (run_locally) {
             // serve as a normal proxy
             if (typeof request.headers['proxy-connection'] !== 'undefined') {
                 // request.headers.connection = request.headers['proxy-connection'];
