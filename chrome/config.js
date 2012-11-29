@@ -116,13 +116,13 @@ function clear_mode_settings(mode_name) {
     case 'normal':
         clear_proxy();
         clear_normal_header();
+        clear_timezone();
         console.log('cleared settings for normal');
         break;
     default:
         console.error('should never come here');
         break;
     }
-    clear_timezone();
 
     console.log('cleared the settings for the mode: ' + mode_name);
 }
@@ -138,12 +138,12 @@ function setup_mode_settings(mode_name) {
     case 'normal':
         setup_normal_header();
         setup_proxy();
+        setup_timezone();
         break;
     default:
         console.error('should never come here');
         break;
     }
-    setup_timezone();
 
     console.log('initialized the settings for the mode: ' + mode_name);
 }
