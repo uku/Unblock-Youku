@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.0.7",
+    "version": "2.6.0.8",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -26,7 +26,8 @@
             "chrome/config.js",
             "chrome/header.js",
             "chrome/proxy.js",
-            "chrome/redirect.js"
+            "chrome/redirect.js",
+            "chrome/timezone.js"
         ]
     },
     "browser_action": {

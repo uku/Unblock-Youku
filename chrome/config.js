@@ -122,6 +122,7 @@ function clear_mode_settings(mode_name) {
         console.error('should never come here');
         break;
     }
+    clear_timezone();
 
     console.log('cleared the settings for the mode: ' + mode_name);
 }
@@ -142,6 +143,7 @@ function setup_mode_settings(mode_name) {
         console.error('should never come here');
         break;
     }
+    setup_timezone();
 
     console.log('initialized the settings for the mode: ' + mode_name);
 }

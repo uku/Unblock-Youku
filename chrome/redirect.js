@@ -69,6 +69,14 @@ function http_redirector(details) {
         return {};
     }
 
+    // you ku ni yao nao na yang...
+    if (details.url.slice(0, 18) === 'http://v.youku.com' &&
+            details.url.indexOf('timezone') !== -1 && 
+            (details.url.indexOf('timezone/08') === -1 &&
+             details.url.indexOf('timezone/+08') === -1)) { 
+        details.url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
+    } 
+
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
         backend_server = unblock_youku.backend_server;
