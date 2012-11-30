@@ -47,7 +47,11 @@
             "http://*.edu.sg/*",
             "http://*.ac.uk/*",
             "http://*.ac.jp/*",
-            "http://*.cn/*"
+            "http://*.cn/*",
+            "http://*.youku.com/*",
+            "http://*.tudou.com/*",
+            "http://*.soku.com/*",
+            "http://*.sohu.com/*"
         ],
         "exclude_globs" : [
             "http://u*.ca/*",
