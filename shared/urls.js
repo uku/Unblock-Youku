@@ -26,6 +26,7 @@ unblock_youku.url_list = [
     'http://v2.tudou.com/*',
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
+    'http://live.tv.sohu.com/*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
 
@@ -53,6 +54,8 @@ unblock_youku.url_list = [
     'http://61.135.183.46/*',
     'http://220.181.118.181/*',
     //'http://*/?prot=2&type=*',
+
+    // 'http://*/*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
