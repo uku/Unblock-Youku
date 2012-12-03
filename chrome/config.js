@@ -188,7 +188,7 @@ chrome.storage.onChanged.addListener(function(changes, area) {
         if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
             chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
         } else {
-            chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'}); 
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'}); 
         }
     }
 });
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
             } else {
                 _gaq.push(['_trackEvent', 'Init Support', 'No']);
-                chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
+                chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
             }
         });
     });
