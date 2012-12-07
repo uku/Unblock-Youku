@@ -53,6 +53,7 @@ if (typeof String.prototype.startsWith !== 'function') {
 
 if (cluster.isMaster) {
     var num_CPUs = require('os').cpus().length;
+    // num_CPUs = 1;
 
     var i;
     for (i = 0; i < num_CPUs; i++) {
@@ -63,17 +64,19 @@ if (cluster.isMaster) {
 
 } else {
     var sogou_server_addr = sogou.new_sogou_proxy_addr();
-    console.log('default sogou server: ' + sogou_server_addr);
+    // console.log('default server: ' + sogou_server_addr);
     server_utils.change_sogou_server(function(new_addr) {
         sogou_server_addr = new_addr;
-        console.log('changed to new sogou server: ' + new_addr);
+        // console.log('changed to new server: ' + new_addr);
     });
     require('timers').setInterval(function() {
         server_utils.change_sogou_server(function(new_addr) {
             sogou_server_addr = new_addr;
-            console.log('changed to new sogou server: ' + new_addr);
+            // console.log('changed to new server: ' + new_addr);
         });
     }, 10 * 60 * 1000);  // every 10 mins
+    // }, 20 * 1000);  // every 20 secs
+
 
     var my_date = new Date();
     
@@ -120,8 +123,8 @@ if (cluster.isMaster) {
         }
 
         var req_options;
-        //if (server_utils.is_valid_url(target.href)) {
-        if (true) {
+        // if (true) {
+        if (server_utils.is_valid_url(target.href)) {
             var sogou_auth = sogou.new_sogou_auth_str();
             var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);

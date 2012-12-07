@@ -90,18 +90,47 @@ function is_valid_url(target_url) {
 
 function change_sogou_server(callback, depth) {
     var new_addr = new_sogou_proxy_addr();
+    // new_addr = 'h8.dxt.bj.ie.sogou.com';
 
     if (typeof depth === 'undefined') {
         depth = 0;
-    } else if (depth > 5) {
+    } else if (depth >= 10) {
+    // } else if (depth >= 3) {
         callback(new_addr);
+        return;
     }
 
-    http.get('http://' + new_addr, function(res) {
+    // console.log(new_addr + ' depth ' + depth);
+    
+    var options = {
+        host: new_addr,
+        headers: {
+            "Accept-Language": "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
+            "Accept-Encoding": "deflate",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11",
+            "Accept-Charset": "gb18030,utf-8;q=0.7,*;q=0.3"
+        }
+    };
+
+    var req = http.request(options, function(res) {
         callback(new_addr);
-    }).on('error', function(err) {
+    });
+
+    // http://goo.gl/G2CoU
+    req.on('socket', function (socket) {
+        socket.setTimeout(15 * 1000, function() {  // 15s
+            req.abort();
+            console.warn('Timeout for ' + new_addr + '. Aborted.');
+        });
+    });
+
+    req.on('error', function(err) {
+        console.error('Error when testing ' + new_addr + ': ' + err);
         change_sogou_server(callback, depth + 1);
     });
+
+    req.end();
 }
 
 
