@@ -20,54 +20,27 @@
 
 
 var http = require('http');
-var url = require('url');
-var querystring = require('querystring');
 var cluster = require('cluster');
-var os = require('os');
 
 var sogou = require('./shared/sogou');
-var url_list = require('./shared/urls');
 var shared_tools = require('./shared/tools');
+var server_utils = require('./server/utils');
 
 
-function get_first_external_ip() {
-    try {
-        // only return the first external ip, which should be fine for usual cases
-        var interfaces = os.networkInterfaces();
-        var i, j;
-        for (i in interfaces) {
-            if (interfaces.hasOwnProperty(i)) {
-                for (j = 0; j < interfaces[i].length; j++) {
-                    var addr = interfaces[i][j];
-                    if (addr.family === 'IPv4' && !addr.internal) {
-                        return addr.address;
-                    }
-                }
-            }
-        }
-    } catch (err) {
-        return '127.0.0.1';
-    }
-
-    return '127.0.0.1';  // no external ip, so bind internal ip
-}
-
-
-var server_addr, server_port, proxy_addr, run_locally;
+var local_addr, local_port, proxy_addr, run_locally;
 if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
-    server_addr = '0.0.0.0';
-    server_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
-    // proxy_addr = 'yo.uku.im';
-    proxy_addr = 'proxy.uku.im';
+    local_addr = '0.0.0.0';
+    local_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
+    proxy_addr = 'proxy.uku.im:80';
     run_locally = false;
 } else {
-    // server_addr = '127.0.0.1';
-    server_addr = '0.0.0.0';
-    server_port = 8888;
-    proxy_addr = get_first_external_ip() + ':' + server_port;
+    // local_addr = '127.0.0.1';
+    local_addr = '0.0.0.0';
+    local_port = 8888;
+    proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
     run_locally = true;
 }
-var pac_file_content = shared_tools.url2pac(url_list.url_list, proxy_addr);
+var pac_file_content = shared_tools.url2pac(require('./shared/urls').url_list, proxy_addr);
 
 
 // learnt from http://goo.gl/X8zmc
@@ -78,42 +51,10 @@ if (typeof String.prototype.startsWith !== 'function') {
 }
 
 
-function get_real_target(req_path) {
-    var real_target = {};
-
-    // the 'path' in proxy requests should always start with http
-    if (req_path.startsWith('http')) {
-        real_target = url.parse(req_path);
-    } else {
-        var real_url = querystring.parse(url.parse(req_path).query).url;
-        if (real_url) {
-            var buf = new Buffer(real_url, 'base64');
-            real_url = buf.toString();
-            real_target = url.parse(real_url);
-        }
-    }
-    if (!real_target.port) {
-        real_target.port = 80;
-    }
-    return real_target;
-}
-
-
-function is_valid_url(target_url) {
-    var i;
-    for (i = 0; i < url_list.regex_url_list.length; i++) {
-        if (url_list.regex_url_list[i].test(target_url)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-var my_date = new Date();
-
 if (cluster.isMaster) {
-    var i, num_CPUs = os.cpus().length;
+    var num_CPUs = require('os').cpus().length;
+
+    var i;
     for (i = 0; i < num_CPUs; i++) {
         cluster.fork();
     }
@@ -121,6 +62,21 @@ if (cluster.isMaster) {
     console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
 
 } else {
+    var sogou_server_addr = sogou.new_sogou_proxy_addr();
+    console.log('default sogou server: ' + sogou_server_addr);
+    server_utils.change_sogou_server(function(new_addr) {
+        sogou_server_addr = new_addr;
+        console.log('changed to new sogou server: ' + new_addr);
+    });
+    require('timers').setInterval(function() {
+        server_utils.change_sogou_server(function(new_addr) {
+            sogou_server_addr = new_addr;
+            console.log('changed to new sogou server: ' + new_addr);
+        });
+    }, 10 * 60 * 1000);  // every 10 mins
+
+    var my_date = new Date();
+    
     http.createServer(function(request, response) {
         console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
 
@@ -149,9 +105,9 @@ if (cluster.isMaster) {
 
         var target;
         if (request.url.startsWith('/proxy') || request.url.startsWith('http')) {
-            target = get_real_target(request.url);
+            target = server_utils.get_real_target(request.url);
         } else if (typeof request.headers.host !== 'undefined'){
-            target = get_real_target('http://' + request.headers.host + request.url);
+            target = server_utils.get_real_target('http://' + request.headers.host + request.url);
         } else {
             response.writeHead(500);
             response.end();
@@ -164,7 +120,8 @@ if (cluster.isMaster) {
         }
 
         var req_options;
-        if (is_valid_url(target.href)) {
+        //if (server_utils.is_valid_url(target.href)) {
+        if (true) {
             var sogou_auth = sogou.new_sogou_auth_str();
             var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
@@ -177,9 +134,8 @@ if (cluster.isMaster) {
             request.headers['X-Forwarded-For'] = random_ip;
 
             request.headers.host = target.host;
-            var proxy_server = sogou.new_sogou_proxy_addr();
             req_options = {
-                hostname: proxy_server,
+                hostname: sogou_server_addr,
                 path: target.href,
                 method: request.method,
                 headers: request.headers
@@ -228,14 +184,13 @@ if (cluster.isMaster) {
         request.on('error', function(err) {
             console.error('Server Error: ' + err.message);
         });
-    }).listen(server_port, server_addr);
+    }).listen(local_port, local_addr);
 
-    console.log('Listening on ' + server_addr + ':' + server_port);
+    console.log('Listening on ' + local_addr + ':' + local_port);
 }
 
 
 process.on('uncaughtException', function(err) {
     console.error('Caught exception: ' + err);
 });
-
 
