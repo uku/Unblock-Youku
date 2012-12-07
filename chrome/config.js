@@ -203,12 +203,26 @@ document.addEventListener("DOMContentLoaded", function() {
         _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
 
         get_storage('support_us', function(option) {
+            // http://goo.gl/y2vmg
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+
+            if (mm === 12 && dd >= 15) {
+                chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
+                chrome.browserAction.setTitle({title: 'Merry Christmas!'});
+            } else {
+                if (option === 'yes') {
+                    chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
+                } else {
+                    chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
+                }
+            }
+
             if (option === 'yes') {
                 _gaq.push(['_trackEvent', 'Init Support', 'Yes']);
-                chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
             } else {
                 _gaq.push(['_trackEvent', 'Init Support', 'No']);
-                chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
             }
         });
     });
