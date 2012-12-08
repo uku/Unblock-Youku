@@ -186,12 +186,30 @@ chrome.storage.onChanged.addListener(function(changes, area) {
         var support_change = changes.support_us;
 
         if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
-            chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
+            change_browser_icon('heart');
         } else {
-            chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'}); 
+            change_browser_icon('regular');
         }
     }
 });
+
+
+function change_browser_icon(option) {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+
+    if (mm === 12 && dd >= 15) {
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
+        chrome.browserAction.setTitle({title: 'Merry Christmas! (Unblock Youku ' + unblock_youku.version + ')'});
+    } else if (option === 'heart') {
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
+        chrome.browserAction.setTitle({title: 'Thank you!  (Unblock Youku ' + unblock_youku.version + ')'});
+    } else {
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
+        chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
+    }
+}
 
 
 // ====== Initialization ======
@@ -203,25 +221,11 @@ document.addEventListener("DOMContentLoaded", function() {
         _gaq.push(['_trackEvent', 'Version', unblock_youku.version]);
 
         get_storage('support_us', function(option) {
-            // http://goo.gl/y2vmg
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-
-            if (mm === 12 && dd >= 15) {
-                chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
-                chrome.browserAction.setTitle({title: 'Merry Christmas!'});
-            } else {
-                if (option === 'yes') {
-                    chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
-                } else {
-                    chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
-                }
-            }
-
             if (option === 'yes') {
+                change_browser_icon('heart');
                 _gaq.push(['_trackEvent', 'Init Support', 'Yes']);
             } else {
+                change_browser_icon('regular');
                 _gaq.push(['_trackEvent', 'Init Support', 'No']);
             }
         });
