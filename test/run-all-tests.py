@@ -48,6 +48,7 @@ def stop_server():
 
 
 def run_all_tests():
+    print
     print 'To run all test-*.js files...'
     num_failed = 0
     num_passed = 0
@@ -70,11 +71,15 @@ def run_all_tests():
     print
     print 'Final results: %d tests passed and %d tests failed.' \
         % (num_passed, num_failed)
+    print
+    return num_failed
 
 
 if __name__ == '__main__':
+    exit_code = -1
     try:
         start_server()
-        run_all_tests()
+        exit_code = run_all_tests()
     finally:
         stop_server()
+    sys.exit(exit_code)
