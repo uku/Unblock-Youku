@@ -18,9 +18,7 @@
     },
     "dependencies": {},
     "scripts": {
-        "pretest": "./test/start-server.sh",
-        "test": "phantomjs --proxy=127.0.0.1:8888 test/run-tests.js",
-        "posttest": "./test/stop-server.sh"
+        "test": "python test/run-all-tests.py"
     },
     "engines": {
         "node": "0.8.x",
