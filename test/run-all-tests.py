@@ -34,12 +34,13 @@ server_process = None
 
 def start_server():
     global server_process
-    print 'To start the server, and wait for 12 seconds to set up...'
+    print 'To start the server, and wait for 16 seconds to set up...'
     server_process = subprocess.Popen(['node', '../server.js'])
-    time.sleep(12)
+    time.sleep(16)
 
 
 def stop_server():
+    time.sleep(1)
     print 'To stop the server...',
     server_process.terminate()
     server_process.wait()
@@ -59,6 +60,7 @@ def run_all_tests():
             print
             print ' '.join(command)
             return_value = subprocess.call(command)
+            time.sleep(1)
             if return_value != 0:
                 num_failed += 1
                 print file_name + ' failed!'
