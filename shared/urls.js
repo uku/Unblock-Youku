@@ -23,12 +23,18 @@ var unblock_youku = unblock_youku || {};  // namespace
 unblock_youku.url_list = [
     'http://v.youku.com/player/*',
     'http://api.3g.youku.com/layout*',
+    'http://api.youku.com/player/*',
     'http://v2.tudou.com/*',
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
+
+    'http://220.181.61.229/*',
+    'http://61.135.183.46/*',
+    'http://220.181.118.181/*',
+    //'http://*/?prot=2&type=*',
 
     'http://vv.video.qq.com/*',
     'http://geo.js.kankan.xunlei.com/*',
@@ -40,6 +46,7 @@ unblock_youku.url_list = [
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
 
+
     'http://music.sina.com.cn/yueku/intro/*',
     //'http://ting.baidu.com/data/music/songlink*',
     //'http://ting.baidu.com/data/music/songinfo*',
@@ -50,10 +57,7 @@ unblock_youku.url_list = [
     'http://int.dpool.sina.com.cn/iplookup*',
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
-    'http://220.181.61.229/*',
-    'http://61.135.183.46/*',
-    'http://220.181.118.181/*',
-    //'http://*/?prot=2&type=*',
+    'http://www.yinyuetai.com/insite/*',
 
     // 'http://*/*',
 
