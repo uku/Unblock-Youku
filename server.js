@@ -60,7 +60,7 @@ if (cluster.isMaster) {
         cluster.fork();
     }
 
-    console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
+    console.info('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
 
 } else {
     var sogou_server_addr = sogou.new_sogou_proxy_addr();
@@ -146,7 +146,7 @@ if (cluster.isMaster) {
         } else if (run_locally) {
             // serve as a normal proxy
             if (typeof request.headers['proxy-connection'] !== 'undefined') {
-                // request.headers.connection = request.headers['proxy-connection'];
+                request.headers.connection = request.headers['proxy-connection'];
                 delete request.headers['proxy-connection'];
             }
             request.headers.host = target.host;
@@ -164,6 +164,8 @@ if (cluster.isMaster) {
             return;
         }
 
+        // console.log('Request:');
+        // console.log(req_options);
         var proxy_req = http.request(req_options, function(res) {
             res.on('data', function(chunk) {
                 response.write(chunk);
@@ -175,6 +177,9 @@ if (cluster.isMaster) {
                 console.error('Proxy Error: ' + err.message);
             });
 
+            // console.log('Response:');
+            // console.log(res.statusCode);
+            // console.log(res.headers);
             response.writeHead(res.statusCode, res.headers);
         });
 
@@ -189,7 +194,7 @@ if (cluster.isMaster) {
         });
     }).listen(local_port, local_addr);
 
-    console.log('Listening on ' + local_addr + ':' + local_port);
+    console.info('Listening on ' + local_addr + ':' + local_port);
 }
 
 
