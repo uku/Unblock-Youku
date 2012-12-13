@@ -23,6 +23,9 @@ var querystring = require('querystring');
 
 var regex_url_list = require('../shared/urls').regex_url_list;
 var new_sogou_proxy_addr = require('../shared/sogou').new_sogou_proxy_addr;
+var shared_tools = require('../shared/tools');
+var string_starts_with = shared_tools.string_starts_with;
+var to_title_case = shared_tools.to_title_case;
 
 
 function get_first_external_ip() {
@@ -48,19 +51,11 @@ function get_first_external_ip() {
 }
 
 
-// learnt from http://goo.gl/X8zmc
-if (typeof String.prototype.startsWith !== 'function') {
-    String.prototype.startsWith = function(str) {
-        return this.slice(0, str.length) === str;
-    };
-}
-
-
 function get_real_target(req_path) {
     var real_target = {};
 
     // the 'path' in proxy requests should always start with http
-    if (req_path.startsWith('http')) {
+    if (string_starts_with(req_path, 'http')) {
         real_target = url.parse(req_path);
     } else {
         var real_url = querystring.parse(url.parse(req_path).query).url;
@@ -134,7 +129,29 @@ function change_sogou_server(callback, depth) {
 }
 
 
+function filter_headers(headers) {
+    var ret_headers = {};
+
+    var field;
+    for (field in headers) {
+        if (headers.hasOwnProperty(field)) {
+            if (string_starts_with(field, 'proxy-')) {
+                if (field === 'proxy-connection') {
+                    ret_headers.connection = headers['proxy-connection'];
+                }
+            } else {
+                // in case some servers do not recognize lower-case headers, such as hacker news
+                ret_headers[to_title_case(field)] = headers[field];
+            }
+        }
+    }
+
+    return ret_headers;
+}
+
+
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
 exports.change_sogou_server = change_sogou_server;
+exports.filter_headers = filter_headers;

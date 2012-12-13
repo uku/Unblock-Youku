@@ -43,14 +43,6 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
 var pac_file_content = shared_tools.url2pac(require('./shared/urls').url_list, proxy_addr);
 
 
-// learnt from http://goo.gl/X8zmc
-if (typeof String.prototype.startsWith !== 'function') {
-    String.prototype.startsWith = function(str) {
-        return this.slice(0, str.length) === str;
-    };
-}
-
-
 if (cluster.isMaster) {
     var num_CPUs = require('os').cpus().length;
     // num_CPUs = 1;
@@ -80,116 +72,122 @@ if (cluster.isMaster) {
 
     var my_date = new Date();
     
-    http.createServer(function(request, response) {
-        console.info(request.connection.remoteAddress + ': ' + request.method + ' ' + request.url);
+    http.createServer(function(client_request, client_response) {
+        console.info(client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
 
-        if (request.url === '/favicon.ico') {
-            response.writeHead(404);
-            response.end();
+        if (client_request.url === '/favicon.ico') {
+            client_response.writeHead(404);
+            client_response.end();
             return;
         }
 
-        if (request.url === '/crossdomain.xml') {
-            response.writeHead(200, {
+        if (client_request.url === '/crossdomain.xml') {
+            client_response.writeHead(200, {
                 'Content-Type': 'text/xml'
             });
-            response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
+            client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                 '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
             return;
         }
 
-        if (request.url === '/proxy.pac') {
-            response.writeHead(200, {
+        if (client_request.url === '/proxy.pac') {
+            client_response.writeHead(200, {
                 'Content-Type': 'application/x-ns-proxy-autoconfig'
             });
-            response.end(pac_file_content);
+            client_response.end(pac_file_content);
             return;
         }
 
         var target;
-        if (request.url.startsWith('/proxy') || request.url.startsWith('http')) {
-            target = server_utils.get_real_target(request.url);
-        } else if (typeof request.headers.host !== 'undefined'){
-            target = server_utils.get_real_target('http://' + request.headers.host + request.url);
+        if (shared_tools.string_starts_with(client_request.url, '/proxy') || 
+                shared_tools.string_starts_with(client_request.url, 'http')) {
+            target = server_utils.get_real_target(client_request.url);
+        } else if (typeof client_request.headers.host !== 'undefined'){
+            target = server_utils.get_real_target('http://' + client_request.headers.host + client_request.url);
         } else {
-            response.writeHead(500);
-            response.end();
+            client_response.writeHead(500);
+            client_response.end();
             return;
         }
         if (!target.host) {
-            response.writeHead(403);
-            response.end();
+            client_response.writeHead(403);
+            client_response.end();
             return;
         }
 
-        var req_options;
+        var proxy_request_options;
         // if (true) {
         if (server_utils.is_valid_url(target.href)) {
             var sogou_auth = sogou.new_sogou_auth_str();
             var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
-            request.headers['X-Sogou-Auth'] = sogou_auth;
-            request.headers['X-Sogou-Timestamp'] = timestamp;
-            request.headers['X-Sogou-Tag'] = sogou_tag;
+            client_request.headers['X-Sogou-Auth'] = sogou_auth;
+            client_request.headers['X-Sogou-Timestamp'] = timestamp;
+            client_request.headers['X-Sogou-Tag'] = sogou_tag;
 
-            var random_ip = shared_tools.new_random_ip();
-            request.headers['X-Forwarded-For'] = random_ip;
+            client_request.headers['X-Forwarded-For'] = shared_tools.new_random_ip();
 
-            request.headers.host = target.host;
-            req_options = {
+            client_request.headers.host = target.host;
+            proxy_request_options = {
                 hostname: sogou_server_addr,
+                host: sogou_server_addr,
+                port: +target.port,  // but always 80
                 path: target.href,
-                method: request.method,
-                headers: request.headers
+                method: client_request.method,
+                headers: server_utils.filter_headers(client_request.headers)
             };
         } else if (run_locally) {
             // serve as a normal proxy
-            if (typeof request.headers['proxy-connection'] !== 'undefined') {
-                request.headers.connection = request.headers['proxy-connection'];
-                delete request.headers['proxy-connection'];
-            }
-            request.headers.host = target.host;
-            req_options = {
+            client_request.headers.host = target.host;
+            proxy_request_options = {
                 host: target.host,
                 hostname: target.hostname,
                 port: +target.port,
                 path: target.path,
-                method: request.method,
-                headers: request.headers
+                method: client_request.method,
+                headers: server_utils.filter_headers(client_request.headers)
             };
         } else {
-            response.writeHead(403);
-            response.end();
+            client_response.writeHead(403);
+            client_response.end();
             return;
         }
 
         // console.log('Request:');
-        // console.log(req_options);
-        var proxy_req = http.request(req_options, function(res) {
-            res.on('data', function(chunk) {
-                response.write(chunk);
+        // console.log(proxy_request_options);
+        var proxy_request = http.request(proxy_request_options, function(proxy_response) {
+            // may change these to stream.pipe later when the stream api is stabilized
+
+            proxy_response.on('data', function(chunk) {
+                client_response.write(chunk);
             });
-            res.on('end', function() {
-                response.end();
+            proxy_response.on('end', function() {
+                client_response.end();
             });
-            res.on('error', function(err) {
+            proxy_response.on('close', function() {
+                client_response.close();
+            });
+            proxy_response.on('error', function(err) {
                 console.error('Proxy Error: ' + err.message);
             });
 
             // console.log('Response:');
-            // console.log(res.statusCode);
-            // console.log(res.headers);
-            response.writeHead(res.statusCode, res.headers);
+            // console.log(proxy_response.statusCode);
+            // console.log(proxy_response.headers);
+            client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
 
-        request.on('data', function(chunk) {
-            proxy_req.write(chunk);
+        client_request.on('data', function(chunk) {
+            proxy_request.write(chunk);
         });
-        request.on('end', function() {
-            proxy_req.end();
+        client_request.on('end', function() {
+            proxy_request.end();
         });
-        request.on('error', function(err) {
+        client_request.on('close', function() {
+            proxy_request.close();
+        });
+        client_request.on('error', function(err) {
             console.error('Server Error: ' + err.message);
         });
     }).listen(local_port, local_addr);

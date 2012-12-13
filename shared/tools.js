@@ -49,6 +49,22 @@ function url2pac(url_list, proxy_server) {
 }
 
 
+function string_starts_with(str, substr) {
+    return str.slice(0, substr.length) === substr;
+}
+
+
+// change host to Host, or user-agent to User-Agent
+function to_title_case(str) {
+    // just a little differnt from http://goo.gl/IGhfR
+    return str.replace(/\w[^\-\s]*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
 exports.url2pac = url2pac;
+exports.string_starts_with = string_starts_with;
+exports.to_title_case = to_title_case;

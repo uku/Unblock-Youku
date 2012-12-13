@@ -17,6 +17,12 @@
  */
 
 
+if (typeof string_starts_with !== 'function') {
+    // should only reach here in node.js runtime
+    var string_starts_with = require('./tools').string_starts_with;
+}
+
+
 function new_sogou_auth_str() {
     var auth_str = '/30/853edc6d49ba4e27';
     var i, tmp_str;
@@ -40,18 +46,10 @@ function new_sogou_proxy_addr() {
 }
 
 
-// String.startsWith
-if (typeof String.prototype.startsWith !== 'function') {
-    String.prototype.startsWith = function(str) {
-        return this.slice(0, str.length) === str;
-    };
-}
-
-
 // based on http://goo.gl/th215
 function compute_sogou_tag(timestamp, target_link) {
     var hostname;
-    if (target_link.startsWith('http://')) {
+    if (string_starts_with(target_link, 'http://')) {
         hostname = target_link.match(/^http:\/\/(.[^:\/]+)/)[1];
     } else {
         hostname = target_link;
