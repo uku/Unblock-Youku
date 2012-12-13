@@ -114,7 +114,7 @@ function change_sogou_server(callback, depth) {
 
     // http://goo.gl/G2CoU
     req.on('socket', function (socket) {
-        socket.setTimeout(15 * 1000, function() {  // 15s
+        socket.setTimeout(10 * 1000, function() {  // 10s
             req.abort();
             console.warn('Timeout for ' + new_addr + '. Aborted.');
         });

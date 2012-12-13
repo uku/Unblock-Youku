@@ -34,9 +34,9 @@ server_process = None
 
 def start_server():
     global server_process
-    print 'To start the server, and wait for 16 seconds to set up...'
+    print 'To start the server, and wait for 21 seconds to set up...'
     server_process = subprocess.Popen(['node', '../server.js'])
-    time.sleep(16)
+    time.sleep(21)
 
 
 def stop_server():
@@ -54,22 +54,22 @@ def run_all_tests():
     num_passed = 0
     for file_name in os.listdir('.'):
         if file_name.startswith('test-') and file_name.endswith('.js'):
-            if file_name.endswith('proxy.js'):
+            if file_name.endswith('-proxy.js'):
                 command = ['phantomjs', '--proxy=127.0.0.1:8888', file_name]
             else:
                 command = ['phantomjs', file_name]
             print
             print ' '.join(command)
             return_value = subprocess.call(command)
-            time.sleep(1)
+            time.sleep(2)  # sleep 2 seconds between tests
             if return_value != 0:
                 num_failed += 1
-                print file_name + ' failed!'
+                print file_name + ' FAILED!'
             else:
                 num_passed += 1
-                print file_name + ' passed!'
+                print file_name + ' passed.'
     print
-    print 'Final results: %d tests passed and %d tests failed.' \
+    print 'Final results: %d tests passed and %d TESTS FAILED.' \
         % (num_passed, num_failed)
     print
     return num_failed

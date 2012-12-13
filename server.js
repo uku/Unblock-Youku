@@ -154,7 +154,7 @@ if (cluster.isMaster) {
             return;
         }
 
-        // console.log('Request:');
+        // console.log('Client Request:');
         // console.log(proxy_request_options);
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             // may change these to stream.pipe later when the stream api is stabilized
@@ -165,14 +165,16 @@ if (cluster.isMaster) {
             proxy_response.on('end', function() {
                 client_response.end();
             });
-            proxy_response.on('close', function() {
-                client_response.close();
-            });
+            // Do we need to handle this?
+            // I didn't find the api like response.close()
+            // proxy_response.on('close', function() {
+            //     client_response.close();
+            // });
             proxy_response.on('error', function(err) {
                 console.error('Proxy Error: ' + err.message);
             });
 
-            // console.log('Response:');
+            // console.log('Server Response:');
             // console.log(proxy_response.statusCode);
             // console.log(proxy_response.headers);
             client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
@@ -184,9 +186,10 @@ if (cluster.isMaster) {
         client_request.on('end', function() {
             proxy_request.end();
         });
-        client_request.on('close', function() {
-            proxy_request.close();
-        });
+        // It seems there is no request.close() api
+        // client_request.on('close', function() {
+        //    proxy_request.close();
+        // });
         client_request.on('error', function(err) {
             console.error('Server Error: ' + err.message);
         });
