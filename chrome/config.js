@@ -34,6 +34,7 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://*.gougou.com/*',
     'http://www.yyets.com/*',
     'http://pay.youku.com/buy/redirect.html*',
+    'http://pay.video.qq.com/fcgi-bin/paylimit*',
     'http://v.pptv.com/show/*.html',
     'http://music.baidu.com/box*',
     'http://fm.baidu.com/*',
