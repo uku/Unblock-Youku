@@ -137,7 +137,7 @@ function filter_headers(headers) {
         if (headers.hasOwnProperty(field)) {
             if (string_starts_with(field, 'proxy-')) {
                 if (field === 'proxy-connection') {
-                    ret_headers.connection = headers['proxy-connection'];
+                    ret_headers.Connection = headers['proxy-connection'];
                 }
             } else {
                 // in case some servers do not recognize lower-case headers, such as hacker news

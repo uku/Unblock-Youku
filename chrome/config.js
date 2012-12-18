@@ -24,20 +24,24 @@ unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // only for redirec
 unblock_youku.backup_server = 'yo.uku.im/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
-    //'http://shop.xunlei.com/*',
     'http://live.video.sina.com.cn/room/*',
+
+    'http://pay.youku.com/buy/redirect.html*',
+    'http://pay.video.qq.com/fcgi-bin/paylimit*',
+
+    'http://play.baidu.com/*',
+    'http://zhangmenshiting.baidu.com/*',
+    'http://music.baidu.com/box*',
     'http://music.baidu.com/data/music/songlink*',
     'http://music.baidu.com/data/music/songinfo*',
     'http://music.baidu.com/song/*/download*',
+    'http://fm.baidu.com/*',
+
+    'http://v.pptv.com/show/*.html',
     'http://www.songtaste.com/*',
     'http://songtaste.com/*',
     'http://*.gougou.com/*',
     'http://www.yyets.com/*',
-    'http://pay.youku.com/buy/redirect.html*',
-    'http://pay.video.qq.com/fcgi-bin/paylimit*',
-    'http://v.pptv.com/show/*.html',
-    'http://music.baidu.com/box*',
-    'http://fm.baidu.com/*',
     'http://imanhua.com/comic/*',
     'http://www.imanhua.com/comic/*'
 ]);
