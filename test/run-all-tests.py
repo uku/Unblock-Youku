@@ -28,6 +28,15 @@ import os
 if os.path.dirname(sys.argv[0]) != '':
     os.chdir(os.path.dirname(sys.argv[0]))
 
+print 'PhantomJS',
+try:
+    version = subprocess.check_output(['phantomjs', '--version'])
+    print version
+except Exception as exp:
+    print 'is not installed.'
+    print 'Please install it and try again.'
+    sys.exit(-1)
+
 
 server_process = None
 
