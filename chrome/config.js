@@ -43,7 +43,9 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://*.gougou.com/*',
     'http://www.yyets.com/*',
     'http://imanhua.com/comic/*',
-    'http://www.imanhua.com/comic/*'
+    'http://www.imanhua.com/comic/*',
+    'http://imanhua.com/v2*',
+    'http://www.imanhua.com/v2*'
 ]);
 unblock_youku.redirect_url_list = unblock_youku.url_list;
 unblock_youku.header_extra_url_list = [
