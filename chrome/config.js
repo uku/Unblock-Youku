@@ -34,6 +34,7 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://music.baidu.com/box*',
     'http://music.baidu.com/data/music/songlink*',
     'http://music.baidu.com/data/music/songinfo*',
+    'http://music.baidu.com/data/music/fmlink*',
     'http://music.baidu.com/song/*/download*',
     'http://fm.baidu.com/*',
 
