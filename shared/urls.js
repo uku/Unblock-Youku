@@ -53,8 +53,10 @@ unblock_youku.url_list = [
     //'http://ting.baidu.com/song/*/download*',
 
     'http://v.iask.com/v_play.php*',
-    //'http://v.iask.com/v_play_ipad.cx.php*',
-    'http://int.dpool.sina.com.cn/iplookup*',
+    'http://v.iask.com/v_play_ipad.cx.php*',
+    'http://*.dpool.sina.com.cn/iplookup*',
+    'http://edge.v.iask.com/*',
+
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',

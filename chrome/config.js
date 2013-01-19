@@ -211,7 +211,7 @@ function change_browser_icon(option) {
         chrome.browserAction.setTitle({title: 'Merry Christmas! (Unblock Youku ' + unblock_youku.version + ')'});
     } else if (option === 'heart') {
         chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
-        chrome.browserAction.setTitle({title: 'Thank you!  (Unblock Youku ' + unblock_youku.version + ')'});
+        chrome.browserAction.setTitle({title: 'Thank you! (Unblock Youku ' + unblock_youku.version + ')'});
     } else {
         chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
         chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
