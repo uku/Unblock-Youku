@@ -41,7 +41,6 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://v.pptv.com/show/*.html',
     'http://www.songtaste.com/*',
     'http://songtaste.com/*',
-    'http://*.gougou.com/*',
     'http://www.yyets.com/*',
     'http://imanhua.com/comic/*',
     'http://www.imanhua.com/comic/*',
