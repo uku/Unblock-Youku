@@ -24,6 +24,7 @@ unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // only for redirec
 unblock_youku.backup_server = 'yo.uku.im/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
+    'http://www.tudou.com/programs/view/*',
     'http://live.video.sina.com.cn/room/*',
 
     'http://pay.youku.com/buy/redirect.html*',
