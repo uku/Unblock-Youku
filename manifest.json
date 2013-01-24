@@ -37,9 +37,9 @@
     },
     "options_page": "chrome/pages/options.html",
     "content_scripts": [{
-        "matches": ["http://www.tudou.com/albumplay/*"],
+        "matches": ["http://www.tudou.com/*"],
         "js": ["chrome/content/tudou.js"],
-        "run_at": "document_idle",
+        "run_at": "document_end",
         "all_frames": true
     }, {
         "matches": ["http://*/*"],
