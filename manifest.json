@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.1.0",
+    "version": "2.6.1.1",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -37,6 +37,11 @@
     },
     "options_page": "chrome/pages/options.html",
     "content_scripts": [{
+        "matches": ["http://www.tudou.com/albumplay/*"],
+        "js": ["chrome/content/tudou.js"],
+        "run_at": "document_idle",
+        "all_frames": true
+    }, {
         "matches": ["http://*/*"],
         "exclude_matches": [
             "http://*.org/*",

@@ -25,6 +25,7 @@ unblock_youku.url_list = [
     'http://api.3g.youku.com/layout*',
     'http://api.youku.com/player/*',
     'http://v2.tudou.com/*',
+    'http://www.tudou.com/a/*',
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
