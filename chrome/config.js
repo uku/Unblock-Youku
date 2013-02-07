@@ -209,13 +209,39 @@ chrome.storage.onChanged.addListener(function(changes, area) {
 
 function change_browser_icon(option) {
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
+    var y = today.getFullYear();
+    var d = today.getDate();
+    var m = today.getMonth() + 1;
 
-    if (mm === 12 && dd >= 15) {
+    // hard-coded spring festivals
+    var is_spring = false;
+    switch (y) {
+        case 2013:  // Feb 10, 2013
+            if (m === 2 && d <= 20) {
+                is_spring = true;
+            }
+            break;
+        // hope our extension can survive longer than this...
+        case 2014:  // Jan 31, 2014
+            if ((m === 1 && 20 >= d) || (m === 2 && d <= 10)) {
+                is_spring = true;
+            }
+            break;
+    }
+    if (is_spring) {
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19spring.png'});
+        chrome.browserAction.setTitle({title: 'Happy Spring Festival! (Unblock Youku ' + unblock_youku.version + ')'});
+        return;
+    }
+
+    // christmas
+    if (m === 12 && d >= 15) {
         chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
         chrome.browserAction.setTitle({title: 'Merry Christmas! (Unblock Youku ' + unblock_youku.version + ')'});
-    } else if (option === 'heart') {
+        return;
+    }
+    
+    if (option === 'heart') {
         chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
         chrome.browserAction.setTitle({title: 'Thank you! (Unblock Youku ' + unblock_youku.version + ')'});
     } else {
