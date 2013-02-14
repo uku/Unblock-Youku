@@ -41,12 +41,12 @@ unblock_youku.url_list = [
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
+    // 'http://c1.pptv.com/*',
     'http://dyn.ugc.pps.tv/*',
     'http://inner.kandian.com/*',
     'http://ipservice.163.com/*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
-
 
     'http://music.sina.com.cn/yueku/intro/*',
     //'http://ting.baidu.com/data/music/songlink*',
@@ -57,6 +57,7 @@ unblock_youku.url_list = [
     'http://v.iask.com/v_play_ipad.cx.php*',
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://edge.v.iask.com/*',
+    'http://tv.weibo.com/player/*',
 
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
