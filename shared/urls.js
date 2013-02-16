@@ -31,6 +31,7 @@ unblock_youku.url_list = [
     'http://live.tv.sohu.com/live/player*',
     'http://hot.vrs.letv.com/*',
     'http://data.video.qiyi.com/*',
+    'http://interface.bilibili.tv/player*',
 
     'http://220.181.61.229/*',
     'http://61.135.183.46/*',
