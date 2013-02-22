@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.1.6",
+    "version": "2.6.1.7",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -31,8 +31,8 @@
         ]
     },
     "browser_action": {
-        "default_title": "Unblock Youku",
-        "default_icon": "chrome/icons/icon19.png",
+        "default_title": "Unblock Youku isn't working properly! Visit http://ub.uku.im/faq for possible solutions.",
+        "default_icon": "chrome/icons/icon19gray.png",
         "default_popup": "chrome/pages/popup.html"
     },
     "options_page": "chrome/pages/options.html",
