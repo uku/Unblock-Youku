@@ -2,7 +2,7 @@
 
 This project contains three-fold functionalities.
 
-1. _A Google Chrome extension_ helping registered users access their web services while travelling outside mainland China.
+1. _A Google Chrome extension_ helping users access their web services while travelling outside mainland China.
  
    You can find this extension on Chrome Web Store at [http://ub.uku.im/chrome](http://ub.uku.im/chrome)
 
