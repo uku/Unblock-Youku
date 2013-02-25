@@ -1,6 +1,6 @@
 {
     "name": "Unblock Youku",
-    "version": "2.6.2.1",
+    "version": "2.6.2.2",
     "manifest_version": 2,
     "minimum_chrome_version": "21.0",
     "description": "__MSG_description__",
@@ -46,13 +46,12 @@
         "exclude_matches": [
             "http://*.org/*",
             "http://*.edu/*",
-            "http://*.edu.hk/*",
-            "http://*.edu.tw/*",
-            "http://*.edu.au/*",
-            "http://*.edu.sg/*",
             "http://*.ac.uk/*",
             "http://*.ac.jp/*",
             "http://*.cn/*",
+            "http://*.gov/*",
+            "http://*.gc.ca/*",
+            "http://*.go.jp/*",
             "http://*.youku.com/*",
             "http://*.tudou.com/*",
             "http://*.soku.com/*",
@@ -60,6 +59,7 @@
             "http://*.xunlei.com/*"
         ],
         "exclude_globs" : [
+            "http://*.edu.*/*",
             "http://u*.ca/*",
             "http://*.u*.ca/*",
             "http://uni*.it/*",
@@ -68,6 +68,7 @@
             "http://*.uni*.de/*",
             "http://uni*.fr/*",
             "http://*.uni*.fr/*",
+            "http://*.gov.*/*",
             "http://*game.com/*",
             "http://*mail*",
             "http://*bank*",
