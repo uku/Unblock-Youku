@@ -5,6 +5,18 @@
   "popup_title": {
     "message": "Débloquer la configuration Youku"
   },
+  "support_title": {
+    "message": "Nous Avons Besoin De Votre Soutien"
+  },
+  "support_checkbox_label": {
+    "message": "Oui, je veux soutenir ce software."
+  },
+  "support_message_no": {
+    "message": "Vous devez uniquement activer ceci pour nous soutenir. Rien d'autre. <br />Nous n'allons pas à afficher des annonces à vous ennuyer, vous n'avez pas besoin de nous payer pour quoi que ce soit, et nous ne voulons pas votre don.<br />Pour plus de discussions, s'il vous plaît visitez  <a href=\"http://ub.uku.im/viglink\" target=\"_blank\">ici</a>."
+  },
+  "support_message_yes": {
+    "message": "Merci! Votre soutien est grandement apprécie!"
+  },
   "mode_select": {
     "message": "Sélectionner la mode"
   },
