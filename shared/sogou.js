@@ -37,10 +37,15 @@ function new_sogou_auth_str() {
 function new_sogou_proxy_addr() {
     var random_num = Math.floor(Math.random() * (16 + 16));  // 0 ~ 15 edu and 0 ~ 15 dxt
     var proxy_addr;
+
     if (random_num < 16) {
+        if (8 === random_num || 12 === random_num) {
+            return new_sogou_proxy_addr(); // just retry
+        }
         proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // 0 ~ 15
     } else {
-        proxy_addr = 'h' + (random_num - 16) + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
+        random_num -= 16;
+        proxy_addr = 'h' + random_num + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
     }
     return proxy_addr;
 }

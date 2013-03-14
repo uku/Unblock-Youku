@@ -50,6 +50,7 @@ unblock_youku.url_list = [
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
     'http://3g.music.qq.com/*',
+    'http://mqqplayer.3g.qq.com/*',
 
     'http://music.sina.com.cn/yueku/intro/*',
     //'http://ting.baidu.com/data/music/songlink*',
