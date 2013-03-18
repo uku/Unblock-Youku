@@ -66,6 +66,7 @@ unblock_youku.url_list = [
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
+    'http://www.yinyuetai.com/main/get-video-info*',
 
     // 'http://*/*',
 
