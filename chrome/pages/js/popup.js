@@ -127,7 +127,7 @@ $(document).ready(function() {
     var my_date = new Date();
     if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();
-    } else if (my_date.getTime() > localStorage.first_time + 1000 * 60 * 60 * 24 * 3) {
+    } else if (my_date.getTime() > parseInt(localStorage.first_time) + 1000 * 60 * 60 * 24 * 3) {
         $('div#rating').show(); // delay 3 days for the rating div to show up, hahaha
     }
 });
