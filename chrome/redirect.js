@@ -51,14 +51,18 @@ function http_redirector(details) {
 }
 
 function setup_redirect() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        http_redirector,
-        {
-            urls: unblock_youku.redirect_url_list
-        },
-        ["blocking"]);
-    // addListener ends here
-    console.log('http_redirector is set');
+    if (!chrome.webRequest.onBeforeRequest.hasListener(http_redirector)) {
+        chrome.webRequest.onBeforeRequest.addListener(
+            http_redirector,
+            {
+                urls: unblock_youku.redirect_url_list
+            },
+            ["blocking"]
+        );
+        console.log('http_redirector is set');
+    } else {
+        console.error('http_redirector is already there!');
+    }
 
     unblock_youku.backend_server = unblock_youku.default_server;
 
@@ -91,7 +95,11 @@ function setup_redirect() {
 
 
 function clear_redirect() {
-    chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
-    console.log('http_redirector is removed');
+    if (chrome.webRequest.onBeforeRequest.hasListener(http_redirector)) {
+        chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
+        console.log('http_redirector is removed');
+    } else {
+        console.error('http_redirector is not there!');
+    }
 }
 

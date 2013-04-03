@@ -33,19 +33,25 @@ function timezone_changer(details) {
 }
 
 function setup_timezone() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        timezone_changer,
-        {
-            urls: ['http://v.youku.com/player/getPlayList*']
-        },
-        ["blocking"]);
-    // addListener ends here
-    console.log('timezone_changer is set');
+    if (!chrome.webRequest.onBeforeRequest.hasListener(timezone_changer)) {
+        chrome.webRequest.onBeforeRequest.addListener(
+            timezone_changer,
+            {urls: ['http://v.youku.com/player/getPlayList*']},
+            ["blocking"]
+        );
+        console.log('timezone_changer is set');
+    } else {
+        console.error('timezone_changer is already there!');
+    }
 }
 
 
 function clear_timezone() {
-    chrome.webRequest.onBeforeRequest.removeListener(timezone_changer);
-    console.log('timezone_changer is removed');
+    if (chrome.webRequest.onBeforeRequest.hasListener(timezone_changer)) {
+        chrome.webRequest.onBeforeRequest.removeListener(timezone_changer);
+        console.log('timezone_changer is removed');
+    } else {
+        console.error('timezone_change is not there!');
+    }
 }
 

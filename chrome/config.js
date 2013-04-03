@@ -18,9 +18,9 @@
 
 /*jslint browser: true */
 /*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false, new_sogou_auth_str: false, _gaq: false */
-/*global setup_lite_header: false, setup_redirect: false, setup_normal_header: false, setup_proxy: false, setup_timezone: false */
+/*global setup_lite_header: false, setup_redirect: false, setup_normal_header: false, setup_proxy: false, setup_timezone: false, setup_extra_header: false */
 /*global clear_lite_header: false, clear_redirect: false, clear_normal_header: false, clear_proxy: false, clear_timezone: false */
-
+"use strict";
 
 // ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
@@ -125,6 +125,7 @@ function get_mode_name(callback) {
 function clear_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
+        clear_timezone();
         clear_lite_header();
         console.log('cleared settings for lite');
         break;
@@ -133,9 +134,9 @@ function clear_mode_settings(mode_name) {
         console.log('cleared settings for redirect');
         break;
     case 'normal':
+        clear_timezone();
         clear_proxy();
         clear_normal_header();
-        clear_timezone();
         console.log('cleared settings for normal');
         break;
     default:
@@ -150,6 +151,7 @@ function setup_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
         setup_lite_header();
+        setup_timezone();
         break;
     case 'redirect':
         setup_redirect();
@@ -218,7 +220,7 @@ function change_browser_icon(option) {
 
 
 // in case settings are changed (or synced) in background
-chrome.storage.onChanged.addListener(function(changes, area) {
+function storage_monitor(changes, area) {
     console.log('storage changes:');
     console.log(changes);
 
@@ -255,12 +257,23 @@ chrome.storage.onChanged.addListener(function(changes, area) {
             change_browser_icon('regular');
         }
     }
-});
+}
+
+
+function setup_storage_monitor() {
+    if (!chrome.storage.onChanged.hasListener(storage_monitor)) {
+        chrome.storage.onChanged.addListener(storage_monitor);
+        console.log('storage_monitor is set');
+    } else {
+        console.error('storage_monitor is already there!');
+    }
+}
 
 
 // ====== Initialization ======
 document.addEventListener("DOMContentLoaded", function() {
-    "use strict";
+    setup_storage_monitor();
+
     get_mode_name(function(current_mode_name) {
         setup_mode_settings(current_mode_name);
 
@@ -277,5 +290,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+
+    setup_extra_header();
 });
 

@@ -52,54 +52,75 @@ function normal_header_modifier(details) {
 }
 
 function setup_lite_header() {
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        lite_header_modifier,
-        {
-            urls: unblock_youku.normal_url_list  // the same url list as normal mode
-        },
-        ['requestHeaders', 'blocking']);
-    // addListener ends here
-    console.log('lite_header_modifier is set');
+    if (!chrome.webRequest.onBeforeSendHeaders.hasListener(lite_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.addListener(
+            lite_header_modifier,
+            {urls: unblock_youku.normal_url_list},  // the same url list as normal mode
+            ['requestHeaders', 'blocking']
+        );
+        console.log('lite_header_modifier is set');
+    } else {
+        console.error('lite_header_modifier is already there!');
+    }
 }
 
 function setup_normal_header() {
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-        normal_header_modifier,
-        {
-            urls: unblock_youku.normal_url_list
-        },
-        ['requestHeaders', 'blocking']);
-    // addListener ends here
-    console.log('normal_header_modifier is set');
+    if (!chrome.webRequest.onBeforeSendHeaders.hasListener(normal_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.addListener(
+            normal_header_modifier,
+            {
+                urls: unblock_youku.normal_url_list
+            },
+            ['requestHeaders', 'blocking']
+        );
+        console.log('normal_header_modifier is set');
+    } else {
+        console.error('normal_header_modifer is already there!');
+    }
 }
 
 
 function clear_lite_header() {
-    chrome.webRequest.onBeforeSendHeaders.removeListener(lite_header_modifier);
-    console.log('lite_header_modifier is removed');
+    if (chrome.webRequest.onBeforeSendHeaders.hasListener(lite_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.removeListener(lite_header_modifier);
+        console.log('lite_header_modifier is removed');
+    } else {
+        console.error('lite_header_modifer is not there!');
+    }
 }
 
 function clear_normal_header() {
-    chrome.webRequest.onBeforeSendHeaders.removeListener(normal_header_modifier);
-    console.log('normal_header_modifier is removed');
+    if (chrome.webRequest.onBeforeSendHeaders.hasListener(normal_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.removeListener(normal_header_modifier);
+        console.log('normal_header_modifier is removed');
+    } else {
+        console.error('normal_header_modifier is not there!');
+    }
 }
 
 
 // extra sites to handle
-chrome.webRequest.onBeforeSendHeaders.addListener(
-    function(details) {
-        details.requestHeaders.push({
-            name: 'X-Forwarded-For',
-            value: unblock_youku.ip_addr
-        });
+function extra_header_modifier(details) {
+    details.requestHeaders.push({
+        name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    });
 
-        return {requestHeaders: details.requestHeaders};
-    },
+    return {requestHeaders: details.requestHeaders};
+}
 
-    {
-        urls: unblock_youku.header_extra_url_list
-    },
-
-    ['requestHeaders', 'blocking']
-);
+function setup_extra_header() {
+    if (!chrome.webRequest.onBeforeSendHeaders.hasListener(extra_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.addListener(
+            extra_header_modifier,
+            {
+                urls: unblock_youku.header_extra_url_list
+            },
+            ['requestHeaders', 'blocking']
+        );
+        console.log('extra_header_modifier is set');
+    } else {
+        console.error('extra_header_modifer is already there!');
+    }
+}
 
