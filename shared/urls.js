@@ -37,6 +37,10 @@ unblock_youku.url_list = [
     'http://220.181.61.229/*',
     'http://61.135.183.46/*',
     'http://220.181.118.181/*',
+    'http://220.181.19.218/*',
+    'http://123.126.48.47/*',
+    'http://123.126.48.48/*',
+    'http://*/vrs_flash.action*',
     //'http://*/?prot=2&type=*',
 
     'http://vv.video.qq.com/*',
