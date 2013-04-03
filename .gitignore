@@ -3,3 +3,5 @@
 *.swp
 *.zip
 *.pyc
+*.log
+*.bak

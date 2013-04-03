@@ -16,6 +16,40 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome: false, unblock_youku: false, compute_sogou_tag: false */
+"use strict";
+
+function lite_header_modifier(details) {
+    details.requestHeaders.push({
+        name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    });
+
+    return {requestHeaders: details.requestHeaders};
+}
+
+function normal_header_modifier(details) {
+    var timestamp = Math.round(details.timeStamp / 1000).toString(16);
+    var tag = compute_sogou_tag(timestamp, details.url);
+
+    console.log('t=' + timestamp + ' h=' + tag + ' ' + details.url);
+
+    details.requestHeaders.push({
+        name: 'X-Sogou-Auth',
+        value: unblock_youku.sogou_auth
+    }, {
+        name: 'X-Sogou-Timestamp',
+        value: timestamp
+    }, {
+        name: 'X-Sogou-Tag',
+        value: tag
+    }, {
+        name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    });
+
+    return {requestHeaders: details.requestHeaders};
+}
 
 function setup_lite_header() {
     chrome.webRequest.onBeforeSendHeaders.addListener(
@@ -51,39 +85,6 @@ function clear_normal_header() {
 }
 
 
-function lite_header_modifier(details) {
-    details.requestHeaders.push({
-        name: 'X-Forwarded-For',
-        value: unblock_youku.ip_addr
-    });
-
-    return {requestHeaders: details.requestHeaders};
-}
-
-function normal_header_modifier(details) {
-    var timestamp = Math.round(details.timeStamp / 1000).toString(16);
-    var tag = compute_sogou_tag(timestamp, details.url);
-
-    console.log('t=' + timestamp + ' h=' + tag + ' ' + details.url);
-
-    details.requestHeaders.push({
-        name: 'X-Sogou-Auth',
-        value: unblock_youku.sogou_auth
-    }, {
-        name: 'X-Sogou-Timestamp',
-        value: timestamp
-    }, {
-        name: 'X-Sogou-Tag',
-        value: tag
-    }, {
-        name: 'X-Forwarded-For',
-        value: unblock_youku.ip_addr
-    });
-
-    return {requestHeaders: details.requestHeaders};
-}
-
-
 // extra sites to handle
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
@@ -99,5 +100,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         urls: unblock_youku.header_extra_url_list
     },
 
-    ['requestHeaders', 'blocking']);
-// addListener ends here
+    ['requestHeaders', 'blocking']
+);
+

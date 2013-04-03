@@ -24,6 +24,7 @@ if (typeof string_starts_with !== 'function') {
 
 
 function new_sogou_auth_str() {
+    "use strict";
     var auth_str = '/30/853edc6d49ba4e27';
     var i, tmp_str;
     for (i = 0; i < 8; i++) {
@@ -35,6 +36,7 @@ function new_sogou_auth_str() {
 
 
 function new_sogou_proxy_addr() {
+    "use strict";
     var random_num = Math.floor(Math.random() * (16 + 16));  // 0 ~ 15 edu and 0 ~ 15 dxt
     var proxy_addr;
 
@@ -53,6 +55,7 @@ function new_sogou_proxy_addr() {
 
 // based on http://goo.gl/th215
 function compute_sogou_tag(timestamp, target_link) {
+    "use strict";
     var hostname;
     if (string_starts_with(target_link, 'http://')) {
         hostname = target_link.match(/^http:\/\/(.[^:\/]+)/)[1];
@@ -66,7 +69,7 @@ function compute_sogou_tag(timestamp, target_link) {
 
     var hash = total_len;  // output hash tag
 
-    var i;
+    var i, low, high;
     for (i = 0; i < numb_iter; i++) {
         low  = s.charCodeAt(4 * i + 1) * 256 + s.charCodeAt(4 * i);  // right most 16 bits in little-endian
         high = s.charCodeAt(4 * i + 3) * 256 + s.charCodeAt(4 * i + 2);  // left most

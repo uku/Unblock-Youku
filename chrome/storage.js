@@ -16,6 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome: false */
+"use strict";
 
 // have to use a callback function
 function get_storage(key, callback) {
@@ -37,6 +39,7 @@ function remove_storage(key, callback) {
 }
 
 
+/* 
 (function migrate_storage(list_keys) {
     var old_keys = [];
     var i;
@@ -68,4 +71,5 @@ function remove_storage(key, callback) {
         console.error(err);
     }
 }(['unblock_youku_mode', 'custom_server', 'test']));
+*/
 

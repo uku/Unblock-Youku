@@ -18,6 +18,7 @@
 
 
 function new_random_ip() {
+    "use strict";
     var ip_addr = '220.181.111.';
     //ip_addr += Math.floor(Math.random() * 255) + '.';
     ip_addr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
@@ -26,6 +27,7 @@ function new_random_ip() {
 
 
 function url2pac(url_list, proxy_server) {
+    "use strict";
     var s = 'function FindProxyForURL(url, host) {\n' +
             '    if (';
 
@@ -50,12 +52,14 @@ function url2pac(url_list, proxy_server) {
 
 
 function string_starts_with(str, substr) {
+    "use strict";
     return str.slice(0, substr.length) === substr;
 }
 
 
 // change host to Host, or user-agent to User-Agent
 function to_title_case(str) {
+    "use strict";
     // just a little differnt from http://goo.gl/IGhfR
     return str.replace(/\w[^\-\s]*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();

@@ -16,6 +16,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
+/*global chrome: false */
+"use strict";
 
 chrome.storage.sync.get('support_us', function(items) {
     if (items.support_us === 'yes') {

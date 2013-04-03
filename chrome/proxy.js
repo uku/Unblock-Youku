@@ -16,6 +16,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
+/*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, url2pac: false, get_mode_name: false, _gaq: false */
+"use strict";
+
 
 function setup_proxy(depth) {  // depth for recursion
     if (typeof depth === 'undefined') {
@@ -51,6 +55,21 @@ function setup_proxy(depth) {  // depth for recursion
 
     console.log('to check if the proxy server is avaiable: ' + proxy_addr);
     var xhr = new XMLHttpRequest();
+
+    // test timeout
+    var xhr_timer = setTimeout(function() {
+        xhr.abort();
+        console.warn(proxy_addr + ' TIMEOUT!');
+        _gaq.push(['_trackEvent', 'Proxy Server Timeout', proxy_addr]);
+        get_mode_name(function(current_mode_name) {
+            if (current_mode_name === 'normal') {
+                setup_proxy(depth + 1); // simply set up again
+            } else {
+                console.warn('not in normal mode anymore, so abort the retrial');
+            }
+        });
+    }, 10000);  // 10s
+
     // xhr.open('GET', 'http://httpbin.org/delay/13');
     xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
@@ -66,20 +85,6 @@ function setup_proxy(depth) {  // depth for recursion
         console.error('xhr error: ' + e.target.status);
     };
     xhr.send();
-
-    // test timeout
-    var xhr_timer = setTimeout(function() {
-        xhr.abort();
-        console.warn(proxy_addr + ' TIMEOUT!');
-        _gaq.push(['_trackEvent', 'Proxy Server Timeout', proxy_addr]);
-        get_mode_name(function(current_mode_name) {
-            if (current_mode_name === 'normal') {
-                setup_proxy(depth + 1); // simply set up again
-            } else {
-                console.warn('not in normal mode anymore, so abort the retrial');
-            }
-        });
-    }, 10000);  // 10s
 }
 
 function clear_proxy() {

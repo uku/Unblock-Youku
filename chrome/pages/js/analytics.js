@@ -16,12 +16,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-30726750-4']);
 _gaq.push(['_trackPageview']);
 
 (function() {
+    "use strict";
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;
@@ -33,6 +35,7 @@ _gaq.push(['_trackPageview']);
 
 // see http://goo.gl/QLJu6 and http://goo.gl/aNH3H
 window.onerror = function(message, file, line) {
+    "use strict";
     var msg = file + '(' + line + '): ' + message;
     console.error(msg);
     _gaq.push(['_trackEvent', 'Unknown Error', msg]);

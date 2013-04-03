@@ -16,51 +16,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-function setup_redirect() {
-    chrome.webRequest.onBeforeRequest.addListener(
-        http_redirector,
-        {
-            urls: unblock_youku.redirect_url_list
-        },
-        ["blocking"]);
-    // addListener ends here
-    console.log('http_redirector is set');
-
-    unblock_youku.backend_server = unblock_youku.default_server;
-
-    console.log('to test the redirection server: ' + unblock_youku.default_server);
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://' + unblock_youku.backend_server + '?url=' + btoa('http://ipservice.163.com/isFromMainland'), true);
-    xhr.timeout = 12000; // 12s
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            clearTimeout(xhr_timer);
-            console.log('the redirection server seems to be working fine: ' + unblock_youku.backend_server);
-        }
-    };
-    xhr.onerror = function(err) {
-        console.warn(unblock_youku.default_server + ' ERROR! changed redirection server to backup_server: ' + unblock_youku.backup_server);
-        _gaq.push(['_trackEvent', 'Redirection Server Error', err.target.status]);
-        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
-        clearTimeout(xhr_timer);
-    };
-    xhr.send();
-
-    var xhr_timer = setTimeout(function() {
-        xhr.abort();
-        console.warn(unblock_youku.default_server + ' TIMEOUT! changed redirection server to backup_server: ' + unblock_youku.backup_server);
-        _gaq.push(['_trackEvent', 'Redirection Server Timeout', unblock_youku.default_server]);
-        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
-    }, 10000);  // 10s
-}
-
-
-function clear_redirect() {
-    chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
-    console.log('http_redirector is removed');
-}
-
+/*jslint browser: true */
+/*global chrome: false, unblock_youku: false, btoa: false, _gaq: false */
+"use strict";
 
 function http_redirector(details) {
     console.log('original url: ' + details.url);
@@ -91,3 +49,49 @@ function http_redirector(details) {
 
     return {redirectUrl: redirect_url};
 }
+
+function setup_redirect() {
+    chrome.webRequest.onBeforeRequest.addListener(
+        http_redirector,
+        {
+            urls: unblock_youku.redirect_url_list
+        },
+        ["blocking"]);
+    // addListener ends here
+    console.log('http_redirector is set');
+
+    unblock_youku.backend_server = unblock_youku.default_server;
+
+    console.log('to test the redirection server: ' + unblock_youku.default_server);
+    var xhr = new XMLHttpRequest();
+
+    var xhr_timer = setTimeout(function() {
+        xhr.abort();
+        console.warn(unblock_youku.default_server + ' TIMEOUT! changed redirection server to backup_server: ' + unblock_youku.backup_server);
+        _gaq.push(['_trackEvent', 'Redirection Server Timeout', unblock_youku.default_server]);
+        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
+    }, 10000);  // 10s
+
+    xhr.open('GET', 'http://' + unblock_youku.backend_server + '?url=' + btoa('http://ipservice.163.com/isFromMainland'), true);
+    xhr.timeout = 12000; // 12s
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            clearTimeout(xhr_timer);
+            console.log('the redirection server seems to be working fine: ' + unblock_youku.backend_server);
+        }
+    };
+    xhr.onerror = function(err) {
+        console.warn(unblock_youku.default_server + ' ERROR! changed redirection server to backup_server: ' + unblock_youku.backup_server);
+        _gaq.push(['_trackEvent', 'Redirection Server Error', err.target.status]);
+        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
+        clearTimeout(xhr_timer);
+    };
+    xhr.send();
+}
+
+
+function clear_redirect() {
+    chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
+    console.log('http_redirector is removed');
+}
+

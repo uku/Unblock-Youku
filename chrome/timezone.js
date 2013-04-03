@@ -16,6 +16,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome: false */
+"use strict";
+
+function timezone_changer(details) {
+    if (details.url.indexOf('timezone') !== -1 && 
+            (details.url.indexOf('timezone/08') === -1 &&
+             details.url.indexOf('timezone/+08') === -1)) {
+        console.log('original url: ' + details.url);
+        var redirect_url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
+        console.log('redirect url: ' + redirect_url);
+        return {redirectUrl: redirect_url};
+    }
+
+    return {};
+}
 
 function setup_timezone() {
     chrome.webRequest.onBeforeRequest.addListener(
@@ -34,16 +49,3 @@ function clear_timezone() {
     console.log('timezone_changer is removed');
 }
 
-
-function timezone_changer(details) {
-    if (details.url.indexOf('timezone') !== -1 && 
-            (details.url.indexOf('timezone/08') === -1 &&
-             details.url.indexOf('timezone/+08') === -1)) {
-        console.log('original url: ' + details.url);
-        var redirect_url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
-        console.log('redirect url: ' + redirect_url);
-        return {redirectUrl: redirect_url};
-    }
-
-    return {};
-}

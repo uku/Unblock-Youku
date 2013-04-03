@@ -76,6 +76,7 @@ unblock_youku.url_list = [
 
 unblock_youku.regex_url_list = [];
 (function() {
+    "use strict";
     var i, re_str;
     for (i = 0; i < unblock_youku.url_list.length; i++) {
         re_str = unblock_youku.url_list[i].replace(/\//g, '\\/');

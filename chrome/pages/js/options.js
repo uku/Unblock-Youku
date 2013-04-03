@@ -16,12 +16,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global $: false, btoa: false */
 
 var background = chrome.extension.getBackgroundPage();
 var default_server = background.unblock_youku.default_server;
 
+function remove_custom_server(callback) {
+    "use strict";
+    // localStorage.removeItem('custom_server');
+    background.remove_storage('custom_server', callback);
+}
 
 function get_custom_server(callback) {
+    "use strict";
     background.get_storage('custom_server', function(server_addr) {
         if (typeof server_addr === 'undefined') {
             callback(default_server);
@@ -32,6 +39,7 @@ function get_custom_server(callback) {
 }
 
 function set_custom_server(server_addr, callback) {
+    "use strict";
     if (server_addr === 'yo.uku.im/proxy.php' || server_addr === 'www.yōukù.com/proxy.php') {
         remove_custom_server(callback);
     } else {
@@ -41,13 +49,9 @@ function set_custom_server(server_addr, callback) {
     }
 }
 
-function remove_custom_server(callback) {
-    // localStorage.removeItem('custom_server');
-    background.remove_storage('custom_server', callback);
-}
-
 
 function show_message(type, content) {
+    "use strict";
     var alert_type = 'info';
     if (type === 'success' || type === 'error') {
         alert_type = type;
@@ -58,6 +62,7 @@ function show_message(type, content) {
 
 
 $('document').ready(function() {
+    "use strict";
     get_custom_server(function(server_addr) {
         $('input#custom_server').val(server_addr);
     });
@@ -96,3 +101,4 @@ $('document').ready(function() {
         return false;
     });
 });
+

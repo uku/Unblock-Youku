@@ -16,6 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
+/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false, new_sogou_auth_str: false, _gaq: false */
+/*global setup_lite_header: false, setup_redirect: false, setup_normal_header: false, setup_proxy: false, setup_timezone: false */
+/*global clear_lite_header: false, clear_redirect: false, clear_normal_header: false, clear_proxy: false, clear_timezone: false */
+
 
 // ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
@@ -86,6 +91,18 @@ get_storage('previous_new_version', function(version) {
 
 
 // ====== Configuration Functions ======
+function set_mode_name(mode_name, callback) {
+    if (typeof callback === 'undefined') {
+        console.error('missing callback function in set_mode_name()');
+    }
+
+    if (mode_name === 'lite' || mode_name === 'redirect') {
+        set_storage('unblock_youku_mode', mode_name, callback);
+    } else {
+        set_storage('unblock_youku_mode', 'normal', callback);
+    }
+}
+
 function get_mode_name(callback) {
     if (typeof callback === 'undefined') {
         console.error('missing callback function in get_mode_name()');
@@ -103,18 +120,6 @@ function get_mode_name(callback) {
             callback(current_mode);
         }
     });
-}
-
-function set_mode_name(mode_name, callback) {
-    if (typeof callback === 'undefined') {
-        console.error('missing callback function in set_mode_name()');
-    }
-
-    if (mode_name === 'lite' || mode_name === 'redirect') {
-        set_storage('unblock_youku_mode', mode_name, callback);
-    } else {
-        set_storage('unblock_youku_mode', 'normal', callback);
-    }
 }
 
 function clear_mode_settings(mode_name) {
@@ -167,46 +172,6 @@ function change_mode(new_mode_name) {
     // the storage change listener would take care about the setting changes
 }
 
-// in case settings are changed (or synced) in background
-chrome.storage.onChanged.addListener(function(changes, area) {
-    console.log('storage changes:');
-    console.log(changes);
-
-    if (typeof changes.unblock_youku_mode !== 'undefined') {
-        var mode_change = changes.unblock_youku_mode;
-
-        // doesn't run if it's first time to migrate the old settings
-        if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
-            clear_mode_settings(mode_change.oldValue);
-            setup_mode_settings(mode_change.newValue);
-            _gaq.push(['_trackEvent', 'Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue]);
-        }
-    }
-
-    if (typeof changes.custom_server !== 'undefined') {
-        var server_change = changes.custom_server;
-        
-        if (typeof server_change.newValue !== 'undefined') {
-            // have to use a localStorage cache for using in the blocking webRequest listener
-            localStorage.custom_server = server_change.newValue;
-        } else {
-            if (typeof localStorage.custom_server !== 'undefined') {
-                localStorage.removeItem('custom_server');
-            }
-        }
-    }
-
-    if (typeof changes.support_us !== 'undefined') {
-        var support_change = changes.support_us;
-
-        if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
-            change_browser_icon('heart');
-        } else {
-            change_browser_icon('regular');
-        }
-    }
-});
-
 
 function change_browser_icon(option) {
     var today = new Date();
@@ -252,8 +217,50 @@ function change_browser_icon(option) {
 }
 
 
+// in case settings are changed (or synced) in background
+chrome.storage.onChanged.addListener(function(changes, area) {
+    console.log('storage changes:');
+    console.log(changes);
+
+    if (typeof changes.unblock_youku_mode !== 'undefined') {
+        var mode_change = changes.unblock_youku_mode;
+
+        // doesn't run if it's first time to migrate the old settings
+        if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
+            clear_mode_settings(mode_change.oldValue);
+            setup_mode_settings(mode_change.newValue);
+            _gaq.push(['_trackEvent', 'Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue]);
+        }
+    }
+
+    if (typeof changes.custom_server !== 'undefined') {
+        var server_change = changes.custom_server;
+        
+        if (typeof server_change.newValue !== 'undefined') {
+            // have to use a localStorage cache for using in the blocking webRequest listener
+            localStorage.custom_server = server_change.newValue;
+        } else {
+            if (typeof localStorage.custom_server !== 'undefined') {
+                localStorage.removeItem('custom_server');
+            }
+        }
+    }
+
+    if (typeof changes.support_us !== 'undefined') {
+        var support_change = changes.support_us;
+
+        if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
+            change_browser_icon('heart');
+        } else {
+            change_browser_icon('regular');
+        }
+    }
+});
+
+
 // ====== Initialization ======
 document.addEventListener("DOMContentLoaded", function() {
+    "use strict";
     get_mode_name(function(current_mode_name) {
         setup_mode_settings(current_mode_name);
 

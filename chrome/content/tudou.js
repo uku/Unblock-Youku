@@ -16,6 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
+"use strict";
 
 var s = document.createElement('script');
 s.type = 'text/javascript';

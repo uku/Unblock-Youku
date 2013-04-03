@@ -16,8 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*jslint browser: true */
+/*global $: false, chrome: false, _gaq: false */
 
 function set_i18n_text() {
+    "use strict";
     var get_msg = chrome.i18n.getMessage;
 
     $('div#mode_select strong').html(get_msg('mode_select'));
@@ -38,6 +41,7 @@ function set_i18n_text() {
 
 
 $(document).ready(function() {
+    "use strict";
     set_i18n_text();
 
     var background = chrome.extension.getBackgroundPage();
@@ -127,7 +131,7 @@ $(document).ready(function() {
     var my_date = new Date();
     if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();
-    } else if (my_date.getTime() > parseInt(localStorage.first_time) + 1000 * 60 * 60 * 24 * 3) {
+    } else if (my_date.getTime() > parseInt(localStorage.first_time, 10) + 1000 * 60 * 60 * 24 * 3) {
         $('div#rating').show(); // delay 3 days for the rating div to show up, hahaha
     }
 });
