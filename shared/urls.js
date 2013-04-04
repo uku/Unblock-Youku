@@ -40,8 +40,6 @@ unblock_youku.url_list = [
     'http://220.181.19.218/*',
     'http://123.126.48.47/*',
     'http://123.126.48.48/*',
-    'http://*/vrs_flash.action*',
-    //'http://*/?prot=2&type=*',
 
     'http://vv.video.qq.com/*',
     'http://geo.js.kankan.xunlei.com/*',
@@ -63,7 +61,6 @@ unblock_youku.url_list = [
 
     'http://v.iask.com/v_play.php*',
     'http://v.iask.com/v_play_ipad.cx.php*',
-    'http://*.dpool.sina.com.cn/iplookup*',
     'http://edge.v.iask.com/*',
     'http://tv.weibo.com/player/*',
 
@@ -72,6 +69,8 @@ unblock_youku.url_list = [
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-video-info*',
 
+    'http://*.dpool.sina.com.cn/iplookup*',
+    'http://*/vrs_flash.action*',
     // 'http://*/*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
@@ -86,6 +85,9 @@ unblock_youku.regex_url_list = [];
         re_str = unblock_youku.url_list[i].replace(/\//g, '\\/');
         re_str = re_str.replace(/\./g, '\\.');
         re_str = re_str.replace(/\*/g, '.*');
+        // make the first * matches only domain names or ip addresses
+        // just as http://developer.chrome.com/extensions/match_patterns.html
+        re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\/\/[^\/]*');
         unblock_youku.regex_url_list.push(new RegExp('^' + re_str, 'i'));
     }
 }());

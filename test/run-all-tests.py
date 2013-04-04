@@ -44,7 +44,8 @@ server_process = None
 def start_server():
     global server_process
     print 'To start the server, and wait for 21 seconds to set up...'
-    server_process = subprocess.Popen(['node', '../server.js'])
+    server_process = subprocess.Popen(
+            ['node', '../server.js', 'run_locally=false'])
     time.sleep(21)
 
 

@@ -19,6 +19,7 @@
  */
 
 
+var util = require('util');
 var http = require('http');
 var cluster = require('cluster');
 
@@ -38,11 +39,19 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
     local_addr = '0.0.0.0';
     local_port = 8888;
     proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
-    run_locally = true;
+    if (process.argv.length > 2 && 'run_locally=false' === process.argv[2]) {
+        run_locally = false;  // for npm test
+    } else {
+        run_locally = true;
+    }
 }
 var pac_file_content = shared_tools.url2pac(require('./shared/urls').url_list, proxy_addr);
 
 
+// what are the life cycles of variables in nodejs?
+var my_date = new Date();
+var sogou_server_addr;
+    
 if (cluster.isMaster) {
     var num_CPUs = require('os').cpus().length;
     // num_CPUs = 1;
@@ -50,12 +59,32 @@ if (cluster.isMaster) {
     var i;
     for (i = 0; i < num_CPUs; i++) {
         cluster.fork();
+        // one note here
+        // the fork() in nodejs is not as the fork() in C
+        // here the fork() will run the whole code from beginning
+        // not from where it is invoked
     }
+
+    cluster.on('listening', function(worker, addr_port) {
+        util.log('worker ' + worker.process.pid + ' is now connected to ' + addr_port.address + ':' + addr_port.port);
+    });
+
+    cluster.on('exit', function(worker, code, signal) {
+        if (signal) {
+            util.log('worker ' + worker.process.pid + ' was killed by signal: ' + signal);
+        } else if (code !== 0) {
+            util.warn('worker ' + worker.process.pid + ' exited with error code: ' + code);
+            // respawn a worker process when one dies
+            cluster.fork();
+        } else {
+            util.error('worker ' + worker.process.pid + ' exited with no error; this should never happen');
+        }
+    });
 
     console.info('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
 
 } else {
-    var sogou_server_addr = sogou.new_sogou_proxy_addr();
+    sogou_server_addr = sogou.new_sogou_proxy_addr();
     // console.log('default server: ' + sogou_server_addr);
     server_utils.change_sogou_server(function(new_addr) {
         sogou_server_addr = new_addr;
@@ -69,9 +98,6 @@ if (cluster.isMaster) {
     }, 10 * 60 * 1000);  // every 10 mins
     // }, 20 * 1000);  // every 20 secs
 
-
-    var my_date = new Date();
-    
     http.createServer(function(client_request, client_response) {
         console.info(client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
 
@@ -159,7 +185,7 @@ if (cluster.isMaster) {
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             proxy_response.pipe(client_response);
             proxy_response.on('error', function(err) {
-                console.error('Proxy Error: ' + err.message);
+                util.error('Proxy Error: ' + err.message);
             });
 
             // console.log('Server Response:');
@@ -170,15 +196,13 @@ if (cluster.isMaster) {
 
         client_request.pipe(proxy_request);
         client_request.on('error', function(err) {
-            console.error('Server Error: ' + err.message);
+            util.error('Server Error: ' + err.message);
         });
     }).listen(local_port, local_addr);
-
-    console.info('Listening on ' + local_addr + ':' + local_port);
 }
 
 
 process.on('uncaughtException', function(err) {
-    console.error('Caught exception: ' + err);
+    util.error('Caught exception: ' + err);
 });
 
