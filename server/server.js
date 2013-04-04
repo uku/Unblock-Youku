@@ -24,9 +24,9 @@ var http = require('http');
 http.globalAgent.maxSockets = 100;
 var cluster = require('cluster');
 
-var sogou = require('./shared/sogou');
-var shared_tools = require('./shared/tools');
-var server_utils = require('./server/utils');
+var sogou = require('../shared/sogou');
+var shared_tools = require('../shared/tools');
+var server_utils = require('./utils');
 
 
 var local_addr, local_port, proxy_addr, run_locally;
@@ -46,7 +46,7 @@ if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
         run_locally = true;
     }
 }
-var pac_file_content = shared_tools.url2pac(require('./shared/urls').url_list, proxy_addr);
+var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, proxy_addr);
 
 
 // what are the life cycles of variables in nodejs?
@@ -85,7 +85,7 @@ if (cluster.isMaster) {
 
     console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
 
-} else {
+} else if (cluster.isWorker) {
     sogou_server_addr = sogou.new_sogou_proxy_addr();
     // console.log('default server: ' + sogou_server_addr);
     server_utils.change_sogou_server(function(new_addr) {
@@ -101,6 +101,15 @@ if (cluster.isMaster) {
     // }, 20 * 1000);  // every 20 secs
 
     http.createServer(function(client_request, client_response) {
+        client_request.on('error', function(err) {
+            util.error('[ub.uku.js] client_request error: ' + err.message);
+            util.error('[ub.uku.js] ' + err.stack);
+        });
+        client_response.on('error', function(err) {  // does this work?
+            util.error('[ub.uku.js] client_response error: ' + err.message);
+            util.error('[ub.uku.js] ' + err.stack);
+        });
+
         if (run_locally) {
             console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
         }
@@ -187,26 +196,29 @@ if (cluster.isMaster) {
         // console.log('Client Request:');
         // console.log(proxy_request_options);
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
-            proxy_response.pipe(client_response);
             proxy_response.on('error', function(err) {
-                util.error('[ub.uku.js] Proxy Error: ' + err.message);
+                util.error('[ub.uku.js] proxy_response error: ' + err.message);
+                util.error('[ub.uku.js] ' + err.stack);
             });
+            proxy_response.pipe(client_response);
 
             // console.log('Server Response:');
             // console.log(proxy_response.statusCode);
             // console.log(proxy_response.headers);
             client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
+        proxy_request.on('error', function(err) {
+            util.error('[ub.uku.js] proxy_request error: ' + err.message);
+            util.error('[ub.uku.js] ' + err.stack);
+        });
 
         client_request.pipe(proxy_request);
-        client_request.on('error', function(err) {
-            util.error('[ub.uku.js] Server Error: ' + err.message);
-        });
     }).listen(local_port, local_addr);
 }
 
 process.on('uncaughtException', function(err) {
     util.error('[ub.uku.js] Caught exception: ' + err);
     util.error('[ub.uku.js] ' + err.stack);
+    process.exit(213);
 });
 
