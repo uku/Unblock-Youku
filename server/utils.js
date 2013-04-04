@@ -18,6 +18,7 @@
 
 
 var url = require('url');
+var util = require('util');
 var http = require('http');
 var querystring = require('querystring');
 
@@ -120,12 +121,12 @@ function change_sogou_server(callback, depth) {
     req.on('socket', function (socket) {
         socket.setTimeout(10 * 1000, function() {  // 10s
             req.abort();
-            console.warn('Timeout for ' + new_addr + '. Aborted.');
+            util.error('[ub.uku.js] Timeout for ' + new_addr + '. Aborted.');
         });
     });
 
     req.on('error', function(err) {
-        console.error('Error when testing ' + new_addr + ': ' + err);
+        util.error('[ub.uku.js] Error when testing ' + new_addr + ': ' + err);
         change_sogou_server(callback, depth + 1);
     });
 

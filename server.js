@@ -19,6 +19,14 @@
  */
 
 
+if (process.env.NODETIME_ACCOUNT_KEY) {
+    require('nodetime').profile({
+        accountKey: process.env.NODETIME_ACCOUNT_KEY,
+        appName: 'ub.uku.js'
+    });
+}
+
+
 var util = require('util');
 var http = require('http');
 var cluster = require('cluster');
@@ -66,22 +74,23 @@ if (cluster.isMaster) {
     }
 
     cluster.on('listening', function(worker, addr_port) {
-        util.log('worker ' + worker.process.pid + ' is now connected to ' + addr_port.address + ':' + addr_port.port);
+        // use ub.uku.js as keyword for searching in log files
+        util.log('[ub.uku.js] Worker ' + worker.process.pid + ' is now connected to ' + addr_port.address + ':' + addr_port.port);
     });
 
     cluster.on('exit', function(worker, code, signal) {
         if (signal) {
-            util.log('worker ' + worker.process.pid + ' was killed by signal: ' + signal);
+            util.log('[ub.uku.js] Worker ' + worker.process.pid + ' was killed by signal: ' + signal);
         } else if (code !== 0) {
-            util.warn('worker ' + worker.process.pid + ' exited with error code: ' + code);
+            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited with error code: ' + code);
             // respawn a worker process when one dies
             cluster.fork();
         } else {
-            util.error('worker ' + worker.process.pid + ' exited with no error; this should never happen');
+            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited with no error; this should never happen');
         }
     });
 
-    console.info('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
+    console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
 
 } else {
     sogou_server_addr = sogou.new_sogou_proxy_addr();
@@ -99,7 +108,7 @@ if (cluster.isMaster) {
     // }, 20 * 1000);  // every 20 secs
 
     http.createServer(function(client_request, client_response) {
-        console.info(client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
+        console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
 
         if (client_request.url === '/favicon.ico') {
             client_response.writeHead(404);
@@ -185,7 +194,7 @@ if (cluster.isMaster) {
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             proxy_response.pipe(client_response);
             proxy_response.on('error', function(err) {
-                util.error('Proxy Error: ' + err.message);
+                util.error('[ub.uku.js] Proxy Error: ' + err.message);
             });
 
             // console.log('Server Response:');
@@ -196,13 +205,13 @@ if (cluster.isMaster) {
 
         client_request.pipe(proxy_request);
         client_request.on('error', function(err) {
-            util.error('Server Error: ' + err.message);
+            util.error('[ub.uku.js] Server Error: ' + err.message);
         });
     }).listen(local_port, local_addr);
 }
 
 
 process.on('uncaughtException', function(err) {
-    util.error('Caught exception: ' + err);
+    util.error('[ub.uku.js] Caught exception: ' + err);
 });
 

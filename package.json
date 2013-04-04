@@ -16,7 +16,9 @@
         "type": "git",
         "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
     },
-    "dependencies": {},
+    "dependencies": {
+        "nodetime": ">= 0.8.10"
+    },
     "scripts": {
         "test": "python test/run-all-tests.py"
     },
