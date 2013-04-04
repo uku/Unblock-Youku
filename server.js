@@ -19,14 +19,6 @@
  */
 
 
-if (process.env.NODETIME_ACCOUNT_KEY) {
-    require('nodetime').profile({
-        accountKey: process.env.NODETIME_ACCOUNT_KEY,
-        appName: 'ub.uku.js'
-    });
-}
-
-
 var util = require('util');
 var http = require('http');
 var cluster = require('cluster');
