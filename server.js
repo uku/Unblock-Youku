@@ -21,6 +21,7 @@
 
 var util = require('util');
 var http = require('http');
+http.globalAgent.maxSockets = 100;
 var cluster = require('cluster');
 
 var sogou = require('./shared/sogou');
@@ -204,8 +205,8 @@ if (cluster.isMaster) {
     }).listen(local_port, local_addr);
 }
 
-
 process.on('uncaughtException', function(err) {
     util.error('[ub.uku.js] Caught exception: ' + err);
+    util.error('[ub.uku.js] ' + err.stack);
 });
 
