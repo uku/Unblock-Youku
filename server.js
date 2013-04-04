@@ -108,7 +108,9 @@ if (cluster.isMaster) {
     // }, 20 * 1000);  // every 20 secs
 
     http.createServer(function(client_request, client_response) {
-        console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
+        if (run_locally) {
+            console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
+        }
 
         if (client_request.url === '/favicon.ico') {
             client_response.writeHead(404);
