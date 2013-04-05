@@ -21,7 +21,7 @@
 
 var util = require('util');
 var http = require('http');
-http.globalAgent.maxSockets = 100;
+http.globalAgent.maxSockets = 256;
 var cluster = require('cluster');
 
 var sogou = require('../shared/sogou');
