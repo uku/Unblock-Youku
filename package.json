@@ -1,7 +1,7 @@
 {
     "name": "ub.uku.js",
     "preferGlobal": "true",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "author": "zhuzhuor <npmjs@zhuzhu.org>",
     "description": "A Backend Server for Unblock-Youku",
     "keywords": [
@@ -22,8 +22,8 @@
         "test": "python test/run-all-tests.py"
     },
     "engines": {
-        "node": "0.8.x",
-        "npm": "1.1.x"
+        "node": "0.10.x",
+        "npm": "1.2.x"
     },
     "bugs": {
         "web" : "https://github.com/zhuzhuor/Unblock-Youku/issues"

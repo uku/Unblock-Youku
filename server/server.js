@@ -102,11 +102,11 @@ if (cluster.isMaster) {
 
     http.createServer(function(client_request, client_response) {
         client_request.on('error', function(err) {
-            util.error('[ub.uku.js] client_request error: ' + err.message);
+            util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message);
             util.error('[ub.uku.js] ' + err.stack);
         });
         client_response.on('error', function(err) {  // does this work?
-            util.error('[ub.uku.js] client_response error: ' + err.message);
+            util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message);
             util.error('[ub.uku.js] ' + err.stack);
         });
 
@@ -197,7 +197,7 @@ if (cluster.isMaster) {
         // console.log(proxy_request_options);
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             proxy_response.on('error', function(err) {
-                util.error('[ub.uku.js] proxy_response error: ' + err.message);
+                util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message);
                 util.error('[ub.uku.js] ' + err.stack);
             });
             proxy_response.pipe(client_response);
@@ -208,7 +208,7 @@ if (cluster.isMaster) {
             client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
         proxy_request.on('error', function(err) {
-            util.error('[ub.uku.js] proxy_request error: ' + err.message);
+            util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message);
             util.error('[ub.uku.js] ' + err.stack);
         });
 
