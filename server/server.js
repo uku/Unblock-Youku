@@ -21,7 +21,7 @@
 
 var util = require('util');
 var http = require('http');
-http.globalAgent.maxSockets = 256;
+http.globalAgent.maxSockets = Infinity;
 var cluster = require('cluster');
 
 var sogou = require('../shared/sogou');
@@ -210,6 +210,12 @@ if (cluster.isMaster) {
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message);
             util.error('[ub.uku.js] ' + err.stack);
+            if ('ECONNRESET' === err.code) {
+                server_utils.change_sogou_server(function(new_addr) {
+                    sogou_server_addr = new_addr;
+                    util.log('[ub.uku.js] on ECONNRESET error, changed to new server: ' + new_addr);
+                });
+            }
         });
 
         client_request.pipe(proxy_request);

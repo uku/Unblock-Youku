@@ -5,3 +5,5 @@
 *.pyc
 *.log
 *.bak
+
+node_modules/

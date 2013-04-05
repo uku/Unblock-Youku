@@ -35,6 +35,7 @@ unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://www.tudou.com/listplay/*',
 
     'http://live.video.sina.com.cn/room/*',
+    'http://edge.v.iask.com/*',  // may be large files
 
     'http://pay.youku.com/buy/redirect.html*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',

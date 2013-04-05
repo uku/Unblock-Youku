@@ -61,7 +61,6 @@ unblock_youku.url_list = [
 
     'http://v.iask.com/v_play.php*',
     'http://v.iask.com/v_play_ipad.cx.php*',
-    'http://edge.v.iask.com/*',
     'http://tv.weibo.com/player/*',
 
     //'http://kandian.com/player/getEpgInfo*',  // !!!
