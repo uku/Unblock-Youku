@@ -1,0 +1,14 @@
+.DS_Store
+*~
+*.swp
+*.zip
+*.pyc
+*.log
+*.bak
+
+node_modules/
+
+chrome/
+_locales/
+manifest.json
+Procfile
