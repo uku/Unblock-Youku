@@ -92,13 +92,17 @@ if (cluster.isMaster) {
         sogou_server_addr = new_addr;
         // console.log('changed to new server: ' + new_addr);
     });
-    require('timers').setInterval(function() {
+    var change_server_timer = setInterval(function() {
         server_utils.change_sogou_server(function(new_addr) {
             sogou_server_addr = new_addr;
             // console.log('changed to new server: ' + new_addr);
         });
     }, 10 * 60 * 1000);  // every 10 mins
     // }, 20 * 1000);  // every 20 secs
+
+    if ('function' === typeof change_server_timer.unref) {
+        change_server_timer.unref();  // doesn't exist in nodejs v0.8
+    }
 
     http.createServer(function(client_request, client_response) {
         client_request.on('error', function(err) {
@@ -144,7 +148,7 @@ if (cluster.isMaster) {
         } else if (typeof client_request.headers.host !== 'undefined'){
             target = server_utils.get_real_target('http://' + client_request.headers.host + client_request.url);
         } else {
-            client_response.writeHead(500);
+            client_response.writeHead(501);
             client_response.end();
             return;
         }
@@ -216,6 +220,10 @@ if (cluster.isMaster) {
                     util.log('[ub.uku.js] on ECONNRESET error, changed to new server: ' + new_addr);
                 });
             }
+            // should we explicitly end client_response when error occurs?
+            client_response.statusCode = 599;
+            client_response.end();
+            // should we also destroy the proxy_request object?
         });
 
         client_request.pipe(proxy_request);
