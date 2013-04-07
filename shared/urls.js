@@ -27,6 +27,7 @@ unblock_youku.url_list = [
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
+    'http://api.3g.tudou.com/*', // tudou ipad app for apple
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
@@ -51,6 +52,7 @@ unblock_youku.url_list = [
     'http://ipservice.163.com/*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
+    'http://proxy.music.qq.com/*', //iphone QQ music for apple
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
 
