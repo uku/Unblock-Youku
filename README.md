@@ -33,3 +33,5 @@ If you are interested in helping us translating some phrases, or you want the ex
 [@whuhacker](https://github.com/whuhacker) - Contributions to many important functionalities and improvements, and Japanese, German and French translations
 
 [Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translations
+
+Please [visit this page](http://ub.uku.im/contributors) for more contributers.

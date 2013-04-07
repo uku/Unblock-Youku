@@ -106,12 +106,10 @@ if (cluster.isMaster) {
 
     http.createServer(function(client_request, client_response) {
         client_request.on('error', function(err) {
-            util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message);
-            util.error('[ub.uku.js] ' + err.stack);
+            util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
         });
         client_response.on('error', function(err) {  // does this work?
-            util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message);
-            util.error('[ub.uku.js] ' + err.stack);
+            util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
         });
 
         if (run_locally) {
@@ -201,8 +199,7 @@ if (cluster.isMaster) {
         // console.log(proxy_request_options);
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             proxy_response.on('error', function(err) {
-                util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message);
-                util.error('[ub.uku.js] ' + err.stack);
+                util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message, err.stack);
             });
             proxy_response.pipe(client_response);
 
@@ -212,8 +209,7 @@ if (cluster.isMaster) {
             client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
         proxy_request.on('error', function(err) {
-            util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message);
-            util.error('[ub.uku.js] ' + err.stack);
+            util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
                 server_utils.change_sogou_server(function(new_addr) {
                     sogou_server_addr = new_addr;
@@ -231,8 +227,7 @@ if (cluster.isMaster) {
 }
 
 process.on('uncaughtException', function(err) {
-    util.error('[ub.uku.js] Caught exception: ' + err);
-    util.error('[ub.uku.js] ' + err.stack);
+    util.error('[ub.uku.js] Caught exception: ' + err, err.stack);
     process.exit(213);
 });
 
