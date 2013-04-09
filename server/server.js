@@ -30,14 +30,13 @@ var server_utils = require('./utils');
 
 
 var local_addr, local_port, proxy_addr, run_locally;
-if (process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT) {
+if (process.env.PORT) {
     local_addr = '0.0.0.0';
-    local_port = process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || process.env.PORT;
+    local_port = process.env.PORT;
     proxy_addr = 'proxy.uku.im:80';
     run_locally = false;
 } else {
-    // local_addr = '127.0.0.1';
-    local_addr = '0.0.0.0';
+    local_addr = '0.0.0.0';  // '127.0.0.1';
     local_port = 8888;
     proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
     if (process.argv.length > 2 && 'run_locally=false' === process.argv[2]) {
@@ -143,8 +142,6 @@ if (cluster.isMaster) {
         if (shared_tools.string_starts_with(client_request.url, '/proxy') || 
                 shared_tools.string_starts_with(client_request.url, 'http')) {
             target = server_utils.get_real_target(client_request.url);
-        } else if (typeof client_request.headers.host !== 'undefined'){
-            target = server_utils.get_real_target('http://' + client_request.headers.host + client_request.url);
         } else {
             client_response.writeHead(501);
             client_response.end();
