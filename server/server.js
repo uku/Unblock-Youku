@@ -116,14 +116,17 @@ if (cluster.isMaster) {
         }
 
         if (client_request.url === '/favicon.ico') {
-            client_response.writeHead(404);
+            client_response.writeHead(404, {
+                'Cache-Control': 'public, max-age=2592000'
+            });
             client_response.end();
             return;
         }
 
         if (client_request.url === '/crossdomain.xml') {
             client_response.writeHead(200, {
-                'Content-Type': 'text/xml'
+                'Content-Type': 'text/xml',
+                'Cache-Control': 'public, max-age=2592000'
             });
             client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                 '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
@@ -132,7 +135,8 @@ if (cluster.isMaster) {
 
         if (client_request.url === '/proxy.pac') {
             client_response.writeHead(200, {
-                'Content-Type': 'application/x-ns-proxy-autoconfig'
+                'Content-Type': 'application/x-ns-proxy-autoconfig',
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end(pac_file_content);
             return;
@@ -143,12 +147,16 @@ if (cluster.isMaster) {
                 shared_tools.string_starts_with(client_request.url, 'http')) {
             target = server_utils.get_real_target(client_request.url);
         } else {
-            client_response.writeHead(501);
+            client_response.writeHead(501, {
+                'Cache-Control': 'public, max-age=14400'
+            });
             client_response.end();
             return;
         }
         if (!target.host) {
-            client_response.writeHead(403);
+            client_response.writeHead(403, {
+                'Cache-Control': 'public, max-age=14400'
+            });
             client_response.end();
             return;
         }
@@ -187,7 +195,9 @@ if (cluster.isMaster) {
                 headers: server_utils.filter_headers(client_request.headers)
             };
         } else {
-            client_response.writeHead(403);
+            client_response.writeHead(403, {
+                'Cache-Control': 'public, max-age=14400'
+            });
             client_response.end();
             return;
         }
