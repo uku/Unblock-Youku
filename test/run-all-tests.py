@@ -23,6 +23,8 @@ import time
 import sys
 import os
 
+os.putenv('PORT', '8888')
+
 # http://goo.gl/2wtRL
 # os.chdir(os.path.dirname(sys.argv[0]))
 if os.path.dirname(sys.argv[0]) != '':
@@ -44,8 +46,7 @@ server_process = None
 def start_server():
     global server_process
     print 'To start the server, and wait for 21 seconds to set up...'
-    server_process = subprocess.Popen(
-            ['node', '../server/server.js', 'run_locally=false'])
+    server_process = subprocess.Popen(['node', '../server/server.js'])
     time.sleep(21)
 
 

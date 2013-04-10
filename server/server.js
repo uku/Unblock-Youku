@@ -39,11 +39,7 @@ if (process.env.PORT) {
     local_addr = '0.0.0.0';  // '127.0.0.1';
     local_port = 8888;
     proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
-    if (process.argv.length > 2 && 'run_locally=false' === process.argv[2]) {
-        run_locally = false;  // for npm test
-    } else {
-        run_locally = true;
-    }
+    run_locally = true;
 }
 var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, proxy_addr);
 
