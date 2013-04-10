@@ -3,7 +3,7 @@
 *.swp
 *.zip
 *.pyc
-*.log
 *.bak
+*.log
 
 node_modules/
