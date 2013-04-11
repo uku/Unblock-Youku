@@ -45,14 +45,15 @@ var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, 
 
 
 // what are the life cycles of variables in nodejs?
-var my_date = new Date();
 var sogou_server_addr;
-var timeout_count = 0, MAX_TIMEOUT_COUNT = 100;
-var last_error_code = null;
+var reset_count = 0, MAX_RESET_COUNT = 4;
+var timeout_count = 0, MAX_TIMEOUT_COUNT = 32;
+var in_changing_server = false, last_error_code = null;
 function change_sogou_server(error_code) {
-    if (timeout_count >= MAX_TIMEOUT_COUNT) {
+    if (true === in_changing_server) {
         return;  // should already be in the process of changing new server
     }
+    in_changing_server = true;
 
     if ('string' === typeof error_code) {
         last_error_code = error_code;
@@ -61,11 +62,12 @@ function change_sogou_server(error_code) {
     }
     server_utils.renew_sogou_server(function(new_addr) {
         sogou_server_addr = new_addr;
-        // console.log('changed to new server: ' + new_addr);
         if (null !== last_error_code) {
             util.error('[ub.uku.js] on ' + last_error_code + 'error, changed server to ' + new_addr);
         }
+        reset_count = 0;
         timeout_count = 0;
+        in_changing_server = false;
     });
 }
     
@@ -174,7 +176,7 @@ if (cluster.isMaster) {
         // if (true) {
         if (server_utils.is_valid_url(target.href)) {
             var sogou_auth = sogou.new_sogou_auth_str();
-            var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
+            var timestamp = Math.round(Date.now() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
             var proxy_request_headers = server_utils.filtered_headers(client_request.headers);
@@ -227,7 +229,11 @@ if (cluster.isMaster) {
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
-                change_sogou_server('ECONNRESET');
+                reset_count += 1;
+                util.log('[ub.uku.js] reset_count: ' + reset_count);
+                if (reset_count >= MAX_RESET_COUNT) {
+                    change_sogou_server('ECONNRESET');
+                }
             } else if ('ETIMEDOUT' === err.code) {
                 timeout_count += 1;
                 util.log('[ub.uku.js] timeout_count: ' + timeout_count);
