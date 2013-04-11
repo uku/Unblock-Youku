@@ -227,12 +227,12 @@ if (cluster.isMaster) {
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
-                change_sogou_server();
+                change_sogou_server('ECONNRESET');
             } else if ('ETIMEDOUT' === err.code) {
                 timeout_count += 1;
                 util.log('[ub.uku.js] timeout_count: ' + timeout_count);
                 if (timeout_count >= MAX_TIMEOUT_COUNT) {
-                    change_sogou_server();
+                    change_sogou_server('ETIMEOUT');
                 }
             }
             // should we explicitly end client_response when error occurs?
