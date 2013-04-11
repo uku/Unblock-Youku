@@ -1,7 +1,7 @@
 {
     "name": "ub.uku.js",
     "preferGlobal": "true",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "author": "zhuzhuor <npmjs@zhuzhu.org>",
     "description": "A Backend Server for Unblock-Youku",
     "keywords": [

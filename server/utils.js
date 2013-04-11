@@ -88,7 +88,7 @@ function is_valid_url(target_url) {
 }
 
 
-function change_sogou_server(callback, depth) {
+function renew_sogou_server(callback, depth) {
     var new_addr = new_sogou_proxy_addr();
     // new_addr = 'h8.dxt.bj.ie.sogou.com';
 
@@ -127,14 +127,14 @@ function change_sogou_server(callback, depth) {
 
     req.on('error', function(err) {
         util.error('[ub.uku.js] Error when testing ' + new_addr + ': ' + err);
-        change_sogou_server(callback, depth + 1);
+        renew_sogou_server(callback, depth + 1);
     });
 
     req.end();
 }
 
 
-function filter_headers(headers) {
+function filtered_headers(headers) {
     var ret_headers = {};
 
     var field;
@@ -144,7 +144,7 @@ function filter_headers(headers) {
                 if (field === 'proxy-connection') {
                     ret_headers.Connection = headers['proxy-connection'];
                 }
-            } else {
+            } else if (field !== 'x-forwarded-for' && field !== 'x-real-ip') {
                 // in case some servers do not recognize lower-case headers, such as hacker news
                 ret_headers[to_title_case(field)] = headers[field];
             }
@@ -158,5 +158,5 @@ function filter_headers(headers) {
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
-exports.change_sogou_server = change_sogou_server;
-exports.filter_headers = filter_headers;
+exports.renew_sogou_server = renew_sogou_server;
+exports.filtered_headers = filtered_headers;

@@ -47,6 +47,18 @@ var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, 
 // what are the life cycles of variables in nodejs?
 var my_date = new Date();
 var sogou_server_addr;
+var timeout_count = 0, MAX_TIMEOUT_COUNT = 10;
+function change_sogou_server() {
+    if (timeout_count >= MAX_TIMEOUT_COUNT) {
+        return;  // should already be in the process of changing new server
+    }
+
+    server_utils.renew_sogou_server(function(new_addr) {
+        sogou_server_addr = new_addr;
+        // console.log('changed to new server: ' + new_addr);
+        timeout_count = 0;
+    });
+}
     
 if (cluster.isMaster) {
     var num_CPUs = require('os').cpus().length;
@@ -78,23 +90,15 @@ if (cluster.isMaster) {
         }
     });
 
-    console.log('Please use this PAC file: http://' + proxy_addr + '/proxy.pac');
+    if (run_locally) {
+        console.log('The local proxy server is running...\nPlease use this PAC file: http://' + proxy_addr + '/proxy.pac\n');
+    }
 
 } else if (cluster.isWorker) {
     sogou_server_addr = sogou.new_sogou_proxy_addr();
     // console.log('default server: ' + sogou_server_addr);
-    server_utils.change_sogou_server(function(new_addr) {
-        sogou_server_addr = new_addr;
-        // console.log('changed to new server: ' + new_addr);
-    });
-    var change_server_timer = setInterval(function() {
-        server_utils.change_sogou_server(function(new_addr) {
-            sogou_server_addr = new_addr;
-            // console.log('changed to new server: ' + new_addr);
-        });
-    }, 10 * 60 * 1000);  // every 10 mins
-    // }, 20 * 1000);  // every 20 secs
-
+    change_sogou_server();
+    var change_server_timer = setInterval(change_sogou_server, 10 * 60 * 1000);  // every 10 mins
     if ('function' === typeof change_server_timer.unref) {
         change_server_timer.unref();  // doesn't exist in nodejs v0.8
     }
@@ -164,20 +168,20 @@ if (cluster.isMaster) {
             var timestamp = Math.round(my_date.getTime() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
-            client_request.headers['X-Sogou-Auth'] = sogou_auth;
-            client_request.headers['X-Sogou-Timestamp'] = timestamp;
-            client_request.headers['X-Sogou-Tag'] = sogou_tag;
+            var proxy_request_headers = server_utils.filtered_headers(client_request.headers);
+            proxy_request_headers['X-Sogou-Auth'] = sogou_auth;
+            proxy_request_headers['X-Sogou-Timestamp'] = timestamp;
+            proxy_request_headers['X-Sogou-Tag'] = sogou_tag;
+            proxy_request_headers['X-Forwarded-For'] = shared_tools.new_random_ip();
+            proxy_request_headers.Host = target.host;
 
-            client_request.headers['X-Forwarded-For'] = shared_tools.new_random_ip();
-
-            client_request.headers.host = target.host;
             proxy_request_options = {
                 hostname: sogou_server_addr,
                 host: sogou_server_addr,
                 port: +target.port,  // but always 80
                 path: target.href,
                 method: client_request.method,
-                headers: server_utils.filter_headers(client_request.headers)
+                headers: proxy_request_headers
             };
         } else if (run_locally) {
             // serve as a normal proxy
@@ -214,10 +218,13 @@ if (cluster.isMaster) {
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
-                server_utils.change_sogou_server(function(new_addr) {
-                    sogou_server_addr = new_addr;
-                    util.log('[ub.uku.js] on ECONNRESET error, changed to new server: ' + new_addr);
-                });
+                change_sogou_server();
+            } else if ('ETIMEDOUT' === err.code) {
+                timeout_count += 1;
+                until.log('[ub.uku.js] timeout_count: ' + timeout_count);
+                if (timeout_count >= MAX_TIMEOUT_COUNT) {
+                    change_sogou_server();
+                }
             }
             // should we explicitly end client_response when error occurs?
             client_response.statusCode = 599;
