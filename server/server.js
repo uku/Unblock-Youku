@@ -46,8 +46,8 @@ var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, 
 
 // what are the life cycles of variables in nodejs?
 var sogou_server_addr;
-var reset_count = 0, MAX_RESET_COUNT = 4;
-var timeout_count = 0, MAX_TIMEOUT_COUNT = 8;
+var reset_count = 0, MAX_RESET_COUNT = 1;
+var timeout_count = 0, MAX_TIMEOUT_COUNT = 4;
 var in_changing_server = false, last_error_code = null;
 function change_sogou_server(error_code) {
     if (true === in_changing_server) {
