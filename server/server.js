@@ -47,7 +47,7 @@ var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, 
 // what are the life cycles of variables in nodejs?
 var sogou_server_addr;
 var reset_count = 0, MAX_RESET_COUNT = 4;
-var timeout_count = 0, MAX_TIMEOUT_COUNT = 32;
+var timeout_count = 0, MAX_TIMEOUT_COUNT = 8;
 var in_changing_server = false, last_error_code = null;
 function change_sogou_server(error_code) {
     if (true === in_changing_server) {
@@ -63,7 +63,7 @@ function change_sogou_server(error_code) {
     server_utils.renew_sogou_server(function(new_addr) {
         sogou_server_addr = new_addr;
         if (null !== last_error_code) {
-            util.error('[ub.uku.js] on ' + last_error_code + 'error, changed server to ' + new_addr);
+            util.error('[ub.uku.js] on ' + last_error_code + ' error, changed server to ' + new_addr);
         }
         reset_count = 0;
         timeout_count = 0;
@@ -230,13 +230,13 @@ if (cluster.isMaster) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
                 reset_count += 1;
-                util.log('[ub.uku.js] reset_count: ' + reset_count);
+                util.log('[ub.uku.js] ' + sogou_server_addr + ' reset_count: ' + reset_count);
                 if (reset_count >= MAX_RESET_COUNT) {
                     change_sogou_server('ECONNRESET');
                 }
             } else if ('ETIMEDOUT' === err.code) {
                 timeout_count += 1;
-                util.log('[ub.uku.js] timeout_count: ' + timeout_count);
+                util.log('[ub.uku.js] ' + sogou_server_addr + ' timeout_count: ' + timeout_count);
                 if (timeout_count >= MAX_TIMEOUT_COUNT) {
                     change_sogou_server('ETIMEOUT');
                 }
