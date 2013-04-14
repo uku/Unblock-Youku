@@ -34,7 +34,9 @@ unblock_youku.url_list = [
     'http://hot.vrs.letv.com/*',
     'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/*',
-    'http://interface.bilibili.tv/player*',
+
+    // cause oversea servers unusable?
+    // 'http://interface.bilibili.tv/player*',
 
     'http://220.181.61.229/*',
     'http://61.135.183.46/*',

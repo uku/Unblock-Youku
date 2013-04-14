@@ -27,7 +27,7 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 // unblock_youku.default_server = '127.0.0.1:8888/proxy.php';  // for test
 unblock_youku.default_server = 'www.yōukù.com/proxy.php';  // only for redirection mode
-unblock_youku.backup_server = 'yo.uku.im/proxy.php';
+unblock_youku.backup_server = 'static.yōukù.com/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
     'http://www.tudou.com/programs/view/*',

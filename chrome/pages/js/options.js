@@ -40,7 +40,7 @@ function get_custom_server(callback) {
 
 function set_custom_server(server_addr, callback) {
     "use strict";
-    if (server_addr === 'yo.uku.im/proxy.php' || server_addr === 'www.yōukù.com/proxy.php') {
+    if (server_addr === default_server) {
         remove_custom_server(callback);
     } else {
         // chrome.storage.sync.onChange listener will change localStorage as well
