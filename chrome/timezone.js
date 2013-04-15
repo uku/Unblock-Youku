@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false */
+/*global chrome: false, _gaq: false */
 "use strict";
 
 function timezone_changer(details) {
@@ -41,7 +41,9 @@ function setup_timezone() {
         );
         console.log('timezone_changer is set');
     } else {
-        console.error('timezone_changer is already there!');
+        var err_msg = 'timezone_changer is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 
@@ -51,7 +53,9 @@ function clear_timezone() {
         chrome.webRequest.onBeforeRequest.removeListener(timezone_changer);
         console.log('timezone_changer is removed');
     } else {
-        console.error('timezone_change is not there!');
+        var err_msg = 'timezone_change is not there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 

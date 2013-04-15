@@ -61,7 +61,9 @@ function setup_redirect() {
         );
         console.log('http_redirector is set');
     } else {
-        console.error('http_redirector is already there!');
+        var err_msg = 'http_redirector is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 
     unblock_youku.backend_server = unblock_youku.default_server;
@@ -99,7 +101,9 @@ function clear_redirect() {
         chrome.webRequest.onBeforeRequest.removeListener(http_redirector);
         console.log('http_redirector is removed');
     } else {
-        console.error('http_redirector is not there!');
+        var err_msg = 'http_redirector is not there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 

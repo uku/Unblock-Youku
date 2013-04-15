@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false, unblock_youku: false, compute_sogou_tag: false */
+/*global chrome: false, unblock_youku: false, compute_sogou_tag: false, _gaq: false */
 "use strict";
 
 function lite_header_modifier(details) {
@@ -60,7 +60,9 @@ function setup_lite_header() {
         );
         console.log('lite_header_modifier is set');
     } else {
-        console.error('lite_header_modifier is already there!');
+        var err_msg = 'lite_header_modifier is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 
@@ -75,7 +77,9 @@ function setup_normal_header() {
         );
         console.log('normal_header_modifier is set');
     } else {
-        console.error('normal_header_modifer is already there!');
+        var err_msg = 'normal_header_modifer is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 
@@ -85,7 +89,9 @@ function clear_lite_header() {
         chrome.webRequest.onBeforeSendHeaders.removeListener(lite_header_modifier);
         console.log('lite_header_modifier is removed');
     } else {
-        console.error('lite_header_modifer is not there!');
+        var err_msg = 'lite_header_modifer is not there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 
@@ -94,7 +100,9 @@ function clear_normal_header() {
         chrome.webRequest.onBeforeSendHeaders.removeListener(normal_header_modifier);
         console.log('normal_header_modifier is removed');
     } else {
-        console.error('normal_header_modifier is not there!');
+        var err_msg = 'normal_header_modifier is not there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 
@@ -120,7 +128,9 @@ function setup_extra_header() {
         );
         console.log('extra_header_modifier is set');
     } else {
-        console.error('extra_header_modifer is already there!');
+        var err_msg = 'extra_header_modifer is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 

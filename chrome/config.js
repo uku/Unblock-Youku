@@ -94,7 +94,9 @@ get_storage('previous_new_version', function(version) {
 // ====== Configuration Functions ======
 function set_mode_name(mode_name, callback) {
     if (typeof callback === 'undefined') {
-        console.error('missing callback function in set_mode_name()');
+        var err_msg = 'missing callback function in set_mode_name()';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 
     if (mode_name === 'lite' || mode_name === 'redirect') {
@@ -106,7 +108,9 @@ function set_mode_name(mode_name, callback) {
 
 function get_mode_name(callback) {
     if (typeof callback === 'undefined') {
-        console.error('missing callback function in get_mode_name()');
+        var err_msg = 'missing callback function in get_mode_name()';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 
     get_storage('unblock_youku_mode', function(current_mode) {
@@ -141,7 +145,9 @@ function clear_mode_settings(mode_name) {
         console.log('cleared settings for normal');
         break;
     default:
-        console.error('should never come here');
+        var err_msg = 'clear_mode_settings: should never come here';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
         break;
     }
 
@@ -163,7 +169,9 @@ function setup_mode_settings(mode_name) {
         setup_timezone();
         break;
     default:
-        console.error('should never come here');
+        var err_msg = 'setup_mode_settings: should never come here';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
         break;
     }
 
@@ -175,8 +183,7 @@ function change_mode(new_mode_name) {
     // the storage change listener would take care about the setting changes
 }
 
-
-function change_browser_icon(option) {
+function _change_browser_icon(option) {
     var today = new Date();
     var y = today.getFullYear();
     var d = today.getDate();
@@ -217,6 +224,22 @@ function change_browser_icon(option) {
         chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
         chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
     }
+}
+
+
+function change_browser_icon(option) {
+    // check chrome.storage before changing icons
+    // the mode should already be set in previous get_mode_name()
+    get_storage('unblock_youku_mode', function(current_mode) {
+        if (typeof current_mode !== 'undefined') {
+            _change_browser_icon(option);
+        } else {
+            var err_msg = 'chrome.storage has some problems';
+            console.log(err_msg);
+            _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
+        }
+    });
+
 }
 
 
@@ -266,7 +289,9 @@ function setup_storage_monitor() {
         chrome.storage.onChanged.addListener(storage_monitor);
         console.log('storage_monitor is set');
     } else {
-        console.error('storage_monitor is already there!');
+        var err_msg = 'storage_monitor is already there!';
+        console.error(err_msg);
+        _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 }
 

@@ -22,7 +22,11 @@
 // have to use a callback function
 function get_storage(key, callback) {
     chrome.storage.sync.get(key, function(items) {
-        callback(items[key]);
+        if (typeof items !== 'undefined' && items.hasOwnProperty(key)) {
+            callback(items[key]);
+        } else {
+            callback();
+        }
     });
 }
 
