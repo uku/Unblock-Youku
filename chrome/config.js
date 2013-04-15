@@ -222,8 +222,8 @@ function change_browser_icon(option) {
 
 // in case settings are changed (or synced) in background
 function storage_monitor(changes, area) {
-    console.log('storage changes:');
-    console.log(changes);
+    // console.log('storage changes:');
+    // console.log(changes);
 
     if (typeof changes.unblock_youku_mode !== 'undefined') {
         var mode_change = changes.unblock_youku_mode;

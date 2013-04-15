@@ -74,7 +74,7 @@ function setup_proxy(depth) {  // depth for recursion
     xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
+        if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
             console.log('the proxy server seems to be working fine: ' + proxy_addr);
         }

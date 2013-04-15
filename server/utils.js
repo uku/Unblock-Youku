@@ -114,7 +114,12 @@ function renew_sogou_server(callback, depth) {
     };
 
     var req = http.request(options, function(res) {
-        callback(new_addr);
+        if (400 === res.statusCode) {
+            callback(new_addr);
+        } else {
+            util.error('[ub.uku.js] statusCode for ' + new_addr + ' is unexpected: ' + res.statusCode);
+            renew_sogou_server(callback, depth + 1);
+        }
     });
 
     // http://goo.gl/G2CoU
