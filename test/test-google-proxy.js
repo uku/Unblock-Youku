@@ -2,7 +2,7 @@ var page = require('webpage').create();
 
 var test_url = 'http://google.com';
 
-page.open(test_url, function (status) {
+page.open(test_url, function(status) {
     if (status !== 'success') {
         phantom.exit(0);
     } else {

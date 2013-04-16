@@ -108,7 +108,8 @@ if (cluster.isMaster) {
             // respawn a worker process when one dies
             cluster.fork();
         } else {
-            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited with no error; this should never happen');
+            // util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited with no error; this should never happen');
+            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited.');
         }
     });
 
@@ -269,7 +270,12 @@ if (cluster.isMaster) {
         });
 
         client_request.pipe(proxy_request);
-    }).listen(local_port, local_addr);
+    }).listen(local_port, local_addr).on('error', function(err) {
+        if (err.code === 'EADDRINUSE') {
+            util.error('[ub.uku.js] Port number is already in use! Exiting now...');
+            process.exit();
+        }
+    });
 }
 
 process.on('uncaughtException', function(err) {

@@ -4,7 +4,7 @@ var test_url = 'http://127.0.0.1:8888/proxy.php?url=' + btoa('http://httpbin.org
 var ipdb_url = 'http://api.ipinfodb.com/v3/ip-country/?key=07ba93c884b57bf1f5b64ed136ecb4d7bd1610677a67f589af17095895781592&ip=';
 
 
-page.open(test_url, function (status) {
+page.open(test_url, function(status) {
     if (status !== 'success') {
         console.error('Failed in opening httpbin...');
         phantom.exit(1);
