@@ -117,6 +117,8 @@ if (cluster.isMaster) {
         var srv = 'http://' + proxy_addr + '/proxy.pac\n';
         var msg = 'The local proxy server is running...\nPlease use this PAC file: ' + srv.underline;
         console.log(msg.green);
+    } else {
+        console.log('Starting in production mode...'.yellow);
     }
 
 } else if (cluster.isWorker) {
