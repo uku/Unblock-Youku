@@ -24,22 +24,33 @@ var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 var cluster = require('cluster');
 
+var colors = require('colors');
+var argv = require('optimist')
+    .default('port', 8888)
+    .boolean('local_only')
+    .boolean('production')
+    .argv
+;
+
 var sogou = require('../shared/sogou');
 var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
 
 
-var local_addr, local_port, proxy_addr, run_locally;
-if (process.env.PORT) {
-    local_addr = '0.0.0.0';
-    local_port = process.env.PORT;
-    proxy_addr = 'proxy.uku.im:80';
-    run_locally = false;
+var local_addr, local_port, proxy_addr;
+if (!argv.production) {
+    local_port = argv.port;
+    if (argv.local_only) {
+        local_addr = '127.0.0.1';
+        proxy_addr = '127.0.0.1:' + local_port;
+    } else {
+        local_addr = '0.0.0.0';
+        proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
+    }
 } else {
-    local_addr = '0.0.0.0';  // '127.0.0.1';
-    local_port = 8888;
-    proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
-    run_locally = true;
+    local_port = process.env.PORT || 8888;
+    local_addr = '0.0.0.0';
+    proxy_addr = 'proxy.uku.im:80';
 }
 var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, proxy_addr);
 
@@ -101,8 +112,10 @@ if (cluster.isMaster) {
         }
     });
 
-    if (run_locally) {
-        console.log('The local proxy server is running...\nPlease use this PAC file: http://' + proxy_addr + '/proxy.pac\n');
+    if (!argv.production) {
+        var srv = 'http://' + proxy_addr + '/proxy.pac\n';
+        var msg = 'The local proxy server is running...\nPlease use this PAC file: ' + srv.underline;
+        console.log(msg.green);
     }
 
 } else if (cluster.isWorker) {
@@ -122,25 +135,43 @@ if (cluster.isMaster) {
             util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
         });
 
-        if (run_locally) {
-            console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url);
+        if (!argv.production) {
+            console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
         }
 
-        if (client_request.url === '/favicon.ico') {
-            client_response.writeHead(404, {
-                'Cache-Control': 'public, max-age=2592000'
+        if (!shared_tools.string_starts_with(client_request.url, '/proxy') &&
+                !shared_tools.string_starts_with(client_request.url, 'http')) {
+            if (client_request.url === '/favicon.ico') {
+                client_response.writeHead(404, {
+                    'Cache-Control': 'public, max-age=2592000'
+                });
+                client_response.end();
+                return;
+            }
+
+            if (client_request.url === '/crossdomain.xml') {
+                client_response.writeHead(200, {
+                    'Content-Type': 'text/xml',
+                    'Cache-Control': 'public, max-age=2592000'
+                });
+                client_response.end('<?xml version="1.0" encoding="UTF-8"?>\r\n' +
+                        '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+                return;
+            }
+
+            if (client_request.url === '/robots.txt') {
+                client_response.writeHead(200, {
+                    'Content-Type': 'text/plain',
+                    'Cache-Control': 'public, max-age=2592000'
+                });
+                client_response.end('User-agent: *\r\nDisallow: /\r\n');
+                return;
+            }
+
+            client_response.writeHead(403, {
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end();
-            return;
-        }
-
-        if (client_request.url === '/crossdomain.xml') {
-            client_response.writeHead(200, {
-                'Content-Type': 'text/xml',
-                'Cache-Control': 'public, max-age=2592000'
-            });
-            client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
-                '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
             return;
         }
 
@@ -153,17 +184,7 @@ if (cluster.isMaster) {
             return;
         }
 
-        var target;
-        if (shared_tools.string_starts_with(client_request.url, '/proxy') || 
-                shared_tools.string_starts_with(client_request.url, 'http')) {
-            target = server_utils.get_real_target(client_request.url);
-        } else {
-            client_response.writeHead(501, {
-                'Cache-Control': 'public, max-age=14400'
-            });
-            client_response.end();
-            return;
-        }
+        var target = server_utils.get_real_target(client_request.url);
         if (!target.host) {
             client_response.writeHead(403, {
                 'Cache-Control': 'public, max-age=14400'
@@ -194,7 +215,7 @@ if (cluster.isMaster) {
                 method: client_request.method,
                 headers: proxy_request_headers
             };
-        } else if (run_locally) {
+        } else if (!argv.production) {
             // serve as a normal proxy
             client_request.headers.host = target.host;
             proxy_request_options = {

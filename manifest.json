@@ -1,82 +1,82 @@
 {
-    "name": "Unblock Youku",
+  "name": "Unblock Youku",
     "version": "2.6.5.0",
     "manifest_version": 2,
     "minimum_chrome_version": "25.0",
     "description": "__MSG_description__",
     "icons": {
-        "16": "chrome/icons/icon16.png",
-        "48": "chrome/icons/icon48.png",
-        "128": "chrome/icons/icon128.png"
+      "16": "chrome/icons/icon16.png",
+      "48": "chrome/icons/icon48.png",
+      "128": "chrome/icons/icon128.png"
     },
     "permissions": [
-        "proxy",
-        "webRequest",
-        "webRequestBlocking",
-        "storage",
-        "<all_urls>"
+      "proxy",
+      "webRequest",
+      "webRequestBlocking",
+      "storage",
+      "<all_urls>"
     ],
     "background": {
-        "scripts": [
-            "shared/tools.js",
-            "shared/urls.js",
-            "shared/sogou.js",
-            "chrome/pages/js/analytics.js",
-            "chrome/storage.js",
-            "chrome/header.js",
-            "chrome/proxy.js",
-            "chrome/redirect.js",
-            "chrome/timezone.js",
-            "chrome/config.js"
-        ]
+      "scripts": [
+        "shared/tools.js",
+        "shared/urls.js",
+        "shared/sogou.js",
+        "chrome/pages/js/analytics.js",
+        "chrome/storage.js",
+        "chrome/header.js",
+        "chrome/proxy.js",
+        "chrome/redirect.js",
+        "chrome/timezone.js",
+        "chrome/config.js"
+      ]
     },
     "browser_action": {
-        "default_title": "Unblock Youku isn't working properly! Visit http://ub.uku.im/faq for possible solutions.",
-        "default_icon": "chrome/icons/icon19gray.png",
-        "default_popup": "chrome/pages/popup.html"
+      "default_title": "Unblock Youku isn't working properly! Visit http://ub.uku.im/faq for possible solutions.",
+      "default_icon": "chrome/icons/icon19gray.png",
+      "default_popup": "chrome/pages/popup.html"
     },
     "options_page": "chrome/pages/options.html",
     "content_scripts": [{
-        "matches": ["http://www.tudou.com/*"],
-        "js": ["chrome/content/tudou.js"],
-        "run_at": "document_end",
-        "all_frames": true
+      "matches": ["http://www.tudou.com/*"],
+      "js": ["chrome/content/tudou.js"],
+      "run_at": "document_end",
+      "all_frames": true
     }, {
-        "matches": ["http://*/*"],
-        "exclude_matches": [
-            "http://*.org/*",
-            "http://*.edu/*",
-            "http://*.ac.uk/*",
-            "http://*.ac.jp/*",
-            "http://*.cn/*",
-            "http://*.gov/*",
-            "http://*.gc.ca/*",
-            "http://*.go.jp/*",
-            "http://*.youku.com/*",
-            "http://*.tudou.com/*",
-            "http://*.soku.com/*",
-            "http://*.sohu.com/*",
-            "http://*.xunlei.com/*"
-        ],
-        "exclude_globs" : [
-            "http://*.edu.*/*",
-            "http://u*.ca/*",
-            "http://*.u*.ca/*",
-            "http://uni*.it/*",
-            "http://*.uni*.it/*",
-            "http://uni*.de/*",
-            "http://*.uni*.de/*",
-            "http://uni*.fr/*",
-            "http://*.uni*.fr/*",
-            "http://*.gov.*/*",
-            "http://*game.com/*",
-            "http://*mail*",
-            "http://*bank*",
-            "http://*personal*"
-        ],
-        "js": ["chrome/content/links.js"],
-        "run_at": "document_idle",
-        "all_frames": true
+      "matches": ["http://*/*"],
+      "exclude_matches": [
+        "http://*.org/*",
+        "http://*.edu/*",
+        "http://*.ac.uk/*",
+        "http://*.ac.jp/*",
+        "http://*.cn/*",
+        "http://*.gov/*",
+        "http://*.gc.ca/*",
+        "http://*.go.jp/*",
+        "http://*.youku.com/*",
+        "http://*.tudou.com/*",
+        "http://*.soku.com/*",
+        "http://*.sohu.com/*",
+        "http://*.xunlei.com/*"
+      ],
+      "exclude_globs" : [
+        "http://*.edu.*/*",
+        "http://u*.ca/*",
+        "http://*.u*.ca/*",
+        "http://uni*.it/*",
+        "http://*.uni*.it/*",
+        "http://uni*.de/*",
+        "http://*.uni*.de/*",
+        "http://uni*.fr/*",
+        "http://*.uni*.fr/*",
+        "http://*.gov.*/*",
+        "http://*game.com/*",
+        "http://*mail*",
+        "http://*bank*",
+        "http://*personal*"
+      ],
+      "js": ["chrome/content/links.js"],
+      "run_at": "document_idle",
+      "all_frames": true
     }],
     "default_locale": "en",
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
