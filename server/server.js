@@ -261,20 +261,20 @@ if (cluster.isMaster) {
         }
 
 
-        console.log('Client Request:');
+        // console.log('Client Request:');
         // console.log(proxy_request_options);
-        console.log(client_request.headers);
-        console.log(server_utils.filtered_request_headers(client_request.headers, forward_cookies));
+        // console.log(client_request.headers);
+        // console.log(server_utils.filtered_request_headers(client_request.headers, forward_cookies));
         var proxy_request = http.request(proxy_request_options, function(proxy_response) {
             proxy_response.on('error', function(err) {
                 util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message, err.stack);
             });
             proxy_response.pipe(client_response);
 
-            console.log('Server Response:');
+            // console.log('Server Response:');
             // console.log(proxy_response.statusCode);
-            console.log(proxy_response.headers);
-            console.log(server_utils.filtered_response_headers(proxy_response.headers, forward_cookies));
+            // console.log(proxy_response.headers);
+            // console.log(server_utils.filtered_response_headers(proxy_response.headers, forward_cookies));
             client_response.writeHead(
                 proxy_response.statusCode,
                 server_utils.filtered_response_headers(proxy_response.headers, forward_cookies)

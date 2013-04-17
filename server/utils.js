@@ -161,7 +161,7 @@ function filtered_request_headers(headers, forward_cookie) {
                 } else {
                     ret_headers['User-Agent'] = headers['user-agent'];
                 }
-            } else if (!string_starts_with(field, 'x-')) {
+            } else if (field !== 'via' && (!string_starts_with(field, 'x-'))) {
                 // in case some servers do not recognize lower-case headers, such as hacker news
                 ret_headers[to_title_case(field)] = headers[field];
             }
