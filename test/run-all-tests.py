@@ -57,6 +57,11 @@ def stop_server():
     print 'done.'
 
 
+# http://goo.gl/xaBer
+def red_alert(text):
+    print "\033[7;31m" + text + "\033[0m"
+
+
 def run_all_tests():
     print
     print 'To run all test-*.js files...'
@@ -74,13 +79,16 @@ def run_all_tests():
             time.sleep(2)  # sleep 2 seconds between tests
             if return_value != 0:
                 num_failed += 1
-                print file_name + ' FAILED!'
+                red_alert(file_name + ' FAILED!')
             else:
                 num_passed += 1
                 print file_name + ' passed.'
     print
-    print 'Final results: %d tests passed and %d TESTS FAILED.' \
-        % (num_passed, num_failed)
+    if num_failed > 0:
+        red_alert('Final results: ' + str(num_failed) + ' TESTS FAILED'
+                + ' (out of ' + str(num_failed + num_passed) + ')')
+    else:
+        print 'All %d tests passed.' % (num_passed + num_failed)
     print
     return num_failed
 

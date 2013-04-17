@@ -21,7 +21,7 @@
 "use strict";
 
 function http_redirector(details) {
-    console.log('original url: ' + details.url);
+    console.log(details.method + ' original url: ' + details.url);
     if (details.url.slice(-15) === 'crossdomain.xml') {
         console.log('directly pass');
         return {};
@@ -37,7 +37,6 @@ function http_redirector(details) {
 
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
-        console.log(details.method);
         if (details.method === 'GET' || details.method === 'HEAD'
                 || details.method === 'get' || details.method === 'head') {
             backend_server = unblock_youku.actual_get_server;
@@ -66,14 +65,15 @@ function check_redirect_server(server_addr, success_callback, failure_callback) 
         failure_callback('Timeout');
     }, 10000);  // 10s
 
-    xhr.open('GET', 'http://' + server_addr + '/status', true);
+    xhr.open('GET', 'http://' + server_addr.match(/^(.[^:\/]+)/)[1] + '/status', true);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText.indexOf('OK') !== -1) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 && xhr.responseText.indexOf('OK') !== -1) {
                 clearTimeout(xhr_timer);
                 success_callback();
             } else {
+                clearTimeout(xhr_timer);
                 failure_callback('Wrong Status');
             }
         }
@@ -110,7 +110,8 @@ function setup_redirect() {
         console.log('default_get_server seems to be working fine: ' + unblock_youku.actual_get_server);
     }, function(err_msg) {
         unblock_youku.actual_get_server = unblock_youku.backup_get_server;
-        console.warn('default_get_server ' + err_msg + '!\nchanged to backup_get_server: ' + unblock_youku.actual_get_server);
+        console.warn('default_get_server error: ' + err_msg);
+        console.warn('changed to backup_get_server: ' + unblock_youku.actual_get_server);
         _gaq.push(['_trackEvent', 'GET Server Error', unblock_youku.default_get_server + ': ' + err_msg]);
     });
 
@@ -118,7 +119,8 @@ function setup_redirect() {
         console.log('default_post_server seems to be working fine: ' + unblock_youku.actual_post_server);
     }, function(err_msg) {
         unblock_youku.actual_post_server = unblock_youku.backup_post_server;
-        console.warn('default_post_server ' + err_msg + '!\n changed to backup_post_server: ' + unblock_youku.actual_post_server);
+        console.warn('default_post_server error: ' + err_msg);
+        console.warn('changed to backup_post_server: ' + unblock_youku.actual_post_server);
         _gaq.push(['_trackEvent', 'POST Server Error', unblock_youku.default_post_server + ': ' + err_msg]);
     });
 }
