@@ -139,7 +139,7 @@ function renew_sogou_server(callback, depth) {
 }
 
 
-function filtered_request_headers(headers) {
+function filtered_request_headers(headers, forward_cookie) {
     var ret_headers = {};
 
     var field;
@@ -148,6 +148,10 @@ function filtered_request_headers(headers) {
             if (string_starts_with(field, 'proxy-')) {
                 if (field === 'proxy-connection') {
                     ret_headers.Connection = headers['proxy-connection'];
+                }
+            } else if (field === 'cookie') {
+                if (forward_cookie) {
+                    ret_headers.Cookie = headers.cookie;
                 }
             } else if (field !== 'x-forwarded-for' && field !== 'x-real-ip') {
                 // in case some servers do not recognize lower-case headers, such as hacker news
@@ -159,7 +163,7 @@ function filtered_request_headers(headers) {
     return ret_headers;
 }
 
-function filtered_response_headers(headers) {
+function filtered_response_headers(headers, forward_cookie) {
     var res_headers = {};
 
     var field;
@@ -169,8 +173,12 @@ function filtered_response_headers(headers) {
                 if (field === 'proxy-connection') {
                     res_headers.connection = headers['proxy-connection'];
                 }
-            // improve caching
-            } else if (field !== 'cache-control' &&
+            } else if (field === 'set-cookie') {
+                // cannot set cookies for another domain in redirect mode
+                if (forward_cookie) {
+                    res_headers['set-cookie'] = headers['set-cookie'];
+                }
+            } else if (field !== 'cache-control' &&  // improve caching
                     field !== 'expires' &&
                     field !== 'pragma' &&
                     field !== 'age' &&
