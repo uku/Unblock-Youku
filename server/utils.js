@@ -153,7 +153,15 @@ function filtered_request_headers(headers, forward_cookie) {
                 if (forward_cookie) {
                     ret_headers.Cookie = headers.cookie;
                 }
-            } else if (field !== 'x-forwarded-for' && field !== 'x-real-ip') {
+            } else if (field === 'user-agent') {
+                if (headers['user-agent'].indexOf('CloudFront') !== -1 ||
+                        headers['user-agent'].indexOf('CloudFlare') !== -1) {
+                    ret_headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) ' + 
+                        'AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31';
+                } else {
+                    ret_headers['User-Agent'] = headers['user-agent'];
+                }
+            } else if (!string_starts_with(field, 'x-')) {
                 // in case some servers do not recognize lower-case headers, such as hacker news
                 ret_headers[to_title_case(field)] = headers[field];
             }
@@ -178,12 +186,9 @@ function filtered_response_headers(headers, forward_cookie) {
                 if (forward_cookie) {
                     res_headers['set-cookie'] = headers['set-cookie'];
                 }
-            } else if (field !== 'cache-control' &&  // improve caching
-                    field !== 'expires' &&
-                    field !== 'pragma' &&
-                    field !== 'age' &&
-                    field !== 'x-cache' &&
-                    field !== 'via') {
+            } else if (field !== 'cache-control' && field !== 'expires' &&  // to improve caching
+                    field !== 'pragma' && field !== 'age' && field !== 'via' &&
+                    (!string_starts_with(field, 'x-'))) {
                 res_headers[field] = headers[field];
             }
         }
