@@ -174,7 +174,8 @@ if (cluster.isMaster) {
             if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'private, max-age=0, must-revalidate'
+                    'Cache-Control': 'public, max-age=3600'
+                    // 'Cache-Control': 'private, max-age=0, must-revalidate'
                 });
                 if (argv.production) {
                     client_response.end('OK\r\nProduction');
