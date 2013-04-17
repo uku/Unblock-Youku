@@ -37,18 +37,55 @@ function http_redirector(details) {
 
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
-        backend_server = unblock_youku.backend_server;
+        console.log(details.method);
+        if (details.method === 'GET' || details.method === 'HEAD'
+                || details.method === 'get' || details.method === 'head') {
+            backend_server = unblock_youku.actual_get_server;
+        } else {
+            backend_server = unblock_youku.actual_post_server;
+        }
     } else {
         backend_server = localStorage.custom_server;
     }
 
     //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + btoa(details.url);
-    //var redirect_url = 'http://uku-test.aws.af.cm/?url=' + btoa(details.url);
     var redirect_url = 'http://' + backend_server + '?url=' + btoa(details.url);
     console.log('redirect url: ' + redirect_url);
 
     return {redirectUrl: redirect_url};
 }
+
+
+function check_redirect_server(server_addr, success_callback, failure_callback) {
+    console.log('to test the redirection server: ' + server_addr);
+    var xhr = new XMLHttpRequest();
+
+    var xhr_timer = setTimeout(function() {
+        xhr.abort();
+        console.warn(server_addr + ' TIMEOUT!');
+        failure_callback('Timeout');
+    }, 10000);  // 10s
+
+    xhr.open('GET', 'http://' + server_addr + '/status', true);
+    xhr.timeout = 12000; // 12s
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.responseText.indexOf('OK') !== -1) {
+                clearTimeout(xhr_timer);
+                success_callback();
+            } else {
+                failure_callback('Wrong Status');
+            }
+        }
+    };
+    xhr.onerror = function(err) {
+        console.warn(server_addr + ' ERROR!');
+        clearTimeout(xhr_timer);
+        failure_callback(err.target.status.toString());
+    };
+    xhr.send();
+}
+
 
 function setup_redirect() {
     if (!chrome.webRequest.onBeforeRequest.hasListener(http_redirector)) {
@@ -66,33 +103,24 @@ function setup_redirect() {
         _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 
-    unblock_youku.backend_server = unblock_youku.default_server;
+    unblock_youku.actual_get_server = unblock_youku.default_get_server;
+    unblock_youku.actual_post_server = unblock_youku.default_post_server;
 
-    console.log('to test the redirection server: ' + unblock_youku.default_server);
-    var xhr = new XMLHttpRequest();
+    check_redirect_server(unblock_youku.actual_get_server, function() {
+        console.log('default_get_server seems to be working fine: ' + unblock_youku.actual_get_server);
+    }, function(err_msg) {
+        unblock_youku.actual_get_server = unblock_youku.backup_get_server;
+        console.warn('default_get_server ' + err_msg + '!\nchanged to backup_get_server: ' + unblock_youku.actual_get_server);
+        _gaq.push(['_trackEvent', 'GET Server Error', unblock_youku.default_get_server + ': ' + err_msg]);
+    });
 
-    var xhr_timer = setTimeout(function() {
-        xhr.abort();
-        console.warn(unblock_youku.default_server + ' TIMEOUT! changed redirection server to backup_server: ' + unblock_youku.backup_server);
-        _gaq.push(['_trackEvent', 'Redirection Server Timeout', unblock_youku.default_server]);
-        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
-    }, 10000);  // 10s
-
-    xhr.open('GET', 'http://' + unblock_youku.backend_server + '?url=' + btoa('http://ipservice.163.com/isFromMainland'), true);
-    xhr.timeout = 12000; // 12s
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            clearTimeout(xhr_timer);
-            console.log('the redirection server seems to be working fine: ' + unblock_youku.backend_server);
-        }
-    };
-    xhr.onerror = function(err) {
-        console.warn(unblock_youku.default_server + ' ERROR! changed redirection server to backup_server: ' + unblock_youku.backup_server);
-        _gaq.push(['_trackEvent', 'Redirection Server Error', err.target.status]);
-        unblock_youku.backend_server = unblock_youku.backup_server;  // backup
-        clearTimeout(xhr_timer);
-    };
-    xhr.send();
+    check_redirect_server(unblock_youku.actual_post_server, function() {
+        console.log('default_post_server seems to be working fine: ' + unblock_youku.actual_post_server);
+    }, function(err_msg) {
+        unblock_youku.actual_post_server = unblock_youku.backup_post_server;
+        console.warn('default_post_server ' + err_msg + '!\n changed to backup_post_server: ' + unblock_youku.actual_post_server);
+        _gaq.push(['_trackEvent', 'POST Server Error', unblock_youku.default_post_server + ': ' + err_msg]);
+    });
 }
 
 

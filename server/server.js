@@ -171,6 +171,19 @@ if (cluster.isMaster) {
                 return;
             }
 
+            if (client_request.url === '/status') {
+                client_response.writeHead(200, {
+                    'Content-Type': 'text/plain',
+                    'Cache-Control': 'private, max-age=0, must-revalidate'
+                });
+                if (argv.production) {
+                    client_response.end('OK\r\nProduction');
+                } else {
+                    client_response.end('OK');
+                }
+                return;
+            }
+
             client_response.writeHead(403, {
                 'Cache-Control': 'public, max-age=14400'
             });

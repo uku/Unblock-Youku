@@ -19,7 +19,7 @@
 /*global $: false, btoa: false */
 
 var background = chrome.extension.getBackgroundPage();
-var default_server = background.unblock_youku.default_server;
+var default_server = background.unblock_youku.default_get_server;
 
 function remove_custom_server(callback) {
     "use strict";
@@ -41,6 +41,7 @@ function get_custom_server(callback) {
 function set_custom_server(server_addr, callback) {
     "use strict";
     if (server_addr === default_server) {
+        // must remove, otherwise the post server won't be invoked
         remove_custom_server(callback);
     } else {
         // chrome.storage.sync.onChange listener will change localStorage as well

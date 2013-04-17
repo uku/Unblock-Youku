@@ -21,6 +21,24 @@
 "use strict";
 
 
+function setup_pac_data(proxy_domain) {
+    var pac_data = url2pac(unblock_youku.normal_url_list, proxy_domain + ':80');
+    var proxy_config = {
+        mode: 'pac_script',
+        pacScript: {
+            data: pac_data
+        }
+    };
+    chrome.proxy.settings.set(
+        {
+            value: proxy_config,
+            scope: 'regular'
+        },
+        function() {}
+    );
+}
+
+
 function setup_proxy(depth) {  // depth for recursion
     if (typeof depth === 'undefined') {
         console.log('1st time to call setup_proxy, set depth to 0');
@@ -33,25 +51,10 @@ function setup_proxy(depth) {  // depth for recursion
     }
 
     console.log('to set up proxy');
+
     var proxy_addr = new_sogou_proxy_addr();
     console.log('using proxy: ' + proxy_addr);
-    var pac_data = url2pac(unblock_youku.normal_url_list, proxy_addr + ':80');
-    // console.log(pac_data);
-
-    var proxy_config = {
-        mode: 'pac_script',
-        pacScript: {
-            data: pac_data
-        }
-    };
-
-    chrome.proxy.settings.set(
-        {
-            value: proxy_config,
-            scope: 'regular'
-        },
-        function() {}
-    );
+    setup_pac_data(proxy_addr);
 
     console.log('to check if the proxy server is avaiable: ' + proxy_addr);
     var xhr = new XMLHttpRequest();
