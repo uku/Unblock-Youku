@@ -139,7 +139,7 @@ function renew_sogou_server(callback, depth) {
 }
 
 
-function filtered_headers(headers) {
+function filtered_request_headers(headers) {
     var ret_headers = {};
 
     var field;
@@ -159,9 +159,37 @@ function filtered_headers(headers) {
     return ret_headers;
 }
 
+function filtered_response_headers(headers) {
+    var res_headers = {};
+
+    var field;
+    for (field in headers) {
+        if (headers.hasOwnProperty(field)) {
+            if (string_starts_with(field, 'proxy-')) {
+                if (field === 'proxy-connection') {
+                    res_headers.connection = headers['proxy-connection'];
+                }
+            // improve caching
+            } else if (field !== 'cache-control' &&
+                    field !== 'expires' &&
+                    field !== 'pragma' &&
+                    field !== 'age' &&
+                    field !== 'x-cache' &&
+                    field !== 'via') {
+                res_headers[field] = headers[field];
+            }
+        }
+    }
+    res_headers['cache-control'] = 'public, max-age=3600';
+
+    return res_headers;
+}
+
 
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
 exports.renew_sogou_server = renew_sogou_server;
-exports.filtered_headers = filtered_headers;
+exports.filtered_request_headers = filtered_request_headers;
+exports.filtered_response_headers = filtered_response_headers;
+

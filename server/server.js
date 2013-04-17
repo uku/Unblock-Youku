@@ -216,7 +216,7 @@ if (cluster.isMaster) {
             var timestamp = Math.round(Date.now() / 1000).toString(16);
             var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
 
-            var proxy_request_headers = server_utils.filtered_headers(client_request.headers);
+            var proxy_request_headers = server_utils.filtered_request_headers(client_request.headers);
             proxy_request_headers['X-Sogou-Auth'] = sogou_auth;
             proxy_request_headers['X-Sogou-Timestamp'] = timestamp;
             proxy_request_headers['X-Sogou-Tag'] = sogou_tag;
@@ -240,7 +240,7 @@ if (cluster.isMaster) {
                 port: +target.port,
                 path: target.path,
                 method: client_request.method,
-                headers: server_utils.filter_headers(client_request.headers)
+                headers: server_utils.filtered_request_headers(client_request.headers)
             };
         } else {
             client_response.writeHead(403, {
@@ -261,7 +261,8 @@ if (cluster.isMaster) {
             // console.log('Server Response:');
             // console.log(proxy_response.statusCode);
             // console.log(proxy_response.headers);
-            client_response.writeHead(proxy_response.statusCode, proxy_response.headers);
+            // console.log(server_utils.filtered_response_headers(proxy_response.headers));
+            client_response.writeHead(proxy_response.statusCode, server_utils.filtered_response_headers(proxy_response.headers));
         });
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
