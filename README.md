@@ -10,7 +10,7 @@ This project contains three-fold functionalities.
 
    For more information, please see [the instructions](http://ub.uku.im/proxy) (in Chinese).
 
-3. _A backend server_ to support the redirection mode of the Chrome extension. [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku)
+3. _A backend server_ to support the redirection mode of the Chrome extension. [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku)[![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
 ## Disclaimer
 
