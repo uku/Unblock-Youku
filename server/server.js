@@ -178,10 +178,9 @@ if (cluster.isMaster) {
                     // 'Cache-Control': 'private, max-age=0, must-revalidate'
                 });
                 if (argv.production) {
-                    client_response.end('OK\r\nProduction');
-                } else {
-                    client_response.end('OK');
+                    client_response.write('Production ');
                 }
+                client_response.end('OK');
                 return;
             }
 
