@@ -33,9 +33,7 @@ function http_redirector(details) {
         } 
 
         // remove random number to improve cache hitrate
-        console.log(details.url);
         details.url = details.url.replace(/&ran=[0-9]*|ran=[0-9]*&/gi, '');
-        console.log(details.url);
     } else if (details.url.slice(0, 23) === 'http://hot.vrs.sohu.com') {
         details.url = details.url.replace(/&t=0\.[0-9]*|t=0\.[0-9]*&/gi, '');
     } else if (details.url.slice(0, 23) === 'http://hot.vrs.letv.com') {
