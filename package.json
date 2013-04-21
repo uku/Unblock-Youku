@@ -14,7 +14,8 @@
     },
     "dependencies": {
       "colors": "*",
-      "optimist": "0.4.x"
+      "optimist": "0.4.x",
+      "raven": "0.5.x"
     },
     "scripts": {
       "start": "node server/server.js",

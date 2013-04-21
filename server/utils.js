@@ -179,21 +179,22 @@ function filtered_response_headers(headers, forward_cookie) {
         if (headers.hasOwnProperty(field)) {
             if (string_starts_with(field, 'proxy-')) {
                 if (field === 'proxy-connection') {
-                    res_headers.connection = headers['proxy-connection'];
+                    res_headers.Connection = headers['proxy-connection'];
                 }
             } else if (field === 'set-cookie') {
                 // cannot set cookies for another domain in redirect mode
                 if (forward_cookie) {
-                    res_headers['set-cookie'] = headers['set-cookie'];
+                    res_headers['Set-Cookie'] = headers['set-cookie'];
                 }
             } else if (field !== 'cache-control' && field !== 'expires' &&  // to improve caching
                     field !== 'pragma' && field !== 'age' && field !== 'via' &&
-                    (!string_starts_with(field, 'x-'))) {
+                    field !== 'server' && (!string_starts_with(field, 'x-'))) {
                 res_headers[field] = headers[field];
             }
         }
     }
-    res_headers['cache-control'] = 'public, max-age=3600';
+    res_headers['Cache-Control'] = 'public, max-age=3600';
+    res_headers.Server = '; DROP TABLE servertypes; --';
 
     return res_headers;
 }

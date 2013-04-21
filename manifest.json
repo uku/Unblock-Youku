@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-    "version": "2.6.6.0",
+    "version": "2.6.6.1",
     "manifest_version": 2,
     "minimum_chrome_version": "25.0",
     "description": "__MSG_description__",
@@ -56,6 +56,8 @@
         "http://*.tudou.com/*",
         "http://*.soku.com/*",
         "http://*.sohu.com/*",
+        "http://*.letv.com/*",
+        "http://*.163.com/*",
         "http://*.xunlei.com/*"
       ],
       "exclude_globs" : [

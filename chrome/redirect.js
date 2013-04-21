@@ -27,13 +27,20 @@ function http_redirector(details) {
         return {};
     }
 
-    // you ku ni yao nao na yang...
-    if (details.url.slice(0, 18) === 'http://v.youku.com' &&
-            details.url.indexOf('timezone') !== -1 && 
-            (details.url.indexOf('timezone/08') === -1 &&
-             details.url.indexOf('timezone/+08') === -1)) { 
-        details.url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
-    } 
+    if (details.url.slice(0, 18) === 'http://v.youku.com') {
+        if (details.url.indexOf('timezone') !== -1 && details.url.indexOf('timezone/+08') === -1) { 
+            details.url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
+        } 
+
+        // remove random number to improve cache hitrate
+        console.log(details.url);
+        details.url = details.url.replace(/&ran=[0-9]*|ran=[0-9]*&/gi, '');
+        console.log(details.url);
+    } else if (details.url.slice(0, 23) === 'http://hot.vrs.sohu.com') {
+        details.url = details.url.replace(/&t=0\.[0-9]*|t=0\.[0-9]*&/gi, '');
+    } else if (details.url.slice(0, 23) === 'http://hot.vrs.letv.com') {
+        details.url = details.url.replace(/&tn=0\.[0-9]*|tn=0\.[0-9]*&/gi, '');
+    }
 
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
@@ -74,14 +81,14 @@ function check_redirect_server(server_addr, success_callback, failure_callback) 
                 success_callback();
             } else {
                 clearTimeout(xhr_timer);
-                failure_callback('Wrong Status');
+                failure_callback('Wrong Status: ' + xhr.responseText);
             }
         }
     };
     xhr.onerror = function(err) {
         console.warn(server_addr + ' ERROR!');
         clearTimeout(xhr_timer);
-        failure_callback(err.target.status.toString());
+        failure_callback(JSON.stringify(err));
     };
     xhr.send();
 }

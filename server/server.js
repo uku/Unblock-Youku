@@ -32,6 +32,12 @@ var argv = require('optimist')
     .argv
 ;
 
+if (process.env.SENTRY_ADDRESS) {
+    var raven = require('raven');
+    var raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
+    raven_client.patchGlobal();
+} 
+
 var sogou = require('../shared/sogou');
 var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
@@ -146,7 +152,8 @@ if (cluster.isMaster) {
                 !shared_tools.string_starts_with(client_request.url, 'http')) {
             if (client_request.url === '/favicon.ico') {
                 client_response.writeHead(404, {
-                    'Cache-Control': 'public, max-age=2592000'
+                    'Cache-Control': 'public, max-age=2592000',
+                    'Server': '; DROP TABLE servertypes; --'  // as reddit hahaha
                 });
                 client_response.end();
                 return;
@@ -155,7 +162,8 @@ if (cluster.isMaster) {
             if (client_request.url === '/crossdomain.xml') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/xml',
-                    'Cache-Control': 'public, max-age=2592000'
+                    'Cache-Control': 'public, max-age=2592000',
+                    'Server': '; DROP TABLE servertypes; --'
                 });
                 client_response.end('<?xml version="1.0" encoding="UTF-8"?>\r\n' +
                         '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
@@ -165,7 +173,8 @@ if (cluster.isMaster) {
             if (client_request.url === '/robots.txt') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=2592000'
+                    'Cache-Control': 'public, max-age=2592000',
+                    'Server': '; DROP TABLE servertypes; --'
                 });
                 client_response.end('User-agent: *\r\nDisallow: /\r\n');
                 return;
@@ -174,8 +183,9 @@ if (cluster.isMaster) {
             if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=3600'
-                    // 'Cache-Control': 'private, max-age=0, must-revalidate'
+                    'Cache-Control': 'public, max-age=3600',
+                    // 'Cache-Control': 'private, max-age=0, must-revalidate',
+                    'Server': '; DROP TABLE servertypes; --'
                 });
                 if (argv.production) {
                     client_response.write('Production ');
@@ -185,7 +195,8 @@ if (cluster.isMaster) {
             }
 
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400'
+                'Cache-Control': 'public, max-age=14400',
+                'Server': '; DROP TABLE servertypes; --'
             });
             client_response.end();
             return;
@@ -194,7 +205,8 @@ if (cluster.isMaster) {
         if (client_request.url === '/proxy.pac') {
             client_response.writeHead(200, {
                 'Content-Type': 'application/x-ns-proxy-autoconfig',
-                'Cache-Control': 'public, max-age=14400'
+                'Cache-Control': 'public, max-age=14400',
+                'Server': '; DROP TABLE servertypes; --'
             });
             client_response.end(pac_file_content);
             return;
@@ -209,7 +221,8 @@ if (cluster.isMaster) {
         var target = server_utils.get_real_target(client_request.url);
         if (!target.host) {
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400'
+                'Cache-Control': 'public, max-age=14400',
+                'Server': '; DROP TABLE servertypes; --'
             });
             client_response.end();
             return;
@@ -253,7 +266,8 @@ if (cluster.isMaster) {
             };
         } else {
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400'
+                'Cache-Control': 'public, max-age=14400',
+                'Server': '; DROP TABLE servertypes; --'
             });
             client_response.end();
             return;
