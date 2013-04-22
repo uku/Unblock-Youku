@@ -32,9 +32,9 @@ unblock_youku.backup_get_server = 'wẃw.yōukù.com/proxy.php';
 unblock_youku.backup_post_server = 'wẁw.yōukù.com/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.url_list.concat([
-    'http://www.tudou.com/programs/view/*',
-    'http://www.tudou.com/albumplay/*',
-    'http://www.tudou.com/listplay/*',
+    // 'http://www.tudou.com/programs/view/*',
+    // 'http://www.tudou.com/albumplay/*',
+    // 'http://www.tudou.com/listplay/*',
 
     'http://live.video.sina.com.cn/room/*',
     'http://edge.v.iask.com/*',  // may be large files
