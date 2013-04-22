@@ -36,6 +36,7 @@ if (process.env.SENTRY_ADDRESS) {
     var raven = require('raven');
     var raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
     raven_client.patchGlobal();
+    raven_client.captureMessage('Sentry is running...');
 } 
 
 var sogou = require('../shared/sogou');
@@ -325,6 +326,9 @@ if (cluster.isMaster) {
 
 process.on('uncaughtException', function(err) {
     util.error('[ub.uku.js] Caught exception: ' + err, err.stack);
+    if (process.env.SENTRY_ADDRESS) {
+        raven_client.captureError(err);
+    } 
     process.exit(213);
 });
 
