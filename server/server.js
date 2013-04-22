@@ -32,9 +32,11 @@ var argv = require('optimist')
     .argv
 ;
 
+var raven = null;
+var raven_client = null;
 if (process.env.SENTRY_ADDRESS) {
-    var raven = require('raven');
-    var raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
+    raven = require('raven');
+    raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
     raven_client.patchGlobal();
     raven_client.captureMessage('Sentry is running...');
 } 
@@ -326,7 +328,7 @@ if (cluster.isMaster) {
 
 process.on('uncaughtException', function(err) {
     util.error('[ub.uku.js] Caught exception: ' + err, err.stack);
-    if (process.env.SENTRY_ADDRESS) {
+    if (raven_client !== null) {
         raven_client.captureError(err);
     } 
     process.exit(213);
