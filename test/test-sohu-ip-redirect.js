@@ -8,7 +8,7 @@ page.open(test_url, function(status) {
         phantom.exit(1);
     } else {
         if (page.content.indexOf('"data": null') !== -1 || page.content.indexOf('ipLimit') === -1) {
-            console.log("Proxy didn't work well...");
+            console.error("Proxy didn't work well...");
             phantom.exit(2);
         } else {
             phantom.exit(0);

@@ -168,7 +168,7 @@ if (cluster.isMaster) {
                     'Cache-Control': 'public, max-age=2592000',
                     'Server': '; DROP TABLE servertypes; --'
                 });
-                client_response.end('<?xml version="1.0" encoding="UTF-8"?>\r\n' +
+                client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                         '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
                 return;
             }
@@ -179,7 +179,7 @@ if (cluster.isMaster) {
                     'Cache-Control': 'public, max-age=2592000',
                     'Server': '; DROP TABLE servertypes; --'
                 });
-                client_response.end('User-agent: *\r\nDisallow: /\r\n');
+                client_response.end('User-agent: *\nDisallow: /');
                 return;
             }
 

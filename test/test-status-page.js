@@ -9,7 +9,7 @@ page.open(test_url, function(status) {
     } else {
         if (page.content.indexOf('OK') === -1 
                 || page.content.indexOf('Production') === -1) {
-            console.log("Status page didn't work well...");
+            console.error("Status page didn't work well...");
             phantom.exit(2);
         } else {
             phantom.exit(0);
