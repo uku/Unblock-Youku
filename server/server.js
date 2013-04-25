@@ -28,9 +28,7 @@ var colors = require('colors');
 var argv = require('optimist')
     .default('port', 8888)
     .boolean('local_only')
-    .default('local_only', false)
     .boolean('production')
-    .default('production', false)
     .argv
 ;
 
