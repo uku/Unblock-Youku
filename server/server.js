@@ -28,9 +28,19 @@ var colors = require('colors');
 var argv = require('optimist')
     .default('port', 8888)
     .boolean('local_only')
+    .default('local_only', false)
     .boolean('production')
+    .default('production', false)
     .argv
 ;
+
+// What's the reason to cause occasional H17 error for /status?
+// H17 error - "Poorly formatted HTTP response"
+// Might it be a bug in nodejs or optimist?
+var in_production = false;
+if (argv.production) {
+    in_production = true;
+}
 
 var raven = null;
 var raven_client = null;
@@ -47,7 +57,7 @@ var server_utils = require('./utils');
 
 
 var local_addr, local_port, proxy_addr;
-if (!argv.production) {
+if (!in_production) {
     local_port = argv.port;
     if (argv.local_only) {
         local_addr = '127.0.0.1';
@@ -122,12 +132,12 @@ if (cluster.isMaster) {
         }
     });
 
-    if (!argv.production) {
+    if (in_production) {
+        console.log('Starting in production mode...'.yellow);
+    } else {
         var srv = 'http://' + proxy_addr + '/proxy.pac\n';
         var msg = 'The local proxy server is running...\nPlease use this PAC file: ' + srv.underline;
         console.log(msg.green);
-    } else {
-        console.log('Starting in production mode...'.yellow);
     }
 
 } else if (cluster.isWorker) {
@@ -147,18 +157,23 @@ if (cluster.isMaster) {
             util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
         });
 
-        if (!argv.production) {
+        if (!in_production) {
             console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
         }
 
         if (!shared_tools.string_starts_with(client_request.url, '/proxy') &&
                 !shared_tools.string_starts_with(client_request.url, 'http')) {
-            if (client_request.url === '/favicon.ico') {
-                client_response.writeHead(404, {
-                    'Cache-Control': 'public, max-age=2592000',
-                    'Server': '; DROP TABLE servertypes; --'  // as reddit hahaha
+            if (client_request.url === '/status') {
+                client_response.writeHead(200, {
+                    'Content-Type': 'text/plain',
+                    'Cache-Control': 'public, max-age=3600',
+                    // 'Cache-Control': 'private, max-age=0, must-revalidate',
+                    'Server': '; DROP TABLE servertypes; --'
                 });
-                client_response.end();
+                if (in_production) {
+                    client_response.write('Production ');
+                }
+                client_response.end('OK');
                 return;
             }
 
@@ -173,6 +188,15 @@ if (cluster.isMaster) {
                 return;
             }
 
+            if (client_request.url === '/favicon.ico') {
+                client_response.writeHead(404, {
+                    'Cache-Control': 'public, max-age=2592000',
+                    'Server': '; DROP TABLE servertypes; --'  // as reddit hahaha
+                });
+                client_response.end();
+                return;
+            }
+
             if (client_request.url === '/robots.txt') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
@@ -180,20 +204,6 @@ if (cluster.isMaster) {
                     'Server': '; DROP TABLE servertypes; --'
                 });
                 client_response.end('User-agent: *\nDisallow: /');
-                return;
-            }
-
-            if (client_request.url === '/status') {
-                client_response.writeHead(200, {
-                    'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=3600',
-                    // 'Cache-Control': 'private, max-age=0, must-revalidate',
-                    'Server': '; DROP TABLE servertypes; --'
-                });
-                if (argv.production) {
-                    client_response.write('Production ');
-                }
-                client_response.end('OK');
                 return;
             }
 
@@ -256,7 +266,7 @@ if (cluster.isMaster) {
                 method: client_request.method,
                 headers: proxy_request_headers
             };
-        } else if (!argv.production) {
+        } else if (!in_production) {
             // serve as a normal proxy server
             client_request.headers.host = target.host;
             proxy_request_options = {
