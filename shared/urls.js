@@ -54,6 +54,13 @@ unblock_youku.url_list = [
     'http://ip.kankan.xunlei.com/*',
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
+    'http://180.153.225.136/*', //appletvDns
+	'http://118.244.244.124/*',//appletvDns	
+	'http://210.129.145.150/*', //appletvDns
+    'http://www.tudou.com/albumplay/*',//new tudou
+	//'http://mobi.kuwo.cn/*', feedback a lot of errors, plz check that. thx
+	'http://mobilefeedback.kugou.com/*', //kugou music
+
 
 
     'http://music.sina.com.cn/yueku/intro/*',
