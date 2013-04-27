@@ -22,12 +22,9 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 unblock_youku.url_list = [
     'http://v.youku.com/player/*',
-    'http://api.3g.youku.com/layout*',
-    'http://api.youku.com/player/*',
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
-    'http://api.3g.tudou.com/*', // tudou ipad app for apple
     'http://s.plcloud.music.qq.com/*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
@@ -55,9 +52,9 @@ unblock_youku.url_list = [
     'http://ipservice.163.com/*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
-    'http://proxy.music.qq.com/*', //iphone QQ music for apple
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
+
 
     'http://music.sina.com.cn/yueku/intro/*',
     //'http://ting.baidu.com/data/music/songlink*',
@@ -76,6 +73,14 @@ unblock_youku.url_list = [
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://*/vrs_flash.action*',
     // 'http://*/*',
+    
+    // for iOS apps
+    'http://api.3g.youku.com/layout*',
+    'http://api.youku.com/player/*',
+    'http://api.tv.sohu.com/*',
+    'http://access.tv.sohu.com/*',
+    'http://proxy.music.qq.com/*', // iphone QQ music for apple
+    'http://api.3g.tudou.com/*', // tudou ipad app for apple
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
