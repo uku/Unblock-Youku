@@ -26,7 +26,7 @@ function new_random_ip() {
 }
 
 
-function url2pac(url_list, proxy_server) {
+function urls2pac(url_list, proxy_server) {
     "use strict";
     var s = 'function FindProxyForURL(url, host) {\n' +
             '    if (';
@@ -69,6 +69,6 @@ function to_title_case(str) {
 
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
-exports.url2pac = url2pac;
+exports.urls2pac = urls2pac;
 exports.string_starts_with = string_starts_with;
 exports.to_title_case = to_title_case;

@@ -17,12 +17,12 @@
  */
 
 /*jslint browser: true */
-/*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, url2pac: false, get_mode_name: false, _gaq: false */
+/*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false, _gaq: false */
 "use strict";
 
 
 function setup_pac_data(proxy_domain) {
-    var pac_data = url2pac(unblock_youku.normal_url_list, proxy_domain + ':80');
+    var pac_data = urls2pac(unblock_youku.normal_url_list, proxy_domain + ':80');
     var proxy_config = {
         mode: 'pac_script',
         pacScript: {

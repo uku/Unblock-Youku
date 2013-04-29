@@ -20,7 +20,8 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 
-unblock_youku.url_list = [
+// for both chrome extension and server
+unblock_youku.common_urls = [
     'http://v.youku.com/player/*',
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
@@ -70,11 +71,44 @@ unblock_youku.url_list = [
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://*/vrs_flash.action*',
 
-    'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*',
-    
-    // the following are used only by proxy server
-    // so it may be better to write into another file
+    'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
+];
 
+// only for chrome extension
+unblock_youku.chrome_extra_urls = [
+    // 'http://www.tudou.com/programs/view/*',
+    // 'http://www.tudou.com/albumplay/*',
+    // 'http://www.tudou.com/listplay/*',
+
+    'http://live.video.sina.com.cn/room/*',
+    'http://edge.v.iask.com/*',  // may be large files
+
+    'http://pay.youku.com/buy/redirect.html*',
+    'http://pay.video.qq.com/fcgi-bin/paylimit*',
+
+    'http://play.baidu.com/*',
+    'http://zhangmenshiting.baidu.com/*',
+    'http://music.baidu.com/box*',
+    'http://music.baidu.com/data/music/songlink*',
+    'http://music.baidu.com/data/music/songinfo*',
+    'http://music.baidu.com/data/music/fmlink*',
+    'http://music.baidu.com/song/*/download*',
+    'http://fm.baidu.com/*',
+    'http://www.kugou.com/*',
+    'http://music.baidu.com/data/user/collect*',
+
+    'http://v.pptv.com/show/*.html',
+    'http://www.songtaste.com/*',
+    'http://songtaste.com/*',
+    'http://www.yyets.com/*',
+    'http://imanhua.com/comic/*',
+    'http://www.imanhua.com/comic/*',
+    'http://imanhua.com/v2*',
+    'http://www.imanhua.com/v2*'
+];
+
+// only for server
+unblock_youku.server_extra_urls = [
     // for iOS apps
     'http://api.3g.youku.com/layout*',
     'http://api.youku.com/player/*',
@@ -94,24 +128,27 @@ unblock_youku.url_list = [
 ];
 
 
-unblock_youku.regex_url_list = [];
-(function() {
+function urls2regexs(url_list) {
     "use strict";
+
+    var regex_list = [];
+
     var i, re_str;
-    for (i = 0; i < unblock_youku.url_list.length; i++) {
-        re_str = unblock_youku.url_list[i].replace(/\//g, '\\/');
+    for (i = 0; i < url_list.length; i++) {
+        re_str = url_list[i].replace(/\//g, '\\/');
         re_str = re_str.replace(/\./g, '\\.');
         re_str = re_str.replace(/\*/g, '.*');
         // make the first * matches only domain names or ip addresses
         // just as http://developer.chrome.com/extensions/match_patterns.html
         re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\/\/[^\/]*');
-        unblock_youku.regex_url_list.push(new RegExp('^' + re_str, 'i'));
+        regex_list.push(new RegExp('^' + re_str, 'i'));
     }
-}());
-// console.log(unblock_youku.regex_url_list);
+
+    return regex_list;
+}
 
 
 // also export as a node.js module
 var exports = exports || {};
-exports.url_list = unblock_youku.url_list;
-exports.regex_url_list = unblock_youku.regex_url_list;
+exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
+exports.url_regex_list = urls2regexs(exports.url_list);

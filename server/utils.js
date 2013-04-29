@@ -22,7 +22,7 @@ var util = require('util');
 var http = require('http');
 var querystring = require('querystring');
 
-var regex_url_list = require('../shared/urls').regex_url_list;
+var url_regex_list = require('../shared/urls').url_regex_list;
 var new_sogou_proxy_addr = require('../shared/sogou').new_sogou_proxy_addr;
 var shared_tools = require('../shared/tools');
 var string_starts_with = shared_tools.string_starts_with;
@@ -75,8 +75,8 @@ function get_real_target(req_path) {
 
 function is_valid_url(target_url) {
     var i;
-    for (i = 0; i < regex_url_list.length; i++) {
-        if (regex_url_list[i].test(target_url)) {
+    for (i = 0; i < url_regex_list.length; i++) {
+        if (url_regex_list[i].test(target_url)) {
             return true;
         }
     }

@@ -74,12 +74,13 @@ function check_redirect_server(server_addr, success_callback, failure_callback) 
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200 && xhr.responseText.indexOf('OK') !== -1) {
+            if ((xhr.status === 200 || xhr.status === 304) 
+                    && xhr.responseText.indexOf('OK') !== -1) {
                 clearTimeout(xhr_timer);
                 success_callback();
             } else {
                 clearTimeout(xhr_timer);
-                failure_callback('Wrong Status: ' + xhr.responseText);
+                failure_callback('Wrong Status: [' + xhr.status + '] ' + xhr.responseText);
             }
         }
     };

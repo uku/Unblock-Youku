@@ -31,38 +31,8 @@ unblock_youku.default_post_server = 'wẉw.yōukù.com/proxy.php';
 unblock_youku.backup_get_server = 'wẃw.yōukù.com/proxy.php';
 unblock_youku.backup_post_server = 'wẁw.yōukù.com/proxy.php';
 
-unblock_youku.normal_url_list = unblock_youku.url_list.concat([
-    // 'http://www.tudou.com/programs/view/*',
-    // 'http://www.tudou.com/albumplay/*',
-    // 'http://www.tudou.com/listplay/*',
-
-    'http://live.video.sina.com.cn/room/*',
-    'http://edge.v.iask.com/*',  // may be large files
-
-    'http://pay.youku.com/buy/redirect.html*',
-    'http://pay.video.qq.com/fcgi-bin/paylimit*',
-
-    'http://play.baidu.com/*',
-    'http://zhangmenshiting.baidu.com/*',
-    'http://music.baidu.com/box*',
-    'http://music.baidu.com/data/music/songlink*',
-    'http://music.baidu.com/data/music/songinfo*',
-    'http://music.baidu.com/data/music/fmlink*',
-    'http://music.baidu.com/song/*/download*',
-    'http://fm.baidu.com/*',
-    'http://www.kugou.com/*',
-    'http://music.baidu.com/data/user/collect*',
-
-    'http://v.pptv.com/show/*.html',
-    'http://www.songtaste.com/*',
-    'http://songtaste.com/*',
-    'http://www.yyets.com/*',
-    'http://imanhua.com/comic/*',
-    'http://www.imanhua.com/comic/*',
-    'http://imanhua.com/v2*',
-    'http://www.imanhua.com/v2*'
-]);
-unblock_youku.redirect_url_list = unblock_youku.url_list;
+unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
+unblock_youku.redirect_url_list = unblock_youku.common_urls;
 unblock_youku.header_extra_url_list = [
     'http://*.xiami.com/*',  // xiami is blocked in HK and TW
     'http://*.ku6.com/*',

@@ -69,12 +69,13 @@ if (!in_production) {
     local_addr = '0.0.0.0';
     proxy_addr = 'proxy.uku.im:80';
 }
-var pac_file_content = shared_tools.url2pac(require('../shared/urls').url_list, proxy_addr);
+var pac_file_content = shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr);
 
 
 // what are the life cycles of variables in nodejs?
 var sogou_server_addr;
 var reset_count = 0, MAX_RESET_COUNT = 1;
+var refuse_count = 0, MAX_REFUSE_COUNT = 2;
 var timeout_count = 0, MAX_TIMEOUT_COUNT = 4;
 var in_changing_server = false, last_error_code = null;
 function change_sogou_server(error_code) {
@@ -94,6 +95,7 @@ function change_sogou_server(error_code) {
             util.error('[ub.uku.js] on ' + last_error_code + ' error, changed server to ' + new_addr);
         }
         reset_count = 0;
+        refuse_count = 0;
         timeout_count = 0;
         in_changing_server = false;
     });
@@ -169,9 +171,10 @@ if (cluster.isMaster) {
                     'Server': '; DROP TABLE servertypes; --'
                 });
                 if (in_production) {
-                    client_response.write('Production ');
+                    client_response.end('Production OK');
+                } else {
+                    client_response.end('OK');
                 }
-                client_response.end('OK');
                 return;
             }
 
@@ -307,13 +310,19 @@ if (cluster.isMaster) {
         proxy_request.on('error', function(err) {
             util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
             if ('ECONNRESET' === err.code) {
-                reset_count += 1;
+                reset_count++;
                 util.log('[ub.uku.js] ' + sogou_server_addr + ' reset_count: ' + reset_count);
                 if (reset_count >= MAX_RESET_COUNT) {
                     change_sogou_server('ECONNRESET');
                 }
+            } else if ('ECONNREFUSED' === err.code) {
+                refuse_count++;
+                util.log('[ub.uku.js] ' + sogou_server_addr + ' refuse_count: ' + refuse_count);
+                if (refuse_count >= MAX_REFUSE_COUNT) {
+                    change_sogou_server('ECONNREFUSED');
+                }
             } else if ('ETIMEDOUT' === err.code) {
-                timeout_count += 1;
+                timeout_count++;
                 util.log('[ub.uku.js] ' + sogou_server_addr + ' timeout_count: ' + timeout_count);
                 if (timeout_count >= MAX_TIMEOUT_COUNT) {
                     change_sogou_server('ETIMEOUT');
