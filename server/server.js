@@ -31,6 +31,7 @@ var argv = require('optimist')
     .boolean('production')
     .argv
 ;
+var uglify = require('uglify-js');
 
 // What's the reason to cause occasional H17 error for /status?
 // H17 error - "Poorly formatted HTTP response"
@@ -69,10 +70,19 @@ if (!in_production) {
     local_addr = '0.0.0.0';
     proxy_addr = 'proxy.uku.im:80';
 }
-var pac_file_content = shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr);
+var pac_file_content =
+    '/*\n' +
+    ' * Installing/using this software, you agree that this software is\n' +
+    ' * only for study purposes and its authors and service providers  \n' +
+    ' * take no responsibilities for any consequences.\n' +
+    ' */\n' +
+    uglify.minify(
+        shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr),
+        {fromString: true,}
+    ).code;
+// console.log(pac_file_content);
 
 
-// what are the life cycles of variables in nodejs?
 var sogou_server_addr;
 var reset_count = 0, MAX_RESET_COUNT = 1;
 var refuse_count = 0, MAX_REFUSE_COUNT = 2;
@@ -109,8 +119,8 @@ if (cluster.isMaster) {
     for (i = 0; i < num_CPUs; i++) {
         cluster.fork();
         // one note here
-        // the fork() in nodejs is not as the fork() in C
-        // here the fork() will run the whole code from beginning
+        // the fork() in nodejs is not the same as the fork() in C
+        // fork() in nodejs will run the whole code from beginning
         // not from where it is invoked
     }
 

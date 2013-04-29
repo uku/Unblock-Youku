@@ -15,6 +15,7 @@
     "dependencies": {
       "colors": "*",
       "optimist": "0.4.x",
+      "uglify-js": "2.2.x",
       "raven": "0.5.x"
     },
     "scripts": {
