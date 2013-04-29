@@ -23,6 +23,7 @@ var unblock_youku = unblock_youku || {};  // namespace
 // for both chrome extension and server
 unblock_youku.common_urls = [
     'http://v.youku.com/player/*',
+    'http://api.youku.com/player/*',
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
@@ -111,7 +112,6 @@ unblock_youku.chrome_extra_urls = [
 unblock_youku.server_extra_urls = [
     // for iOS apps
     'http://api.3g.youku.com/layout*',
-    'http://api.youku.com/player/*',
     'http://api.tv.sohu.com/*',
     'http://access.tv.sohu.com/*',
     'http://3g.music.qq.com/*',
