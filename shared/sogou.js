@@ -37,7 +37,11 @@ function new_sogou_auth_str() {
 
 function new_sogou_proxy_addr() {
     "use strict";
-    var random_num = Math.floor(Math.random() * (16 + 16 + 5));  // 0 ~ 15 edu, 0 ~ 15 dxt, 5 for ctc
+    var other_ip_addrs = [
+        '220.181.118.128',
+    ];
+
+    var random_num = Math.floor(Math.random() * (16 + 16 + other_ip_addrs.length));  // 0 ~ 15 edu, 0 ~ 15 dxt
     var proxy_addr;
 
     if (random_num < 16) {
@@ -49,15 +53,8 @@ function new_sogou_proxy_addr() {
         random_num -= 16;
         proxy_addr = 'h' + random_num + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
     } else {
-        var ctc_addr = [
-            '220.181.118.128',
-            '220.181.118.160',
-            '220.181.118.161',
-            '220.181.118.162',
-            '220.181.118.163'
-        ];
         random_num -= 16 + 16;
-        proxy_addr = ctc_addr[random_num];
+        proxy_addr = other_ip_addrs[random_num];
     }
 
     return proxy_addr;
