@@ -42,6 +42,11 @@
       "run_at": "document_end",
       "all_frames": true
     }, {
+      "matches": ["http://play.baidu.com/*"],
+      "js": ["chrome/content/play.baidu.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }, {
       "matches": ["http://*/*"],
       "exclude_matches": [
         "http://*.org/*",

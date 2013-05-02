@@ -59,6 +59,7 @@ unblock_youku.common_urls = [
     //'http://ting.baidu.com/data/music/songlink*',
     //'http://ting.baidu.com/data/music/songinfo*',
     //'http://ting.baidu.com/song/*/download*',
+    'http://play.baidu.com/data/music/songlink*',
 
     'http://v.iask.com/v_play.php*',
     'http://v.iask.com/v_play_ipad.cx.php*',
@@ -120,6 +121,7 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.tudou.com/*',
     'http://mobi.kuwo.cn/*',
     'http://mobilefeedback.kugou.com/*',
+    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song.play*',
 
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
