@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-    "version": "2.6.6.7",
+    "version": "2.6.6.8",
     "manifest_version": 2,
     "minimum_chrome_version": "23.0",
     "description": "__MSG_description__",

@@ -98,6 +98,9 @@ unblock_youku.chrome_extra_urls = [
     'http://www.kugou.com/*',
     'http://music.baidu.com/data/user/collect*',
 
+    // move to common url list later?
+    'http://music.sina.com.cn/radio/port/webFeatureRadioLimitList.php*',
+
     'http://v.pptv.com/show/*.html',
     'http://www.songtaste.com/*',
     'http://songtaste.com/*',
@@ -120,6 +123,11 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.tudou.com/*',
     'http://mobi.kuwo.cn/*',
     'http://mobilefeedback.kugou.com/*',
+    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
+    'http://api.3g.youku.com/v3/play/address*',
+    'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
+    'http://play.api.3g.tudou.com/v3_1/*',
+    'http://iface2.iqiyi.com/php/xyz/iface/*',
 
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
