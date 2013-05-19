@@ -14,7 +14,7 @@
     },
     "dependencies": {
       "colors": "*",
-      "optimist": "0.4.x",
+      "optimist": "0.5.x",
       "uglify-js": "2.3.x",
       "raven": "0.5.x"
     },
