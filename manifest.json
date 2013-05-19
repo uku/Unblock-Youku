@@ -31,7 +31,7 @@
       ]
     },
     "browser_action": {
-      "default_title": "Unblock Youku isn't working properly! Visit http://ub.uku.im/faq for possible solutions.",
+      "default_title": "Unblock Youku isn't working properly! Visit http://uku.im/faq for possible solutions.",
       "default_icon": "chrome/icons/icon19gray.png",
       "default_popup": "chrome/pages/popup.html"
     },
