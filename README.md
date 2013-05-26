@@ -4,11 +4,11 @@ This project contains three-fold functionalities.
 
 1. _A Google Chrome extension_ helping users access their web services while travelling outside mainland China.
  
-   You can find this extension on Chrome Web Store at [http://ub.uku.im/chrome](http://ub.uku.im/chrome)
+   You can find this extension on Chrome Web Store at [http://uku.im/chrome](http://uku.im/chrome)
 
 2. _A local proxy server_ based on the non-blocking [Node.js](http://nodejs.org) for bypassing the mainland restriction _for other browsers and mobile devices_ (but not guaranteed).
 
-   For more information, please see [the instructions](http://ub.uku.im/proxy) (in Chinese).
+   For more information, please see [the instructions](http://uku.im/proxy) (in Chinese).
 
 3. _A backend server_ to support the redirection mode of the Chrome extension. [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
@@ -34,4 +34,4 @@ If you are interested in helping us translating some phrases, or you want the ex
 
 [Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translations
 
-Please [visit this page](http://ub.uku.im/contributors) for more contributers.
+Please [visit this page](http://uku.im/contributors) for more contributers.

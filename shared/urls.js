@@ -38,9 +38,11 @@ unblock_youku.common_urls = [
     // 'http://interface.bilibili.tv/player*',
 
     'http://220.181.61.229/*',
+    'http://61.135.183.45/*',
     'http://61.135.183.46/*',
-    'http://220.181.118.181/*',
     'http://220.181.19.218/*',
+    'http://220.181.61.213/*',
+    'http://220.181.118.181/*',
     'http://123.126.48.47/*',
     'http://123.126.48.48/*',
 
@@ -59,7 +61,7 @@ unblock_youku.common_urls = [
     //'http://ting.baidu.com/data/music/songlink*',
     //'http://ting.baidu.com/data/music/songinfo*',
     //'http://ting.baidu.com/song/*/download*',
-    'http://play.baidu.com/data/music/songlink*',
+    'http://music.sina.com.cn/radio/port/webFeatureRadioLimitList.php*',
 
     'http://v.iask.com/v_play.php*',
     'http://v.iask.com/v_play_ipad.cx.php*',
@@ -72,6 +74,8 @@ unblock_youku.common_urls = [
 
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://*/vrs_flash.action*',
+    'http://*/?prot=2&type=1*',
+    'http://*/?prot=2&file=/*',
 
     'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
 ];
@@ -121,7 +125,11 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.tudou.com/*',
     'http://mobi.kuwo.cn/*',
     'http://mobilefeedback.kugou.com/*',
-    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song.play*',
+    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
+    'http://api.3g.youku.com/v3/play/address*',
+    'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
+    'http://play.api.3g.tudou.com/v3_1/*',
+    'http://iface2.iqiyi.com/php/xyz/iface/*',
 
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
