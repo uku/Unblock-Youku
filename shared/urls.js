@@ -62,6 +62,7 @@ unblock_youku.common_urls = [
     //'http://ting.baidu.com/data/music/songinfo*',
     //'http://ting.baidu.com/song/*/download*',
     'http://music.sina.com.cn/radio/port/webFeatureRadioLimitList.php*',
+    'http://play.baidu.com/data/music/songlink*',
 
     'http://v.iask.com/v_play.php*',
     'http://v.iask.com/v_play_ipad.cx.php*',

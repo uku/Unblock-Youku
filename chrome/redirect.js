@@ -26,6 +26,14 @@ function http_redirector(details) {
         console.log('directly pass');
         return {};
     }
+    var redirect_url = null;
+
+    // special treatment for play.baidu
+    if (details.url.slice(0, 41) === 'http://play.baidu.com/data/music/songlink') {
+        redirect_url = 'http://play.baidu.com/data/cloud/songlink' + details.url.slice(41);
+        console.log('redirect url: ' + redirect_url);
+        return {redirectUrl: redirect_url};
+    }
 
     if (details.url.slice(0, 18) === 'http://v.youku.com') {
         if (details.url.indexOf('timezone') !== -1 && details.url.indexOf('timezone/+08') === -1) { 
@@ -53,10 +61,13 @@ function http_redirector(details) {
     }
 
     //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + btoa(details.url);
-    var redirect_url = 'http://' + backend_server + '?url=' + btoa(details.url);
+    redirect_url = 'http://' + backend_server + '?url=' + btoa(details.url);
     console.log('redirect url: ' + redirect_url);
 
-    return {redirectUrl: redirect_url};
+    if (redirect_url !== null) {
+        return {redirectUrl: redirect_url};
+    }
+    return {};
 }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-    "version": "2.6.6.9",
+    "version": "2.6.6.10",
     "manifest_version": 2,
     "minimum_chrome_version": "23.0",
     "description": "__MSG_description__",
@@ -43,8 +43,7 @@
       "all_frames": true
     }, {
       "matches": ["http://play.baidu.com/*"],
-      "js": ["chrome/content/play.baidu.js"],
-      "run_at": "document_end",
+      "css": ["chrome/content/play.baidu.css"],
       "all_frames": true
     }, {
       "matches": ["http://*/*"],
