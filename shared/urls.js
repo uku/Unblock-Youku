@@ -27,7 +27,7 @@ unblock_youku.common_urls = [
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
-    'http://s.plcloud.music.qq.com/*',
+    'http://s.plcloud.music.qq.com/fcgi-bin/p.fcg*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://hot.vrs.letv.com/*',
