@@ -62,7 +62,13 @@
         "http://*.sohu.com/*",
         "http://*.letv.com/*",
         "http://*.163.com/*",
-        "http://*.xunlei.com/*"
+        "http://*.xunlei.com/*",
+        "http://*.amazon.com/*",
+        "http://*.amazon.ca/*",
+        "http://*.amazon.co.uk",
+        "http://*.amazon.de/*",
+        "http://*.amazon.fr/*",
+        "http://*.amazon.co.jp/*"
       ],
       "exclude_globs" : [
         "http://*.edu.*/*",
