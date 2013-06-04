@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-    "version": "2.6.6.11",
+    "version": "2.6.6.12",
     "manifest_version": 2,
     "minimum_chrome_version": "23.0",
     "description": "__MSG_description__",
@@ -65,7 +65,7 @@
         "http://*.xunlei.com/*",
         "http://*.amazon.com/*",
         "http://*.amazon.ca/*",
-        "http://*.amazon.co.uk",
+        "http://*.amazon.co.uk/*",
         "http://*.amazon.de/*",
         "http://*.amazon.fr/*",
         "http://*.amazon.co.jp/*"
