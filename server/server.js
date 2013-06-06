@@ -33,14 +33,6 @@ var argv = require('optimist')
 ;
 var uglify = require('uglify-js');
 
-// What's the reason to cause occasional H17 error for /status?
-// H17 error - "Poorly formatted HTTP response"
-// Might it be a bug in nodejs or optimist?
-var in_production = false;
-if (argv.production) {
-    in_production = true;
-}
-
 var raven = null;
 var raven_client = null;
 if (process.env.SENTRY_ADDRESS) {
@@ -56,7 +48,7 @@ var server_utils = require('./utils');
 
 
 var local_addr, local_port, proxy_addr;
-if (!in_production) {
+if (!argv.production) {
     local_port = argv.port;
     if (argv.local_only) {
         local_addr = '127.0.0.1';
@@ -79,8 +71,19 @@ var pac_file_content =
     uglify.minify(
         shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr),
         {fromString: true,}
-    ).code;
+    ).code
+;
 // console.log(pac_file_content);
+
+// still trying to get rid of the H17 bug for /status
+// H17 error - "Poorly formatted HTTP response"
+var status_text;
+if (argv.production) {
+    status_text = 'Production OK';
+} else {
+    status_text = 'OK';
+}
+
 
 
 var sogou_server_addr;
@@ -142,7 +145,7 @@ if (cluster.isMaster) {
         }
     });
 
-    if (in_production) {
+    if (argv.production) {
         console.log('Starting in production mode...'.yellow);
     } else {
         var srv = 'http://' + proxy_addr + '/proxy.pac\n';
@@ -167,7 +170,7 @@ if (cluster.isMaster) {
             util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
         });
 
-        if (!in_production) {
+        if (!argv.production) {
             console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
         }
 
@@ -176,15 +179,10 @@ if (cluster.isMaster) {
             if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=3600',
-                    // 'Cache-Control': 'private, max-age=0, must-revalidate',
+                    'Cache-Control': 'public, max-age=7200',
                     'Server': '; DROP TABLE servertypes; --'
                 });
-                if (in_production) {
-                    client_response.end('Production OK');
-                } else {
-                    client_response.end('OK');
-                }
+                client_response.end(status_text);
                 return;
             }
 
@@ -277,7 +275,7 @@ if (cluster.isMaster) {
                 method: client_request.method,
                 headers: proxy_request_headers
             };
-        } else if (!in_production) {
+        } else if (!argv.production) {
             // serve as a normal proxy server
             client_request.headers.host = target.host;
             proxy_request_options = {
