@@ -171,8 +171,7 @@ if (cluster.isMaster) {
             if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=7200',
-                    'Server': '; DROP TABLE servertypes; --'
+                    'Cache-Control': 'public, max-age=3600'
                 });
                 client_response.end(status_text);
                 return;
@@ -181,8 +180,7 @@ if (cluster.isMaster) {
             if (client_request.url === '/crossdomain.xml') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/xml',
-                    'Cache-Control': 'public, max-age=2592000',
-                    'Server': '; DROP TABLE servertypes; --'
+                    'Cache-Control': 'public, max-age=2592000'
                 });
                 client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                         '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
@@ -191,8 +189,7 @@ if (cluster.isMaster) {
 
             if (client_request.url === '/favicon.ico') {
                 client_response.writeHead(404, {
-                    'Cache-Control': 'public, max-age=2592000',
-                    'Server': '; DROP TABLE servertypes; --'  // as reddit hahaha
+                    'Cache-Control': 'public, max-age=2592000'
                 });
                 client_response.end();
                 return;
@@ -201,16 +198,14 @@ if (cluster.isMaster) {
             if (client_request.url === '/robots.txt') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=2592000',
-                    'Server': '; DROP TABLE servertypes; --'
+                    'Cache-Control': 'public, max-age=2592000'
                 });
                 client_response.end('User-agent: *\nDisallow: /');
                 return;
             }
 
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400',
-                'Server': '; DROP TABLE servertypes; --'
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end();
             return;
@@ -219,8 +214,7 @@ if (cluster.isMaster) {
         if (client_request.url === '/proxy.pac') {
             client_response.writeHead(200, {
                 'Content-Type': 'application/x-ns-proxy-autoconfig',
-                'Cache-Control': 'public, max-age=14400',
-                'Server': '; DROP TABLE servertypes; --'
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end(pac_file_content);
             return;
@@ -235,8 +229,7 @@ if (cluster.isMaster) {
         var target = server_utils.get_real_target(client_request.url);
         if (!target.host) {
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400',
-                'Server': '; DROP TABLE servertypes; --'
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end();
             return;
@@ -280,8 +273,7 @@ if (cluster.isMaster) {
             };
         } else {
             client_response.writeHead(403, {
-                'Cache-Control': 'public, max-age=14400',
-                'Server': '; DROP TABLE servertypes; --'
+                'Cache-Control': 'public, max-age=14400'
             });
             client_response.end();
             return;
