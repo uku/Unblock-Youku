@@ -47,7 +47,7 @@ var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
 
 
-var local_addr, local_port, proxy_addr;
+var local_addr, local_port, proxy_addr, status_text;
 if (!argv.production) {
     local_port = argv.port;
     if (argv.local_only) {
@@ -57,10 +57,12 @@ if (!argv.production) {
         local_addr = '0.0.0.0';
         proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
     }
+    status_text = 'OK';
 } else {
     local_port = process.env.PORT || 8888;
     local_addr = '0.0.0.0';
     proxy_addr = 'proxy.uku.im:80';
+    status_text = 'Production OK';
 }
 var pac_file_content =
     '/*\n' +
@@ -74,16 +76,6 @@ var pac_file_content =
     ).code
 ;
 // console.log(pac_file_content);
-
-// still trying to get rid of the H17 bug for /status
-// H17 error - "Poorly formatted HTTP response"
-var status_text;
-if (argv.production) {
-    status_text = 'Production OK';
-} else {
-    status_text = 'OK';
-}
-
 
 
 var sogou_server_addr;
