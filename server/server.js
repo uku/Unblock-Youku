@@ -168,15 +168,6 @@ if (cluster.isMaster) {
 
         if (!shared_tools.string_starts_with(client_request.url, '/proxy') &&
                 !shared_tools.string_starts_with(client_request.url, 'http')) {
-            if (client_request.url === '/status') {
-                client_response.writeHead(200, {
-                    'Content-Type': 'text/plain',
-                    'Cache-Control': 'public, max-age=3600'
-                });
-                client_response.end(status_text);
-                return;
-            }
-
             if (client_request.url === '/crossdomain.xml') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/xml',
@@ -184,6 +175,17 @@ if (cluster.isMaster) {
                 });
                 client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
                         '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+                return;
+            }
+
+            // what's wrong with this piece of code
+            // might be a bug of heroku or nodejs?
+            if (client_request.url === '/status') {
+                client_response.writeHead(200, {
+                    'Content-Type': 'text/plain',
+                    'Cache-Control': 'public, max-age=3600'
+                });
+                client_response.end(status_text);
                 return;
             }
 
