@@ -180,14 +180,16 @@ if (cluster.isMaster) {
 
             // what's wrong with this piece of code
             // might be a bug of heroku or nodejs?
-            if (client_request.url === '/status' || client_request.url === '/abcdef') {
+            if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
+                    'Content-Length': status_text.length,
                     'Cache-Control': 'public, max-age=3600'
                 });
                 client_response.end(status_text);
                 return;
             }
+            // buggy code ends
 
             if (client_request.url === '/favicon.ico') {
                 client_response.writeHead(404, {
