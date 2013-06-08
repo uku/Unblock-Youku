@@ -180,7 +180,7 @@ if (cluster.isMaster) {
 
             // what's wrong with this piece of code
             // might be a bug of heroku or nodejs?
-            if (client_request.url === '/status') {
+            if (client_request.url === '/status' || client_request.url === '/abcdef') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
                     'Cache-Control': 'public, max-age=3600'
