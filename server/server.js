@@ -171,6 +171,7 @@ if (cluster.isMaster) {
             if (client_request.url === '/crossdomain.xml') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/xml',
+                    'Content-Length': '113',
                     'Cache-Control': 'public, max-age=2592000'
                 });
                 client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -183,7 +184,7 @@ if (cluster.isMaster) {
             if (client_request.url === '/status') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Content-Length': status_text.length,
+                    'Content-Length': status_text.length.toString(),
                     'Cache-Control': 'public, max-age=3600'
                 });
                 client_response.end(status_text);
@@ -202,6 +203,7 @@ if (cluster.isMaster) {
             if (client_request.url === '/robots.txt') {
                 client_response.writeHead(200, {
                     'Content-Type': 'text/plain',
+                    'Content-Length': '25',
                     'Cache-Control': 'public, max-age=2592000'
                 });
                 client_response.end('User-agent: *\nDisallow: /');
@@ -218,6 +220,7 @@ if (cluster.isMaster) {
         if (client_request.url === '/proxy.pac') {
             client_response.writeHead(200, {
                 'Content-Type': 'application/x-ns-proxy-autoconfig',
+                'Content-Length': pac_file_content.length.toString(),
                 'Cache-Control': 'public, max-age=14400'
             });
             client_response.end(pac_file_content);
