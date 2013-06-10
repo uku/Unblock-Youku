@@ -30,7 +30,7 @@
     "message": "重新導向模式"
   },
   "mode_lite_description": {
-    "message": "連線速度最快，但只對<abbr title=\"蝦米、酷六、迅雷看看\">蝦米等個別網站</abbr>起效"
+    "message": "連線速度最快，但只對<abbr title=\"土豆、蝦米、酷六、迅雷看看\">土豆等個別網站</abbr>起效"
   },
   "mode_normal_description": {
     "message": "推薦使用。連線速度較快，支援網站數量最多"
