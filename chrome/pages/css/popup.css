@@ -66,10 +66,12 @@ div#rating {
     display: none;
 }
 
+/*
 span.icon {
     vertical-align: text-bottom;
     margin: 0 1px;
 }
+*/
 
 div#sharing a:hover {
     text-decoration: none;
