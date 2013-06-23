@@ -31,6 +31,7 @@ var argv = require('optimist')
     .boolean('production')
     .argv
 ;
+var check = require('validator').check;
 var uglify = require('uglify-js');
 
 var raven = null;
@@ -49,10 +50,26 @@ var server_utils = require('./utils');
 
 var local_addr, local_port, proxy_addr, status_text;
 if (!argv.production) {
+    try {
+        check(argv.port).isNumeric();
+    } catch (err) {
+        console.error('Invalid format for port number.'.red);
+        process.exit(1);
+    }
     local_port = argv.port;
+
     if (argv.local_only) {
         local_addr = '127.0.0.1';
         proxy_addr = '127.0.0.1:' + local_port;
+    } else if (argv.ip) {
+        try {
+            check(argv.ip).isIP();
+        } catch (err) {
+            console.error('Invalid format for IP address.'.red);
+            process.exit(1);
+        }
+        local_addr = '0.0.0.0';
+        proxy_addr = argv.ip + ':' + local_port;
     } else {
         local_addr = '0.0.0.0';
         proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;

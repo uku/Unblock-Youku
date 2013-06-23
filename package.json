@@ -1,7 +1,7 @@
 {
   "name": "ub.uku.js",
   "preferGlobal": "true",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "author": "zhuzhuor <npmjs@zhuzhu.org>",
   "description": "A Backend Server for Unblock-Youku",
   "keywords": ["Unblock Youku", "proxy", "server"],
@@ -15,6 +15,7 @@
   "dependencies": {
     "colors": "*",
     "optimist": "0.5.x",
+    "validator": "1.2.x",
     "uglify-js": "2.3.x",
     "raven": "0.5.x"
   },
