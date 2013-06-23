@@ -1,36 +1,36 @@
 {
   "name": "ub.uku.js",
-    "preferGlobal": "true",
-    "version": "1.5.3",
-    "author": "zhuzhuor <npmjs@zhuzhu.org>",
-    "description": "A Backend Server for Unblock-Youku",
-    "keywords": ["Unblock Youku", "proxy", "server"],
-    "bin": {
-      "ub.uku.js": "server/server.js"
-    },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
-    },
-    "dependencies": {
-      "colors": "*",
-      "optimist": "0.5.x",
-      "uglify-js": "2.3.x",
-      "raven": "0.5.x"
-    },
-    "scripts": {
-      "start": "node server/server.js",
-      "test": "python test/run-all-tests.py"
-    },
-    "engines": {
-      "node": "0.10.x",
-      "npm": "1.2.x"
-    },
-    "bugs": {
-      "web": "https://github.com/zhuzhuor/Unblock-Youku/issues"
-    },
-    "licenses": [{
-      "type": "AGPL v3",
-      "url": "http://www.gnu.org/licenses/agpl-3.0.html"
-    }]
+  "preferGlobal": "true",
+  "version": "1.6.0",
+  "author": "zhuzhuor <npmjs@zhuzhu.org>",
+  "description": "A Backend Server for Unblock-Youku",
+  "keywords": ["Unblock Youku", "proxy", "server"],
+  "bin": {
+    "ub.uku.js": "server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
+  },
+  "dependencies": {
+    "colors": "*",
+    "optimist": "0.5.x",
+    "uglify-js": "2.3.x",
+    "raven": "0.5.x"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "python test/run-all-tests.py"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "bugs": {
+    "web": "https://github.com/zhuzhuor/Unblock-Youku/issues"
+  },
+  "licenses": [{
+    "type": "AGPL v3",
+    "url": "http://www.gnu.org/licenses/agpl-3.0.html"
+  }]
 }
