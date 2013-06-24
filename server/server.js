@@ -27,7 +27,8 @@ var cluster = require('cluster');
 var colors = require('colors');
 var argv = require('optimist')
     .default('port', 8888)
-    .boolean('local_only')
+    .boolean('local_only')  // bind to 127.0.0.1
+    .boolean('mitm_proxy')  // for debug use
     .boolean('production')
     .argv
 ;
@@ -61,15 +62,24 @@ if (!argv.production) {
     if (argv.local_only) {
         local_addr = '127.0.0.1';
         proxy_addr = '127.0.0.1:' + local_port;
-    } else if (argv.ip) {
+    } else if (argv.ext_addr) {
+        var splitted_addr = argv.ext_addr.split(':');
+        var external_ip = splitted_addr[0];
+        if (splitted_addr.length > 1) {
+            var external_port = splitted_addr[1];
+        } else {
+            var external_port = local_port;
+        }
         try {
-            check(argv.ip).isIP();
+            check(external_ip).isIP();
+            check(external_port).isNumeric();
         } catch (err) {
-            console.error('Invalid format for IP address.'.red);
+            console.error('Invalid format for external address.'.red);
             process.exit(1);
         }
+
         local_addr = '0.0.0.0';
-        proxy_addr = argv.ip + ':' + local_port;
+        proxy_addr = external_ip + ':' + external_port;
     } else {
         local_addr = '0.0.0.0';
         proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
@@ -284,7 +294,7 @@ if (cluster.isMaster) {
                 method: client_request.method,
                 headers: proxy_request_headers
             };
-        } else if (!argv.production) {
+        } else if (argv.mitm_proxy) {
             // serve as a normal proxy server
             client_request.headers.host = target.host;
             proxy_request_options = {
