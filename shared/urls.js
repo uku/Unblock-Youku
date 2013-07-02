@@ -129,6 +129,7 @@ unblock_youku.server_extra_urls = [
     'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
     'http://api.3g.youku.com/v3/play/address*',
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
+    'http://api.3g.youku.com/videos/*/download*',
     'http://play.api.3g.tudou.com/v3_1/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
 
