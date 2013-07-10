@@ -1,5 +1,4 @@
-[![Stories in Ready](http://badge.waffle.io/zhuzhuor/Unblock-Youku.png)](http://waffle.io/zhuzhuor/Unblock-Youku)  
-# Unblock Youku
+# Unblock Youku [![waffle badge](http://badge.waffle.io/zhuzhuor/Unblock-Youku.png)](http://waffle.io/zhuzhuor/Unblock-Youku)  
 
 This project contains three-fold functionalities.
 
