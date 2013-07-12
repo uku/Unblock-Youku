@@ -78,7 +78,7 @@ unblock_youku.common_urls = [
     'http://*/?prot=2&type=1*',
     'http://*/?prot=2&file=/*',
 
-    'http://vdn.apps.cntv.cn/api/getHttpVideoInfo.do*'
+    'http://vdn.apps.cntv.cn/api/get*'
 ];
 
 // only for chrome extension
