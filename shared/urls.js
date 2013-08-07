@@ -104,6 +104,7 @@ unblock_youku.chrome_extra_urls = [
     'http://www.kugou.com/*',
     'http://music.baidu.com/data/user/collect*',
 
+    'http://ac.qq.com/*/v/cid/*',
     'http://v.pptv.com/show/*.html',
     'http://www.songtaste.com/*',
     'http://songtaste.com/*',
