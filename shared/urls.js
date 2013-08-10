@@ -77,7 +77,7 @@ unblock_youku.common_urls = [
     'http://*/vrs_flash.action*',
     'http://*/?prot=2&type=1*',
     'http://*/?prot=2&file=/*',
-
+    'http://api.letv.com/streamblock*',
     'http://vdn.apps.cntv.cn/api/get*'
 ];
 
@@ -131,9 +131,10 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.youku.com/v3/play/address*',
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
     'http://api.3g.youku.com/videos/*/download*',
-    'http://play.api.3g.tudou.com/v3_1/*',
+    'http://play.api.3g.tudou.com/v*/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
-
+    'http://http://dynamic.app.m.letv.com/*/dynamic.php?*playid*',
+    'http://listso.m.areainfo.ppstream.com/ip/q.php*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
