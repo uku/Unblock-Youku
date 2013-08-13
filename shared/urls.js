@@ -135,6 +135,7 @@ unblock_youku.server_extra_urls = [
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://dynamic.app.m.letv.com/*/dynamic.php?*playid*',
     'http://listso.m.areainfo.ppstream.com/ip/q.php*',
+    'http://ip2.kugou.com/check/isCn/*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
