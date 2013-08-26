@@ -19,24 +19,42 @@
  */
 
 
+var argv = require('optimist')
+    .default('ip', '0.0.0.0')  // listen to all interfaces
+    .default('port', '8888')
+    .boolean('local_only')  // force --ip=127.0.0.1
+    .boolean('mitm_proxy')  // for debug use
+    .boolean('production')  // pre-set configs for production server
+    .argv
+;
+var colors = require('colors');
+
+
+// check input parameters
+var Validator = require('validator').Validator;
+var vld = new Validator();
+vld.error = function(msg) {
+    console.error(msg.red);
+    process.exit(1);
+};
+
+vld.check(argv.ip, 'Invalid input for IP address.').isIP();
+vld.check(argv.port, 'Invalid input for port number.').isNumeric();
+if (argv.ext_ip) {  // custom IP address in the PAC file, in case the proxy server is behind a router or firewall
+    vld.check(argv.ext_ip, 'Invalid input for external IP address.').isIP();
+}
+if (argv.ext_port) {  // custom port number
+    vld.check(argv.ext_port, 'Invalid input for external port number.').isNumeric();
+}
+
+
 var util = require('util');
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 var cluster = require('cluster');
-
-var colors = require('colors');
-var argv = require('optimist')
-    .default('port', 8888)
-    .boolean('local_only')  // bind to 127.0.0.1
-    .boolean('mitm_proxy')  // for debug use
-    .boolean('production')
-    .argv
-;
-var check = require('validator').check;
-var uglify = require('uglify-js');
-
 var raven = null;
 var raven_client = null;
+
 if (process.env.SENTRY_ADDRESS) {
     raven = require('raven');
     raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
@@ -44,52 +62,44 @@ if (process.env.SENTRY_ADDRESS) {
     raven_client.captureMessage('Sentry is running...');
 } 
 
+
+var uglify = require('uglify-js');
 var sogou = require('../shared/sogou');
 var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
 
 
-var local_addr, local_port, proxy_addr, status_text;
+var local_addr, local_port, proxy_addr, proxy_port, status_text;
 if (!argv.production) {
-    try {
-        check(argv.port).isNumeric();
-    } catch (err) {
-        console.error('Invalid format for port number.'.red);
-        process.exit(1);
-    }
-    local_port = argv.port;
+    status_text = 'OK';
 
     if (argv.local_only) {
         local_addr = '127.0.0.1';
-        proxy_addr = '127.0.0.1:' + local_port;
-    } else if (argv.ext_addr) {
-        var splitted_addr = argv.ext_addr.split(':');
-        var external_ip = splitted_addr[0];
-        if (splitted_addr.length > 1) {
-            var external_port = splitted_addr[1];
-        } else {
-            var external_port = local_port;
-        }
-        try {
-            check(external_ip).isIP();
-            check(external_port).isNumeric();
-        } catch (err) {
-            console.error('Invalid format for external address.'.red);
-            process.exit(1);
-        }
-
-        local_addr = '0.0.0.0';
-        proxy_addr = external_ip + ':' + external_port;
+        proxy_addr = '127.0.0.1';
     } else {
-        local_addr = '0.0.0.0';
-        proxy_addr = server_utils.get_first_external_ip() + ':' + local_port;
+        local_addr = argv.ip;
+        if (argv.ext_ip) {
+            proxy_addr = argv.ext_ip;
+        } else if (local_addr === '0.0.0.0') {
+            proxy_addr = server_utils.get_first_external_ip();
+        } else {
+            proxy_addr = local_addr;
+        }
     }
-    status_text = 'OK';
+
+    local_port = argv.port;
+    if (argv.ext_port) {
+        proxy_port = argv.ext_port;
+    } else {
+        proxy_port = local_port;
+    }
 } else {
-    local_port = process.env.PORT || 8888;
-    local_addr = '0.0.0.0';
-    proxy_addr = 'proxy.uku.im:80';
     status_text = 'Production OK';
+
+    local_addr = '0.0.0.0';
+    local_port = process.env.PORT || 8888;
+    proxy_addr = 'proxy.uku.im';
+    proxy_port = '80';
 }
 var pac_file_content =
     '/*\n' +
@@ -98,7 +108,7 @@ var pac_file_content =
     ' * take no responsibilities for any consequences.\n' +
     ' */\n' +
     uglify.minify(
-        shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr),
+        shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr + ':' + proxy_port),
         {fromString: true,}
     ).code
 ;
@@ -167,10 +177,12 @@ if (cluster.isMaster) {
     if (argv.production) {
         console.log('Starting in production mode...'.yellow);
     } else {
-        var srv = 'http://' + proxy_addr + '/proxy.pac\n';
+        var srv = 'http://' + proxy_addr + ':' + proxy_port + '/proxy.pac\n';
         var msg = 'The local proxy server is running...\nPlease use this PAC file: ' + srv.underline;
         console.log(msg.green);
     }
+
+    // console.log('ip: ' + local_addr + '\nport: ' + local_port + '\next_ip: ' + proxy_addr + '\next_port: ' + proxy_port + '\n');
 
 } else if (cluster.isWorker) {
     sogou_server_addr = sogou.new_sogou_proxy_addr();
