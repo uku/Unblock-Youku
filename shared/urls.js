@@ -139,6 +139,10 @@ unblock_youku.server_extra_urls = [
     'http://ip.kugou.com/check/isCn/*',
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
+    'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
+    // for PC Clients only
+    'http://iplocation.geo.qiyi.com/cityjson'
+    'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*'
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
