@@ -31,7 +31,7 @@ unblock_youku.common_urls = [
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://hot.vrs.letv.com/*',
-    'http://g3.letv.cn/*',
+    //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/*',
 
     // cause oversea servers unusable?
