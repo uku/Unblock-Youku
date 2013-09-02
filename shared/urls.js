@@ -112,7 +112,9 @@ unblock_youku.chrome_extra_urls = [
     'http://imanhua.com/comic/*',
     'http://www.imanhua.com/comic/*',
     'http://imanhua.com/v2*',
-    'http://www.imanhua.com/v2*'
+    'http://www.imanhua.com/v2*',
+    'http://www.douban.fm/*',
+    'http://douban.fm/*'
 ];
 
 // only for server
