@@ -117,28 +117,30 @@ unblock_youku.chrome_extra_urls = [
 
 // only for server
 unblock_youku.server_extra_urls = [
-    // for iOS apps
+    // for Mobile apps    // Video apps
     'http://api.3g.youku.com/layout*',
-    'http://api.tv.sohu.com/*',
-    'http://access.tv.sohu.com/*',
-    'http://3g.music.qq.com/*',
-    'http://mqqplayer.3g.qq.com/*',
-    'http://proxy.music.qq.com/*',
     'http://api.3g.tudou.com/*',
-    'http://mobi.kuwo.cn/*',
-    'http://mobilefeedback.kugou.com/*',
-    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
     'http://api.3g.youku.com/v3/play/address*',
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
     'http://api.3g.youku.com/videos/*/download*',
     'http://play.api.3g.tudou.com/v*/*',
+    'http://api.tv.sohu.com/*',
+    'http://access.tv.sohu.com/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://dynamic.app.m.letv.com/*/dynamic.php?*playid*',
     'http://listso.m.areainfo.ppstream.com/ip/q.php*',
-    'http://ip2.kugou.com/check/isCn/*',
-    'http://ip.kugou.com/check/isCn/*',
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
+    // Music apps
+    'http://3g.music.qq.com/*',
+    'http://mqqplayer.3g.qq.com/*',
+    'http://proxy.music.qq.com/*',
+    'http://ip2.kugou.com/check/isCn/*',
+    'http://ip.kugou.com/check/isCn/*',
+    'http://client.api.ttpod.com/global*',
+    'http://mobi.kuwo.cn/*',
+    'http://mobilefeedback.kugou.com/*',
+    'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
     'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
