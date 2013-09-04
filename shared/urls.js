@@ -145,6 +145,7 @@ unblock_youku.server_extra_urls = [
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
+    'http://v5.pc.duomi.com/single-ajaxsingle-isban*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
