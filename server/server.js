@@ -37,12 +37,17 @@ vld.error = function(msg) {
     console.error(msg.red);
     process.exit(1);
 };
+var sanitize = require('validator').sanitize;
 
 vld.check(argv.ip, 'Invalid input for IP address.').isIP();
 vld.check(argv.port, 'Invalid input for port number.').isNumeric();
-/*if (argv.ext_ip) {  // custom IP address in the PAC file, in case the proxy server is behind a router or firewall
-    vld.check(argv.ext_ip, 'Invalid input for external IP address.').isIP();
-}*/
+if (argv.ext_ip) {  // custom IP/domain address in the PAC file, in case the proxy server is behind a router or firewall
+    // vld.check(argv.ext_ip, 'Invalid input for external IP address.').isIP();
+    if (argv.ext_ip !== sanitize(argv.ext_ip).escape()) {
+        console.error('Invalid input for external IP/domain address.'.red);
+        process.exit(1);
+    }
+}
 if (argv.ext_port) {  // custom port number
     vld.check(argv.ext_port, 'Invalid input for external port number.').isNumeric();
 }
