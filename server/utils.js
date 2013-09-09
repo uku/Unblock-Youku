@@ -200,10 +200,63 @@ function filtered_response_headers(headers, forward_cookie) {
 }
 
 
+function static_response(client_request, client_response, in_production) {
+    if (client_request.url === '/crossdomain.xml') {
+        client_response.writeHead(200, {
+            'Content-Type': 'text/xml',
+            'Content-Length': '113',
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
+                '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+        return;
+    }
+
+    if (client_request.url === '/status') {
+        var status_text = 'OK';
+        if (in_production) {
+            status_text = 'Production OK';
+        }
+
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': status_text.length.toString(),
+            'Cache-Control': 'public, max-age=3600'
+        });
+        client_response.end(status_text);
+        return;
+    }
+
+    if (client_request.url === '/favicon.ico') {
+        client_response.writeHead(404, {
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end();
+        return;
+    }
+
+    if (client_request.url === '/robots.txt') {
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': '25',
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end('User-agent: *\nDisallow: /');
+        return;
+    }
+
+    client_response.writeHead(403, {
+        'Cache-Control': 'public, max-age=14400'
+    });
+    client_response.end();
+    return;
+}
+
+
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
 exports.renew_sogou_server = renew_sogou_server;
 exports.filtered_request_headers = filtered_request_headers;
 exports.filtered_response_headers = filtered_response_headers;
-
+exports.static_response = static_response;
