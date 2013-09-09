@@ -55,11 +55,11 @@ if (argv.ext_port) {  // custom port number
 
 var util = require('util');
 var http = require('http');
-http.globalAgent.maxSockets = Infinity;
 var cluster = require('cluster');
+http.globalAgent.maxSockets = Infinity;
+
 var raven = null;
 var raven_client = null;
-
 if (process.env.SENTRY_ADDRESS) {
     raven = require('raven');
     raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
@@ -67,8 +67,6 @@ if (process.env.SENTRY_ADDRESS) {
     raven_client.captureMessage('Sentry is running...');
 } 
 
-
-var uglify = require('uglify-js');
 var sogou = require('../shared/sogou');
 var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
@@ -102,17 +100,7 @@ if (!argv.production) {
     proxy_addr = 'proxy.uku.im';
     proxy_port = '80';
 }
-var pac_file_content =
-    '/*\n' +
-    ' * Installing/using this software, you agree that this software is\n' +
-    ' * only for study purposes and its authors and service providers  \n' +
-    ' * take no responsibilities for any consequences.\n' +
-    ' */\n' +
-    uglify.minify(
-        shared_tools.urls2pac(require('../shared/urls').url_list, proxy_addr + ':' + proxy_port),
-        {fromString: true,}
-    ).code
-;
+var pac_file_content = server_utils.generate_pac_file(proxy_addr + ':' + proxy_port);
 // console.log(pac_file_content);
 
 
@@ -157,19 +145,10 @@ function http_req_handler(client_request, client_response) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
     }
 
-    if (client_request.url === '/proxy.pac') {
-        client_response.writeHead(200, {
-            'Content-Type': 'application/x-ns-proxy-autoconfig',
-            'Content-Length': pac_file_content.length.toString(),
-            'Cache-Control': 'public, max-age=14400'
-        });
-        client_response.end(pac_file_content);
-        return;
-    }
-
-    if (!shared_tools.string_starts_with(client_request.url, '/proxy') &&
-            !shared_tools.string_starts_with(client_request.url, 'http')) {
-        server_utils.static_response(client_request, client_response, argv.production);
+    if (client_request.url === '/proxy.pac' ||
+            (!shared_tools.string_starts_with(client_request.url, '/proxy') &&
+             !shared_tools.string_starts_with(client_request.url, 'http'))) {
+        server_utils.static_responses(client_request, client_response, argv.production, pac_file_content);
     }
 
     // cannot forward cookie settings for other domains in redirect mode
@@ -190,18 +169,11 @@ function http_req_handler(client_request, client_response) {
     // access control
     var proxy_request_options;
     if (server_utils.is_valid_url(target.href)) {
-        var sogou_auth = sogou.new_sogou_auth_str();
-        var timestamp = Math.round(Date.now() / 1000).toString(16);
-        var sogou_tag = sogou.compute_sogou_tag(timestamp, target.hostname);
-
         var proxy_request_headers = server_utils.filtered_request_headers(
             client_request.headers,
             forward_cookies
         );
-        proxy_request_headers['X-Sogou-Auth'] = sogou_auth;
-        proxy_request_headers['X-Sogou-Timestamp'] = timestamp;
-        proxy_request_headers['X-Sogou-Tag'] = sogou_tag;
-        proxy_request_headers['X-Forwarded-For'] = shared_tools.new_random_ip();
+        server_utils.add_sogou_headers(proxy_request_headers, target.hostname);
         proxy_request_headers.Host = target.host;
 
         proxy_request_options = {
