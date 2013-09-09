@@ -53,6 +53,8 @@ if (argv.ext_port) {  // custom port number
 }
 
 
+var net = require('net');
+var url = require('url');
 var util = require('util');
 var http = require('http');
 var cluster = require('cluster');
@@ -179,7 +181,7 @@ function http_req_handler(client_request, client_response) {
         proxy_request_options = {
             hostname: sogou_server_addr,
             host: sogou_server_addr,
-            port: +target.port,  // but always 80
+            port: 80,
             path: target.href,
             method: client_request.method,
             headers: proxy_request_headers
@@ -247,7 +249,52 @@ function http_req_handler(client_request, client_response) {
 
 
 function connect_req_hander(client_request, client_socket, client_head) {
-    return;
+    // this should only be used for proxy server, not redirect server
+
+    client_request.on('error', function(err) {
+        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
+    });
+
+    if (!argv.production) {
+        console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': CONNECT ' + client_request.url.underline);
+    }
+
+    // var proxy_request_options;
+    // if (server_utils.is_valid_https_domain(client_request.url)) {
+    //     var proxy_request_headers = client_request.headers;
+    //     server_utils.add_sogou_headers(proxy_request_headers, client_request.url);
+
+    //     proxy_request_options = {
+    //         hostname: sogou_server_addr,
+    //         host: sogou_server_addr,
+    //         port: 80,
+    //         method: 'CONNECT',
+    //         headers: proxy_request_headers
+    //     };
+    // } else if (argv.mitm_proxy) {
+    //     // serve as a normal proxy server
+    //     client_request.headers.host = target.host;
+    //     proxy_request_options = {
+    //         host: client_request.url,
+    //         port: 443,
+    //         method: 'CONNECT',
+    //         headers: client_request.headers
+    //     };
+    // } else {
+    //     client_response.writeHead(403, {
+    //         'Cache-Control': 'public, max-age=14400'
+    //     });
+    //     client_response.end();
+    //     return;
+    // }
+
+    var target = url.parse('https://' + client_request.url);
+    var proxy_socket = net.connect(443, target.hostname, function() {
+        client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+        proxy_socket.write(client_head);
+        proxy_socket.pipe(client_socket);
+        client_socket.pipe(proxy_socket);
+    });
 }
 
     
