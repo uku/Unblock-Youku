@@ -262,37 +262,36 @@ function connect_req_hander(client_request, client_socket, client_head) {
     // if (server_utils.is_valid_https_domain(url.parse('https://' + client_request.url).hostname)) {
     if (true) {
         var proxy_request_headers = client_request.headers;
-        server_utils.add_sogou_headers(proxy_request_headers, client_request.url);
+        server_utils.add_sogou_headers(proxy_request_headers, client_request.headers.host);
 
         var proxy_request_options = {
             hostname: sogou_server_addr,
-            host: client_request.url,
+            host: client_request.headers.host,
             port: 80,
             method: 'CONNECT',
             headers: proxy_request_headers
         };
         var proxy_request = http.request(proxy_request_options);
+        proxy_request.on('connect', function(proxy_response, proxy_socket) {
+            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+            proxy_socket.write(client_head);
+            proxy_socket.pipe(client_socket);
+            client_socket.pipe(proxy_socket);
+        });
         proxy_request.end();
 
-        proxy_request.on('connect', function(proxy_response, proxy_socket) {
-            proxy_socket.pipe(client_socket);
-            client_socket.pipe(proxy_socket);
-            proxy_socket.write(client_head);
-            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
-        });
+    // } else if (argv.mitm_proxy) {
+    //     // serve as a normal proxy server
+    //     var target = url.parse('https://' + client_request.url);
+    //     var proxy_socket = net.connect(443, target.hostname, function() {
+    //         client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+    //         proxy_socket.write(client_head);
+    //         proxy_socket.pipe(client_socket);
+    //         client_socket.pipe(proxy_socket);
+    //     });
 
-    } else if (argv.mitm_proxy) {
-        // serve as a normal proxy server
-        var target = url.parse('https://' + client_request.url);
-        var proxy_socket = net.connect(443, target.hostname, function() {
-            proxy_socket.pipe(client_socket);
-            client_socket.pipe(proxy_socket);
-            proxy_socket.write(client_head);
-            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
-        });
-
-    } else {
-        client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
+    // } else {
+    //     client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
     }
 }
 
