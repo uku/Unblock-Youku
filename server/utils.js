@@ -90,6 +90,33 @@ function is_valid_url(target_url) {
 }
 
 
+var utils_global = utils_global || {};
+
+(function() {
+    utils_global.https_domains = [];
+    var i;
+    for (i = 0; i < shared_urls.url_list.length; i++) {
+        if (string_starts_with(shared_urls.url_list[i], 'https://')) {
+            var parsed_url = url.parse(shared_urls.url_list[i]);
+            if (parsed_url.hostname) {
+                utils_global.https_domains.push(parsed_url.hostname);
+            }
+        }
+    }
+}());
+
+
+function is_valid_https_domain(domain_name) {
+    console.log(domain_name);
+    if (domain_name && utils_global.https_domains.indexOf(domain_name) >= 0) {
+        console.log('it is valid');
+        return true;
+    }
+    console.log('it is not valid');
+    return false;
+}
+
+
 function renew_sogou_server(callback, depth) {
     var new_addr = sogou.new_sogou_proxy_addr();
     // new_addr = 'h8.dxt.bj.ie.sogou.com';
@@ -293,6 +320,7 @@ function add_sogou_headers(req_headers, hostname) {
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
+exports.is_valid_https_domain = is_valid_https_domain;
 exports.renew_sogou_server = renew_sogou_server;
 exports.filtered_request_headers = filtered_request_headers;
 exports.filtered_response_headers = filtered_response_headers;

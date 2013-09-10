@@ -258,43 +258,42 @@ function connect_req_hander(client_request, client_socket, client_head) {
     if (!argv.production) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': CONNECT ' + client_request.url.underline);
     }
+    
+    // if (server_utils.is_valid_https_domain(url.parse('https://' + client_request.url).hostname)) {
+    if (true) {
+        var proxy_request_headers = client_request.headers;
+        server_utils.add_sogou_headers(proxy_request_headers, client_request.url);
 
-    // var proxy_request_options;
-    // if (server_utils.is_valid_https_domain(client_request.url)) {
-    //     var proxy_request_headers = client_request.headers;
-    //     server_utils.add_sogou_headers(proxy_request_headers, client_request.url);
+        var proxy_request_options = {
+            hostname: sogou_server_addr,
+            host: client_request.url,
+            port: 80,
+            method: 'CONNECT',
+            headers: proxy_request_headers
+        };
+        var proxy_request = http.request(proxy_request_options);
+        proxy_request.end();
 
-    //     proxy_request_options = {
-    //         hostname: sogou_server_addr,
-    //         host: sogou_server_addr,
-    //         port: 80,
-    //         method: 'CONNECT',
-    //         headers: proxy_request_headers
-    //     };
-    // } else if (argv.mitm_proxy) {
-    //     // serve as a normal proxy server
-    //     client_request.headers.host = target.host;
-    //     proxy_request_options = {
-    //         host: client_request.url,
-    //         port: 443,
-    //         method: 'CONNECT',
-    //         headers: client_request.headers
-    //     };
-    // } else {
-    //     client_response.writeHead(403, {
-    //         'Cache-Control': 'public, max-age=14400'
-    //     });
-    //     client_response.end();
-    //     return;
-    // }
+        proxy_request.on('connect', function(proxy_response, proxy_socket) {
+            proxy_socket.pipe(client_socket);
+            client_socket.pipe(proxy_socket);
+            proxy_socket.write(client_head);
+            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+        });
 
-    var target = url.parse('https://' + client_request.url);
-    var proxy_socket = net.connect(443, target.hostname, function() {
-        client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
-        proxy_socket.write(client_head);
-        proxy_socket.pipe(client_socket);
-        client_socket.pipe(proxy_socket);
-    });
+    } else if (argv.mitm_proxy) {
+        // serve as a normal proxy server
+        var target = url.parse('https://' + client_request.url);
+        var proxy_socket = net.connect(443, target.hostname, function() {
+            proxy_socket.pipe(client_socket);
+            client_socket.pipe(proxy_socket);
+            proxy_socket.write(client_head);
+            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+        });
+
+    } else {
+        client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
+    }
 }
 
     
@@ -359,7 +358,7 @@ if (cluster.isMaster) {
 
 
 process.on('uncaughtException', function(err) {
-    util.error('[ub.uku.js] Caught exception: ' + err, err.stack);
+    util.error('[ub.uku.js] Caught uncaughtException: ' + err, err.stack);
     if (raven_client !== null) {
         raven_client.captureError(err);
     } 
