@@ -56,6 +56,7 @@ unblock_youku.common_urls = [
     'http://ipservice.163.com/*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
+    'http://vxml.56.com/json/*',
 
     'http://music.sina.com.cn/yueku/intro/*',
     //'http://ting.baidu.com/data/music/songlink*',
