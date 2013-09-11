@@ -107,12 +107,9 @@ var utils_global = utils_global || {};
 
 
 function is_valid_https_domain(domain_name) {
-    console.log(domain_name);
     if (domain_name && utils_global.https_domains.indexOf(domain_name) >= 0) {
-        console.log('it is valid');
         return true;
     }
-    console.log('it is not valid');
     return false;
 }
 
