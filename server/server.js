@@ -266,8 +266,9 @@ function connect_req_hander(client_request, client_socket, client_head) {
 
         var proxy_request_options = {
             hostname: sogou_server_addr,
-            host: client_request.headers.host,
+            host: client_request.url,
             port: 80,
+            path: client_request.url,
             method: 'CONNECT',
             headers: proxy_request_headers
         };
@@ -280,18 +281,18 @@ function connect_req_hander(client_request, client_socket, client_head) {
         });
         proxy_request.end();
 
-    // } else if (argv.mitm_proxy) {
-    //     // serve as a normal proxy server
-    //     var target = url.parse('https://' + client_request.url);
-    //     var proxy_socket = net.connect(443, target.hostname, function() {
-    //         client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
-    //         proxy_socket.write(client_head);
-    //         proxy_socket.pipe(client_socket);
-    //         client_socket.pipe(proxy_socket);
-    //     });
+    } else if (argv.mitm_proxy) {
+        // serve as a normal proxy server
+        var target = url.parse('https://' + client_request.url);
+        var proxy_socket = net.connect(443, target.hostname, function() {
+            client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+            proxy_socket.write(client_head);
+            proxy_socket.pipe(client_socket);
+            client_socket.pipe(proxy_socket);
+        });
 
-    // } else {
-    //     client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
+    } else {
+        client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
     }
 }
 
