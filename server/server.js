@@ -133,16 +133,30 @@ function change_sogou_server(error_code) {
         in_changing_server = false;
     });
 }
+function count_sogou_server_errors(err) {
+    if ('ECONNRESET' === err.code) {
+        reset_count++;
+        util.log('[ub.uku.js] ' + sogou_server_addr + ' reset_count: ' + reset_count);
+        if (reset_count >= MAX_RESET_COUNT) {
+            change_sogou_server('ECONNRESET');
+        }
+    } else if ('ECONNREFUSED' === err.code) {
+        refuse_count++;
+        util.log('[ub.uku.js] ' + sogou_server_addr + ' refuse_count: ' + refuse_count);
+        if (refuse_count >= MAX_REFUSE_COUNT) {
+            change_sogou_server('ECONNREFUSED');
+        }
+    } else if ('ETIMEDOUT' === err.code) {
+        timeout_count++;
+        util.log('[ub.uku.js] ' + sogou_server_addr + ' timeout_count: ' + timeout_count);
+        if (timeout_count >= MAX_TIMEOUT_COUNT) {
+            change_sogou_server('ETIMEOUT');
+        }
+    }
+}
 
 
 function http_req_handler(client_request, client_response) {
-    client_request.on('error', function(err) {
-        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
-    });
-    client_response.on('error', function(err) {  // does this work?
-        util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
-    });
-
     if (!argv.production) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
     }
@@ -210,6 +224,7 @@ function http_req_handler(client_request, client_response) {
         proxy_response.on('error', function(err) {
             util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message, err.stack);
         });
+
         proxy_response.pipe(client_response);
 
         client_response.writeHead(
@@ -219,29 +234,22 @@ function http_req_handler(client_request, client_response) {
     });
     proxy_request.on('error', function(err) {
         util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
-        if ('ECONNRESET' === err.code) {
-            reset_count++;
-            util.log('[ub.uku.js] ' + sogou_server_addr + ' reset_count: ' + reset_count);
-            if (reset_count >= MAX_RESET_COUNT) {
-                change_sogou_server('ECONNRESET');
-            }
-        } else if ('ECONNREFUSED' === err.code) {
-            refuse_count++;
-            util.log('[ub.uku.js] ' + sogou_server_addr + ' refuse_count: ' + refuse_count);
-            if (refuse_count >= MAX_REFUSE_COUNT) {
-                change_sogou_server('ECONNREFUSED');
-            }
-        } else if ('ETIMEDOUT' === err.code) {
-            timeout_count++;
-            util.log('[ub.uku.js] ' + sogou_server_addr + ' timeout_count: ' + timeout_count);
-            if (timeout_count >= MAX_TIMEOUT_COUNT) {
-                change_sogou_server('ETIMEOUT');
-            }
-        }
+
+        count_sogou_server_errors(err);
+
         // should we explicitly end client_response when error occurs?
         client_response.statusCode = 599;
         client_response.end();
+        proxy_request.end();
         // should we also destroy the proxy_request object?
+    });
+    client_request.on('error', function(err) {
+        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
+        proxy_request.end();
+    });
+    client_response.on('error', function(err) {  // does this work?
+        util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
+        proxy_request.end();
     });
 
     client_request.pipe(proxy_request);
@@ -251,16 +259,12 @@ function http_req_handler(client_request, client_response) {
 function connect_req_hander(client_request, client_socket, client_head) {
     // this should only be used for proxy server, not redirect server
 
-    client_request.on('error', function(err) {
-        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
-    });
-
     if (!argv.production) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': CONNECT ' + client_request.url.underline);
     }
-    
-    // if (server_utils.is_valid_https_domain(url.parse('https://' + client_request.url).hostname)) {
-    if (true) {
+
+    // if (true) {  
+    if (server_utils.is_valid_https_domain(url.parse('https://' + client_request.url).hostname)) {
         var proxy_request_headers = client_request.headers;
         server_utils.add_sogou_headers(proxy_request_headers, client_request.headers.host);
 
@@ -274,11 +278,29 @@ function connect_req_hander(client_request, client_socket, client_head) {
         };
         var proxy_request = http.request(proxy_request_options);
         proxy_request.on('connect', function(proxy_response, proxy_socket) {
+            proxy_response.on('error', function(err) {
+                // do we need to listen to the error of proxy_response?
+                util.error('[ub.uku.js] CONNECT proxy_response error: (' + err.code + ') ' + err.message, err.stack);
+            });
+            proxy_socket.on('error', function(err) {
+                util.error('[ub.uku.js] CONNECT proxy_response error: (' + err.code + ') ' + err.message, err.stack);
+
+                count_sogou_server_errors(err);
+
+                client_socket.end();  // what's the difference with emit('end')?
+            });
+
             client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
             proxy_socket.write(client_head);
             proxy_socket.pipe(client_socket);
             client_socket.pipe(proxy_socket);
         });
+        proxy_request.on('error', function(err) {
+            util.error('[ub.uku.js] CONNECT proxy_request error: (' + err.code + ') ' + err.message, err.stack);
+            count_sogou_server_errors(err);
+            client_socket.end();
+        });
+
         proxy_request.end();
 
     } else if (argv.mitm_proxy) {
@@ -290,10 +312,25 @@ function connect_req_hander(client_request, client_socket, client_head) {
             proxy_socket.pipe(client_socket);
             client_socket.pipe(proxy_socket);
         });
+        proxy_request.on('error', function(err) {
+            util.error('[ub.uku.js] CONNECT proxy_request error: (' + err.code + ') ' + err.message, err.stack);
+            client_socket.end();
+        });
 
     } else {
         client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
+
+        return;
     }
+
+    client_request.on('error', function(err) {
+        util.error('[ub.uku.js] CONNECT client_request error: (' + err.code + ') ' + err.message, err.stack);
+        proxy_request.end();
+    });
+    client_socket.on('error', function(err) {
+        util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
+        proxy_request.end();
+    });
 }
 
     
@@ -364,3 +401,4 @@ process.on('uncaughtException', function(err) {
     } 
     process.exit(213);
 });
+
