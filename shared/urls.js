@@ -120,11 +120,12 @@ unblock_youku.chrome_extra_urls = [
 unblock_youku.server_extra_urls = [
     // for Mobile apps    // Video apps
     'http://api.3g.youku.com/layout*',
-    'http://api.3g.tudou.com/*',
     'http://api.3g.youku.com/v3/play/address*',
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
     'http://api.3g.youku.com/videos/*/download*',
-    'http://play.api.3g.tudou.com/v*/*',
+    'http://api.3g.youku.com/common/v3/play*',
+    'http://play.api.3g.tudou.com/v*',
+    'http://api.3g.tudou.com/*',
     'http://api.tv.sohu.com/*',
     'http://access.tv.sohu.com/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
