@@ -245,7 +245,7 @@ function http_req_handler(client_request, client_response) {
     });
     client_request.on('error', function(err) {
         util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
-        proxy_request.end();
+        proxy_request.end();  // is this correct?
     });
     client_response.on('error', function(err) {  // does this work?
         util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
@@ -256,8 +256,15 @@ function http_req_handler(client_request, client_response) {
 }
 
 
-function connect_req_hander(client_request, client_socket, client_head) {
+function connect_req_handler(client_request, client_socket, client_head) {
     // this should only be used for proxy server, not redirect server
+
+    client_request.on('error', function(err) {
+        util.error('[ub.uku.js] CONNECT client_request error: (' + err.code + ') ' + err.message, err.stack);
+    });
+    client_socket.on('error', function(err) {
+        util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
+    });
 
     if (!argv.production) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': CONNECT ' + client_request.url.underline);
@@ -319,18 +326,7 @@ function connect_req_hander(client_request, client_socket, client_head) {
 
     } else {
         client_socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
-
-        return;
     }
-
-    client_request.on('error', function(err) {
-        util.error('[ub.uku.js] CONNECT client_request error: (' + err.code + ') ' + err.message, err.stack);
-        proxy_request.end();
-    });
-    client_socket.on('error', function(err) {
-        util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
-        proxy_request.end();
-    });
 }
 
     
@@ -383,7 +379,7 @@ if (cluster.isMaster) {
 
     var ubuku_server = http.createServer();
     ubuku_server.on('request', http_req_handler);
-    ubuku_server.on('connect', connect_req_hander);
+    ubuku_server.on('connect', connect_req_handler);
 
     ubuku_server.listen(local_port, local_addr).on('error', function(err) {
         if (err.code === 'EADDRINUSE') {
