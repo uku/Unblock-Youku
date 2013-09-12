@@ -21,10 +21,12 @@ var url = require('url');
 var util = require('util');
 var http = require('http');
 var querystring = require('querystring');
+var uglify = require('uglify-js');
 
-var url_regex_list = require('../shared/urls').url_regex_list;
-var new_sogou_proxy_addr = require('../shared/sogou').new_sogou_proxy_addr;
+var shared_urls = require('../shared/urls');
+var sogou = require('../shared/sogou');
 var shared_tools = require('../shared/tools');
+
 var string_starts_with = shared_tools.string_starts_with;
 var to_title_case = shared_tools.to_title_case;
 
@@ -75,8 +77,8 @@ function get_real_target(req_path) {
 
 function is_valid_url(target_url) {
     var i;
-    for (i = 0; i < url_regex_list.length; i++) {
-        if (url_regex_list[i].test(target_url)) {
+    for (i = 0; i < shared_urls.url_regex_list.length; i++) {
+        if (shared_urls.url_regex_list[i].test(target_url)) {
             return true;
         }
     }
@@ -88,8 +90,32 @@ function is_valid_url(target_url) {
 }
 
 
+var utils_global = utils_global || {};
+
+(function() {
+    utils_global.https_domains = [];
+    var i;
+    for (i = 0; i < shared_urls.url_list.length; i++) {
+        if (string_starts_with(shared_urls.url_list[i], 'https://')) {
+            var parsed_url = url.parse(shared_urls.url_list[i]);
+            if (parsed_url.hostname) {
+                utils_global.https_domains.push(parsed_url.hostname);
+            }
+        }
+    }
+}());
+
+
+function is_valid_https_domain(domain_name) {
+    if (domain_name && utils_global.https_domains.indexOf(domain_name) >= 0) {
+        return true;
+    }
+    return false;
+}
+
+
 function renew_sogou_server(callback, depth) {
-    var new_addr = new_sogou_proxy_addr();
+    var new_addr = sogou.new_sogou_proxy_addr();
     // new_addr = 'h8.dxt.bj.ie.sogou.com';
 
     if (typeof depth === 'undefined') {
@@ -200,10 +226,101 @@ function filtered_response_headers(headers, forward_cookie) {
 }
 
 
+function static_responses(client_request, client_response, in_production, pac_file_content) {
+    if (client_request.url === '/crossdomain.xml') {
+        client_response.writeHead(200, {
+            'Content-Type': 'text/xml',
+            'Content-Length': '113',
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end('<?xml version="1.0" encoding="UTF-8"?>\n' +
+                '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>');
+        return;
+    }
+
+    if (client_request.url === '/status') {
+        var status_text = 'OK';
+        if (in_production) {
+            status_text = 'Production OK';
+        }
+
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': status_text.length.toString(),
+            'Cache-Control': 'public, max-age=3600'
+        });
+        client_response.end(status_text);
+        return;
+    }
+
+    if (client_request.url === '/proxy.pac') {
+        client_response.writeHead(200, {
+            'Content-Type': 'application/x-ns-proxy-autoconfig',
+            'Content-Length': pac_file_content.length.toString(),
+            'Cache-Control': 'public, max-age=14400'
+        });
+        client_response.end(pac_file_content);
+        return;
+    }
+
+    if (client_request.url === '/favicon.ico') {
+        client_response.writeHead(404, {
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end();
+        return;
+    }
+
+    if (client_request.url === '/robots.txt') {
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': '25',
+            'Cache-Control': 'public, max-age=2592000'
+        });
+        client_response.end('User-agent: *\nDisallow: /');
+        return;
+    }
+
+    client_response.writeHead(403, {
+        'Cache-Control': 'public, max-age=14400'
+    });
+    client_response.end();
+    return;
+}
+
+
+function generate_pac_file(proxy_addr_port) {
+    return '/*\n' +
+        ' * Installing/using this software, you agree that this software is\n' +
+        ' * only for study purposes and its authors and service providers  \n' +
+        ' * take no responsibilities for any consequences.\n' +
+        ' */\n' +
+        uglify.minify(
+            shared_tools.urls2pac(shared_urls.url_list, proxy_addr_port),
+            {fromString: true,}
+        ).code;
+}
+
+
+function add_sogou_headers(req_headers, hostname) {
+    var sogou_auth = sogou.new_sogou_auth_str();
+    var timestamp = Math.round(Date.now() / 1000).toString(16);
+    var sogou_tag = sogou.compute_sogou_tag(timestamp, hostname);
+
+    req_headers['X-Sogou-Auth'] = sogou_auth;
+    req_headers['X-Sogou-Timestamp'] = timestamp;
+    req_headers['X-Sogou-Tag'] = sogou_tag;
+    req_headers['X-Forwarded-For'] = shared_tools.new_random_ip();
+}
+
+
 exports.get_first_external_ip = get_first_external_ip;
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
+exports.is_valid_https_domain = is_valid_https_domain;
 exports.renew_sogou_server = renew_sogou_server;
 exports.filtered_request_headers = filtered_request_headers;
 exports.filtered_response_headers = filtered_response_headers;
-
+exports.static_responses = static_responses;
+exports.generate_pac_file = generate_pac_file;
+exports.add_sogou_headers = add_sogou_headers;
