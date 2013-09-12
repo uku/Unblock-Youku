@@ -23,7 +23,8 @@ var argv = require('optimist')
     .default('ip', '0.0.0.0')  // listen to all interfaces
     .default('port', '8888')
     .boolean('local_only')  // force --ip=127.0.0.1
-    .boolean('mitm_proxy')  // for debug use
+    .boolean('mitm_proxy')  // for debug use; no access control
+    .boolean('nolog')       // do not show network logs
     .boolean('production')  // pre-set configs for production server
     .argv
 ;
@@ -101,6 +102,10 @@ if (!argv.production) {
     local_port = process.env.PORT || 8888;
     proxy_addr = 'proxy.uku.im';
     proxy_port = '80';
+
+    argv.local_only = false;
+    argv.mitm_proxy = false;
+    argv.nolog = true;
 }
 var pac_file_content = server_utils.generate_pac_file(proxy_addr + ':' + proxy_port);
 // console.log(pac_file_content);
@@ -157,7 +162,7 @@ function count_sogou_server_errors(err) {
 
 
 function http_req_handler(client_request, client_response) {
-    if (!argv.production) {
+    if (!argv.nolog) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': ' + client_request.method + ' ' + client_request.url.underline);
     }
 
@@ -184,7 +189,8 @@ function http_req_handler(client_request, client_response) {
 
     // access control
     var proxy_request_options;
-    if (server_utils.is_valid_url(target.href)) {
+    var to_use_proxy = server_utils.is_valid_url(target.href);
+    if (to_use_proxy) {
         var proxy_request_headers = server_utils.filtered_request_headers(
             client_request.headers,
             forward_cookies
@@ -223,6 +229,9 @@ function http_req_handler(client_request, client_response) {
     var proxy_request = http.request(proxy_request_options, function(proxy_response) {
         proxy_response.on('error', function(err) {
             util.error('[ub.uku.js] proxy_response error: (' + err.code + ') ' + err.message, err.stack);
+            client_response.statusCode = 599;
+            client_response.end();
+            proxy_request.end();
         });
 
         proxy_response.pipe(client_response);
@@ -235,7 +244,10 @@ function http_req_handler(client_request, client_response) {
     proxy_request.on('error', function(err) {
         util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
 
-        count_sogou_server_errors(err);
+        if (to_use_proxy) {
+            // errors in the mitm_proxy case do not need to count the errors
+            count_sogou_server_errors(err);
+        }
 
         // should we explicitly end client_response when error occurs?
         client_response.statusCode = 599;
@@ -262,11 +274,8 @@ function connect_req_handler(client_request, client_socket, client_head) {
     client_request.on('error', function(err) {
         util.error('[ub.uku.js] CONNECT client_request error: (' + err.code + ') ' + err.message, err.stack);
     });
-    client_socket.on('error', function(err) {
-        util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
-    });
 
-    if (!argv.production) {
+    if (!argv.nolog) {
         console.log('[ub.uku.js] ' + client_request.connection.remoteAddress + ': CONNECT ' + client_request.url.underline);
     }
 
@@ -290,11 +299,13 @@ function connect_req_handler(client_request, client_socket, client_head) {
                 util.error('[ub.uku.js] CONNECT proxy_response error: (' + err.code + ') ' + err.message, err.stack);
             });
             proxy_socket.on('error', function(err) {
-                util.error('[ub.uku.js] CONNECT proxy_response error: (' + err.code + ') ' + err.message, err.stack);
-
+                util.error('[ub.uku.js] CONNECT proxy_socket error: (' + err.code + ') ' + err.message, err.stack);
                 count_sogou_server_errors(err);
-
                 client_socket.end();  // what's the difference with emit('end')?
+            });
+            client_socket.on('error', function(err) {
+                util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
+                proxy_socket.end();
             });
 
             client_socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
