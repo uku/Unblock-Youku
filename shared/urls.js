@@ -126,7 +126,7 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.youku.com/common/v3/play*',
     'http://play.api.3g.tudou.com/v*',
     'http://api.3g.tudou.com/*',
-    'http://api.tv.sohu.com/*',
+    'http://api.tv.sohu.com/mobile_user/device/clientconf.json?*',
     'http://access.tv.sohu.com/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://dynamic.app.m.letv.com/*/dynamic.php?*playid*',
@@ -149,6 +149,8 @@ unblock_youku.server_extra_urls = [
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
     'http://v5.pc.duomi.com/single-ajaxsingle-isban*',
     'https://openapi.youku.com/*',  // see issue #118
+    'https://61.135.196.99/*', //n-openapi.youku.com
+    'https://220.181.185.150/*', //zw-openapi.youku.com
     'https://httpbin.org/get',  // for testing
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
