@@ -330,9 +330,13 @@ function connect_req_handler(client_request, client_socket, client_head) {
             proxy_socket.pipe(client_socket);
             client_socket.pipe(proxy_socket);
         });
-        proxy_request.on('error', function(err) {
-            util.error('[ub.uku.js] CONNECT proxy_request error: (' + err.code + ') ' + err.message, err.stack);
+        proxy_socket.on('error', function(err) {
+            util.error('[ub.uku.js] CONNECT proxy_socket error: (' + err.code + ') ' + err.message, err.stack);
             client_socket.end();
+        });
+        client_socket.on('error', function(err) {
+            util.error('[ub.uku.js] CONNECT client_socket error: (' + err.code + ') ' + err.message, err.stack);
+            proxy_socket.end();
         });
 
     } else {
