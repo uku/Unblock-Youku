@@ -245,7 +245,7 @@ function http_req_handler(client_request, client_response) {
         util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
 
         if (to_use_proxy) {
-            // errors in the mitm_proxy case do not need to count the errors
+            // do not need to count the errors if the url is not proxied
             count_sogou_server_errors(err);
         }
 
