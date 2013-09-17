@@ -28,7 +28,7 @@
     "npm": "1.2.x"
   },
   "bugs": {
-    "web": "https://github.com/zhuzhuor/Unblock-Youku/issues"
+    "url": "https://github.com/zhuzhuor/Unblock-Youku/issues"
   },
   "licenses": [{
     "type": "AGPL v3",
