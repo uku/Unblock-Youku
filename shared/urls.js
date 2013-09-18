@@ -47,6 +47,17 @@ unblock_youku.common_urls = [
     'http://123.126.48.48/*',
 
     'http://vv.video.qq.com/*',
+    'http://tt.video.qq.com/getinfo*',
+    'http://ice.video.qq.com/getinfo*',
+    'http://tjsa.video.qq.com/getinfo*',
+    'http://a10.video.qq.com/getinfo*',
+    'http://xyy.video.qq.com/getinfo*',
+    'http://vcp.video.qq.com/getinfo*',
+    'http://vsh.video.qq.com/getinfo*',
+    'http://vbj.video.qq.com/getinfo*',
+    'http://bobo.video.qq.com/getinfo*',
+    'http://flvs.video.qq.com/getinfo*',
+
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
