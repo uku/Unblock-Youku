@@ -52,6 +52,7 @@ unblock_youku.common_urls = [
     'http://tjsa.video.qq.com/getinfo*',
     'http://a10.video.qq.com/getinfo*',
     'http://xyy.video.qq.com/getinfo*',
+    'http://vcp.video.qq.com/getinfo*',
     'http://vsh.video.qq.com/getinfo*',
     'http://vbj.video.qq.com/getinfo*',
     'http://bobo.video.qq.com/getinfo*',
