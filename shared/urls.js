@@ -90,6 +90,7 @@ unblock_youku.common_urls = [
     'http://*/?prot=2&type=1*',
     'http://*/?prot=2&file=/*',
     'http://api.letv.com/streamblock*',
+    'http://live.gslb.letv.com/gslb?*',
     'http://vdn.apps.cntv.cn/api/get*'
 ];
 
