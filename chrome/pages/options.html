@@ -3,28 +3,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Options for Unblock Youku</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-2.3.2.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/options.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.0.0.min.css"/>
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap-2.3.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-3.0.0.min.js"></script>
         <script type="text/javascript" src="js/options.js"></script>
         <script type="text/javascript" src="js/analytics.js"></script>
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="span6 offset3">
+                <div class="col-md-6 col-md-offset-3">
                     <form id="form_custom_server" action="#">
-                        <legend>Custom backend server for Redirect Mode</legend>
-                        <div class="input-prepend input-append">
-                            <span class="add-on">http://</span>
-                            <input class="input-large" id="custom_server" type="text">
-                            <span class="add-on">?url=</span>
+                        <legend class="form-group text-center">Custom backend server for Redirect Mode</legend>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">http://</span>
+                                <input class="form-control" id="custom_server" type="text">
+                                <span class="input-group-addon">?url=</span>
+                            </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn" id="reset">Reset to Default</button>
-                            <button type="button" class="btn" id="test">Test</button>
-                            <button type="button" class="btn" id="save">Save</button>
+                        <div class="form-group text-center">
+                            <div class="btn-group btn-group-lg">
+                                <button type="button" class="btn btn-default" id="test">Test</button>
+                                <button type="button" class="btn btn-default" id="save">Save</button>
+                                <button type="button" class="btn btn-default" id="reset">Reset to Default</button>
+                            </div>
                         </div>
                     </form>
                     <div id="message"></div>

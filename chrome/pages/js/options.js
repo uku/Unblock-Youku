@@ -54,11 +54,16 @@ function set_custom_server(server_addr, callback) {
 function show_message(type, content) {
     "use strict";
     var alert_type = 'info';
-    if (type === 'success' || type === 'error') {
-        alert_type = type;
+    if (type === 'success' || type === 'warning') {
+        alert_type = type;  // success, info, or warning
     }
 
     $('#message').html('<div class="alert alert-' + alert_type + '"><button type="button" class="close" data-dismiss="alert">×</button>' + content + '</div>');
+}
+
+
+function show_error(content) {
+    $('#message').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>' + content + '</div>');
 }
 
 
@@ -69,13 +74,6 @@ $('document').ready(function() {
     });
 
 
-    $('button#reset').click(function() {
-        remove_custom_server(function() {
-            $('input#custom_server').val(default_server);
-            show_message('info', 'Reset to default backend server.');
-        });
-    });
-
     $('button#test').click(function() {
         var test_url = 'http://' + $('input#custom_server').val() + '?url=' + btoa('http://ipservice.163.com/isFromMainland');
         show_message('info', 'Waiting...');
@@ -83,19 +81,26 @@ $('document').ready(function() {
             if (data === 'true') {
                 show_message('success', 'Test passed. Please remember to save the new configuration.');
             } else {
-                show_message('error', 'Test failed! Perhaps your server isn\'t located in mainland China.');
+                show_error('Test failed! Perhaps your server isn\'t located in mainland China.');
             }
         }).error(function() {
-            show_message('error', 'Test failed! Perhaps the server isn\'t working properly.');
+            show_error('Test failed! Perhaps the server isn\'t working properly.');
         });
     });
 
     $('button#save').click(function() {
         set_custom_server($('input#custom_server').val(), function() {
-            show_message('info', 'New configuration is saved.');
+            show_message('info', 'The new backend server is set.');
         });
     });
 
+
+    $('button#reset').click(function() {
+        remove_custom_server(function() {
+            $('input#custom_server').val(default_server);
+            show_message('warning', 'Reset to the default backend server.');
+        });
+    });
 
     $('#form_custom_server').submit(function() {
         // prevent the default action of submitting a form
