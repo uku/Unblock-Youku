@@ -24,19 +24,21 @@ function set_i18n_text() {
     var get_msg = chrome.i18n.getMessage;
 
     $('div#mode_select strong').html(get_msg('mode_select'));
-    $('.mode_lite').html(get_msg('mode_lite'));
-    $('.mode_normal').html(get_msg('mode_normal'));
-    $('.mode_redirect').html(get_msg('mode_redirect'));
-    $('td#mode_lite_description').html(get_msg('mode_lite_description'));
-    $('td#mode_normal_description').html(get_msg('mode_normal_description'));
-    $('td#mode_redirect_description').html(get_msg('mode_redirect_description'));
+
+    $('span.mode_lite_name').html(get_msg('mode_lite'));
+    $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
+    $('span.mode_normal_name').html(get_msg('mode_normal'));
+    $('span.mode_normal_desc').html(get_msg('mode_normal_description'));
+    $('span.mode_redirect_name').html(get_msg('mode_redirect'));
+    $('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
+
     $('div#help').html(get_msg('help'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
-    $('div#sharing span:first-child').html(get_msg('sharing'));
+    $('span#sharing_text').html(get_msg('sharing'));
     
     $('div#support_title strong').html(get_msg('support_title'));
-    $('div#support_checkbox span').html(get_msg('support_checkbox_label'));
+    $('span#support_checkbox_label').html(get_msg('support_checkbox_label'));
 }
 
 
@@ -50,13 +52,13 @@ $(document).ready(function() {
     background.get_mode_name(function(current_mode_name) {
         switch (current_mode_name) {
             case 'lite':
-                $('button#lite').addClass('active');
+                $('label#lite').addClass('active');
                 break;
             case 'redirect':
-                $('button#redirect').addClass('active');
+                $('label#redirect').addClass('active');
                 break;
             default:
-                $('button#normal').addClass('active');
+                $('label#normal').addClass('active');
                 break;
         }
 
@@ -115,15 +117,15 @@ $(document).ready(function() {
  
     
     // button actions
-    $('button#lite').click(function() {
+    $('input#input_lite').click(function() {
         console.log('to change mode to lite');
         background.change_mode('lite');
     });
-    $('button#normal').click(function() {
+    $('input#input_normal').click(function() {
         console.log('to change mode to normal');
         background.change_mode('normal');
     });
-    $('button#redirect').click(function() {
+    $('input#input_redirect').click(function() {
         console.log('to change mode to redirect');
         background.change_mode('redirect');
     });

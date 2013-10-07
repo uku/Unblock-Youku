@@ -42,21 +42,17 @@ div#setting {
     margin-top: 15px;
 }
 
-div.btn-group-wrapper {
-	text-align: center;
-}
-
 div#buttons {
     margin: 15px auto;
     clear: both;
 	display: inline-block;
 }
 
-td.bottom-row {
+div#setting_description tr:last-child {
     border-bottom: 1px solid #DDDDDD !important;
 }
 
-div.text-block {
+div.text_block {
     margin-top: 15px;
     text-align: center;
 }

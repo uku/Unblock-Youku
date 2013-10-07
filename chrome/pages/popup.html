@@ -3,61 +3,65 @@
     <head>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
         <title>Popup Page for Unblock Youku</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-2.3.2.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.0.0.min.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome-3.2.0.min.css">
         <link rel="stylesheet" type="text/css" href="css/popup.css" />
         <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap-2.3.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-3.0.0.min.js"></script>
         <script type="text/javascript" src="js/popup.js"></script>
         <script type="text/javascript" src="js/analytics.js"></script>
     </head>
     <body>
         <div class="wrapper">
             <div id="support">
-                <div id="support_title"><strong>.</strong></div>
-                <div id="support_checkbox" class="pagination-centered">
+                <div id="support_title"><strong></strong></div>
+                <div id="support_checkbox" class="text-center">
                     <form action="#" class="form-inline">
-                        <label class="checkbox">
-                            <input type="checkbox">&nbsp;<span>.</span>
-                        </label>
-                        <div id="support_message"></div>
+                        <input type="checkbox">&nbsp;&nbsp;<span id="support_checkbox_label"></span>
                     </form>
+                    <div id="support_message"></div>
                 </div>
             </div>
             <div id="setting">
                 <div>
-                    <div id="mode_select"><strong>.</strong></div>
-                    <div class="btn-group-wrapper">
-                        <div class="btn-group" data-toggle="buttons-radio" id="buttons">
-                            <button class="btn mode_lite" id="lite"></button>
-                            <button class="btn mode_normal" id="normal"></button>
-                            <button class="btn mode_redirect" id="redirect"></button>
+                    <div id="mode_select"><strong></strong></div>
+                    <div class="text-center">
+                        <div class="btn-group" data-toggle="buttons" id="buttons">
+                            <label class="btn btn-default" id="lite">
+                                <input type="radio" name="options" id="input_lite"><span class="mode_lite">Lite</span>
+                            </label>
+                            <label class="btn btn-default" id="normal">
+                                <input type="radio" name="options" id="input_normal"><span class="mode_lite">Normal</span>
+                            </label>
+                            <label class="btn btn-default" id="redirect">
+                                <input type="radio" name="options" id="input_redirect"><span class="mode_lite">Redirect</span>
+                            </label>
                         </div>
                     </div>
                 </div>
-                <div id="setting-description">
+                <div id="setting_description">
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td class="mode_lite"></td>
-                                <td id="mode_lite_description"></td>
+                                <td><span class="mode_lite_name"></span></td>
+                                <td><span class="mode_lite_desc"></span></td>
                             </tr>
                             <tr>
-                                <td class="mode_normal"></td>
-                                <td id="mode_normal_description"></td>
+                                <td><span class="mode_normal_name"></span></td>
+                                <td><span class="mode_normal_desc"></span></td>
                             </tr>
                             <tr>
-                                <td class="mode_redirect bottom-row"></td>
-                                <td class="bottom-row" id="mode_redirect_description"></td>
+                                <td><span class="mode_redirect_name"></span></td>
+                                <td><span class="mode_redirect_desc"></span></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="text-block" id="help"></div>
+                    <div class="text_block" id="help_text"></div>
                 </div>
-                <div class="text-block" id="feedback"></div>    
-                <div class="text-block" id="rating"></div>
-                <div class="text-block" id="sharing">
-                    <span>.</span>
+                <div class="text_block" id="feedback"></div>    
+                <div class="text_block" id="rating"></div>
+                <div class="text_block" id="sharing">
+                    <span id="sharing_text"></span>
                     <span class="icon">
                         <a href="http://ub.uku.im/share2weibo" target="_blank">
                             <i class="icon-weibo"></i>
