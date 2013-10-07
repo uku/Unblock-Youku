@@ -102,9 +102,9 @@ $('document').ready(function() {
         });
     });
 
-    $('#form_custom_server').submit(function() {
+    $('#form_custom_server').submit(function(event) {
         // prevent the default action of submitting a form
-        return false;
+        event.preventDefault();
     });
 });
 

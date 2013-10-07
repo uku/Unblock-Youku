@@ -32,7 +32,7 @@ function set_i18n_text() {
     $('span.mode_redirect_name').html(get_msg('mode_redirect'));
     $('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
 
-    $('div#help').html(get_msg('help'));
+    $('div#help_text').html(get_msg('help'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
     $('span#sharing_text').html(get_msg('sharing'));
@@ -114,18 +114,17 @@ $(document).ready(function() {
     });
 
     // $('div#version').html('Unblock Youku </i> ' + background.unblock_youku.version);
- 
-    
+
     // button actions
-    $('input#input_lite').click(function() {
+    $('input#input_lite').change(function() {
         console.log('to change mode to lite');
         background.change_mode('lite');
     });
-    $('input#input_normal').click(function() {
+    $('input#input_normal').change(function() {
         console.log('to change mode to normal');
         background.change_mode('normal');
     });
-    $('input#input_redirect').click(function() {
+    $('input#input_redirect').change(function() {
         console.log('to change mode to redirect');
         background.change_mode('redirect');
     });
