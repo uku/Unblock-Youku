@@ -90,6 +90,7 @@ unblock_youku.common_urls = [
     'http://*/?prot=2&type=1*',
     'http://*/?prot=2&file=/*',
     'http://api.letv.com/streamblock*',
+    'http://api.letv.com/mms/out/video/play*',
     'http://live.gslb.letv.com/gslb?*',
     'http://vdn.apps.cntv.cn/api/get*'
 ];
@@ -117,6 +118,7 @@ unblock_youku.chrome_extra_urls = [
     'http://www.kugou.com/*',
     'http://music.baidu.com/data/user/collect*',
 
+    'http://d.dxy.cn/*',
     'http://ac.qq.com/*/v/cid/*',
     'http://v.pptv.com/show/*.html',
     'http://www.songtaste.com/*',
