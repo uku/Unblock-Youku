@@ -1,4 +1,4 @@
-# Unblock Youku
+# Unblock Youku [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 This project contains three-fold functionalities.
 
