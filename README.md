@@ -1,4 +1,4 @@
-# Unblock Youku [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+# Unblock Youku
 
 This project contains three-fold functionalities.
 
@@ -40,6 +40,7 @@ If you are interested in helping us translating some phrases, or you want the ex
 
 Please [visit this page](http://uku.im/contributors) for more contributers.
 
+___
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
