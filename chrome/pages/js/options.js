@@ -19,7 +19,7 @@
 /*global $: false, btoa: false */
 
 var background = chrome.extension.getBackgroundPage();
-var default_server = background.unblock_youku.default_get_server;
+var default_server = background.unblock_youku.default_server;
 
 function remove_custom_server(callback) {
     "use strict";

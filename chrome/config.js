@@ -26,10 +26,8 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 // only for redirect mode
-unblock_youku.default_get_server = 'www.yōukù.com/proxy.php';
-unblock_youku.default_post_server = 'wẉw.yōukù.com/proxy.php';
-unblock_youku.backup_get_server = 'wẃw.yōukù.com/proxy.php';
-unblock_youku.backup_post_server = 'wẁw.yōukù.com/proxy.php';
+unblock_youku.default_server = 'www.yōukù.com/proxy.php';
+unblock_youku.backup_server = 'bak.yōukù.com/proxy.php';
 
 unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
 unblock_youku.redirect_url_list = unblock_youku.common_urls;

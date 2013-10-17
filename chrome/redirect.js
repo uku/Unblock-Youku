@@ -21,7 +21,7 @@
 "use strict";
 
 function http_redirector(details) {
-    console.log(details.method + ' original url: ' + details.url);
+    console.log('original url: ' + details.url);
     if (details.url.slice(-15) === 'crossdomain.xml') {
         console.log('directly pass');
         return {};
@@ -50,12 +50,7 @@ function http_redirector(details) {
 
     var backend_server;
     if (typeof localStorage.custom_server === 'undefined') {
-        if (details.method === 'GET' || details.method === 'HEAD'
-                || details.method === 'get' || details.method === 'head') {
-            backend_server = unblock_youku.actual_get_server;
-        } else {
-            backend_server = unblock_youku.actual_post_server;
-        }
+        backend_server = unblock_youku.actual_server;
     } else {
         backend_server = localStorage.custom_server;
     }
@@ -120,25 +115,14 @@ function setup_redirect() {
         _gaq.push(['_trackEvent', 'Unexpected Error', err_msg]);
     }
 
-    unblock_youku.actual_get_server = unblock_youku.default_get_server;
-    unblock_youku.actual_post_server = unblock_youku.default_post_server;
-
-    check_redirect_server(unblock_youku.actual_get_server, function() {
-        console.log('default_get_server seems to be working fine: ' + unblock_youku.actual_get_server);
+    unblock_youku.actual_server = unblock_youku.default_server;
+    check_redirect_server(unblock_youku.actual_server, function() {
+        console.log('default_server seems to be working fine: ' + unblock_youku.actual_server);
     }, function(err_msg) {
-        unblock_youku.actual_get_server = unblock_youku.backup_get_server;
-        console.warn('default_get_server error: ' + err_msg);
-        console.warn('changed to backup_get_server: ' + unblock_youku.actual_get_server);
-        _gaq.push(['_trackEvent', 'GET Server Error', unblock_youku.default_get_server + ': ' + err_msg]);
-    });
-
-    check_redirect_server(unblock_youku.actual_post_server, function() {
-        console.log('default_post_server seems to be working fine: ' + unblock_youku.actual_post_server);
-    }, function(err_msg) {
-        unblock_youku.actual_post_server = unblock_youku.backup_post_server;
-        console.warn('default_post_server error: ' + err_msg);
-        console.warn('changed to backup_post_server: ' + unblock_youku.actual_post_server);
-        _gaq.push(['_trackEvent', 'POST Server Error', unblock_youku.default_post_server + ': ' + err_msg]);
+        unblock_youku.actual_server = unblock_youku.backup_server;
+        console.warn('default_server error: ' + err_msg);
+        console.warn('changed to backup_server: ' + unblock_youku.actual_server);
+        _gaq.push(['_trackEvent', 'Redirect Server Error', unblock_youku.default_server + ': ' + err_msg]);
     });
 }
 
