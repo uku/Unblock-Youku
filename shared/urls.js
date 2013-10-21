@@ -65,6 +65,7 @@ unblock_youku.common_urls = [
     'http://dyn.ugc.pps.tv/*',
     'http://inner.kandian.com/*',
     'http://ipservice.163.com/*',
+    'http://so.open.163.com/open/info.htm*',
     'http://zb.s.qq.com/*',
     'http://ip.kankan.xunlei.com/*',
     'http://vxml.56.com/json/*',
