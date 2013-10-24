@@ -78,7 +78,7 @@ $(document).ready(function() {
     });
 
 
-    var pre_heart_icon = '<i class="icon-heart" style="color: PaleVioletRed;"></i>&nbsp;';
+    var pre_heart_icon = '<i class="fa fa-heart" style="color: PaleVioletRed;"></i>&nbsp;';
 
     background.get_storage('support_us', function(option) {
         if (option === 'yes') {
