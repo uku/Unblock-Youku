@@ -1,5 +1,4 @@
-# Unblock Youku [![Code Climate](https://codeclimate.com/github/zhuzhuor/Unblock-Youku.png)](https://codeclimate.com/github/zhuzhuor/Unblock-Youku) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+# Unblock Youku
 
 This project contains three-fold functionalities.
 
@@ -11,7 +10,9 @@ This project contains three-fold functionalities.
 
    For more information, please see [the instructions](http://uku.im/proxy) (in Chinese).
 
-3. _A backend server_ to support the redirection mode of the Chrome extension. [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
+3. _A backend server_ to support the redirection mode of the Chrome extension.
+
+   [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
 ## Disclaimer
 
@@ -39,3 +40,6 @@ If you are interested in helping us translating some phrases, or you want the ex
 
 Please [visit this page](http://uku.im/contributors) for more contributers.
 
+___
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
