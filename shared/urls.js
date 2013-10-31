@@ -93,7 +93,8 @@ unblock_youku.common_urls = [
     'http://api.letv.com/streamblock*',
     'http://api.letv.com/mms/out/video/play*',
     'http://live.gslb.letv.com/gslb?*',
-    'http://vdn.apps.cntv.cn/api/get*'
+    'http://vdn.apps.cntv.cn/api/get*',
+    'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
 ];
 
 // only for chrome extension
