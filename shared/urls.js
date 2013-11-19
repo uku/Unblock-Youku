@@ -94,6 +94,8 @@ unblock_youku.common_urls = [
     'http://api.letv.com/mms/out/video/play*',
     'http://live.gslb.letv.com/gslb?*',
     'http://vdn.apps.cntv.cn/api/get*',
+    'http://vip.sports.cntv.cn/check.do*',
+    'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
 ];
 
@@ -140,6 +142,8 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
     'http://api.3g.youku.com/videos/*/download*',
     'http://api.3g.youku.com/common/v3/play*',
+    'http://play.api.3g.youku.com/common/v3/hasadv/play*',
+    'http://play.api.3g.youku.com/common/v3/play*',
     'http://play.api.3g.youku.com/v3/play/address*',
     'http://play.api.3g.tudou.com/v*',
     'http://api.3g.tudou.com/*',
