@@ -24,7 +24,7 @@ chrome.storage.sync.get('support_us', function(items) {
     if (items.support_us === 'yes') {
         var s = document.createElement('script');
         s.type = 'text/javascript';
-        s.innerText = "var vglnk = {api_url: '//api.viglink.com/api', key: '0dff9ade2d1125af6c910069b6d6e155'};";
+        s.innerText = "var vglnk = vglnk || {api_url: '//api.viglink.com/api', key: '0dff9ade2d1125af6c910069b6d6e155'};";
         document.body.appendChild(s);
 
         s = document.createElement('script');
