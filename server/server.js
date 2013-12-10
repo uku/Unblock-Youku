@@ -19,6 +19,13 @@
  */
 
 
+try {
+    require('newrelic');
+} catch (e) {
+    // console.warn('No configs are found for the New Relic lib.');
+}
+
+
 var argv = require('optimist')
     .default('ip', '0.0.0.0')  // listen to all interfaces
     .default('port', '8888')

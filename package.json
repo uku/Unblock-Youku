@@ -1,7 +1,7 @@
 {
   "name": "ub.uku.js",
   "preferGlobal": "true",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "author": "zhuzhuor <npmjs@zhuzhu.org>",
   "description": "A Backend Server for Unblock-Youku",
   "keywords": ["Unblock Youku", "proxy", "server"],
@@ -17,7 +17,8 @@
     "optimist": "0.6.x",
     "validator": "2.0.x",
     "uglify-js": "2.4.x",
-    "raven": "0.6.x"
+    "raven": "0.6.x",
+    "newrelic": "1.2.x"
   },
   "scripts": {
     "start": "node server/server.js",
