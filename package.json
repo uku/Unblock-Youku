@@ -15,9 +15,9 @@
   "dependencies": {
     "colors": "*",
     "optimist": "0.6.x",
-    "validator": "1.5.x",
+    "validator": "2.0.x",
     "uglify-js": "2.4.x",
-    "raven": "0.5.x"
+    "raven": "0.6.x"
   },
   "scripts": {
     "start": "node server/server.js",
