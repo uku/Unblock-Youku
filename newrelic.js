@@ -12,7 +12,7 @@ exports.config = {
   /**
    * Your New Relic license key.
    */
-  license_key : 'license key here',  // should be overridden by ENV setting
+  // license_key : 'license key here',  // should be overridden by ENV setting
   logging : {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

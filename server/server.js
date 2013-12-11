@@ -19,11 +19,10 @@
  */
 
 
-try {
+var new_relic_working = false;
+if (process.env.NEW_RELIC_LICENSE_KEY) {
     require('newrelic');
-    console.log('newrelic is working...');
-} catch (e) {
-    // console.warn('No configs are found for the New Relic lib.');
+    new_relic_working = true;
 }
 
 
@@ -389,6 +388,10 @@ if (cluster.isMaster) {
         var srv = 'http://' + proxy_addr + ':' + proxy_port + '/proxy.pac\n';
         var msg = 'The local proxy server is running...\nPlease use this PAC file: ' + srv.underline;
         console.log(msg.green);
+    }
+
+    if (new_relic_working) {
+        console.log('\nNew Relic is working...\n'.cyan);
     }
 
 } else if (cluster.isWorker) {
