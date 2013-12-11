@@ -17,7 +17,7 @@
  */
 
 /*jslint browser: true */
-/*global $: false, chrome: false, _gaq: false */
+/*global $: false, chrome: false, ga: false */
 
 function set_i18n_text() {
     "use strict";
@@ -95,13 +95,13 @@ $(document).ready(function() {
             background.set_storage('support_us', 'yes', function() {
                 $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
                 console.log('change to support us');
-                _gaq.push(['_trackEvent', 'Change Support', 'Yes']);
+                ga('send', 'event', 'Change Support', 'Yes');
             });
         } else {
             background.set_storage('support_us', 'no', function() {
                 $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
                 console.log('change to not support us');
-                _gaq.push(['_trackEvent', 'Change Support', 'No']);
+                ga('send', 'event', 'Change Support', 'No');
             });
         }
     });

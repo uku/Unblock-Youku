@@ -17,7 +17,7 @@
  */
 
 /*jslint browser: true */
-/*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false, _gaq: false */
+/*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false, ga: false */
 "use strict";
 
 
@@ -63,7 +63,7 @@ function setup_proxy(depth) {  // depth for recursion
     var xhr_timer = setTimeout(function() {
         xhr.abort();
         console.warn(proxy_addr + ' TIMEOUT!');
-        _gaq.push(['_trackEvent', 'Proxy Server Timeout', proxy_addr]);
+        ga('send', 'event', 'Proxy Server Timeout', proxy_addr);
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
                 setup_proxy(depth + 1); // simply set up again

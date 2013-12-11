@@ -85,7 +85,7 @@ unblock_youku.common_urls = [
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
-    'http://www.yinyuetai.com/main/get-video-info*',
+    'http://www.yinyuetai.com/main/get-*',
 
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://*/vrs_flash.action*',

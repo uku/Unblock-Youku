@@ -16,21 +16,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*jslint browser: true */
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-30726750-4']);
-_gaq.push(['_trackPageview']);
+// new google analytics code
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-(function() {
-    "use strict";
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = 'https://ssl.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-}());
+ga('create', 'UA-30726750-7');
+ga('set', 'anonymizeIp', true);
+// ga('send', 'pageview');
 
 
 // see http://goo.gl/QLJu6 and http://goo.gl/aNH3H
@@ -38,5 +33,5 @@ window.onerror = function(message, file, line) {
     "use strict";
     var msg = file + '(' + line + '): ' + message;
     console.error(msg);
-    _gaq.push(['_trackEvent', 'Unknown Error', msg]);
+    ga('send', 'event', 'Unknown Error', msg);
 };
