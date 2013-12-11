@@ -21,6 +21,7 @@
 
 try {
     require('newrelic');
+    console.log('newrelic is working...');
 } catch (e) {
     // console.warn('No configs are found for the New Relic lib.');
 }
