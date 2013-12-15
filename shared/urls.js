@@ -63,6 +63,7 @@ unblock_youku.common_urls = [
     'http://web-play.pplive.cn/*',
     // 'http://c1.pptv.com/*',
     'http://dyn.ugc.pps.tv/*',
+    'http://v.pps.tv/ugc/ajax/aj_html5_url.php*',
     'http://inner.kandian.com/*',
     'http://ipservice.163.com/*',
     'http://so.open.163.com/open/info.htm*',
