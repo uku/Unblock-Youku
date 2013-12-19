@@ -57,6 +57,7 @@ unblock_youku.common_urls = [
     'http://vbj.video.qq.com/getinfo*',
     'http://bobo.video.qq.com/getinfo*',
     'http://flvs.video.qq.com/getinfo*',
+    'http://rcgi.video.qq.com/report*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
