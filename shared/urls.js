@@ -82,6 +82,7 @@ unblock_youku.common_urls = [
     'http://v.iask.com/v_play_ipad.cx.php*',
     'http://tv.weibo.com/player/*',
     'http://wtv.v.iask.com/*.m3u8',
+    'http://wtv.v.iask.com/mcdn.php',
 
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
