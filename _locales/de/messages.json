@@ -5,6 +5,18 @@
   "popup_title": {
     "message": "Konfigurieren Entblocken Youku"
   },
+  "support_title": {
+    "message": null
+  },
+  "support_checkbox_label": {
+    "message": null
+  },
+  "support_message_no": {
+    "message": null
+  },
+  "support_message_yes": {
+    "message": null
+  },
   "mode_select": {
     "message": "Wählen Sie Modus"
   },

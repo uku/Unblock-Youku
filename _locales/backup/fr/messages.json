@@ -30,7 +30,7 @@
     "message": "Rediriger"
   },
   "mode_lite_description": {
-    "message": "rapide, mais applicable qu'à <abbr title=\"Xiami, Ku6 and Xunlei\">quelques sites internet</abbr>."
+    "message": "Rapide, mais applicable seulement à <abbr title=\"Tudou, Xiami, Ku6 et Xunlei\">quelques sites Internet</abbr>."
   },
   "mode_normal_description": {
     "message": "Recommandé. Applicable aux plupart de sites internets."

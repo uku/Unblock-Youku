@@ -5,6 +5,18 @@
   "popup_title": {
     "message": "Unblock Youku 設定"
   },
+  "support_title": {
+    "message": "ご支援のほど、よろしくお願いします"
+  },
+  "support_checkbox_label": {
+    "message": "はい、私はこのソフトウェアのサポートをします"
+  },
+  "support_message_no": {
+    "message": "これを入れるだけで私たちをサポートしています。ほかになにもない。<br>私たちはあなたを困らせるために広告を表示するつもりはない、まだ、私たちに支払う必要はありません、私たちにの寄付も必要がないです。<br><a href=\"http://ub.uku.im/support_us\"target=\"_blank\"> 詳細については、こちらをご覧ください</a>。"
+  },
+  "support_message_yes": {
+    "message": "ありがとう！あなたのサポートは本当にありがとうございました ！<br>この機能 <a href=\"http://ub.uku.im/support_us\"target=\"_blank\"> VigLink</a> によって提供されています。"
+  },
   "mode_select": {
     "message": "動作モードを選択"
   },

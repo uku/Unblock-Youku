@@ -5,6 +5,18 @@
   "popup_title": {
     "message": "Configura Unblock Youku"
   },
+  "support_title": {
+    "message": "abbiamo bisogno del vostro sostegno"
+  },
+  "support_checkbox_label": {
+    "message": "si, desidero sostenere questo programma."
+  },
+  "support_message_no": {
+    "message": null
+  },
+  "support_message_yes": {
+    "message": "Grazie! Il vostro sostegno e' molto apprezzato!"
+  },
   "mode_select": {
     "message": "Seleziona modalità d'azione"
   },
