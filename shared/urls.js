@@ -160,7 +160,7 @@ unblock_youku.server_extra_urls = [
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
     'http://vv.video.qq.com/getvinfo*',
-	'http://bkvv.video.qq.com/getvinfo*',
+    'http://bkvv.video.qq.com/getvinfo*',
     // Music apps
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
