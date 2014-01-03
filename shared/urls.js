@@ -184,6 +184,7 @@ unblock_youku.server_extra_urls = [
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
     'http://210.129.145.150/*',
+    'http://182.16.230.98/*', //Updated on Jan. 3, for new DNS of apple tv.
 ];
 
 
