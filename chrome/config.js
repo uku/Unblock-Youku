@@ -162,14 +162,13 @@ function _change_browser_icon(option) {
     // hard-coded spring festivals
     var is_spring = false;
     switch (y) {
-        case 2013:  // Feb 10, 2013
-            if (m === 2 && d <= 20) {
+        case 2014:  // Jan 31, 2014
+            if ((m === 1 && 20 <= d) || (m === 2 && d <= 10)) {
                 is_spring = true;
             }
             break;
-        // hope our extension can survive longer than this...
-        case 2014:  // Jan 31, 2014
-            if ((m === 1 && 20 >= d) || (m === 2 && d <= 10)) {
+        case 2015:  // Feb 19, 2015
+            if (m === 2 && (9 <= d && d <= 29)) {
                 is_spring = true;
             }
             break;
