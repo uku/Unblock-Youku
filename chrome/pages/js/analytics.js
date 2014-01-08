@@ -17,15 +17,63 @@
  */
 
 
-// new google analytics code
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+/*jslint browser: true */
 
-ga('create', 'UA-30726750-8', 'auto');
-ga('set', 'anonymizeIp', true);
-// ga('send', 'pageview');
+var unblock_youku = unblock_youku || {};
+
+
+(function() {
+    "use strict";
+    if (typeof localStorage.uuid === 'undefined') {
+        // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+        unblock_youku.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0;
+            var v = c === 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
+        localStorage.uuid = unblock_youku.uuid;
+    } else {
+        unblock_youku.uuid = localStorage.uuid;
+    }
+}());
+
+
+function ga_collect_data(type, data) {
+    "use strict";
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://www.google-analytics.com/collect', true);
+    var payload = 'v=1&' 
+                + 'tid=UA-30726750-8&'
+                + 'cid='+ unblock_youku.uuid + '&' 
+                + 't=' + type + '&'
+                + data;
+    xhr.send(payload);
+}
+
+
+function ga_report_event(event_name, event_desc) {
+    "use strict";
+    var data = 'ec=' + encodeURIComponent(event_name) + '&' 
+             + 'ea=' + encodeURIComponent(event_desc);
+    ga_collect_data('event', data);
+}
+
+
+function ga_report_ratio(ratio_name, ratio_value) {
+    "use strict";
+    if (Math.random() < 0.01) {  // reduce data points
+        ga_report_event(ratio_name, ratio_value);
+    }
+}
+
+
+function ga_report_error(error_name, error_desc) {
+    "use strict";
+    var data = 'exd=' + encodeURIComponent(error_name) + '&'
+             + 'exf=' + encodeURIComponent(error_desc);
+    ga_collect_data('exception', data);
+}
+
 
 
 // see http://goo.gl/QLJu6 and http://goo.gl/aNH3H
@@ -33,5 +81,5 @@ window.onerror = function(message, file, line) {
     "use strict";
     var msg = file + '(' + line + '): ' + message;
     console.error(msg);
-    ga('send', 'event', 'Unknown Error', msg);
+    ga_report_error('Unknown Error', msg);
 };
