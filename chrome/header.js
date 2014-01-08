@@ -16,7 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false, unblock_youku: false, compute_sogou_tag: false, ga: false */
+/*global chrome: false, unblock_youku: false, compute_sogou_tag: false */
+/*global ga_report_error: false */
 "use strict";
 
 function lite_header_modifier(details) {
@@ -62,7 +63,7 @@ function setup_lite_header() {
     } else {
         var err_msg = 'lite_header_modifier is already there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 
@@ -79,7 +80,7 @@ function setup_normal_header() {
     } else {
         var err_msg = 'normal_header_modifer is already there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 
@@ -91,7 +92,7 @@ function clear_lite_header() {
     } else {
         var err_msg = 'lite_header_modifer is not there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 
@@ -102,7 +103,7 @@ function clear_normal_header() {
     } else {
         var err_msg = 'normal_header_modifier is not there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 
@@ -130,7 +131,7 @@ function setup_extra_header() {
     } else {
         var err_msg = 'extra_header_modifer is already there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 

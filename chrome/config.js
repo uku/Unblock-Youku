@@ -17,9 +17,10 @@
  */
 
 /*jslint browser: true */
-/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false, new_sogou_auth_str: false, ga: false */
+/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false, new_sogou_auth_str: false */
 /*global setup_lite_header: false, setup_redirect: false, setup_normal_header: false, setup_proxy: false, setup_timezone: false, setup_extra_header: false */
 /*global clear_lite_header: false, clear_redirect: false, clear_normal_header: false, clear_proxy: false, clear_timezone: false */
+/*global ga_report_event: false, ga_report_ratio: false, ga_report_error: false */
 "use strict";
 
 // ====== Constant and Variable Settings ======
@@ -66,7 +67,7 @@ function set_mode_name(mode_name, callback) {
     if (typeof callback === 'undefined') {
         var err_msg = 'missing callback function in set_mode_name()';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 
     if (mode_name === 'lite' || mode_name === 'redirect') {
@@ -80,7 +81,7 @@ function get_mode_name(callback) {
     if (typeof callback === 'undefined') {
         var err_msg = 'missing callback function in get_mode_name()';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 
     get_storage('unblock_youku_mode', function(current_mode) {
@@ -117,7 +118,7 @@ function clear_mode_settings(mode_name) {
     default:
         var err_msg = 'clear_mode_settings: should never come here';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
         break;
     }
 
@@ -141,7 +142,7 @@ function setup_mode_settings(mode_name) {
     default:
         var err_msg = 'setup_mode_settings: should never come here';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
         break;
     }
 
@@ -205,7 +206,7 @@ function change_browser_icon(option) {
         } else {
             var err_msg = 'chrome.storage has some problems';
             console.log(err_msg);
-            ga('send', 'event', 'Unexpected Error', err_msg);
+            ga_report_error('Unexpected Error', err_msg);
         }
     });
 
@@ -223,7 +224,7 @@ function storage_monitor(changes, area) {
         if (typeof mode_change.oldValue !== 'undefined' && typeof mode_change.newValue !== 'undefined') {
             clear_mode_settings(mode_change.oldValue);
             setup_mode_settings(mode_change.newValue);
-            ga('send', 'event', 'Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue);
+            ga_report_event('Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue);
         }
     }
 
@@ -259,7 +260,7 @@ function setup_storage_monitor() {
     } else {
         var err_msg = 'storage_monitor is already there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 
@@ -271,16 +272,16 @@ document.addEventListener("DOMContentLoaded", function() {
     get_mode_name(function(current_mode_name) {
         setup_mode_settings(current_mode_name);
 
-        // ga('send', 'event', 'Init Mode', current_mode_name);
-        // ga('send', 'event', 'Version', unblock_youku.version);
+        ga_report_ratio('Init Mode', current_mode_name);
+        ga_report_ratio('Version', unblock_youku.version);
 
         get_storage('support_us', function(option) {
             if (option === 'yes') {
                 change_browser_icon('heart');
-                // ga('send', 'event', 'Init Support', 'Yes');
+                ga_report_ratio('Init Support', 'Yes');
             } else {
                 change_browser_icon('regular');
-                // ga('send', 'event', 'Init Support', 'No');
+                ga_report_ratio('Init Support', 'No');
             }
         });
     });

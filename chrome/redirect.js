@@ -17,7 +17,8 @@
  */
 
 /*jslint browser: true */
-/*global chrome: false, unblock_youku: false, btoa: false, ga: false */
+/*global chrome: false, unblock_youku: false, btoa: false */
+/*global ga_report_error */
 "use strict";
 
 function http_redirector(details) {
@@ -112,7 +113,7 @@ function setup_redirect() {
     } else {
         var err_msg = 'http_redirector is already there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 
     unblock_youku.actual_server = unblock_youku.default_server;
@@ -122,7 +123,7 @@ function setup_redirect() {
         unblock_youku.actual_server = unblock_youku.backup_server;
         console.warn('default_server error: ' + err_msg);
         console.warn('changed to backup_server: ' + unblock_youku.actual_server);
-        ga('send', 'event', 'Redirect Server Error', unblock_youku.default_server + ': ' + err_msg);
+        ga_report_error('Redirect Server Error', unblock_youku.default_server + ': ' + err_msg);
     });
 }
 
@@ -134,7 +135,7 @@ function clear_redirect() {
     } else {
         var err_msg = 'http_redirector is not there!';
         console.error(err_msg);
-        ga('send', 'event', 'Unexpected Error', err_msg);
+        ga_report_error('Unexpected Error', err_msg);
     }
 }
 

@@ -45,6 +45,7 @@ function ga_collect_data(type, data) {
     var payload = 'v=1&' 
                 + 'tid=UA-30726750-8&'
                 + 'cid='+ unblock_youku.uuid + '&' 
+                + 'aip=1&'  // anonymize IP
                 + 't=' + type + '&'
                 + data;
     xhr.send(payload);
@@ -61,7 +62,7 @@ function ga_report_event(event_name, event_desc) {
 
 function ga_report_ratio(ratio_name, ratio_value) {
     "use strict";
-    if (Math.random() < 0.01) {  // reduce data points
+    if (Math.random() < 0.001) {  // reduce data points
         ga_report_event(ratio_name, ratio_value);
     }
 }
