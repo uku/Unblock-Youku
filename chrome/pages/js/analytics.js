@@ -43,7 +43,7 @@ function ga_collect_data(type, data) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://www.google-analytics.com/collect', true);
     var payload = 'v=1&' 
-                + 'tid=UA-30726750-8&'
+                + 'tid=UA-30726750-7&'
                 + 'cid='+ unblock_youku.uuid + '&' 
                 + 'aip=1&'  // anonymize IP
                 + 't=' + type + '&'
