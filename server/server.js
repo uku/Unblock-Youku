@@ -39,25 +39,24 @@ var colors = require('colors');
 
 
 // check input parameters
-var Validator = require('validator').Validator;
-var vld = new Validator();
-vld.error = function(msg) {
-    console.error(msg.red);
-    process.exit(1);
-};
-var sanitize = require('validator').sanitize;
+var validator = require('validator');
+function validate_input(str, fun, msg) {
+    if (!fun(str.toString())) {
+        console.error(msg.red);
+        process.exit(1);
+    }
+}
 
-vld.check(argv.ip, 'Invalid input for IP address.').isIP();
-vld.check(argv.port, 'Invalid input for port number.').isNumeric();
+validate_input(argv.ip, validator.isIP, 'Invalid input for IP address.');
+validate_input(argv.port, validator.isNumeric, 'Invalid input for port number.');
 if (argv.ext_ip) {  // custom IP/domain address in the PAC file, in case the proxy server is behind a router or firewall
-    // vld.check(argv.ext_ip, 'Invalid input for external IP address.').isIP();
-    if (argv.ext_ip !== sanitize(argv.ext_ip).escape()) {
+    if (argv.ext_ip !== validator.escape(argv.ext_ip)) {
         console.error('Invalid input for external IP/domain address.'.red);
         process.exit(1);
     }
 }
 if (argv.ext_port) {  // custom port number
-    vld.check(argv.ext_port, 'Invalid input for external port number.').isNumeric();
+    validate_input(argv.ext_port, validator.isNumeric, 'Invalid input for external port number.');
 }
 
 
