@@ -43,7 +43,7 @@ function ga_collect_data(type, data) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://www.google-analytics.com/collect', true);
     var payload = 'v=1&' 
-                + 'tid=UA-30726750-7&'
+                + 'tid=UA-30726750-8&'
                 + 'cid='+ unblock_youku.uuid + '&' 
                 + 'aip=1&'  // anonymize IP
                 + 't=' + type + '&'
@@ -70,9 +70,10 @@ function ga_report_ratio(ratio_name, ratio_value) {
 
 function ga_report_error(error_name, error_desc) {
     "use strict";
-    var data = 'exd=' + encodeURIComponent(error_name) + '&'
-             + 'exf=' + encodeURIComponent(error_desc);
-    ga_collect_data('exception', data);
+    // var data = 'exd=' + encodeURIComponent(error_name) + '&'
+    //          + 'exf=' + encodeURIComponent(error_desc);
+    // ga_collect_data('exception', data);
+    ga_report_event(error_name, error_desc);
 }
 
 
