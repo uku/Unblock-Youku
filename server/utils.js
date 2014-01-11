@@ -63,6 +63,16 @@ function get_real_target(req_path) {
     } else {
         var real_url = querystring.parse(url.parse(req_path).query).url;
         if (real_url) {
+            // to use urlsafe_b64encode
+            real_url = real_url.replace('-', '+').replace('_', '/');
+
+            // fix possible padding errors
+            // real_url += (new Array((4 - real_url.length % 4) % 4 + 1)).join('=');
+            var i;
+            for (i = 0; i < (4 - real_url.length % 4) % 4; i++) {
+                real_url += '=';
+            }
+
             var buf = new Buffer(real_url, 'base64');
             real_url = buf.toString();
             real_target = url.parse(real_url);

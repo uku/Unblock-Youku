@@ -21,6 +21,12 @@
 /*global ga_report_error */
 "use strict";
 
+
+function urlsafe_b64encode(str) {
+    return btoa(str).replace('+', '-').replace('/', '_');
+}
+
+
 function http_redirector(details) {
     console.log('original url: ' + details.url);
     if (details.url.slice(-15) === 'crossdomain.xml') {
@@ -56,8 +62,8 @@ function http_redirector(details) {
         backend_server = localStorage.custom_server;
     }
 
-    //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + btoa(details.url);
-    redirect_url = 'http://' + backend_server + '?url=' + btoa(details.url);
+    //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + urlsafe_b64encode(details.url);
+    redirect_url = 'http://' + backend_server + '?url=' + urlsafe_b64encode(details.url);
     console.log('redirect url: ' + redirect_url);
 
     if (redirect_url !== null) {
