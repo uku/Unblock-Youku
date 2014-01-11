@@ -98,6 +98,7 @@ unblock_youku.common_urls = [
     'http://*/?prot=2&file=/*',
     'http://api.letv.com/streamblock*',
     'http://api.letv.com/mms/out/video/play*',
+    'http://api.letv.com/mms/out/common/geturl*',
     'http://api.letv.com/geturl*',
     'http://live.gslb.letv.com/gslb?*',
     'http://vdn.apps.cntv.cn/api/get*',
