@@ -176,6 +176,7 @@ unblock_youku.server_extra_urls = [
     'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
     'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
     'http://music.163.com/api/copyright/restrict/?*',
+    'http://music.163.com/api/batch',
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
