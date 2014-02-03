@@ -202,16 +202,18 @@ function urls2regexs(url_list) {
 
     var i, re_str;
     for (i = 0; i < url_list.length; i++) {
-        re_str = url_list[i].replace(/\//g, '\\/');
-        re_str = re_str.replace(/\./g, '\\.');
+        re_str = url_list[i];
+        // escape all possibly problematic symbols
+        // http://stackoverflow.com/a/6969486/1766096
+        re_str = re_str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
         re_str = re_str.replace(/\*/g, '.*');
-        re_str = re_str.replace(/\?/g, '\\?');
         // make the first * matches only domain names or ip addresses
         // just as http://developer.chrome.com/extensions/match_patterns.html
-        re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\/\/[^\/]*');
+        re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\\/\\/[^\/]*');
         regex_list.push(new RegExp('^' + re_str, 'i'));
     }
 
+    // console.log(regex_list);
     return regex_list;
 }
 
