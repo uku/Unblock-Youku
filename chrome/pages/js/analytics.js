@@ -66,7 +66,7 @@ function ga_report_event(event_name, event_desc, collection_rate) {
 
 
 function ga_report_ratio(ratio_name, ratio_value) {
-    ga_report_event(ratio_name, ratio_value, 0.001);
+    ga_report_event(ratio_name, ratio_value, 0.01);
 }
 
 

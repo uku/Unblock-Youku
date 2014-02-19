@@ -92,7 +92,7 @@ function get_mode_name(callback) {
 function clear_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
-        clear_timezone();
+        // clear_timezone();
         clear_lite_header();
         console.log('cleared settings for lite');
         break;
@@ -101,7 +101,7 @@ function clear_mode_settings(mode_name) {
         console.log('cleared settings for redirect');
         break;
     case 'normal':
-        clear_timezone();
+        // clear_timezone();
         clear_proxy();
         clear_normal_header();
         console.log('cleared settings for normal');
@@ -120,7 +120,7 @@ function setup_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
         setup_lite_header();
-        setup_timezone();
+        // setup_timezone();
         break;
     case 'redirect':
         setup_redirect();
@@ -128,7 +128,7 @@ function setup_mode_settings(mode_name) {
     case 'normal':
         setup_normal_header();
         setup_proxy();
-        setup_timezone();
+        // setup_timezone();
         break;
     default:
         var err_msg = 'setup_mode_settings: should never come here';
