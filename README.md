@@ -39,7 +39,3 @@ If you are interested in helping us translating some phrases, or you want the ex
 [Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translations
 
 Please visit [this page](http://uku.im/contributors) for more contributers, and [this page](http://uku.im/translators) for our translators.
-
-___
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/zhuzhuor/unblock-youku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
