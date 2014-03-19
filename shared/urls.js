@@ -153,6 +153,7 @@ unblock_youku.server_extra_urls = [
     'http://api.3g.youku.com/videos/*/download*',
     'http://api.3g.youku.com/common/v3/play*',
     'http://tv.api.3g.youku.com/openapi-wireless/v3/play/address*',
+    'http://tv.api.3g.youku.com/common/v3/hasadv/play*',
     'http://tv.api.3g.youku.com/common/v3/play*',
     'http://play.api.3g.youku.com/common/v3/hasadv/play*',
     'http://play.api.3g.youku.com/common/v3/play*',
@@ -189,6 +190,8 @@ unblock_youku.server_extra_urls = [
     'https://61.135.196.99/*', //n-openapi.youku.com
     'https://220.181.185.150/*', //zw-openapi.youku.com
     'https://httpbin.org/get',  // for testing
+    // for MiBox iCNTV Authentication
+    'http://tms.is.ysten.com:8080/yst-tms/login.action?*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
