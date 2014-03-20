@@ -40,3 +40,6 @@ If you are interested in helping us translating some phrases, or you want the ex
 
 Please visit [this page](http://uku.im/contributors) for more contributers, and [this page](http://uku.im/translators) for our translators.
 
+## Current Reward for Commits
+
+[![Current BitHub Reward](https://ubuku-bitbot.herokuapp.com/v1/status/payment/commit)](https://github.com/zhuzhuor/Unblock-Youku/issues/238)
