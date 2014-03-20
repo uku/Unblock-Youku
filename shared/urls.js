@@ -215,6 +215,7 @@ function urls2regexs(url_list) {
         // make the first * matches only domain names or ip addresses
         // just as http://developer.chrome.com/extensions/match_patterns.html
         re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\\/\\/[^\/]*');
+        re_str = re_str.replace(/^https:\\\/\\\/\.\*/i, 'https:\\/\\/[^\/]*');
         regex_list.push(new RegExp('^' + re_str, 'i'));
     }
 
