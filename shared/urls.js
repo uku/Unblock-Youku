@@ -159,6 +159,7 @@ unblock_youku.server_extra_urls = [
     'http://play.api.3g.youku.com/common/v3/play*',
     'http://play.api.3g.youku.com/v3/play/address*',
     'http://play.api.3g.tudou.com/v*',
+    'http://tv.api.3g.tudou.com/tv/play?*',
     'http://api.3g.tudou.com/*',
     'http://api.tv.sohu.com/mobile_user/device/clientconf.json?*',
     'http://access.tv.sohu.com/*',
