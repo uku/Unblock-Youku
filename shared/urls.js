@@ -28,6 +28,7 @@ unblock_youku.common_urls = [
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
     'http://www.tudou.com/outplay/goto/getTvcCode*',
+    'http://www.tudou.com/tvp/alist.action*',
     'http://s.plcloud.music.qq.com/fcgi-bin/p.fcg*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
@@ -165,6 +166,7 @@ unblock_youku.server_extra_urls = [
     'http://access.tv.sohu.com/*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://dynamic.app.m.letv.com/*/dynamic.php?*playid*',
+    'http://dynamic.meizi.app.m.letv.com/*/dynamic.php?*playid*',
     'http://listso.m.areainfo.ppstream.com/ip/q.php*',
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
@@ -183,6 +185,7 @@ unblock_youku.server_extra_urls = [
     'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
     'http://music.163.com/api/copyright/restrict/?*',
     'http://music.163.com/api/batch',
+    'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
