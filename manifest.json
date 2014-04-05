@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "2.6.11.4",
+  "version": "2.6.11.5",
   "manifest_version": 2,
   "minimum_chrome_version": "25.0",
   "description": "__MSG_description__",
@@ -88,7 +88,7 @@
     ],
     "js": ["chrome/content/links.js"],
     "run_at": "document_idle",
-    "all_frames": true
+    "all_frames": false 
   }],
   "default_locale": "en"
 }
