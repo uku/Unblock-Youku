@@ -63,6 +63,9 @@ unblock_youku.common_urls = [
     'http://rcgi.video.qq.com/report*',
 
     'http://geo.js.kankan.xunlei.com/*',
+    'http://ip.kankan.xunlei.com/*',
+    'http://kuai.xunlei.com/*',
+
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
     // 'http://c1.pptv.com/*',
@@ -72,7 +75,6 @@ unblock_youku.common_urls = [
     'http://ipservice.163.com/*',
     'http://so.open.163.com/open/info.htm*',
     'http://zb.s.qq.com/*',
-    'http://ip.kankan.xunlei.com/*',
     'http://vxml.56.com/json/*',
 
     'http://music.sina.com.cn/yueku/intro/*',
