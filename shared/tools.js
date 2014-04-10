@@ -26,12 +26,29 @@ function new_random_ip() {
 }
 
 
-function urls2pac(url_list, proxy_server) {
+function urls2pac(url_whitelist, url_list, proxy_server) {
     "use strict";
     var s = 'function FindProxyForURL(url, host) {\n' +
             '    if (';
 
     var i;
+
+    if (url_whitelist.length > 0) {
+	for (i = 0; i < url_whitelist.length; i++) {
+            s += 'shExpMatch(url, "' + url_whitelist[i] + '")';
+            if (i === url_whitelist.length - 1) {
+		s += ') {\n';
+            } else {
+		s += ' ||\n            ';
+            }
+	}
+
+	s += '        return "DIRECT";\n' +
+            '    }\n';
+
+	s += 'else if (';
+    }
+    
     for (i = 0; i < url_list.length; i++) {
         s += 'shExpMatch(url, "' + url_list[i] + '")';
         if (i === url_list.length - 1) {

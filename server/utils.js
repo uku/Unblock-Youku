@@ -87,6 +87,11 @@ function get_real_target(req_path) {
 
 function is_valid_url(target_url) {
     var i;
+    for (i = 0; i < shared_urls.url_regex_whitelist.length; i++) {
+	if (shared_urls.url_regex_whitelist[i].test(target_url)) {
+	    return false;
+	}
+    }
     for (i = 0; i < shared_urls.url_regex_list.length; i++) {
         if (shared_urls.url_regex_list[i].test(target_url)) {
             return true;
@@ -306,7 +311,7 @@ function generate_pac_file(proxy_addr_port) {
         ' * take no responsibilities for any consequences.\n' +
         ' */\n' +
         uglify.minify(
-            shared_tools.urls2pac(shared_urls.url_list, proxy_addr_port),
+            shared_tools.urls2pac(shared_urls.url_whitelist, shared_urls.url_list, proxy_addr_port),
             {fromString: true,}
         ).code;
 }

@@ -146,6 +146,12 @@ unblock_youku.chrome_extra_urls = [
 ];
 
 // only for server
+
+unblock_youku.server_whitelist_urls = [
+    // those does not need to go throw proxy
+    'http://*/ipad?file=/*'
+];
+
 unblock_youku.server_extra_urls = [
     // for Mobile apps    // Video apps
     'http://api.3g.youku.com/layout*',
@@ -232,3 +238,5 @@ function urls2regexs(url_list) {
 var exports = exports || {};
 exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
 exports.url_regex_list = urls2regexs(exports.url_list);
+exports.url_whitelist = unblock_youku.server_whitelist_urls;
+exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);
