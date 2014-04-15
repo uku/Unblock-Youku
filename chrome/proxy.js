@@ -1,6 +1,6 @@
 /*
  * Allow you smoothly surf on many websites blocking non-mainland visitors.
- * Copyright (C) 2012, 2013 Bo Zhu http://zhuzhu.org
+ * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -61,7 +61,7 @@ function setup_proxy(depth) {  // depth for recursion
         ga_report_timeout('Proxy Server Timeout', proxy_addr);
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
-                if (depth < 9) {
+                if (depth < 31) {
                     setup_proxy(depth + 1); // simply recursive
                 } else {
                     console.warn('reached the max retrial times of setup_proxy, so abort');
