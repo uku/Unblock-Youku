@@ -62,7 +62,6 @@ function setup_proxy(depth) {  // depth for recursion
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
                 if (depth < 9) {
-                // if (depth < 4) {
                     setup_proxy(depth + 1); // simply recursive
                 } else {
                     console.warn('reached the max retrial times of setup_proxy, so abort');
@@ -82,8 +81,8 @@ function setup_proxy(depth) {  // depth for recursion
     };
 
     // xhr.open('GET', 'http://httpbin.org/delay/13');
-    xhr.open('GET', 'http://fakedomainname');
-    // xhr.open('GET', 'http://' + proxy_addr);
+    // xhr.open('GET', 'http://fakedomainname');
+    xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 400) {
