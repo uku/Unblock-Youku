@@ -43,10 +43,6 @@ function http_redirector(details) {
     }
 
     // if (details.url.slice(0, 18) === 'http://v.youku.com') {
-    //     if (details.url.indexOf('timezone') !== -1 && details.url.indexOf('timezone/+08') === -1) { 
-    //         details.url = details.url.replace(/timezone\/.[^\/]*/gi, 'timezone/+08');
-    //     } 
-
     //     // remove random number to improve cache hitrate
     //     details.url = details.url.replace(/&ran=[0-9]*|ran=[0-9]*&/gi, '');
     // } else if (details.url.slice(0, 23) === 'http://hot.vrs.sohu.com') {

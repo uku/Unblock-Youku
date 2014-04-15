@@ -42,22 +42,16 @@ function setup_pac_data(proxy_domain) {
 
 function setup_proxy(depth) {  // depth for recursion
     if (typeof depth === 'undefined') {
-        console.log('1st time to call setup_proxy, set depth to 0');
-        depth = 0;
-    } else if (depth < 10) {
-        console.log((depth + 1) + 'th time to test proxy servers');
-    } else {
-        console.log('reached the max retrial times of setup_proxy, simply abort');
-        return;
+        depth = 0;  // recursion depth
+        console.group('to set up proxy');
     }
-
-    console.log('to set up proxy');
 
     var proxy_addr = new_sogou_proxy_addr();
     console.log('using proxy: ' + proxy_addr);
-    setup_pac_data(proxy_addr);
+    setup_pac_data(proxy_addr);  // should set up PAC already
 
     console.log('to check if the proxy server is avaiable: ' + proxy_addr);
+    console.log((depth + 1) + '-th time to test proxy servers');
     var xhr = new XMLHttpRequest();
 
     // test timeout
@@ -67,26 +61,36 @@ function setup_proxy(depth) {  // depth for recursion
         ga_report_timeout('Proxy Server Timeout', proxy_addr);
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
-                setup_proxy(depth + 1); // simply set up again
+                if (depth < 9) {
+                // if (depth < 4) {
+                    setup_proxy(depth + 1); // simply recursive
+                } else {
+                    console.warn('reached the max retrial times of setup_proxy, so abort');
+                    console.groupEnd();
+                }
             } else {
                 console.warn('not in normal mode anymore, so abort the retrial');
+                console.groupEnd();
             }
         });
     }, 10000);  // 10s
 
+    // http://goo.gl/ktYcx
+    // but still can't get rid of the annoying message "Failed to load resource"
+    xhr.onerror = function(e) {
+        console.error('xhr error: ' + e.target.status);
+    };
+
     // xhr.open('GET', 'http://httpbin.org/delay/13');
-    xhr.open('GET', 'http://' + proxy_addr);
+    xhr.open('GET', 'http://fakedomainname');
+    // xhr.open('GET', 'http://' + proxy_addr);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
             console.log('the proxy server seems to be working fine: ' + proxy_addr);
+            console.groupEnd();
         }
-    };
-    // http://goo.gl/ktYcx
-    // but still can't get rid of the annoying message "Failed to load resource"
-    xhr.onerror = function(e) {
-        console.error('xhr error: ' + e.target.status);
     };
     xhr.send();
 }
