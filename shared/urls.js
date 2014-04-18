@@ -191,6 +191,7 @@ unblock_youku.server_extra_urls = [
     'http://music.163.com/api/copyright/restrict/?*',
     'http://music.163.com/api/batch',
     'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
+    'http://spark.api.xiami.com/api?*method=Songs.detail*',
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
