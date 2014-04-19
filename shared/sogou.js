@@ -51,10 +51,12 @@ function new_sogou_proxy_addr() {
         proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // 0 ~ 15
     } else if (random_num < 16 + 16) {
         random_num -= 16;
+        /*
         if (4 === random_num || 5 === random_num || 6 === random_num || 7 === random_num ||
             12 === random_num || 13 === random_num || 14 === random_num || 15 === random_num) {
             return new_sogou_proxy_addr();
         }
+        */
         proxy_addr = 'h' + random_num + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
     } else {
         random_num -= 16 + 16;
