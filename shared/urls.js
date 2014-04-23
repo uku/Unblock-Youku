@@ -50,6 +50,7 @@ unblock_youku.common_urls = [
     'http://123.126.48.48/*',
 
     'http://vv.video.qq.com/getvinfo*',
+    'http://vv.video.qq.com/getinfo*',
     'http://tt.video.qq.com/getvinfo*',
     'http://ice.video.qq.com/getvinfo*',
     'http://tjsa.video.qq.com/getvinfo*',
