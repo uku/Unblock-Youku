@@ -50,6 +50,7 @@ unblock_youku.common_urls = [
     'http://123.126.48.48/*',
 
     'http://vv.video.qq.com/getvinfo*',
+    'http://vv.video.qq.com/getinfo*',
     'http://tt.video.qq.com/getvinfo*',
     'http://ice.video.qq.com/getvinfo*',
     'http://tjsa.video.qq.com/getvinfo*',
@@ -191,6 +192,7 @@ unblock_youku.server_extra_urls = [
     'http://music.163.com/api/copyright/restrict/?*',
     'http://music.163.com/api/batch',
     'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
+    'http://spark.api.xiami.com/api?*method=Songs.detail*',
     // for PC Clients only
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
