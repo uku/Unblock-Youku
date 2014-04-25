@@ -18,6 +18,8 @@
 
 /*jslint browser: true */
 /*global chrome: false */
+
+/*
 "use strict";
 
 chrome.storage.sync.get('support_us', function(items) {
@@ -34,3 +36,4 @@ chrome.storage.sync.get('support_us', function(items) {
         document.body.appendChild(s);
     }
 });
+*/
