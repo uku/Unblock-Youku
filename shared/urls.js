@@ -154,7 +154,7 @@ unblock_youku.chrome_extra_urls = [
 // only for server
 
 unblock_youku.server_whitelist_urls = [
-    // those does not need to go throw proxy
+    // those does not need to go through proxy
     'http://*/ipad?file=/*'
 ];
 
@@ -206,10 +206,13 @@ unblock_youku.server_extra_urls = [
     'http://iplocation.geo.qiyi.com/cityjson',
     'http://sns.video.qq.com/tunnel/fcgi-bin/tunnel*',
     'http://v5.pc.duomi.com/single-ajaxsingle-isban*',
+
+    // the access control for https are per domain name
     'https://openapi.youku.com/*',  // see issue #118
     'https://61.135.196.99/*', //n-openapi.youku.com
     'https://220.181.185.150/*', //zw-openapi.youku.com
-    'https://httpbin.org/get',  // for testing
+    'https://httpbin.org/*',  // for testing
+
     // for MiBox iCNTV Authentication
     'http://tms.is.ysten.com:8080/yst-tms/login.action?*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
