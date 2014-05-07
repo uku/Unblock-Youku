@@ -49,6 +49,7 @@ unblock_youku.common_urls = [
     'http://123.126.48.47/*',
     'http://123.126.48.48/*',
 
+    'http://vv.video.qq.com/*',
     'http://vv.video.qq.com/getvinfo*',
     'http://vv.video.qq.com/getinfo*',
     'http://tt.video.qq.com/getvinfo*',
@@ -121,6 +122,8 @@ unblock_youku.chrome_extra_urls = [
     'http://edge.v.iask.com/*',  // may be large files
 
     'http://pay.youku.com/buy/redirect.html*',
+    'http://pay.tudou.com/buy/redirect.html*',
+    'http://aid.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
 
     'http://play.baidu.com/*',
@@ -141,6 +144,7 @@ unblock_youku.chrome_extra_urls = [
     'http://www.songtaste.com/*',
     'http://songtaste.com/*',
     'http://www.yyets.com/*',
+    'http://mainv2.img.duomi.com/*',
     'http://imanhua.com/comic/*',
     'http://www.imanhua.com/comic/*',
     'http://imanhua.com/v2*',
