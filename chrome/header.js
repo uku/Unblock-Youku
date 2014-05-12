@@ -24,6 +24,9 @@ function lite_header_modifier(details) {
     details.requestHeaders.push({
         name: 'X-Forwarded-For',
         value: unblock_youku.ip_addr
+    }, {
+        name: 'Client-IP',
+        value: unblock_youku.ip_addr
     });
 
     return {requestHeaders: details.requestHeaders};
@@ -46,6 +49,9 @@ function normal_header_modifier(details) {
         value: tag
     }, {
         name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    }, {
+        name: 'Client-IP',
         value: unblock_youku.ip_addr
     });
 
@@ -112,6 +118,9 @@ function clear_normal_header() {
 function extra_header_modifier(details) {
     details.requestHeaders.push({
         name: 'X-Forwarded-For',
+        value: unblock_youku.ip_addr
+    }, {
+        name: 'Client-IP',
         value: unblock_youku.ip_addr
     });
 
