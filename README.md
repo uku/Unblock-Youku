@@ -1,6 +1,6 @@
 # Unblock Youku
 
-This project contains three-fold functionalities.
+This project contains four functionalities.
 
 1. _A Google Chrome extension_ helping users access their web services while travelling outside mainland China.
  
@@ -10,13 +10,17 @@ This project contains three-fold functionalities.
 
    For more information, please see [the instructions](http://uku.im/proxy) (in Chinese).
 
-3. _A backend server_ to support the redirection mode of the Chrome extension.
+3. _A DNS server_ combined with the local proxy server.
+
+   For more information, please read [its README file](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy).
+
+4. _A backend server_ to support the redirection mode of the Chrome extension.
 
    [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
 ## Disclaimer
 
-Using/installing this software, you agree that it is only for study purposes and its authors take no responsibilities for any consequences.
+Installing/using the software/service, you agree that the software/service is only for study purposes and its authors and/or service providers take no responsibilities for any consequences.
 
 ## License
 
@@ -24,22 +28,26 @@ The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0
 
 ## Translations
 
-We are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage our translations.
+We are using [WebTranslateIt](https://webtranslateit.com/en/projects/4902-Unblock-Youku) to manage our international language files.
 
-If you are interested in helping us translating some phrases, or you want the extension to be available in additional language(s), [please make a request here](https://webtranslateit.com/en/projects/4902-Unblock-Youku/invitation_request). Any help is appreciated.
+If you are interested in helping us translating the extension, or you want the extension to be available in additional language(s), [please make a request here](https://webtranslateit.com/en/projects/4902-Unblock-Youku/invitation_request). Your help is very much appreciated.
 
 [![](https://webtranslateit.com/api/projects/5c5f1fc9841ce33c4e5ec608b59aeecc3bff1511/charts.png)](https://webtranslateit.com/en/projects/4902-Unblock-Youku)
 
 ## Credits
 
-[@whuhacker](https://github.com/whuhacker) - Contributions to many important functionalities and improvements, and Japanese, German and French translations
+[@whuhacker](https://github.com/whuhacker) - Contribute many important functionalities and improvements, and Japanese, German and French translations
 
-[@karlcheong](https://github.com/karlcheong) - Contributed many URL patterns for web and mobile apps; found the root cause for network issue in Macau
+[@karlcheong](https://github.com/karlcheong) - Contribute many URL patterns for web and mobile apps; discover the root cause for network issue in Macau; create and maintain [the public Unblock-Youku DNS server](http://uku.im/dns)
+
+[@mozbugbox](https://github.com/mozbugbox) - Create [the DNS server combined with a reverse proxy server](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy)
 
 [Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translations
 
-Please visit [this page](http://uku.im/contributors) for more contributers, and [this page](http://uku.im/translators) for our translators.
+Please visit [this page for more contributors](http://uku.im/contributors), and [this page for our translators](http://uku.im/translators).
 
 ## Current Reward for Commits
 
 [![Current BitHub Reward](https://ubuku-bitbot.herokuapp.com/v1/status/payment/commit)](https://github.com/zhuzhuor/Unblock-Youku/issues/238)
+
+[Read more about this reward](https://github.com/zhuzhuor/Unblock-Youku/issues/238) (in Chinese)
