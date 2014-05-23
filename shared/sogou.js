@@ -41,23 +41,18 @@ function new_sogou_proxy_addr() {
         '220.181.118.128',
     ];
 
-    var random_num = Math.floor(Math.random() * (16 + 16 + other_ip_addrs.length));  // 0 ~ 15 edu, 0 ~ 15 dxt
+    // var random_num = Math.floor(Math.random() * (16 + 16 + other_ip_addrs.length));  // 0 ~ 15 edu, 0 ~ 15 dxt
+    var random_num = Math.floor(Math.random() * 16);  // only 0 ~ 15 edu
     var proxy_addr;
 
     if (random_num < 16) {
-        if (8 === random_num || 12 === random_num) {
+        if (6 === random_num || 7 === random_num) {
             return new_sogou_proxy_addr(); // just retry
         }
-        proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // 0 ~ 15
+        proxy_addr = 'h' + random_num + '.edu.bj.ie.sogou.com';  // 0 ~ 15
     } else if (random_num < 16 + 16) {
         random_num -= 16;
-        /*
-        if (4 === random_num || 5 === random_num || 6 === random_num || 7 === random_num ||
-            12 === random_num || 13 === random_num || 14 === random_num || 15 === random_num) {
-            return new_sogou_proxy_addr();
-        }
-        */
-        proxy_addr = 'h' + random_num + '.edu.bj.ie.sogou.com';  // (16 ~ 31) - 16
+        proxy_addr = 'h' + random_num + '.dxt.bj.ie.sogou.com';  // (16 ~ 31) - 16
     } else {
         random_num -= 16 + 16;
         proxy_addr = other_ip_addrs[random_num];
