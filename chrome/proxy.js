@@ -79,7 +79,7 @@ function setup_proxy(depth) {  // depth for recursion
                 console.groupEnd();
             }
         });
-    }, 10000);  // 10s
+    }, 15000);  // 15s
 
     // http://goo.gl/ktYcx
     // but still can't get rid of the annoying message "Failed to load resource"
@@ -90,7 +90,7 @@ function setup_proxy(depth) {  // depth for recursion
     // xhr.open('GET', 'http://httpbin.org/delay/13');
     // xhr.open('GET', 'http://fakedomainname');
     xhr.open('GET', 'http://' + proxy_addr);
-    xhr.timeout = 12000; // 12s
+    xhr.timeout = 17000; // 15 + 2 s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
