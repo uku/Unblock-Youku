@@ -1,6 +1,8 @@
-CRX_FILES = manifest.json chrome shared _locales COPYING.txt README.md
 ZIP_FILENAME = crx.zip
+INCLUDED_FILES = manifest.json chrome shared _locales COPYING.txt
+EXCLUDED_FILES = _locales/backup*
 
 .PHONY: zip
 zip:
-	zip -r $(ZIP_FILENAME) $(CRX_FILES)
+	rm -rf $(ZIP_FILENAME)
+	zip -9 -r $(ZIP_FILENAME) $(INCLUDED_FILES) -x=$(EXCLUDED_FILES)
