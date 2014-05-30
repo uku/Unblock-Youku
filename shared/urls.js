@@ -121,37 +121,37 @@ unblock_youku.chrome_extra_urls = [
     // 'http://www.tudou.com/albumplay/*',
     // 'http://www.tudou.com/listplay/*',
 
-    'http://live.video.sina.com.cn/room/*',
-    'http://edge.v.iask.com/*',  // may be large files
+    // 'http://live.video.sina.com.cn/room/*',
+    // 'http://edge.v.iask.com/*',  // may be large files
 
     'http://pay.youku.com/buy/redirect.html*',
     'http://pay.tudou.com/buy/redirect.html*',
     'http://aid.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
 
-    'http://play.baidu.com/*',
-    'http://zhangmenshiting.baidu.com/*',
-    'http://music.baidu.com/box*',
-    'http://music.baidu.com/data/service/sum*',
-    'http://music.baidu.com/data/music/songlink*',
-    'http://music.baidu.com/data/music/songinfo*',
-    'http://music.baidu.com/data/music/fmlink*',
-    'http://music.baidu.com/song/*/download*',
-    'http://fm.baidu.com/*',
-    'http://www.kugou.com/*',
-    'http://music.baidu.com/data/user/collect*',
+    // 'http://play.baidu.com/*',
+    // 'http://zhangmenshiting.baidu.com/*',
+    // 'http://music.baidu.com/box*',
+    // 'http://music.baidu.com/data/service/sum*',
+    // 'http://music.baidu.com/data/music/songlink*',
+    // 'http://music.baidu.com/data/music/songinfo*',
+    // 'http://music.baidu.com/data/music/fmlink*',
+    // 'http://music.baidu.com/song/*/download*',
+    // 'http://fm.baidu.com/*',
+    // 'http://www.kugou.com/*',
+    // 'http://music.baidu.com/data/user/collect*',
 
-    'http://d.dxy.cn/*',
-    'http://ac.qq.com/*/v/cid/*',
-    'http://v.pptv.com/show/*.html',
-    'http://www.songtaste.com/*',
-    'http://songtaste.com/*',
-    'http://www.yyets.com/*',
-    'http://mainv2.img.duomi.com/*',
-    'http://imanhua.com/comic/*',
-    'http://www.imanhua.com/comic/*',
-    'http://imanhua.com/v2*',
-    'http://www.imanhua.com/v2*'
+    // 'http://d.dxy.cn/*',
+    // 'http://ac.qq.com/*/v/cid/*',
+    // 'http://v.pptv.com/show/*.html',
+    // 'http://www.songtaste.com/*',
+    // 'http://songtaste.com/*',
+    // 'http://www.yyets.com/*',
+    // 'http://mainv2.img.duomi.com/*',
+    // 'http://imanhua.com/comic/*',
+    // 'http://www.imanhua.com/comic/*',
+    // 'http://imanhua.com/v2*',
+    // 'http://www.imanhua.com/v2*'
 ];
 
 // only for server

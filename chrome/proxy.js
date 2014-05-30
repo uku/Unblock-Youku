@@ -23,7 +23,7 @@
 
 
 function setup_pac_data(proxy_domain) {
-    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain + ':80');
+    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain);
     var proxy_config = {
         mode: 'pac_script',
         pacScript: {
@@ -61,10 +61,17 @@ function setup_proxy(depth) {  // depth for recursion
         ga_report_timeout('Proxy Server Timeout', proxy_addr);
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
-                if (depth < 31) {
+                // if (depth < 31) {
+                if (depth < 5) {
                     setup_proxy(depth + 1); // simply recursive
                 } else {
-                    console.warn('reached the max retrial times of setup_proxy, so abort');
+                    console.warn('have reached the max retrial times of setup_proxy, so abort');
+                    
+                    // experimental
+                    var test_server = 'test1.proxy.uku.im:8888';
+                    console.log('using experimental server: ' + test_server);
+                    setup_pac_data(test_server);
+
                     console.groupEnd();
                 }
             } else {
