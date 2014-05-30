@@ -42,7 +42,8 @@ function new_sogou_proxy_addr() {
     ];
 
     // var random_num = Math.floor(Math.random() * (16 + 16 + other_ip_addrs.length));  // 0 ~ 15 edu, 0 ~ 15 dxt
-    var random_num = Math.floor(Math.random() * 16);  // only 0 ~ 15 edu
+    // var random_num = Math.floor(Math.random() * 16);  // only 0 ~ 15 edu
+    var random_num = Math.floor(Math.random() * 4);  // only 0 ~ 3 edu
     var proxy_addr;
 
     if (random_num < 16) {
