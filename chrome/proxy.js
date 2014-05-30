@@ -62,13 +62,18 @@ function setup_proxy(depth) {  // depth for recursion
         get_mode_name(function(current_mode_name) {
             if (current_mode_name === 'normal') {
                 // if (depth < 31) {
-                if (depth < 5) {
+                if (depth < 3) {
                     setup_proxy(depth + 1); // simply recursive
                 } else {
                     console.warn('have reached the max retrial times of setup_proxy, so abort');
                     
                     // experimental
-                    var test_server = 'test1.proxy.uku.im:8888';
+                    var test_server;
+                    if (Math.random() < 0.5) {
+                        test_server = 'test1.proxy.uku.im:8888';
+                    } else {
+                        test_server = 'test2.proxy.uku.im:8888';
+                    }
                     console.log('using experimental server: ' + test_server);
                     setup_pac_data(test_server);
 
