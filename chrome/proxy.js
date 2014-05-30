@@ -18,7 +18,7 @@
 
 /*jslint browser: true */
 /*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false */
-/*global ga_report_timeout: false, ga_report_error: false */
+/*global ga_report_timeout: false, ga_report_error: false, ga_report_ratio: false */
 "use strict";
 
 
@@ -76,6 +76,7 @@ function setup_proxy(depth) {  // depth for recursion
                     }
                     console.log('using experimental server: ' + test_server);
                     setup_pac_data(test_server);
+                    ga_report_ratio('Proxy Server Selection', test_server);
 
                     console.groupEnd();
                 }
@@ -100,6 +101,8 @@ function setup_proxy(depth) {  // depth for recursion
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
             console.log('the proxy server seems to be working fine: ' + proxy_addr);
+            ga_report_ratio('Proxy Server Selection', proxy_addr);
+
             console.groupEnd();
         }
     };
