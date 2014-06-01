@@ -1,0 +1,53 @@
+{
+  "description": {
+    "message": "Pour vous aider de surfer sur des sites Internet bloquant les visiteurs en dehors de la Chine continentale."
+  },
+  "popup_title": {
+    "message": "Configurer Unblock Youku"
+  },
+  "support_title": {
+    "message": "Nous avons besoin de votre soutien"
+  },
+  "support_checkbox_label": {
+    "message": "Oui, je veux soutenir cette extension."
+  },
+  "support_message_no": {
+    "message": "Vous n'avez qu'à activer celui-ci pour nous soutenir et rien d'autre.<br>Nous n'allons pas afficher de publicité qui vous ennuie, vous n'avez pas besoin de nous payer pour quoi que ce soit, et nous ne voulons pas votre don.<br><a href=\"http://ub.uku.im/support_us\" target=\"_blank\">Pour plus d'information, s'il vous plaît visitez ici.</a>"
+  },
+  "support_message_yes": {
+    "message": "Merci ! Votre soutien est grandement apprécié !"
+  },
+  "mode_select": {
+    "message": "Sélectionner le mode opératoire"
+  },
+  "mode_lite": {
+    "message": "Léger"
+  },
+  "mode_normal": {
+    "message": "Normal"
+  },
+  "mode_redirect": {
+    "message": "Redirection"
+  },
+  "mode_lite_description": {
+    "message": "Rapide, mais n'applicable qu'à <abbr title=\"Tudou, Xiami, Ku6 et Xunlei\">quelques sites Internet</abbr>."
+  },
+  "mode_normal_description": {
+    "message": "Recommandé. Applicable à la plupart de sites Internet."
+  },
+  "mode_redirect_description": {
+    "message": "Lent, mais compatible avec les autres configurations de proxy."
+  },
+  "help": {
+    "message": "Pour plus d'information sur les différents modes, vous pouvez <a href=\"http://ub.uku.im/modes\" target=\"_blank\">lire celui-ci</a>."
+  },
+  "feedback": {
+    "message": "Si vous avez encore des questions, n'hésitez pas à <a href=\"http://ub.uku.im/feedback\" target=\"_blank\">nous contacter</a>."
+  },
+  "rating": {
+    "message": "Si vous trouvez cette extension utile, <a href=\"http://ub.uku.im/reviews\" target=\"_blank\">veuillez nous aider en donnant vos remarques</a>."
+  },
+  "sharing": {
+    "message": "Soyez la bienvenue de la partager sur"
+  }
+}
