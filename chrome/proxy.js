@@ -18,7 +18,7 @@
 
 /*jslint browser: true */
 /*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false */
-/*global ga_report_timeout: false, ga_report_error: false, ga_report_ratio: false */
+/*global ga_report_timeout: false, ga_report_error: false, ga_report_event: false */
 "use strict";
 
 
@@ -76,7 +76,7 @@ function setup_proxy(depth) {  // depth for recursion
                     }
                     console.log('using experimental server: ' + test_server);
                     setup_pac_data(test_server);
-                    ga_report_ratio('Proxy Server Selection', test_server);
+                    ga_report_event('Proxy Server Selection', test_server);
 
                     console.groupEnd();
                 }
@@ -85,7 +85,7 @@ function setup_proxy(depth) {  // depth for recursion
                 console.groupEnd();
             }
         });
-    }, 15000);  // 15s
+    }, 10000);  // 10s
 
     // http://goo.gl/ktYcx
     // but still can't get rid of the annoying message "Failed to load resource"
@@ -96,12 +96,12 @@ function setup_proxy(depth) {  // depth for recursion
     // xhr.open('GET', 'http://httpbin.org/delay/13');
     // xhr.open('GET', 'http://fakedomainname');
     xhr.open('GET', 'http://' + proxy_addr);
-    xhr.timeout = 17000; // 15 + 2 s
+    xhr.timeout = 12000; // 10 + 2 s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
             console.log('the proxy server seems to be working fine: ' + proxy_addr);
-            ga_report_ratio('Proxy Server Selection', proxy_addr);
+            ga_report_event('Proxy Server Selection', proxy_addr);
 
             console.groupEnd();
         }
