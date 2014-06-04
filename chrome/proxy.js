@@ -35,13 +35,15 @@ function setup_pac_data(proxy_domain) {
             value: proxy_config,
             scope: 'regular'
         },
-        function() {}
+        function() {
+            return;
+        }
     );
 }
 
 
 function setup_proxy(depth) {  // depth for recursion
-    if (typeof depth === 'undefined') {
+    if (depth === undefined) {
         depth = 0;  // recursion depth
         console.group('to set up proxy');
     }
@@ -68,12 +70,7 @@ function setup_proxy(depth) {  // depth for recursion
                     console.warn('have reached the max retrial times of setup_proxy, so abort');
                     
                     // experimental
-                    var test_server;
-                    if (Math.random() < 0.5) {
-                        test_server = 'test1.proxy.uku.im:8888';
-                    } else {
-                        test_server = 'test2.proxy.uku.im:8888';
-                    }
+                    var test_server = 'proxy.mainland.io:8888';
                     console.log('using experimental server: ' + test_server);
                     setup_pac_data(test_server);
                     ga_report_event('Proxy Server Selection', test_server);
@@ -85,7 +82,7 @@ function setup_proxy(depth) {  // depth for recursion
                 console.groupEnd();
             }
         });
-    }, 10000);  // 10s
+    }, 7000);  // 7s
 
     // http://goo.gl/ktYcx
     // but still can't get rid of the annoying message "Failed to load resource"
@@ -96,7 +93,7 @@ function setup_proxy(depth) {  // depth for recursion
     // xhr.open('GET', 'http://httpbin.org/delay/13');
     // xhr.open('GET', 'http://fakedomainname');
     xhr.open('GET', 'http://' + proxy_addr);
-    xhr.timeout = 12000; // 10 + 2 s
+    xhr.timeout = 10000; // 10s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
@@ -119,7 +116,9 @@ function clear_proxy() {
             value: proxy_config,
             scope: 'regular'
         },
-        function () {}
+        function() {
+            return;
+        }
     );
     
     console.log('proxy is removed (changed to system setting)');
