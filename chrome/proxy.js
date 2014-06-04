@@ -73,7 +73,7 @@ function setup_proxy(depth) {  // depth for recursion
                     var test_server = 'proxy.mainland.io:8888';
                     console.log('using experimental server: ' + test_server);
                     setup_pac_data(test_server);
-                    ga_report_event('Proxy Server Selection', test_server);
+                    ga_report_event('Proxy Server Selection', test_server, 0.1);
 
                     console.groupEnd();
                 }
@@ -98,7 +98,7 @@ function setup_proxy(depth) {  // depth for recursion
         if (xhr.readyState === 4 && xhr.status === 400) {
             clearTimeout(xhr_timer);
             console.log('the proxy server seems to be working fine: ' + proxy_addr);
-            ga_report_event('Proxy Server Selection', proxy_addr);
+            ga_report_event('Proxy Server Selection', proxy_addr, 0.1);
 
             console.groupEnd();
         }
