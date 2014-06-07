@@ -122,24 +122,34 @@ def is_valid_url(target_url):
 
 class SogouManager(EventEmitter):
     """Provide active Sogou proxy"""
-    def __init__(self, dns_resolver):
+    def __init__(self, dns_resolver, proxy_list=None):
         """
         @dns_resolver : an optional DnsResolver to lookup sogou server IP
+        @proxy_list: user supplied proxy list instead of sogou proxy servers
         """
         self.dns_resolver = dns_resolver
+        self.proxy_list = proxy_list
         self.sogou_network = None
 
     def new_proxy_address(self):
-        new_addr = sogou.new_sogou_proxy_addr();
-        if self.sogou_network:
-            good_net = new_addr.indexOf(self.sogou_network) >= 0
-            while not good_net:
-                new_addr = sogou.new_sogou_proxy_addr();
+        """Return a new proxy server address"""
+        if self.proxy_list is not None:
+            random_num = Math.floor(Math.random() * self.proxy_list.length)
+            new_addr = self.proxy_list[random_num]
+        else:
+            new_addr = sogou.new_sogou_proxy_addr();
+            if self.sogou_network:
                 good_net = new_addr.indexOf(self.sogou_network) >= 0
+                while not good_net:
+                    new_addr = sogou.new_sogou_proxy_addr();
+                    good_net = new_addr.indexOf(self.sogou_network) >= 0
         return new_addr
 
     def renew_sogou_server(self, depth=0):
         new_addr = self.new_proxy_address()
+        parts = new_addr.split(":")
+        new_domain = parts[0]
+        new_port = int(parts[1] or 80)
 
         new_ip = None
 
@@ -148,15 +158,16 @@ class SogouManager(EventEmitter):
             def _lookup_cb(name, ip):
                 addr_info = {
                         "address": name,
-                        "ip": ip
+                        "ip": ip,
+                        "port": new_port
                         }
                 self.check_sogou_server(addr_info, depth)
             def _err_cb(err):
                 self.emit("error", err)
 
-            self.dns_resolver.lookup(new_addr, _lookup_cb, _err_cb)
+            self.dns_resolver.lookup(new_domain, _lookup_cb, _err_cb)
         else:
-            addr_info = {"address": new_addr}
+            addr_info = {"address": new_domain, "port": new_port }
             self.check_sogou_server(addr_info, depth)
 
     def _on_check_sogou_success(self, addr_info):
@@ -167,6 +178,8 @@ class SogouManager(EventEmitter):
         domain = addr_info["address"]
         def _on_lookup(err, addr, family):
             valid = False
+            if /sogou\.com$/.test(domain) is False:
+                valid = True
             for sgip in SOGOU_IPS:
                 if addr.indexOf(sgip) is 0:
                     valid = True
@@ -184,11 +197,17 @@ class SogouManager(EventEmitter):
         emit "renew-address" on success
         """
         if depth >= 10:
+            logger.warn("WARN: renew sogou failed, max depth reached")
             self.emit("renew-address", addr_info)
             return
 
         new_addr = addr_info["address"]
         new_ip = addr_info["ip"]
+        new_port = addr_info["port"]
+        # Don't test for 400 status code if not sogou server
+        if /sogou\.com$/.test(new_addr) is False:
+            self._on_check_sogou_success(addr_info)
+            return
 
         headers = {
             "Accept-Language": "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
@@ -201,6 +220,7 @@ class SogouManager(EventEmitter):
 
         options = {
             host: new_ip or new_addr,
+            port: new_port,
             headers: headers,
         }
         logger.debug("check sogou adderss:", addr_info, options.host)
@@ -312,8 +332,8 @@ def createRateLimiter(options):
     rl = RateLimiter(options)
     return rl
 
-def createSogouManager(dns_resolver):
-    s = SogouManager(dns_resolver)
+def createSogouManager(dns_resolver, proxy_list=None):
+    s = SogouManager(dns_resolver, proxy_list)
     return s
 
 def filtered_request_headers(headers, forward_cookie):
