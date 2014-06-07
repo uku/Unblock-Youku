@@ -27,6 +27,9 @@
     "message": "普通模式"
   },
   "mode_redirect": {
+    "message": "因爲 <a herf=\"https://github.com/zhuzhuor/Unblock-Youku/issues/209\" target=\"_blank\">Chrome 瀏覽器中 Flash 的 bug</a>，重新導向模式不可用"
+  },
+  "mode_redirect": {
     "message": "重新導向模式"
   },
   "mode_lite_description": {

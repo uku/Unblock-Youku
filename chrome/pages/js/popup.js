@@ -41,6 +41,10 @@ function set_i18n_text() {
     $('span#support_checkbox_label').html(get_msg('support_checkbox_label'));
 }
 
+function is_opera() {
+    return !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+}
+
 
 $(document).ready(function() {
     "use strict";
@@ -77,6 +81,20 @@ $(document).ready(function() {
         }
     });
 
+    // check whether the browser is Opera, to get around Flash bug in Chrome
+    // https://github.com/zhuzhuor/Unblock-Youku/issues/209
+    if(!is_opera()) {
+        $('#redirect').addClass('disabled');
+        $('#input_redirect').attr('disabled', true);
+        // $('#buttons').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
+        $('.mode_redirect_desc').parents('tr').addClass('text-muted').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
+        // if current mode is redirect, change to normal mode
+        background.get_mode_name(function(current_mode_name) {
+            if(current_mode_name === 'redirect') {
+                $('#normal').click();
+            }
+        });
+    }
 
     var pre_heart_icon = '<i class="fa fa-heart" style="color: PaleVioletRed;"></i>&nbsp;';
 
