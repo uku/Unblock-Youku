@@ -41,15 +41,19 @@ unblock_youku.common_urls = [
     // cause oversea servers unusable?
     // 'http://interface.bilibili.tv/player*',
 
-    'http://220.181.61.229/*',
     'http://61.135.183.45/*',
     'http://61.135.183.46/*',
-    'http://220.181.19.218/*',
+    'http://61.135.183.50/*',
+    'http://220.181.61.229/*',
     'http://220.181.61.212/*',
     'http://220.181.61.213/*',
+    'http://220.181.19.218/*',
     'http://220.181.118.181/*',
     'http://123.126.48.47/*',
     'http://123.126.48.48/*',
+    'http://123.125.123.80/*',
+    'http://123.125.123.81/*',
+    'http://123.125.123.82/*',
 
     'http://vv.video.qq.com/*',
     'http://vv.video.qq.com/getvinfo*',
@@ -110,6 +114,10 @@ unblock_youku.common_urls = [
     'http://api.letv.com/geturl*',
     'http://live.gslb.letv.com/gslb?*',
     'http://vdn.apps.cntv.cn/api/get*',
+    'http://vdn.live.cntv.cn/api2/liveHtml5.do?channel=pa://cctv_p2p_hdcctv5*',
+    'http://vdn.live.cntv.cn/api2/liveHtml5.do?channel=pa://cctv_p2p_hdcctv6*',
+    'http://vdn.live.cntv.cn/api2/liveHtml5.do?channel=pa://cctv_p2p_hdcctv8*',
+    'http://vdn.live.cntv.cn/api2/liveHtml5.do?channel=pa://cctv_p2p_hdbtv6*',
     'http://vip.sports.cntv.cn/check.do*',
     'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
@@ -128,12 +136,13 @@ unblock_youku.chrome_extra_urls = [
     'http://pay.tudou.com/buy/redirect.html*',
     'http://aid.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
+    'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*',
 
     // 'http://play.baidu.com/*',
     // 'http://zhangmenshiting.baidu.com/*',
     // 'http://music.baidu.com/box*',
     // 'http://music.baidu.com/data/service/sum*',
-    // 'http://music.baidu.com/data/music/songlink*',
+    'http://music.baidu.com/data/music/songlink*',
     // 'http://music.baidu.com/data/music/songinfo*',
     // 'http://music.baidu.com/data/music/fmlink*',
     // 'http://music.baidu.com/song/*/download*',
@@ -193,6 +202,15 @@ unblock_youku.server_extra_urls = [
     'http://play.api.pptv.com/boxplay.api?*',
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
+    'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv5*',
+    'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv5*',
+    'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv6*',
+    'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv6*',
+    'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv8*',
+    'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv8*',
+    'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdbtv6*',
+    'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdbtv6*',
+
     // Music apps
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
@@ -218,10 +236,17 @@ unblock_youku.server_extra_urls = [
     'https://openapi.youku.com/*',  // see issue #118
     'https://61.135.196.99/*', //n-openapi.youku.com
     'https://220.181.185.150/*', //zw-openapi.youku.com
+    'https://111.13.127.46/*',//bj-m-openapi.youku.com
+    'https://211.151.50.10/*',//b-openapi.youku.com
+    'https://123.126.99.57/*',//openapi.youku.com
+    'https://123.126.99.39/*',//zw-n-openapi.youku.com
+    'https://220.181.154.137/*',//zw-t-openapi.youku.com
+
     'https://httpbin.org/*',  // for testing
 
     // for MiBox iCNTV Authentication
     'http://tms.is.ysten.com:8080/yst-tms/login.action?*',
+    'http://chrome.2345.com/dianhua/mobileApi/check.php',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
