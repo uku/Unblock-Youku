@@ -142,7 +142,7 @@ unblock_youku.chrome_extra_urls = [
     // 'http://zhangmenshiting.baidu.com/*',
     // 'http://music.baidu.com/box*',
     // 'http://music.baidu.com/data/service/sum*',
-    'http://music.baidu.com/data/music/songlink*',
+    // 'http://music.baidu.com/data/music/songlink*',
     // 'http://music.baidu.com/data/music/songinfo*',
     // 'http://music.baidu.com/data/music/fmlink*',
     // 'http://music.baidu.com/song/*/download*',
