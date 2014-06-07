@@ -70,8 +70,29 @@ def load_extra_url_list(fname):
     for r in url_regex:
         shared_urls.url_regex_list.push(r)
 
+def load_user_proxy_list(fname):
+    """
+    Load user supplied proxy lists
+    """
+    if not (fname and fs.existsSync(fname)):
+        if fname.indexOf(".") > 0: # domain name list?
+            return fname.split(",")
+        else:
+            log.error("user supplied proxy list file not found:", fname)
+            process.exit(2)
+
+    data = fs.readFileSync(fname, "utf-8")
+    data = data.replace(/,(\s*[\}|\]])/g, '$1')
+    url_list = JSON.parse(data)
+    return url_list
+
 def drop_root(options):
     """change root and drop root priviledge"""
+
+    # load system DNS lib before chroot, otherwise, getaddrinfo()
+    # will fail after chroot
+    _dns = require("dns")
+    _dns.lookup("baidu.com", def (err, addr, fam): pass;)
     try:
         chroot = require("chroot")
         rdir = options["chroot_dir"]
@@ -120,11 +141,15 @@ def run_servers(argv):
             "sogou_dns": argv["sogou_dns"],
             "sogou_network": argv["sogou_network"],
             "http_rate_limit": int(argv["http_rate_limit"]),
+            "proxy_list": None,
             }
     if argv["ip"]:
         sogou_proxy_options["listen_address"] = argv["ip"]
     if argv["ext_ip"]:
         sogou_proxy_options["external_ip"] = argv["ext_ip"]
+    if argv["proxy_list"]:
+        proxy_list = load_user_proxy_list(argv["proxy_list"])
+        sogou_proxy_options["proxy_list"] = proxy_list
 
     # https proxy
     #sogou_proxy_options_s = JSON.parse(JSON.stringify(sogou_proxy_options))
@@ -190,8 +215,8 @@ def load_config(argv):
     # load config file as a JSON file
     data = fs.readFileSync(cfile, "utf-8")
     # naiive fix dict with unquoted keys
-    data = data.replace(RegExp('([\'"])?(#?[-_a-zA-Z0-9]+)([\'"])?:', "g"),
-            '"$2": ')
+    #data = data.replace(RegExp('([\'"])?(#?[-_a-zA-Z0-9]+)([\'"])?:', "g"),
+    #        '"$2": ')
     # extra comma before }]
     data = data.replace(/,(\s*[\}|\]])/g, '$1')
     log.debug("config data:", data)
@@ -236,6 +261,13 @@ def parse_args():
             "sogou-network": {
                 "description"
                     : 'choose between "edu" and "dxt"',
+                "default": None,
+                },
+            "proxy-list": {
+                "description" : \
+                    'Load user supplied proxy servers either ' +
+                    'from a comma seperated list or ' +
+                    'from a JSON file as a list of strings.',
                 "default": None,
                 },
             "extra-url-list": {

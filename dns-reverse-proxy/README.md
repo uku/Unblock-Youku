@@ -112,6 +112,9 @@ Options:
   --sogou-dns        DNS used to lookup IP of sogou proxy servers
                                                                [default: null]
   --sogou-network    choose between "edu" and "dxt"            [default: null]
+  --proxy-list       Load user supplied proxy servers either from a comma
+                     seperated list or from a JSON file as a list of strings.
+                                                               [default: null]
   --extra-url-list   load extra url redirect list from a JSON file            
   --ext-ip           for public DNS, the DNS proxy route to the given public
                      IP. If set to "lookup", try to find the public IP

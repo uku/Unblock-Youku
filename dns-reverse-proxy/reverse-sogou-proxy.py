@@ -39,7 +39,6 @@ class ReverseSogouProxy(EventEmitter):
         self.public_ip_box = None
         self.request_id = 1
 
-        self.sogou_port = 80
         self.proxy_host = "0.0.0.0"
         self.proxy_port = 80
         if options["listen_port"]:
@@ -67,7 +66,8 @@ class ReverseSogouProxy(EventEmitter):
             sg_dns = self.options["sogou_dns"]
             log.info("Sogou proxy DNS solver:", sg_dns)
             dns_resolver = dns_proxy.createDnsResolver(sg_dns)
-        self.sogou_manager = lutils.createSogouManager(dns_resolver)
+        self.sogou_manager = lutils.createSogouManager(dns_resolver,
+                self.options["proxy_list"])
         self.sogou_manager.sogou_network = self.options["sogou_network"]
 
         def _on_renew_address(addr_info):
@@ -190,10 +190,11 @@ class ReverseSogouProxy(EventEmitter):
         if to_use_proxy:
             si = self.sogou_info
             sogou_host = si["ip"] or si["address"]
+            sogou_port = si["port"]
             lutils.add_sogou_headers(req.headers, req.headers["host"])
             proxy_options = {
                     "target": {
-                        "host": sogou_host, "port": self.sogou_port,
+                        "host": sogou_host, "port": sogou_port,
                         #host: "localhost", port: 9010,
                     },
                     "toProxy": True,
@@ -219,7 +220,7 @@ class ReverseSogouProxy(EventEmitter):
             sock.destroy()
 
     def _on_proxy_error(self, err, req, res):
-        log.error("_on_proxy_error:", err, req.headers["host"],
+        log.error("_on_proxy_error:", err, req.headers["Host"],
                 req.url, req.socket.remoteAddress)
         if 'ECONNRESET' is err.code:
             self.reset_count += 1
