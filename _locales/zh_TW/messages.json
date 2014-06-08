@@ -27,10 +27,10 @@
     "message": "普通模式"
   },
   "mode_redirect": {
-    "message": "因爲 <a herf=\"https://github.com/zhuzhuor/Unblock-Youku/issues/209\" target=\"_blank\">Chrome 瀏覽器中 Flash 的 bug</a>，重新導向模式不可用"
-  },
-  "mode_redirect": {
     "message": "重新導向模式"
+  },
+  "mode_redirect_disabled": {
+    "message": "因爲 <a herf=\"https://github.com/zhuzhuor/Unblock-Youku/issues/209\" target=\"_blank\">Chrome 瀏覽器中 Flash 的 bug</a>，重新導向模式不可用"
   },
   "mode_lite_description": {
     "message": "連線速度最快，但只對<abbr title=\"土豆、蝦米、酷六、迅雷看看\">土豆等個別網站</abbr>起效"
