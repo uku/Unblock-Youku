@@ -192,7 +192,7 @@ unblock_youku.server_extra_urls = [
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://iface2.iqiyi.com/php/xyz/entry/galaxy.php?*',
     'http://iface2.iqiyi.com/php/xyz/entry/nebula.php?*',
-    'http://cache.m.iqiyi.com/jp/tmts/*/?*type=*',
+    'http://cache.m.iqiyi.com/jp/tmts/*',
     'http://dynamic.app.m.letv.com/*/dynamic.php?*ctl=videofile*',
     'http://dynamic.meizi.app.m.letv.com/*/dynamic.php?*ctl=videofile*',
     'http://dynamic.search.app.m.letv.com/*/dynamic.php?*ctl=videofile*',
