@@ -16,8 +16,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global unblock_youku: true, exports: true*/
 
-var unblock_youku = unblock_youku || {};  // namespace
+// var unblock_youku = unblock_youku || {};  // namespace
+if (unblock_youku === undefined) {
+    var unblock_youku = {};
+}
 
 
 // for both chrome extension and server
@@ -281,9 +285,28 @@ function urls2regexs(url_list) {
 
 
 // also export as a node.js module
-var exports = exports || {};
+if (exports === undefined) {
+    var exports = {};
+}
 exports.urls2regexs = urls2regexs;
 exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
 exports.url_regex_list = urls2regexs(exports.url_list);
 exports.url_whitelist = unblock_youku.server_whitelist_urls;
 exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);
+
+
+(function() {
+    // http://stackoverflow.com/a/5197219
+    // http://stackoverflow.com/a/6398335
+    if (module !== undefined && module.exports && require.main === module) {
+        var chrome_url_list = unblock_youku.common_urls.concat(
+            unblock_youku.chrome_extra_urls
+        );
+        var chrome_regex_list = urls2regexs(chrome_url_list);
+        var i, single_str;
+        for (i = 0; i < chrome_regex_list.length; i++) {
+            single_str = chrome_regex_list[i].toString();
+            console.log(single_str.substring(1, single_str.length - 2));
+        }
+    }
+}());
