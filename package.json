@@ -15,7 +15,7 @@
   "dependencies": {
     "colors": "*",
     "optimist": "0.6.x",
-    "validator": "3.12.x",
+    "validator": "3.13.x",
     "uglify-js": "2.4.x",
     "raven": "0.6.x",
     "newrelic": "1.6.x"
