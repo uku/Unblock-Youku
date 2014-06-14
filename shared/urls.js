@@ -142,6 +142,9 @@ unblock_youku.chrome_extra_urls = [
     'http://aid.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
     'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*',
+    'https://www.amazon.cn/gp/mas/order/ref*',
+    'https://www.amazon.cn/gp/digital/fiona/payment-checkout/ref*',
+    'https://www.amazon.cn/gp/aw/kindle/order.html*',
 
     // 'http://play.baidu.com/*',
     // 'http://zhangmenshiting.baidu.com/*',
