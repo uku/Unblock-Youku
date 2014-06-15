@@ -21,6 +21,8 @@ JS_TARGET = dns-proxy.js \
 	    droxy.js \
 	    reverse-sogou-proxy.js \
 	    lutils.js \
+	    url-list-manager.js \
+
 
 all: $(JS_TARGET)
 

@@ -460,7 +460,7 @@ class DnsUDPClient(EventEmitter):
         def _on_msg(b, r):
             self._on_message(b, r)
         def _on_error(err):
-            log.error("Err on DnsUDPClient lookup:", err)
+            log.error("DnsUDPClient lookup:", err)
         client.on("message", _on_msg)
         client.on("error", _on_error)
 
@@ -616,7 +616,7 @@ class DnsProxy(EventEmitter):
         dns_client.lookup(dns_msg)
 
     def _on_dns_error(self, err):
-        log.error("Err on dns proxy:", err)
+        log.error("_on_dns_error:", err)
 
     def _on_dns_listening(self):
         addr = self.usock.address()
@@ -810,16 +810,13 @@ class DnsResolver(EventEmitter):
         self.id_count += 1
 
         def _on_msg(b, r):
-            self._on_message(b, r, callback)
             clearTimeout(timeout_id)
+            self._on_message(b, domain, callback, err_callback)
             client.close()
         def _on_error(err):
             clearTimeout(timeout_id)
             err.message += ": " + domain
-            if err_callback:
-                err_callback(err)
-            else:
-                self.emit("error", err)
+            self.emit_error(err, err_callback)
         client.on("message", _on_msg)
         client.on("error", _on_error)
 
@@ -832,13 +829,18 @@ class DnsResolver(EventEmitter):
 
         def _on_kill_me_timeout():
             client.close()
-            err = DnsLookupError("timeout: " + domain)
-            log.debug(err)
-            if err_callback:
-                err_callback(err)
-            else:
-                self.emit("error", err)
+            self.emit_error("timeout: " + domain, err_callback)
         timeout_id = setTimeout(_on_kill_me_timeout, self.timeout)
+
+    def emit_error(self, err, err_callback):
+        """Emmit an err as Error or DnsLookupError with message"""
+        if not isinstance(err, Error):
+            err = DnsLookupError(err)
+        log.debug("DnsResolver Error: " + err)
+        if isinstance(err_callback, Function):
+            err_callback(err)
+        else:
+            self.emit("error", err)
 
     def create_a_question(self, msg_id, name):
         """Create a DnsMessage with type "A" query question"""
@@ -865,20 +867,27 @@ class DnsResolver(EventEmitter):
         ip = decode_ip(rec["rdata"])
         return {"name": rec["name"], "ip": ip}
 
-    def _on_message(self, buf, remote_info, callback):
+    def _on_message(self, buf, domain, callback, err_callback):
         """receive a DNS query result"""
         nonlocal BUFFER_SIZE
         #console.warn("DnsUDPClient._on_message()")
         if buf.length > BUFFER_SIZE:
             BUFFER_SIZE = buf.length
 
-        msg = DnsMessage(buf)
+        try:
+            msg = DnsMessage(buf)
+        except as e:
+            self.emit_error("Failed to parse DNS message@" + domain + ": " + e,
+                    err_callback)
+            return
         name = None
         ip = None
         result = self.ip_from_a_message(msg)
-        if result is not None:
-            name = result["name"]
-            ip = result["ip"]
+        if result is None:
+            self.emit_error("Unknow reply for " + domain, err_callback)
+            return
+        name = result["name"]
+        ip = result["ip"]
 
         if callback:
             callback(name, ip)

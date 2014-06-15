@@ -6,6 +6,7 @@ net = require("net")
 
 dnsproxy = require("./dns-proxy")
 reversesogouproxy = require("./reverse-sogou-proxy")
+urllistmanager = require("./url-list-manager")
 lutils = require("./lutils")
 log = lutils.logger
 
@@ -51,25 +52,6 @@ def load_router_from_file(fname, dns_map):
     for k in Object.keys(rdict):
         dns_map[k] = rdict[k]
 
-def load_extra_url_list(fname):
-    """Add extra url list to the shared urls
-    The input file is a JSON file with a single array of url pattern strings
-    """
-    if not (fname and fs.existsSync(fname)):
-        log.error("extra url filter file not found:", fname)
-        process.exit(2)
-
-    data = fs.readFileSync(fname, "utf-8")
-    data = data.replace(/,(\s*[\}|\]])/g, '$1')
-    url_list = JSON.parse(data)
-
-    shared_urls = require("../shared/urls.js")
-    url_regex = shared_urls.urls2regexs(url_list)
-    for u in url_list:
-        shared_urls.url_list.push(u)
-    for r in url_regex:
-        shared_urls.url_regex_list.push(r)
-
 def load_user_proxy_list(fname):
     """
     Load user supplied proxy lists
@@ -93,6 +75,15 @@ def drop_root(options):
     # will fail after chroot
     _dns = require("dns")
     _dns.lookup("baidu.com", def (err, addr, fam): pass;)
+    Date().toString() # load /etc/timezone too
+
+    # load libraries needed for https
+    _https = require("https")
+    url_s = "https://github.com"
+    def _on_error(e):
+        log.debug("https error", e, url_s)
+    _https.get(url_s).on("error", _on_error)
+
     try:
         chroot = require("chroot")
         rdir = options["chroot_dir"]
@@ -110,14 +101,16 @@ def drop_root(options):
             _ = fs.openSync(resolv_path, "r")
             fs.close(_)
         except as e:
-            log.warn("WARN: %s is not reachable", resolv_path)
+            log.warn("%s is not reachable", resolv_path)
     except as e:
-        log.warn("WARN: Failed to chroot:", e)
+        log.warn("Failed to chroot:", e)
 
 server_count = 0
 def run_servers(argv):
     if argv["extra_url_list"]:
-        load_extra_url_list(argv["extra_url_list"])
+        ret = lutils.load_extra_url_list(argv["extra_url_list"])
+        if not ret:
+            process.exit(2)
 
     # setup dns proxy
     dns_options = {
@@ -176,6 +169,11 @@ def run_servers(argv):
         drouter.set_public_ip_box(ipbox)
         sproxy.set_public_ip_box(ipbox)
 
+    url_list_reloader = urllistmanager.createURLListReloader(
+            argv["extra_url_list"])
+    url_list_reloader.do_reload()
+    url_list_reloader.start()
+
     # drop root priviledge if run as root
     def _on_listen():
         nonlocal server_count
@@ -205,12 +203,13 @@ def fix_keys(dobj):
             dobj[nk] = dobj[k]
             del dobj[k]
 
-def load_config(argv):
+def load_config(cfile):
     """Load config file and update argv"""
-    cfile = argv.config
+    cdict = {}
+    if not cfile: cdict
     cfile = expand_user(cfile)
     if not (cfile and fs.existsSync(cfile)):
-        return
+        return cdict
 
     # load config file as a JSON file
     data = fs.readFileSync(cfile, "utf-8")
@@ -223,9 +222,7 @@ def load_config(argv):
 
     cdict = JSON.parse(data)
     fix_keys(cdict)
-
-    for k in Object.keys(cdict):
-        argv[k] = cdict[k]
+    return cdict
 
 def parse_args():
     """Cmdline argument parser"""
@@ -256,19 +253,16 @@ def parse_args():
             "sogou-dns": {
                 "description"
                     : "DNS used to lookup IP of sogou proxy servers",
-                "default": None,
                 },
             "sogou-network": {
                 "description"
                     : 'choose between "edu" and "dxt"',
-                "default": None,
                 },
             "proxy-list": {
                 "description" : \
                     'Load user supplied proxy servers either ' +
                     'from a comma seperated list or ' +
                     'from a JSON file as a list of strings.',
-                "default": None,
                 },
             "extra-url-list": {
                 "description"
@@ -287,7 +281,6 @@ def parse_args():
                     'public IP through http://httpbin.org/ip. If a ' +
                     'domain name is given, the IP will be lookup ' +
                     'through DNS',
-                "default": None,
                 },
             "dns-no-relay": {
                 "description"
@@ -360,7 +353,7 @@ def parse_args():
         sd = argv["sogou_network"]
         if not (sd == "dxt" or sd == "edu"):
             opt.showHelp()
-            log.error('*** Error: Bad value for option --sogou-network %s',
+            log.error('Bad value for option --sogou-network %s',
                     sd)
             process.exit(code=2)
 
@@ -370,12 +363,18 @@ def parse_args():
     return argv
 
 def main():
+    process.title = appname
     argv = parse_args()
     if argv.debug:
         log.set_level(log.DEBUG)
         log.debug("argv:", argv)
-    load_config(argv)
+
+    conf = load_config(argv["config"])
+    log.debug("config:", conf)
+    for k in Object.keys(conf):
+        argv[k] = conf[k]
     log.debug("with config:", argv)
+
     run_servers(argv)
 
 if require.main is JS("module"):

@@ -169,7 +169,7 @@ nameserver 8.8.8.8
 
 Where the `192.168.1.5` is our DNS proxy server. The other 2 servers are backup
 servers for non-routed domain names. Of course, using DNS provided by ISP in
-general is preferred over ~evil~ public DNS like 8.8.8.8.
+general is preferred over ~~evil~~ public DNS like 8.8.8.8.
 
 ## extra-url-list ##
 
@@ -209,6 +209,14 @@ If the package `chroot` is installed, the server will drop root privilege and
 chroot when **running under root**.
 
 The options `--run-as` and `--chroot-dir` will take part in the action.
+
+Should copy following file with path to /newroot/ and make the path new user
+**accessible**.
+
+     /etc/resolv.conf
+     /etc/timezone
+
+e.g. copy /etc/resolv.conf to /var/chroot/droxy/etc/resolve.conf
 
 # Hackinig #
 
