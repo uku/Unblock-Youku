@@ -107,7 +107,7 @@ if (!argv.production) {
     local_addr = '0.0.0.0';
     local_port = process.env.PORT || 8888;
     proxy_addr = 'proxy.uku.im';
-    proxy_port = '80';
+    proxy_port = '8888';
 
     argv.local_only = false;
     argv.mitm_proxy = false;
