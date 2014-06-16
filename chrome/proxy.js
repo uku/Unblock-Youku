@@ -48,6 +48,13 @@ function setup_proxy(depth) {  // depth for recursion
         console.group('to set up proxy');
     }
 
+    var test_server = 'proxy.mainland.io:8888';
+    setup_pac_data(test_server);
+    console.log('using experimental server: ' + test_server);
+    ga_report_event('Proxy Server Selection', test_server, 0.1);
+    console.groupEnd();
+
+    /*
     var proxy_addr = new_sogou_proxy_addr();
     console.log('using proxy: ' + proxy_addr);
     setup_pac_data(proxy_addr);  // should set up PAC already
@@ -104,6 +111,7 @@ function setup_proxy(depth) {  // depth for recursion
         }
     };
     xhr.send();
+    */
 }
 
 function clear_proxy() {
