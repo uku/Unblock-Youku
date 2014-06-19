@@ -49,6 +49,7 @@ function setup_proxy(depth) {  // depth for recursion
     }
 
     var test_server = 'proxy.mainland.io:8888';
+    // var test_server = 'proxy.uku.im:8888';
     setup_pac_data(test_server);
     console.log('using experimental server: ' + test_server);
     ga_report_event('Proxy Server Selection', test_server, 0.1);
