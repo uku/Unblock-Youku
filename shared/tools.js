@@ -26,47 +26,73 @@ function new_random_ip() {
 }
 
 
-function urls2pac(url_whitelist, url_list, proxy_server) {
-    "use strict";
-    var s = 'function FindProxyForURL(url, host) {\n' +
-            '    if (';
-
-    var i;
-
-    if (url_whitelist.length > 0) {
-	for (i = 0; i < url_whitelist.length; i++) {
-            s += 'shExpMatch(url, "' + url_whitelist[i] + '")';
-            if (i === url_whitelist.length - 1) {
-		s += ') {\n';
-            } else {
-		s += ' ||\n            ';
-            }
-	}
-
-	s += '        return "DIRECT";\n' +
-            '    }\n';
-
-	s += 'else if (';
+// Generate proxy.pac file
+function parse_url(url_str) {
+    var colon_idx, path_idx, urlobj;
+    colon_idx = url_str.indexOf("://");
+    if (colon_idx < 0) {
+        return null;
     }
-    
-    for (i = 0; i < url_list.length; i++) {
-        s += 'shExpMatch(url, "' + url_list[i] + '")';
-        if (i === url_list.length - 1) {
-            s += ') {\n';
-        } else {
-            s += ' ||\n            ';
-        }
+    colon_idx += 3;
+    path_idx = url_str.indexOf("/", colon_idx);
+    if (path_idx < 0) {
+        url_str += "/";
+        path_idx = url_str.length;
     }
-
-    s += '        return "PROXY ' + proxy_server + '";\n' +
-         '    }\n';
-
-    s += '    return "DIRECT";\n' +
-         '}';
-
-    return s;
+    urlobj = {
+        host: url_str.slice(colon_idx, path_idx),
+        path: url_str.slice(path_idx)
+    };
+    return urlobj;
 }
 
+function gen_url_map(ulist) {
+    var url_map, uobj, k, u, val_list, i, txt;
+    url_map = {};
+    for (i = 0; i < ulist.length; i++) {
+        u = ulist[i];
+        uobj = parse_url(u);
+        if (uobj === null || uobj.host.indexOf("*") >= 0) {
+            k = "any";
+        } else {
+            k = uobj.host;
+            u = uobj.path.slice(1);
+        }
+        val_list = url_map[k] || [];
+        if (val_list.length === 0) {
+            url_map[k] = val_list;
+        }
+        val_list.push(u);
+    }
+    if (!url_map["any"]) {
+        url_map["any"] = [];
+    }
+    txt = JSON.stringify(url_map, null, "    ");
+    return txt;
+}
+
+function urls2pac(url_whitelist, url_list, proxy_server) {
+    var white_str, block_str, txt;
+    white_str = gen_url_map(url_whitelist);
+    block_str = gen_url_map(url_list);
+    txt = ("function FindProxyForURL(url, host) {\n" +
+           "  var i, patterns, prefix, shell_match=shExpMatch;\n" +
+           "  var white_list = " + white_str + ";\n" +
+           "  var url_list = " + block_str + ";\n" +
+           "  prefix = white_list[host] ? '*/' : '';\n" +
+           "  patterns = white_list[host] || white_list['any']\n" +
+           "  for (i = 0; i < patterns.length; i++)\n" +
+           "    if (shell_match(url, prefix + patterns[i]))\n" +
+           "        return 'DIRECT';\n" +
+           "  prefix = url_list[host] ? '*/' : '';\n" +
+           "  patterns = url_list[host] || url_list['any']\n" +
+           "  for (i = 0; i < patterns.length; i++)\n" +
+           "    if (shell_match(url, prefix + patterns[i]))\n" +
+           "        return 'PROXY " + proxy_server + "';\n" +
+           "  return 'DIRECT';\n" +
+           "}");
+    return txt;
+}
 
 function string_starts_with(str, substr) {
     "use strict";
