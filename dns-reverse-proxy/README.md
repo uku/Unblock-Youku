@@ -129,6 +129,9 @@ Options:
                      port forward                                [default: 80]
   --http-rate-limit  HTTP proxy rate limit per sec per IP. -1 = no limit
                                                                  [default: 20]
+  --access-control-list, --acl  Load access control list(acl) of IPs either
+                                from a comma seperated list or from a JSON
+                                file as a list of strings.                   
   --run-as           run as unpriviledged user (sudo/root)
                                                            [default: "nobody"]
   --chroot-dir       chroot to given directory (sudo/root). Should copy

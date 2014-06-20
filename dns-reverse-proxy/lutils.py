@@ -6,6 +6,7 @@ UAGENT_CHROME = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.
 RATE_LIMITER_DENY_TIMEOUT = 5*60 # in seconds
 
 http = require('http')
+zlib = require("zlib")
 net = require("net")
 url = require("url")
 dns = require("dns")
@@ -165,6 +166,21 @@ def load_extra_url_list(fname):
         shared_urls.url_regex_list.push(r)
     return True
 
+def create_decompress_stream(res):
+    """ Create a decompression stream for the given http response
+    """
+    encoding = res.headers["content-encoding"]
+    #log.info("encoding:", encoding)
+    if encoding == "gzip":
+        output = zlib.createGunzip()
+        res.pipe(output)
+    elif encoding == "deflate":
+        output = zlib.createInflate()
+        res.pipe(output)
+    else:
+        output = res
+    return output
+
 def is_sogou_domain(domain):
     return /sogou\.com$/.test(domain)
 
@@ -176,15 +192,26 @@ class SogouManager(EventEmitter):
         @proxy_list: user supplied proxy list instead of sogou proxy servers
         """
         self.dns_resolver = dns_resolver
-        self.proxy_list = proxy_list
         self.sogou_network = None
         self.max_depth = 10
+        self.set_proxy_list(proxy_list)
+
+    def set_proxy_list(self, proxy_list):
+        """setter"""
+        self.proxy_list = proxy_list
+        if proxy_list:
+            ceil = 10
+            if self.proxy_list.length <= ceil:
+                # for short proxy_list, try every one
+                mdepth = min(self.proxy_list.length, ceil/2)
+            else:
+                mdepth = int(self.proxy_list.length/2)
+                mdepth = Math.min(ceil, mdepth)
+            self.max_depth = mdepth
 
     def new_proxy_address(self):
         """Return a new proxy server address"""
         if self.proxy_list is not None:
-            self.max_depth = int(self.proxy_list.length/2)
-            self.max_depth = Math.min(10, Math.max(1, self.max_depth))
             random_num = Math.floor(Math.random() * self.proxy_list.length)
             new_addr = self.proxy_list[random_num]
         else:
@@ -256,31 +283,66 @@ class SogouManager(EventEmitter):
         new_addr = addr_info["address"]
         new_ip = addr_info["ip"]
         new_port = addr_info["port"]
+
+        # proxy test target and matching string
+        test_targets = [
+                ["http://www.baidu.com/", "030173"],
+                ["http://www.sogou.com/","050897"],
+                ["http://www.cnnic.cn/", "09112257"],
+                ["http://search.sina.com.cn/", "000007"], #gbk
+                ]
+        test_idx = Math.floor(Math.random() * test_targets.length)
+        test_target = test_targets[test_idx]
+
         # Don't test for 400 status code if not sogou server
-        if is_sogou_domain(new_addr) is False:
-            self._on_check_sogou_success(addr_info)
-            return
+        # instead, test for remote site in test_targets
+        if is_sogou_domain(new_addr) is True:
+            path = "/"
+        else:
+            path = test_target[0]
 
         headers = {
-            "Accept-Language": "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
-            "Accept-Encoding": "deflate",
+            "Accept-Encoding": "deflate,gzip",
             "Accept": "text/html,application/xhtml+xml," +
                 "application/xml;q=0.9,*/*;q=0.8",
             "User-Agent": UAGENT_CHROME,
-            "Accept-Charset": "gb18030,utf-8;q=0.7,*;q=0.3"
+            "Accept-Language": "en-US,en;q=0.5",
+            "DNT": "-1",
         }
 
         options = {
             host: new_ip or new_addr,
             port: new_port,
             headers: headers,
+            path: path,
         }
         logger.debug("check sogou adderss:", addr_info, options.host)
 
+        chunks = []
+        def _on_data(chunk):
+            chunks.push(chunk)
+
+        def _on_end():
+            """on got all test site data"""
+            content = chunks.join("")
+            if content.indexOf(test_target[1]) >= 0:
+                self._on_check_sogou_success(addr_info)
+                return
+            logger.error('renew proxy: failed to download data.', new_addr)
+            self.renew_sogou_server(depth + 1)
+
         def on_response (res):
-            if 400 == res.statusCode:
+            #log.debug("RemoteRequire:", res.statusCode,
+            #        res.req._headers, res.headers)
+            if res.statusCode == 200:
+                output = create_decompress_stream(res)
+                output.setEncoding("utf8")
+                output.on("data", _on_data)
+                output.on("end", _on_end)
+            elif 400 == res.statusCode and is_sogou_domain(new_addr):
                 self._on_check_sogou_success(addr_info)
             else:
+                req.abort()
                 logger.error('statusCode for %s is unexpected: %d',
                     new_addr, res.statusCode)
                 self.renew_sogou_server(depth + 1)
@@ -443,3 +505,4 @@ exports.createSogouManager = createSogouManager
 exports.createRateLimiter = createRateLimiter
 exports.filtered_request_headers = filtered_request_headers
 exports.get_public_ip = get_public_ip
+exports.create_decompress_stream = create_decompress_stream

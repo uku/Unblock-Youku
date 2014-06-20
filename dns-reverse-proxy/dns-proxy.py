@@ -13,6 +13,8 @@ BUFFER_SIZE = 2048 # STANDARD size should be 512 but who knows
 DEFAULT_TTL = 600 # time to live for our fake A record, in seconds
 DNS_RATE_LIMIT = 20 # rate limit: lookup/second
 
+# 1.2.4.8 cnnic
+# 210.2.4.8 cnnic
 # 8.8.8.8 google
 # 8.8.4.4 google
 # 156.154.70.1 Dnsadvantage
@@ -542,10 +544,20 @@ class DnsProxy(EventEmitter):
         self.usock.on("listening", _on_listening)
         self.usock.on("error", _on_error)
 
+    def is_banned(self, ip):
+        """If the given ip is banned"""
+        acl = self.options["acl"]
+        # use access control list
+        if acl:
+            ret = not acl[ip]
+        else:
+            ret = self.rate_limiter.over_limit(ip) or self.banned[ip]
+        return ret
+
     def _on_dns_message(self, buf, remote_info):
         #console.log("remote info:", remote_info)
         raddress = remote_info.address
-        if self.rate_limiter.over_limit(raddress) or self.banned[raddress]:
+        if self.is_banned(raddress):
             return
         nonlocal BUFFER_SIZE
         if buf.length > BUFFER_SIZE:
@@ -697,6 +709,7 @@ class DnsProxy(EventEmitter):
         def _on_clean_interval():
             self.clean_query_map()
         self.clean_interval = setInterval(_on_clean_interval, 10*1000)
+        self.clean_interval.unref()
 
     def clean_query_map(self):
         """Clean up query map periodically"""
@@ -749,6 +762,7 @@ class PublicIPBox:
             def _on_interval():
                 self._on_interval()
             self.check_iid = setInterval(_on_interval, self.check_timeout)
+            self.check_iid.unref()
 
 def createPublicIPBox(domain_name):
     ipbox = PublicIPBox(domain_name)

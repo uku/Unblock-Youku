@@ -213,10 +213,20 @@ class ReverseSogouProxy(EventEmitter):
 
         proxy.web(req, res, proxy_options)
 
+    def is_banned(self, ip):
+        """If the given ip is banned"""
+        acl = self.options["acl"]
+        # use access control list
+        if acl:
+            ret = not acl[ip]
+        else:
+            ret = self.rate_limiter.over_limit(ip) or self.banned[ip]
+        return ret
+
     def _on_server_connection(self, sock):
         """Prevent DoS"""
         raddress = sock.remoteAddress
-        if self.rate_limiter.over_limit(raddress) or self.banned[raddress]:
+        if self.is_banned(raddress):
             sock.destroy()
 
     def _on_proxy_error(self, err, req, res):

@@ -4,7 +4,6 @@
 https = require("https")
 http = require("http")
 fs = require("fs")
-zlib = require("zlib")
 murl = require("url")
 
 shared_urls = require("../shared/urls.js")
@@ -25,26 +24,13 @@ class RemoteRequire:
         self.headers = {
                 "Accept": "*/*",
                 "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:29.0) Gecko/20100101 Firefox/29.0",
-                "Accept-encoding": "gzip,deflate"
+                "Accept-encoding": "gzip,deflate",
+                "Accept-Language": "en-US,en;q=0.5",
+                "DNT": "-1",
                 }
         if headers:
             for k in headers:
                 self.headers[k] = headers[k]
-
-    def create_decompress_stream(self, res):
-        """ Create a decompression stream for the given response
-        """
-        encoding = res.headers["content-encoding"]
-        #log.info("encoding:", encoding)
-        if encoding == "gzip":
-            output = zlib.createGunzip()
-            res.pipe(output)
-        elif encoding == "deflate":
-            output = zlib.createInflate()
-            res.pipe(output)
-        else:
-            output = res
-        return output
 
     def require(self, uri, callback, force=False):
         #log.info("cache: ", self.cache)
@@ -88,7 +74,7 @@ class RemoteRequire:
             #        res.req._headers, res.headers)
             nonlocal info
             if res.statusCode == 200:
-                output_stream = self.create_decompress_stream(res)
+                output_stream = lutils.create_decompress_stream(res)
 
                 output_stream.on("data", _on_data)
                 output_stream.on("end", _on_end)
