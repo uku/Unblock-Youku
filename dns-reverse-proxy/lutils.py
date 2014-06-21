@@ -6,9 +6,11 @@ UAGENT_CHROME = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.
 RATE_LIMITER_DENY_TIMEOUT = 5*60 # in seconds
 
 http = require('http')
+zlib = require("zlib")
 net = require("net")
 url = require("url")
 dns = require("dns")
+fs = require("fs")
 EventEmitter = require("events").EventEmitter
 shared_urls = require('../shared/urls')
 shared_tools = require('../shared/tools')
@@ -47,12 +49,12 @@ class Logger:
         self._log(self.INFO, *args)
     def log(self, *args):
         self.info(*args)
-    def warn(self, *args):
-        self._log(self.WARN, *args)
-    def error(self, *args):
-        self._log(self.ERROR, *args)
-    def critical(self, *args):
-        self._log(self.CRITICAL, *args)
+    def warn(self, arg1, *args):
+        self._log(self.WARN, "WARN: " + arg1, *args)
+    def error(self, arg1, *args):
+        self._log(self.ERROR, "** Err: " + arg1, *args)
+    def critical(self, arg1, *args):
+        self._log(self.CRITICAL, "** CRITICAL: " + arg1, *args)
 logger = Logger()
 
 def add_sogou_headers(req_headers, hostname):
@@ -108,6 +110,7 @@ class URLMatch:
 
 url_match = None
 def is_valid_url(target_url):
+    """ Test if a url is a valid url to filter """
     nonlocal url_match
     if url_match is None:
         url_match = URLMatch(shared_urls.url_list)
@@ -120,6 +123,67 @@ def is_valid_url(target_url):
         return True
     return False
 
+USER_DOMAIN_MAP = None
+def fetch_user_domain():
+    """Fetch a list of domains for the filtered ub.uku urls """
+    nonlocal USER_DOMAIN_MAP
+    if USER_DOMAIN_MAP is not None:
+        return USER_DOMAIN_MAP
+
+    domain_dict = {}
+    for u in shared_urls.url_list:
+        # FIXME: can we do https proxy?
+        if u.indexOf("https") is 0: continue
+        parsed_url = url.parse(u)
+        hostname = parsed_url.hostname
+        if hostname and hostname not in domain_dict:
+            domain_dict[hostname] = True
+    USER_DOMAIN_MAP = domain_dict
+    return USER_DOMAIN_MAP
+
+def load_extra_url_list(fname):
+    """Add extra url list to the shared urls
+    The input file is a JSON file with a single array of url pattern strings
+    """
+    if not (fname and fs.existsSync(fname)):
+        logger.error("extra url filter file not found:", fname)
+        return False
+
+    nonlocal url_match
+    nonlocal USER_DOMAIN_MAP
+
+    url_match = None
+    USER_DOMAIN_MAP = None
+
+    data = fs.readFileSync(fname, "utf-8")
+    data = data.replace(/,(\s*[\}|\]])/g, '$1')
+    url_list = JSON.parse(data)
+
+    url_regex = shared_urls.urls2regexs(url_list)
+    for u in url_list:
+        shared_urls.url_list.push(u)
+    for r in url_regex:
+        shared_urls.url_regex_list.push(r)
+    return True
+
+def create_decompress_stream(res):
+    """ Create a decompression stream for the given http response
+    """
+    encoding = res.headers["content-encoding"]
+    #log.info("encoding:", encoding)
+    if encoding == "gzip":
+        output = zlib.createGunzip()
+        res.pipe(output)
+    elif encoding == "deflate":
+        output = zlib.createInflate()
+        res.pipe(output)
+    else:
+        output = res
+    return output
+
+def is_sogou_domain(domain):
+    return /sogou\.com$/.test(domain)
+
 class SogouManager(EventEmitter):
     """Provide active Sogou proxy"""
     def __init__(self, dns_resolver, proxy_list=None):
@@ -128,8 +192,22 @@ class SogouManager(EventEmitter):
         @proxy_list: user supplied proxy list instead of sogou proxy servers
         """
         self.dns_resolver = dns_resolver
-        self.proxy_list = proxy_list
         self.sogou_network = None
+        self.max_depth = 10
+        self.set_proxy_list(proxy_list)
+
+    def set_proxy_list(self, proxy_list):
+        """setter"""
+        self.proxy_list = proxy_list
+        if proxy_list:
+            ceil = 10
+            if self.proxy_list.length <= ceil:
+                # for short proxy_list, try every one
+                mdepth = min(self.proxy_list.length, ceil/2)
+            else:
+                mdepth = int(self.proxy_list.length/2)
+                mdepth = Math.min(ceil, mdepth)
+            self.max_depth = mdepth
 
     def new_proxy_address(self):
         """Return a new proxy server address"""
@@ -154,10 +232,10 @@ class SogouManager(EventEmitter):
         new_ip = None
 
         # use a give DNS to lookup ip of sogou server
-        if self.dns_resolver and not net.isIPv4(new_addr):
+        if self.dns_resolver and not net.isIPv4(new_domain):
             def _lookup_cb(name, ip):
                 addr_info = {
-                        "address": name,
+                        "address": name or new_domain,
                         "ip": ip,
                         "port": new_port
                         }
@@ -178,14 +256,14 @@ class SogouManager(EventEmitter):
         domain = addr_info["address"]
         def _on_lookup(err, addr, family):
             valid = False
-            if /sogou\.com$/.test(domain) is False:
+            if is_sogou_domain(domain) is False:
                 valid = True
             for sgip in SOGOU_IPS:
                 if addr.indexOf(sgip) is 0:
                     valid = True
                     break
             if not valid:
-                logger.warn("WARN: sogou IP (%s -> %s) seems invalid",
+                logger.warn("sogou IP (%s -> %s) seems invalid",
                         domain, addr)
         if not addr_info["ip"]:
             dns.lookup(addr_info["address"], 4, _on_lookup)
@@ -196,40 +274,76 @@ class SogouManager(EventEmitter):
         """check validity of proxy.
         emit "renew-address" on success
         """
-        if depth >= 10:
-            logger.warn("WARN: renew sogou failed, max depth reached")
+        if depth >= self.max_depth:
+            logger.warn("renew sogou failed, max depth reached:",
+                    self.max_depth)
             self.emit("renew-address", addr_info)
             return
 
         new_addr = addr_info["address"]
         new_ip = addr_info["ip"]
         new_port = addr_info["port"]
+
+        # proxy test target and matching string
+        test_targets = [
+                ["http://www.baidu.com/", "030173"],
+                ["http://www.sogou.com/","050897"],
+                ["http://www.cnnic.cn/", "09112257"],
+                ["http://search.sina.com.cn/", "000007"], #gbk
+                ]
+        test_idx = Math.floor(Math.random() * test_targets.length)
+        test_target = test_targets[test_idx]
+
         # Don't test for 400 status code if not sogou server
-        if /sogou\.com$/.test(new_addr) is False:
-            self._on_check_sogou_success(addr_info)
-            return
+        # instead, test for remote site in test_targets
+        if is_sogou_domain(new_addr) is True:
+            path = "/"
+        else:
+            path = test_target[0]
 
         headers = {
-            "Accept-Language": "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
-            "Accept-Encoding": "deflate",
+            "Accept-Encoding": "deflate,gzip",
             "Accept": "text/html,application/xhtml+xml," +
                 "application/xml;q=0.9,*/*;q=0.8",
             "User-Agent": UAGENT_CHROME,
-            "Accept-Charset": "gb18030,utf-8;q=0.7,*;q=0.3"
+            "Accept-Language": "en-US,en;q=0.5",
+            "DNT": "-1",
         }
 
         options = {
             host: new_ip or new_addr,
             port: new_port,
             headers: headers,
+            path: path,
         }
         logger.debug("check sogou adderss:", addr_info, options.host)
 
+        chunks = []
+        def _on_data(chunk):
+            chunks.push(chunk)
+
+        def _on_end():
+            """on got all test site data"""
+            content = chunks.join("")
+            if content.indexOf(test_target[1]) >= 0:
+                self._on_check_sogou_success(addr_info)
+                return
+            logger.error('renew proxy: failed to download data.', new_addr)
+            self.renew_sogou_server(depth + 1)
+
         def on_response (res):
-            if 400 == res.statusCode:
+            #log.debug("RemoteRequire:", res.statusCode,
+            #        res.req._headers, res.headers)
+            if res.statusCode == 200:
+                output = create_decompress_stream(res)
+                output.setEncoding("utf8")
+                output.on("data", _on_data)
+                output.on("end", _on_end)
+            elif 400 == res.statusCode and is_sogou_domain(new_addr):
                 self._on_check_sogou_success(addr_info)
             else:
-                logger.error('[ub.uku.js] statusCode for %s is unexpected: %d',
+                req.abort()
+                logger.error('statusCode for %s is unexpected: %d',
                     new_addr, res.statusCode)
                 self.renew_sogou_server(depth + 1)
         req = http.request(options, on_response)
@@ -238,12 +352,12 @@ class SogouManager(EventEmitter):
         def on_socket(socket):
             def on_socket_timeout():
                 req.abort()
-                logger.error('[ub.uku.js] Timeout for %s. Aborted.', new_addr)
+                logger.error('Timeout for %s. Aborted.', new_addr)
             socket.setTimeout(SOCKET_TIMEOUT, on_socket_timeout)
         req.on('socket', on_socket)
 
         def on_error(err):
-            logger.error('[ub.uku.js] Error when testing %s: %s', new_addr, err)
+            logger.error('when testing %s: %s', new_addr, err)
             self.renew_sogou_server(depth + 1);
         req.on('error', on_error)
         req.end()
@@ -359,24 +473,6 @@ def filtered_request_headers(headers, forward_cookie):
 
     return ret_headers
 
-USER_DOMAIN_MAP = None
-def fetch_user_domain():
-    """Fetch a list of domains for the filtered ub.uku urls"""
-    nonlocal USER_DOMAIN_MAP
-    if USER_DOMAIN_MAP is not None:
-        return USER_DOMAIN_MAP
-
-    domain_dict = {}
-    for u in shared_urls.url_list:
-        # FIXME: can we do https proxy?
-        if u.indexOf("https") is 0: continue
-        parsed_url = url.parse(u)
-        hostname = parsed_url.hostname
-        if hostname and hostname not in domain_dict:
-            domain_dict[hostname] = True
-    USER_DOMAIN_MAP = domain_dict
-    return USER_DOMAIN_MAP
-
 def get_public_ip(cb):
     """get public ip from http://httpbin.org/ip then call cb"""
     def _on_ip_response(res):
@@ -391,7 +487,7 @@ def get_public_ip(cb):
             cb(lookup_ip)
 
         def _on_error(err):
-            logger.error("Err on get public ip:", err)
+            logger.error("get public ip failed:", err)
 
         res.on('data',_on_data)
         res.on('end', _on_end)
@@ -402,8 +498,11 @@ def get_public_ip(cb):
 exports.logger = logger
 exports.add_sogou_headers = add_sogou_headers
 exports.is_valid_url = is_valid_url
+exports.fetch_user_domain = fetch_user_domain
+exports.load_extra_url_list = load_extra_url_list
+exports.is_sogou_domain = is_sogou_domain
 exports.createSogouManager = createSogouManager
 exports.createRateLimiter = createRateLimiter
 exports.filtered_request_headers = filtered_request_headers
-exports.fetch_user_domain = fetch_user_domain
 exports.get_public_ip = get_public_ip
+exports.create_decompress_stream = create_decompress_stream

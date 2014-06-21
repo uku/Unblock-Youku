@@ -129,6 +129,9 @@ Options:
                      port forward                                [default: 80]
   --http-rate-limit  HTTP proxy rate limit per sec per IP. -1 = no limit
                                                                  [default: 20]
+  --access-control-list, --acl  Load access control list(acl) of IPs either
+                                from a comma seperated list or from a JSON
+                                file as a list of strings.                   
   --run-as           run as unpriviledged user (sudo/root)
                                                            [default: "nobody"]
   --chroot-dir       chroot to given directory (sudo/root). Should copy
@@ -169,7 +172,7 @@ nameserver 8.8.8.8
 
 Where the `192.168.1.5` is our DNS proxy server. The other 2 servers are backup
 servers for non-routed domain names. Of course, using DNS provided by ISP in
-general is preferred over ~evil~ public DNS like 8.8.8.8.
+general is preferred over ~~evil~~ public DNS like 8.8.8.8.
 
 ## extra-url-list ##
 
@@ -209,6 +212,14 @@ If the package `chroot` is installed, the server will drop root privilege and
 chroot when **running under root**.
 
 The options `--run-as` and `--chroot-dir` will take part in the action.
+
+Should copy following file with path to /newroot/ and make the path new user
+**accessible**.
+
+     /etc/resolv.conf
+     /etc/timezone
+
+e.g. copy /etc/resolv.conf to /var/chroot/droxy/etc/resolve.conf
 
 # Hackinig #
 

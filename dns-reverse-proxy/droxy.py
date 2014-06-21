@@ -6,6 +6,7 @@ net = require("net")
 
 dnsproxy = require("./dns-proxy")
 reversesogouproxy = require("./reverse-sogou-proxy")
+urllistmanager = require("./url-list-manager")
 lutils = require("./lutils")
 log = lutils.logger
 
@@ -51,40 +52,21 @@ def load_router_from_file(fname, dns_map):
     for k in Object.keys(rdict):
         dns_map[k] = rdict[k]
 
-def load_extra_url_list(fname):
-    """Add extra url list to the shared urls
-    The input file is a JSON file with a single array of url pattern strings
-    """
-    if not (fname and fs.existsSync(fname)):
-        log.error("extra url filter file not found:", fname)
-        process.exit(2)
-
-    data = fs.readFileSync(fname, "utf-8")
-    data = data.replace(/,(\s*[\}|\]])/g, '$1')
-    url_list = JSON.parse(data)
-
-    shared_urls = require("../shared/urls.js")
-    url_regex = shared_urls.urls2regexs(url_list)
-    for u in url_list:
-        shared_urls.url_list.push(u)
-    for r in url_regex:
-        shared_urls.url_regex_list.push(r)
-
-def load_user_proxy_list(fname):
-    """
-    Load user supplied proxy lists
+def host_list_from_file_string(fname):
+    """ Load list of address from the given string
+    The string is either a filename contains JSON list or a list of items
+    seperated by commas.
     """
     if not (fname and fs.existsSync(fname)):
         if fname.indexOf(".") > 0: # domain name list?
             return fname.split(",")
         else:
-            log.error("user supplied proxy list file not found:", fname)
-            process.exit(2)
+            return None
 
     data = fs.readFileSync(fname, "utf-8")
     data = data.replace(/,(\s*[\}|\]])/g, '$1')
-    url_list = JSON.parse(data)
-    return url_list
+    host_list = JSON.parse(data)
+    return host_list
 
 def drop_root(options):
     """change root and drop root priviledge"""
@@ -93,6 +75,15 @@ def drop_root(options):
     # will fail after chroot
     _dns = require("dns")
     _dns.lookup("baidu.com", def (err, addr, fam): pass;)
+    Date().toString() # load /etc/timezone too
+
+    # load libraries needed for https
+    _https = require("https")
+    url_s = "https://github.com"
+    def _on_error(e):
+        log.debug("https error", e, url_s)
+    _https.get(url_s).on("error", _on_error)
+
     try:
         chroot = require("chroot")
         rdir = options["chroot_dir"]
@@ -110,84 +101,137 @@ def drop_root(options):
             _ = fs.openSync(resolv_path, "r")
             fs.close(_)
         except as e:
-            log.warn("WARN: %s is not reachable", resolv_path)
+            log.warn("%s is not reachable", resolv_path)
     except as e:
-        log.warn("WARN: Failed to chroot:", e)
+        log.warn("Failed to chroot:", e)
 
-server_count = 0
-def run_servers(argv):
-    if argv["extra_url_list"]:
-        load_extra_url_list(argv["extra_url_list"])
+class DroxyServer:
+    def __init__(self, options):
+        """A dns reverse proxy server"""
+        self.options = options
+        self.dns_proxy = None
+        self.http_proxy = None
 
-    # setup dns proxy
-    dns_options = {
-            "listen_address": "0.0.0.0",
-            "listen_port": argv["dns_port"],
-            "dns_relay": not argv["dns_no_relay"],
-            "dns_rate_limit": int(argv["dns_rate_limit"]),
-            }
-    if argv["ip"]:
-        dns_options["listen_address"] = argv["ip"]
-    if argv["dns_host"]:
-        dns_options["dns_host"] = argv["dns_host"]
-    if not dns_options["dns_host"]:
-        dns_options["dns_host"] = load_resolv_conf()
-    log.debug("dns_options:", dns_options)
+        if options["extra_url_list"]:
+            ret = lutils.load_extra_url_list(options["extra_url_list"])
+            if not ret:
+                process.exit(2)
 
-    # setup http proxy
-    sogou_proxy_options = {
-            "listen_port": argv["http_port"],
-            "listen_address": "127.0.0.1",
-            "sogou_dns": argv["sogou_dns"],
-            "sogou_network": argv["sogou_network"],
-            "http_rate_limit": int(argv["http_rate_limit"]),
-            "proxy_list": None,
-            }
-    if argv["ip"]:
-        sogou_proxy_options["listen_address"] = argv["ip"]
-    if argv["ext_ip"]:
-        sogou_proxy_options["external_ip"] = argv["ext_ip"]
-    if argv["proxy_list"]:
-        proxy_list = load_user_proxy_list(argv["proxy_list"])
-        sogou_proxy_options["proxy_list"] = proxy_list
+        if options["access_control_list"]:
+            acl = host_list_from_file_string(options["access_control_list"])
+            if acl is None:
+                log.error("access control list(acl) file not found:", fname)
+                process.exit(2)
+            else:
+                acl_dict = {}
+                for i in [0 til acl.length]:
+                    acl_dict[acl[i]] = True
+                options["acl"] = acl_dict
 
-    # https proxy
-    #sogou_proxy_options_s = JSON.parse(JSON.stringify(sogou_proxy_options))
-    #sogou_proxy_options_s["listen_port"] = 443
-    #log.debug("sogou_proxy_options_s:", sogou_proxy_options_s)
-    log.debug("sogou_proxy_options:", sogou_proxy_options)
+    def setup_dns_options(self):
+        # setup dns proxy
+        options = self.options
+        dns_options = {
+                "listen_address": "0.0.0.0",
+                "listen_port": options["dns_port"],
+                "dns_relay": not options["dns_no_relay"],
+                "dns_rate_limit": int(options["dns_rate_limit"]),
+                "acl": options["acl"],
+                }
+        if options["ip"]:
+            dns_options["listen_address"] = options["ip"]
+        if options["dns_host"]:
+            dns_options["dns_host"] = options["dns_host"]
+        if not dns_options["dns_host"]:
+            dns_options["dns_host"] = load_resolv_conf()
+        return dns_options
 
-    target_ip = argv["ext_ip"] or sogou_proxy_options["listen_address"]
-    dns_map = load_dns_map(target_ip)
+    def setup_proxy_options(self):
+        # setup http proxy
+        options = self.options
+        http_proxy_options = {
+                "listen_port": options["http_port"],
+                "listen_address": "127.0.0.1",
+                "sogou_dns": options["sogou_dns"],
+                "sogou_network": options["sogou_network"],
+                "http_rate_limit": int(options["http_rate_limit"]),
+                "proxy_list": None,
+                "acl": options["acl"],
+                }
+        if options["ip"]:
+            http_proxy_options["listen_address"] = options["ip"]
+        if options["ext_ip"]:
+            http_proxy_options["external_ip"] = options["ext_ip"]
+        if options["proxy_list"]:
+            proxy_list = host_list_from_file_string(options["proxy_list"])
+            if proxy_list is None:
+                log.error("user supplied proxy list file not found:", fname)
+                process.exit(2)
+            http_proxy_options["proxy_list"] = proxy_list
 
-    if argv["dns_extra_router"]:
-        load_router_from_file(argv["dns_extra_router"], dns_map)
-    #log.debug("dns_map:", dns_map)
+        # https proxy
+        #http_proxy_options_s = JSON.parse(JSON.stringify(http_proxy_options))
+        #http_proxy_options_s["listen_port"] = 443
+        #log.debug("http_proxy_options_s:", http_proxy_options_s)
+        return http_proxy_options
 
-    # now we are set, create servers
-    drouter = dnsproxy.createBaseRouter(dns_map)
+    def create_router(self, target_ip):
+        """Create a router object for http proxy server"""
+        options = self.options
+        dns_map = load_dns_map(target_ip)
 
-    dproxy = dnsproxy.createServer(dns_options, drouter)
-    sproxy = reversesogouproxy.createServer(sogou_proxy_options)
+        if options["dns_extra_router"]:
+            load_router_from_file(options["dns_extra_router"], dns_map)
+        #log.debug("dns_map:", dns_map)
 
-    # if need lookup externel IP
-    if not (net.isIPv4(target_ip) or net.isIPv6(target_ip)):
-        ipbox = dnsproxy.createPublicIPBox(target_ip)
-        drouter.set_public_ip_box(ipbox)
-        sproxy.set_public_ip_box(ipbox)
+        drouter = dnsproxy.createBaseRouter(dns_map)
 
-    # drop root priviledge if run as root
-    def _on_listen():
-        nonlocal server_count
-        server_count += 1
-        if server_count >= 2:
-            drop_root(argv)
+        # if need lookup externel IP
+        if not (net.isIPv4(target_ip) or net.isIPv6(target_ip)):
+            ipbox = dnsproxy.createPublicIPBox(target_ip)
+            drouter.set_public_ip_box(ipbox)
 
-    dproxy.on("listening", _on_listen)
-    sproxy.on("listening", _on_listen)
+        return drouter
 
-    dproxy.start()
-    sproxy.start()
+    def start_reload_url_list(self):
+        """Starting reload url list online """
+        options = self.options
+        url_list_reloader = urllistmanager.createURLListReloader(
+                options["extra_url_list"])
+        url_list_reloader.do_reload()
+        url_list_reloader.start()
+
+    def run(self):
+        options = self.options
+        dns_options = self.setup_dns_options()
+        log.debug("dns_options:", dns_options)
+        http_proxy_options = self.setup_proxy_options()
+        log.debug("http_proxy_options:", http_proxy_options)
+
+        # now we are set, create servers
+        target_ip = options["ext_ip"] or http_proxy_options["listen_address"]
+        drouter = self.create_router(target_ip)
+        dproxy = dnsproxy.createServer(dns_options, drouter)
+        hproxy = reversesogouproxy.createServer(http_proxy_options)
+        hproxy.set_public_ip_box(drouter.public_ip_box)
+
+        # drop root priviledge if run as root
+        server_count = 0
+        def _on_listen():
+            nonlocal server_count
+            server_count += 1
+            if server_count >= 2:
+                drop_root(options)
+
+        dproxy.on("listening", _on_listen)
+        hproxy.on("listening", _on_listen)
+
+        self.dns_proxy = dproxy
+        self.http_proxy = hproxy
+
+        dproxy.start()
+        hproxy.start()
+        self.start_reload_url_list()
 
 def expand_user(txt):
     """Expand tild (~/) to user home directory"""
@@ -205,12 +249,13 @@ def fix_keys(dobj):
             dobj[nk] = dobj[k]
             del dobj[k]
 
-def load_config(argv):
+def load_config(cfile):
     """Load config file and update argv"""
-    cfile = argv.config
+    cdict = {}
+    if not cfile: cdict
     cfile = expand_user(cfile)
     if not (cfile and fs.existsSync(cfile)):
-        return
+        return cdict
 
     # load config file as a JSON file
     data = fs.readFileSync(cfile, "utf-8")
@@ -223,9 +268,7 @@ def load_config(argv):
 
     cdict = JSON.parse(data)
     fix_keys(cdict)
-
-    for k in Object.keys(cdict):
-        argv[k] = cdict[k]
+    return cdict
 
 def parse_args():
     """Cmdline argument parser"""
@@ -256,7 +299,6 @@ def parse_args():
             "sogou-dns": {
                 "description"
                     : "DNS used to lookup IP of sogou proxy servers",
-                "default": None,
                 },
             "sogou-network": {
                 "description"
@@ -268,7 +310,6 @@ def parse_args():
                     'Load user supplied proxy servers either ' +
                     'from a comma seperated list or ' +
                     'from a JSON file as a list of strings.',
-                "default": None,
                 },
             "extra-url-list": {
                 "description"
@@ -287,7 +328,6 @@ def parse_args():
                     'public IP through http://httpbin.org/ip. If a ' +
                     'domain name is given, the IP will be lookup ' +
                     'through DNS',
-                "default": None,
                 },
             "dns-no-relay": {
                 "description"
@@ -315,6 +355,13 @@ def parse_args():
                 "description"
                     : "HTTP proxy rate limit per sec per IP. -1 = no limit",
                 "default": 20,
+                },
+            "access-control-list": {
+                "description" : \
+                    "Load access control list(acl) of IPs either " +
+                    'from a comma seperated list or ' +
+                    'from a JSON file as a list of strings.',
+                "alias": "acl",
                 },
             "run-as": {
                 "description": "run as unpriviledged user (sudo/root)",
@@ -360,7 +407,7 @@ def parse_args():
         sd = argv["sogou_network"]
         if not (sd == "dxt" or sd == "edu"):
             opt.showHelp()
-            log.error('*** Error: Bad value for option --sogou-network %s',
+            log.error('Bad value for option --sogou-network %s',
                     sd)
             process.exit(code=2)
 
@@ -370,13 +417,20 @@ def parse_args():
     return argv
 
 def main():
+    process.title = appname
     argv = parse_args()
     if argv.debug:
         log.set_level(log.DEBUG)
         log.debug("argv:", argv)
-    load_config(argv)
+
+    conf = load_config(argv["config"])
+    log.debug("config:", conf)
+    for k in Object.keys(conf):
+        argv[k] = conf[k]
     log.debug("with config:", argv)
-    run_servers(argv)
+
+    droxy = DroxyServer(argv)
+    droxy.run()
 
 if require.main is JS("module"):
     main()

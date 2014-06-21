@@ -76,7 +76,7 @@ class ReverseSogouProxy(EventEmitter):
             self.reset_sogou_flags()
         def _on_error(err):
             self.in_changing_sogou = -1
-            log.error("Error on renew sogou:", err)
+            log.error("renew sogou:", err)
         self.sogou_manager.on("renew-address", _on_renew_address)
         self.sogou_manager.on("error", _on_error)
 
@@ -213,15 +213,26 @@ class ReverseSogouProxy(EventEmitter):
 
         proxy.web(req, res, proxy_options)
 
+    def is_banned(self, ip):
+        """If the given ip is banned"""
+        acl = self.options["acl"]
+        # use access control list
+        if acl:
+            ret = not acl[ip]
+        else:
+            ret = self.rate_limiter.over_limit(ip) or self.banned[ip]
+        return ret
+
     def _on_server_connection(self, sock):
         """Prevent DoS"""
         raddress = sock.remoteAddress
-        if self.rate_limiter.over_limit(raddress) or self.banned[raddress]:
+        if self.is_banned(raddress):
             sock.destroy()
 
     def _on_proxy_error(self, err, req, res):
-        log.error("_on_proxy_error:", err, req.headers["Host"],
-                req.url, req.socket.remoteAddress)
+        req_id = int(req.headers["X-Droxy-Rid"])
+        log.error("_on_proxy_error[%d]:", req_id, err,
+                req.headers["Host"], req.url, req.socket.remoteAddress)
         if 'ECONNRESET' is err.code:
             self.reset_count += 1
         elif 'ECONNREFUSED' is err.code:
@@ -248,18 +259,18 @@ class ReverseSogouProxy(EventEmitter):
                     (not via or via.indexOf("sogou-in.domain") < 0)):
                 # someone crapped on our request, mostly chinacache
                 mitm = True
+        sock = res.socket
         if mitm is True:
-            s = res.socket
             log.warn("We are fucked by man-in-the-middle[%d]:\n",
                     req_id, res.headers, res.statusCode,
-                    s.remoteAddress + ":" + s.remotePort)
+                    sock.remoteAddress + ":" + sock.remotePort)
             # 502: Bad Gateway
             res.statusCode = 502
             self.refuse_count += 1
             self.renew_sogou_server()
         else:
             log.debug("_on_proxy_response[%d] headers:", req_id,
-                    res.headers, res.statusCode)
+                    res.headers, res.statusCode, sock.remoteAddress)
 
     def _handle_unknown_host(self, req, res):
         """In case we see an request with unknown/un-routed "host" """
