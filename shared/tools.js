@@ -108,7 +108,7 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
                     }
 
                 } else {
-                    if (typeof map_obj[hostname] === 'undefined') {
+                    if (!map_obj.hasOwnProperty(hostname)) {
                         map_obj[hostname] = [];
                     }
                     key = hostname;
@@ -150,7 +150,7 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "}",
         "",
         "function _check_patterns(patterns, hostname, full_url, prot_len) {",
-        "  if (typeof patterns[hostname] !== 'undefined')",
+        "  if (patterns.hasOwnProperty(hostname))",
         "    if (_check_regex_list(patterns[hostname],",
         "        full_url.slice(prot_len + hostname.length)))",  // check only :port/path
         "      return true;",
