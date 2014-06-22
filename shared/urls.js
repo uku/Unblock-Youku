@@ -277,7 +277,7 @@ function urls2regexs(url_list) {
         // just as http://developer.chrome.com/extensions/match_patterns.html
         re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\\/\\/[^\/]*');
         re_str = re_str.replace(/^https:\\\/\\\/\.\*/i, 'https:\\/\\/[^\/]*');
-        regex_list.push(new RegExp('^' + re_str, 'i'));
+        regex_list.push(new RegExp('^' + re_str + '$', 'i'));
     }
 
     // console.log(regex_list);

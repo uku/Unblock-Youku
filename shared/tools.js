@@ -113,7 +113,7 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
                 val = val.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
                 val = val.replace(/\*/g, '.*');
                 val = val.replace(/^\.\*/i, '[^\/]*');  // if starts with *; should not be possible for :port or /path
-                // val = new RegExp('^' + val, 'i').toString();
+                val = '^' + val + '$';
 
                 map_obj[key].push(val);
             }  // if
@@ -147,7 +147,7 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
         "  for (i = 0; i < regex_list.length; i++)",
-        "    if (new RegExp('^' + regex_list[i] + '$', 'i').test(str))",  // better to convert to regex first
+        "    if (new RegExp(regex_list[i], 'i').test(str))",  // better to convert to regex first
         "      return true;",
         "  return false;",
         "}",
