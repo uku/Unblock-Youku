@@ -91,18 +91,22 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
             uobj = _parse_url(ulist[i]);
             if (uobj === null) {
                 console.error('Invalid URL pattern: ' + ulist[i]);
+                continue;
+            }
 
-            } else if (uobj.protocol === protocol) {
+            if (uobj.protocol === protocol) {
                 hostname = uobj.hostname;
                 portpath = uobj.portpath;
                 if (hostname.indexOf('*') >= 0) {
                     if (hostname.slice(1).indexOf('*') >= 0) {  // * is only allowed to be the first char
                         console.error('Invalid wildcard URL pattern: ' + ulist[i]);
-                        key = null;
+                        continue;
+
                     } else {
                         key = 'any';
                         val = hostname + portpath;  // host:port/path
                     }
+
                 } else {
                     if (typeof map_obj[hostname] === 'undefined') {
                         map_obj[hostname] = [];
@@ -110,6 +114,7 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
                     key = hostname;
                     val = portpath;  // only :port/path
                 }
+
                 val = val.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
                 val = val.replace(/\*/g, '.*');
                 val = val.replace(/^\.\*/i, '[^\/]*');  // if starts with *; should not be possible for :port or /path
@@ -136,14 +141,6 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "var _https_map = " + https_map_str + ";",
         "var _proxy_str = 'PROXY " + proxy_server + "';",
         "",
-        "function _parse_url(url, host) {",
-        "  var res_obj = {};",
-        "  var idx = url.indexOf('://');",
-        "  res_obj.protocol = url.slice(0, idx);",
-        "  res_obj.portpath = url.slice(idx + 3 + host.length);",
-        "  return res_obj;",
-        "}",
-        "",
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
         "  for (i = 0; i < regex_list.length; i++)",
@@ -152,35 +149,39 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "  return false;",
         "}",
         "",
-        "function _check_patterns(patterns, hostname, portpath) {",
+        "function _check_patterns(patterns, hostname, full_url, prot_len) {",
         "  if (typeof patterns[hostname] !== 'undefined')",
-        "    if (_check_regex_list(patterns[hostname], portpath))",  // check only :port/path
+        "    if (_check_regex_list(patterns[hostname],",
+        "        full_url.slice(prot_len + hostname.length)))",  // check only :port/path
         "      return true;",
-        "  if (_check_regex_list(patterns.any, hostname + portpath))",  // check hostname:port/path
+        "  if (_check_regex_list(patterns.any,",  // try our best to speed up the checking for non-proxied urls
+        "      full_url.slice(prot_len)))",  // check hostname:port/path
         "    return true;",
         "  return false;",
         "}",
         "",
-        "function _find_proxy(url_map, host, port_path) {",
-        "  if (_check_patterns(url_map.white, host, port_path))",
+        "function _find_proxy(url_map, host, url, prot_len) {",
+        "  if (_check_patterns(url_map.white, host, url, prot_len))",
         "      return 'DIRECT';",
-        "  if (_check_patterns(url_map.proxy, host, port_path))",
+        "  if (_check_patterns(url_map.proxy, host, url, prot_len))",
         "    return _proxy_str;",
         "  return 'DIRECT';",
         "}",
         "",
         "function FindProxyForURL(url, host) {",  // host doesn't contain port
-        "  var url_obj = _parse_url(url, host);",
-        "  var prot = url_obj.protocol;",
-        "  if (prot === 'http')",
-        "    return _find_proxy(_http_map, host, url_obj.portpath);",
-        "  else if (prot === 'https')",
-        "    return _find_proxy(_https_map, host, url_obj.portpath);",
+        "  var prot = url.slice(0, 6);",
+        "  if (prot === 'http:/')",
+        "    return _find_proxy(_http_map, host, url, 7);",  // 'http://'.length
+        "  else if (prot === 'https:')",
+        "    return _find_proxy(_https_map, host, url, 8);",  // 'https://'.length
         "  return 'DIRECT';",
         "}"
     ].join("\n") + "\n";
 
+    console.log('==================');
     console.log(txt);
+    console.log('==================');
+
     return txt;
 }
 
