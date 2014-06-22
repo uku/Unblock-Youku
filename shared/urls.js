@@ -16,12 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global unblock_youku: true, exports: true*/
-
-// var unblock_youku = unblock_youku || {};  // namespace
-if (unblock_youku === undefined) {
-    var unblock_youku = {};
-}
+var unblock_youku = unblock_youku || {};  // namespace
 
 
 // for both chrome extension and server
@@ -291,9 +286,7 @@ function urls2regexs(url_list) {
 
 
 // also export as a node.js module
-if (exports === undefined) {
-    var exports = {};
-}
+var exports = exports || {};
 exports.urls2regexs = urls2regexs;
 exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
 exports.url_regex_list = urls2regexs(exports.url_list);
@@ -304,11 +297,11 @@ exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);
 (function() {
     // http://stackoverflow.com/a/5197219
     // http://stackoverflow.com/a/6398335
-    if (module !== undefined && module.exports && require.main === module) {
+    if (typeof module !== 'undefined' && module.exports && require.main === module) {
         var squid_url_list = unblock_youku.common_urls.concat(
             unblock_youku.chrome_extra_urls
         );
-        if (process !== undefined && process.argv[2] === 'server') {
+        if (typeof process !== 'undefined' && process.argv[2] === 'server') {
             squid_url_list = squid_url_list.concat(
                 unblock_youku.server_extra_urls
             );
