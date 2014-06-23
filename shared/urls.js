@@ -289,6 +289,7 @@ function urls2regexs(url_list) {
 var exports = exports || {};
 exports.urls2regexs = urls2regexs;
 exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
+exports.crx_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
 exports.url_regex_list = urls2regexs(exports.url_list);
 exports.url_whitelist = unblock_youku.server_whitelist_urls;
 exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);

@@ -118,7 +118,8 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
                 val = val.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
                 val = val.replace(/\*/g, '.*');
                 val = val.replace(/^\.\*/i, '[^\/]*');  // if starts with *; should not be possible for :port or /path
-                val = '^' + val + '$';
+                // val = new RegExp('^' + val + '$', 'i');
+                val = '/^' + val + '$/i';
 
                 map_obj[key].push(val);
             }  // if
@@ -127,7 +128,68 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
     add_patterns(url_map.white, white_ulist);
     add_patterns(url_map.proxy, proxy_ulist);
 
-    return JSON.stringify(url_map, null, "  ");
+    // this cannot remove the quotes around regex
+    // RegExp.prototype.toJSON = function() {
+    //     return this.toString();
+    // };
+    // return JSON.stringify(url_map, null, "  ");
+
+
+    // console.log(stringify(url_map));
+    return stringify(url_map);
+
+
+    function stringify(map_obj) {
+        var white_map = map_obj.white;
+        var proxy_map = map_obj.proxy;
+
+        var res_str = [
+            "{",
+            "  'white': {",
+        ].join("\n") + "\n";
+        res_str += stringify_patterns(white_map);
+
+        res_str += [
+            "  },",
+            "  'proxy': {",
+        ].join("\n") + "\n";
+        res_str += stringify_patterns(proxy_map);
+
+        res_str += [
+            "  }",
+            "}"
+        ].join("\n");
+
+        return res_str;
+    }
+
+
+    function stringify_patterns(hostname_map) {
+        var res_str = "";
+        var i, patterns = null;
+
+        for (var hostname in hostname_map) {
+            if (hostname_map.hasOwnProperty(hostname)) {
+                res_str += "    '" + hostname + "': [";
+                patterns = hostname_map[hostname];
+
+                if (patterns.length === 0) {
+                    res_str += "],\n";
+
+                } else {
+                    res_str += "\n";
+                    for (i = 0; i < patterns.length; i++) {
+                        res_str += "      " + patterns[i] + ",\n";
+                    }
+                    res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
+                    res_str += "    ],\n";
+                }
+            }
+        }
+        res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
+
+        return res_str;
+    }
 }
 
 
@@ -144,7 +206,7 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
         "  for (i = 0; i < regex_list.length; i++)",
-        "    if (new RegExp(regex_list[i], 'i').test(str))",  // better to convert to regex first
+        "    if (regex_list[i].test(str))",
         "      return true;",
         "  return false;",
         "}",
@@ -178,9 +240,9 @@ function urls2pac(url_whitelist, url_list, proxy_server) {
         "}"
     ].join("\n") + "\n";
 
-    console.log('==================');
-    console.log(txt);
-    console.log('==================');
+    // console.log('==================');
+    // console.log(txt);
+    // console.log('==================');
 
     return txt;
 }
@@ -201,3 +263,12 @@ exports.new_random_ip = new_random_ip;
 exports.urls2pac = urls2pac;
 exports.string_starts_with = string_starts_with;
 exports.to_title_case = to_title_case;
+
+
+(function() {
+    if (typeof module !== 'undefined' && module.exports && require.main === module) {
+        var crx_url_list = require('./urls').crx_url_list;
+        var pac_content = urls2pac([], crx_url_list, 'localhost:8888');
+        console.log(pac_content);
+    }
+}());
