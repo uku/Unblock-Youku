@@ -235,6 +235,9 @@ unblock_youku.server_extra_urls = [
     'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
     'http://music.163.com/api/copyright/restrict/?*',
     'http://music.163.com/api/batch',
+    'http://www.xiami.com/web/spark*',
+    'http://www.xiami.com/web/*?*xiamitoken=*',
+    'http://spark.api.xiami.com/api?*method=AuthIp*',
     'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
     'http://spark.api.xiami.com/api?*method=Songs.detail*',
     // for PC Clients only
