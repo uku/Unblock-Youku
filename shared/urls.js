@@ -42,7 +42,7 @@ unblock_youku.common_urls = [
     //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/*',
     // 'http://nl.rcd.iqiyi.com/apis/urc/*',
-    'http://serv.vip.iqiyi.com/services/ck.action*',
+    'http://cache.video.qiyi.com/vms?*',
     'http://cache.vip.qiyi.com/vms?*',
 
     // cause oversea servers unusable?
@@ -77,7 +77,6 @@ unblock_youku.common_urls = [
     'http://bobo.video.qq.com/getvinfo*',
     'http://flvs.video.qq.com/getvinfo*',
     'http://bkvv.video.qq.com/getvinfo*',
-    'http://rcgi.video.qq.com/report*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
