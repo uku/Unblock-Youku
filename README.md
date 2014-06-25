@@ -48,7 +48,7 @@ Please visit [this page for more contributors](http://uku.im/contributors), and 
 
 ## Bitcoin Reward for Pull Requests
 
-**Appending `MONEYMONEY` to your commit message, you will be rewarded with BTC as the following USD amount**
+Appending `MONEYMONEY` to your commit message, you will be rewarded with BTC as the following USD amount:
 
 [![Current BitHub Reward](https://ubuku-bitbot.herokuapp.com/v1/status/payment/commit)](https://github.com/zhuzhuor/Unblock-Youku/issues/238)
 
