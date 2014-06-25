@@ -42,7 +42,7 @@ unblock_youku.common_urls = [
     //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/*',
     // 'http://nl.rcd.iqiyi.com/apis/urc/*',
-    'http://serv.vip.iqiyi.com/services/ck.action*',
+    'http://cache.video.qiyi.com/vms?*',
     'http://cache.vip.qiyi.com/vms?*',
 
     // cause oversea servers unusable?
@@ -77,7 +77,6 @@ unblock_youku.common_urls = [
     'http://bobo.video.qq.com/getvinfo*',
     'http://flvs.video.qq.com/getvinfo*',
     'http://bkvv.video.qq.com/getvinfo*',
-    'http://rcgi.video.qq.com/report*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
@@ -236,6 +235,9 @@ unblock_youku.server_extra_urls = [
     'http://serviceinfo.sdk.duomi.com/api/serviceinfo/getserverlist*',
     'http://music.163.com/api/copyright/restrict/?*',
     'http://music.163.com/api/batch',
+    'http://www.xiami.com/web/spark*',
+    'http://www.xiami.com/web/*?*xiamitoken=*',
+    'http://spark.api.xiami.com/api?*method=AuthIp*',
     'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
     'http://spark.api.xiami.com/api?*method=Songs.detail*',
     // for PC Clients only
