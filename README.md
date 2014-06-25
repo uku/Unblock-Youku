@@ -46,7 +46,9 @@ If you are interested in helping us translating the extension, or you want the e
 
 Please visit [this page for more contributors](http://uku.im/contributors), and [this page for our translators](http://uku.im/translators).
 
-## Current Reward for Commits
+## Bitcoin Reward for Pull Requests
+
+**Appending `MONEYMONEY` to your commit message, you will be rewarded with BTC as the following USD amount**
 
 [![Current BitHub Reward](https://ubuku-bitbot.herokuapp.com/v1/status/payment/commit)](https://github.com/zhuzhuor/Unblock-Youku/issues/238)
 
