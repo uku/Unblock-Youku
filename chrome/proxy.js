@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*jslint browser: true */
+/*jshint devel:true, globalstrict: true */
 /*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false */
 /*global ga_report_timeout: false, ga_report_error: false, ga_report_event: false */
 "use strict";
@@ -43,7 +43,7 @@ function setup_pac_data(proxy_domain) {
 
 
 function setup_proxy(depth) {  // depth for recursion
-    if (depth === undefined) {
+    if (typeof depth === 'undefined') {
         depth = 0;  // recursion depth
         console.group('to set up proxy');
     }
