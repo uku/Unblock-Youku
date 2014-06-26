@@ -121,6 +121,10 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
                 // val = new RegExp('^' + val + '$', 'i');
                 val = '/^' + val + '$/i';
 
+                if (val.slice(-5) === '.*$/i') {
+                    val = val.slice(0, -5) + '/i';
+                }
+
                 map_obj[key].push(val);
             }  // if
         }  // for
