@@ -177,6 +177,7 @@ unblock_youku.server_whitelist_urls = [
 
 unblock_youku.server_extra_urls = [
     // for Mobile apps    // Video apps
+    'http://a.play.api.3g.youku.com/common/v3/play?*',
     'http://api.3g.youku.com/layout*',
     'http://api.3g.youku.com/v3/play/address*',
     'http://api.3g.youku.com/openapi-wireless/videos/*/download*',
@@ -255,6 +256,7 @@ unblock_youku.server_extra_urls = [
     // for MiBox iCNTV Authentication
     'http://tms.is.ysten.com:8080/yst-tms/login.action?*',
     'http://chrome.2345.com/dianhua/mobileApi/check.php',
+    'http://internal.check.duokanbox.com/check.json*',
     // for 3rd party's DNS for Apple TV (see pull request #78)
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
