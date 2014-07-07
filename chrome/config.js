@@ -17,9 +17,9 @@
  */
 
 /*jslint browser: true */
-/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false, new_sogou_auth_str: false */
-/*global setup_lite_header: false, setup_redirect: false, setup_normal_header: false, setup_proxy: false, setup_timezone: false, setup_extra_header: false */
-/*global clear_lite_header: false, clear_redirect: false, clear_normal_header: false, clear_proxy: false, clear_timezone: false */
+/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false */
+/*global setup_redirect: false, setup_header: false, setup_proxy: false, setup_timezone: false, setup_extra_header: false */
+/*global clear_redirect: false, clear_header: false, clear_proxy: false, clear_timezone: false */
 /*global ga_report_event: false, ga_report_ratio: false, ga_report_error: false */
 "use strict";
 
@@ -40,8 +40,6 @@ unblock_youku.header_extra_url_list = [
 
 unblock_youku.ip_addr = new_random_ip();
 console.log('ip addr: ' + unblock_youku.ip_addr);
-unblock_youku.sogou_auth = new_sogou_auth_str();
-console.log('sogou_auth: ' + unblock_youku.sogou_auth);
 
 unblock_youku.version = chrome.runtime.getManifest().version;
 // the lastest version to show NEW on the icon; it's usually a big update with new features
@@ -93,7 +91,7 @@ function clear_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
         // clear_timezone();
-        clear_lite_header();
+        clear_header();
         console.log('cleared settings for lite');
         break;
     case 'redirect':
@@ -103,7 +101,7 @@ function clear_mode_settings(mode_name) {
     case 'normal':
         // clear_timezone();
         clear_proxy();
-        clear_normal_header();
+        clear_header();
         console.log('cleared settings for normal');
         break;
     default:
@@ -119,14 +117,14 @@ function clear_mode_settings(mode_name) {
 function setup_mode_settings(mode_name) {
     switch (mode_name) {
     case 'lite':
-        setup_lite_header();
+        setup_header();
         // setup_timezone();
         break;
     case 'redirect':
         setup_redirect();
         break;
     case 'normal':
-        setup_normal_header();
+        setup_header();
         setup_proxy();
         // setup_timezone();
         break;
