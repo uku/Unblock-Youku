@@ -24,7 +24,7 @@
 
 function setup_pac_data(proxy_domain) {
     var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain, 'HTTPS');
-    console.log(pac_data);
+    // console.log(pac_data);
     var proxy_config = {
         mode: 'pac_script',
         pacScript: {
