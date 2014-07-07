@@ -197,15 +197,20 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
 }
 
 
-function urls2pac(url_whitelist, url_list, proxy_server) {
+function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
     "use strict";
     var http_map_str = gen_url_map('http', url_whitelist, url_list);
     var https_map_str = gen_url_map('https', url_whitelist, url_list);
 
+    if (typeof proxy_protocol === 'undefined') {
+        proxy_protocol = 'PROXY';
+    }
+
     var txt = [
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
-        "var _proxy_str = 'PROXY " + proxy_server + "';",
+        // "var _proxy_str = 'PROXY " + proxy_server + "';",
+        "var _proxy_str = '" + proxy_protocol + " "  + proxy_server + "';",
         "",
         "function _check_regex_list(regex_list, str) {",
         "  var i;",

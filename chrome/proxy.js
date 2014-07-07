@@ -23,7 +23,8 @@
 
 
 function setup_pac_data(proxy_domain) {
-    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain);
+    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain, 'HTTPS');
+    console.log(pac_data);
     var proxy_config = {
         mode: 'pac_script',
         pacScript: {
@@ -48,7 +49,7 @@ function setup_proxy(depth) {  // depth for recursion
         console.group('to set up proxy');
     }
 
-    var test_server = 'proxy.mainland.io:8888';
+    var test_server = 'proxy.mainland.io:993';
     // var test_server = 'proxy.uku.im:8888';
     setup_pac_data(test_server);
     console.log('using experimental server: ' + test_server);
