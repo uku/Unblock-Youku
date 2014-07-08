@@ -1,24 +1,11 @@
 {
   "name": "ub.uku.js",
-  "preferGlobal": "true",
-  "version": "1.8.10",
-  "author": "zhuzhuor <npmjs@zhuzhu.org>",
-  "description": "A Backend Server for Unblock-Youku",
-  "keywords": ["Unblock Youku", "proxy", "server"],
-  "bin": {
-    "ub.uku.js": "server/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
-  },
   "dependencies": {
     "colors": "*",
     "optimist": "0.6.x",
-    "validator": "3.13.x",
     "uglify-js": "2.4.x",
     "raven": "0.6.x",
-    "newrelic": "1.6.x"
+    "request": "2.37.x"
   },
   "scripts": {
     "start": "node server/server.js",
@@ -26,13 +13,10 @@
   },
   "engines": {
     "node": "0.10.x",
-    "npm": "1.2.x"
+    "npm": "1.4.x"
   },
-  "bugs": {
-    "url": "https://github.com/zhuzhuor/Unblock-Youku/issues"
-  },
-  "licenses": [{
-    "type": "AGPL v3",
-    "url": "http://www.gnu.org/licenses/agpl-3.0.html"
-  }]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
+  }
 }

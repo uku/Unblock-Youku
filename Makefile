@@ -1,4 +1,4 @@
-ZIP_FILENAME = crx.zip
+ZIP_FILENAME = ../ubuku_crx.zip
 INCLUDED_FILES = manifest.json chrome shared _locales COPYING.txt
 EXCLUDED_FILES = _locales/backup*
 

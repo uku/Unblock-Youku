@@ -6,17 +6,14 @@ This project contains four functionalities.
  
    You can find this extension on Chrome Web Store at [http://uku.im/chrome](http://uku.im/chrome)
 
-2. _A local proxy server_ based on the non-blocking [Node.js](http://nodejs.org) for bypassing the mainland restriction _for other browsers and mobile devices_ (but not guaranteed).
+2. _A backend server_ to support the redirect mode of the Chrome extension.
 
-   For more information, please see [the instructions](http://uku.im/proxy) (in Chinese).
+   [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
-3. _A DNS server_ combined with the local proxy server.
+3. _A local DNS server_ for devices that cannot set up proxies freely.
 
    For more information, please read [its README file](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy).
 
-4. _A backend server_ to support the redirection mode of the Chrome extension.
-
-   [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
 ## Disclaimer
 

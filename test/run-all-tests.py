@@ -45,11 +45,11 @@ server_process = None
 
 def start_server():
     global server_process
-    print 'To start the server, and wait for 21 seconds to set up...'
+    print 'To start the server, and wait for 3 seconds to set up...'
     sys.stdout.flush()
     server_process = subprocess.Popen(
-        ['node', '../server/server.js', '--production', '--port=8888'])
-    time.sleep(21)
+        ['node', '../server/server.js', '--proxy=http://proxy.uku.im:8888'])
+    time.sleep(3)
 
 
 def stop_server():
@@ -76,10 +76,7 @@ def run_all_tests():
     num_passed = 0
     for file_name in os.listdir('.'):
         if file_name.startswith('test-') and file_name.endswith('.js'):
-            if file_name.endswith('-proxy.js'):
-                command = ['phantomjs', '--proxy=127.0.0.1:8888', file_name]
-            else:
-                command = ['phantomjs', file_name]
+            command = ['phantomjs', file_name]
             print
             print ' '.join(command)
             sys.stdout.flush()
