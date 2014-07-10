@@ -52,8 +52,10 @@ if (process.env.SENTRY_ADDRESS) {
 local_port = process.env.PORT || 8888;
 var pac_file_content = null;
 if (argv.proxy) {
-    // TODO parse proxy argv
-    pac_file_content = server_utils.generate_pac_file(proxy_addr + ':' + proxy_port);
+    var parsed_proxy = url.parse(argv.proxy);
+    pac_file_content = server_utils.generate_pac_file(parsed_proxy.host, parsed_proxy.protocol);
+} else {
+    pac_file_content = 'function FindProxyForURL(url, host) {return "DIRECT";}';
 }
 // console.log(pac_file_content);
 

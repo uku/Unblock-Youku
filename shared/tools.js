@@ -205,8 +205,16 @@ function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
     if (typeof proxy_protocol === 'undefined') {
         proxy_protocol = 'PROXY';
     }
+    proxy_protocol = proxy_protocol.replace(/:/g,'');
+    proxy_protocol = proxy_protocol.replace(/\//g,'');
+    proxy_protocol = proxy_protocol.toUpperCase();
+    if (proxy_protocol === 'HTTP') {
+        proxy_protocol = 'PROXY';
+    }
 
     var txt = [
+        // "(function() {",
+        // "",
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
         // "var _proxy_str = 'PROXY " + proxy_server + "';",
@@ -246,7 +254,10 @@ function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
         "  else if (prot === 'https:')",
         "    return _find_proxy(_https_map, host, url, 8);",  // 'https://'.length
         "  return 'DIRECT';",
-        "}"
+        "}",
+        // "",
+        // "window.FindProxyForURL = FindProxyForURL;",
+        // "}());"
     ].join("\n") + "\n";
 
     // console.log('==================');
