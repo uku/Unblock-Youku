@@ -146,6 +146,18 @@ function static_responses(client_request, client_response, pac_file_content) {
         return;
     }
 
+    if (client_request.url === '/status') {
+        var status_text = 'OK';
+
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': status_text.length.toString(),
+            'Cache-Control': 'public, max-age=3600'
+        });
+        client_response.end(status_text);
+        return;
+    }
+
     if (client_request.url === '/proxy.pac') {
         client_response.writeHead(200, {
             'Content-Type': 'application/x-ns-proxy-autoconfig',
