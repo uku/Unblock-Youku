@@ -31,6 +31,9 @@ class ReverseProxyServer(EventEmitter):
             events:
                 "listening": emit after server has been bound to listen port
         """
+        self.proxy_manager = None
+        self.proxy_info = None
+
         self.options = options
         self.banned = {} # banned IP
         self.proxy_renew_timeout = 10*60*1000
@@ -55,10 +58,16 @@ class ReverseProxyServer(EventEmitter):
 
         self.reset_proxy_flags()
         self.setup_proxy_manager()
-        self.proxy_info = {"address": self.proxy_manager.new_proxy_address()}
+        if self.proxy_manager is not None:
+            self.proxy_info = {
+                    "address": self.proxy_manager.new_proxy_address(),
+                    }
 
     def setup_proxy_manager(self):
         """Manage which proxy server we choose"""
+        if not self.options["proxy_list"]:
+            return
+
         dns_resolver = None
         if self.options["proxy_dns"]:
             sg_dns = self.options["proxy_dns"]
@@ -88,6 +97,9 @@ class ReverseProxyServer(EventEmitter):
 
     def renew_proxy_server(self, forced=False):
         """Change to a new proxy server"""
+        if self.proxy_manager is None:
+            return
+
         need_reset = forced
         for k in Object.keys(MAX_ERROR_COUNT):
             if getattr(self, k) > MAX_ERROR_COUNT[k]:
@@ -184,7 +196,7 @@ class ReverseProxyServer(EventEmitter):
         if req.url.indexOf('http') is 0:
             forward_cookies = True
 
-        if to_use_proxy:
+        if to_use_proxy and self.proxy_info is not None:
             si = self.proxy_info
             proxy_host = si["ip"] or si["address"]
             proxy_port = si["port"]
@@ -200,6 +212,7 @@ class ReverseProxyServer(EventEmitter):
             proxy_options = {
                     "target": req.url,
             }
+            log.debug("do_proxy[%s] DIRECT", req.headers["X-Droxy-RID"])
 
         # log.debug("do_proxy headers before:", req.headers)
         headers = lutils.filtered_request_headers(
@@ -282,11 +295,12 @@ class ReverseProxyServer(EventEmitter):
         self.server.listen(self.proxy_port, self.proxy_host, _on_listen)
 
         # change proxy server periodically
-        def on_renew_timeout():
-            self.renew_proxy_server(True)
-        proxy_renew_timer = setInterval(on_renew_timeout,
-                self.proxy_renew_timeout)
-        proxy_renew_timer.unref()
+        if self.proxy_manager is not None:
+            def on_renew_timeout():
+                self.renew_proxy_server(True)
+            proxy_renew_timer = setInterval(on_renew_timeout,
+                    self.proxy_renew_timeout)
+            proxy_renew_timer.unref()
 
 def createServer(options):
     s = ReverseProxyServer(options)

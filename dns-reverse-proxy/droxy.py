@@ -304,7 +304,7 @@ def parse_args():
                     'Load user supplied proxy servers either ' +
                     'from a comma seperated list or ' +
                     'from a JSON file as a list of strings.',
-                "default": "proxy.uku.im:8888",
+                #"default": "proxy.uku.im:8888",
                 },
             "extra-url-list": {
                 "description"
