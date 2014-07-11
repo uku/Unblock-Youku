@@ -10,7 +10,7 @@ This project contains three functionalities.
 
    [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
-3. _A local DNS server combined with a reverse proxy_ used for devices that cannot set up proxies easily.
+3. _A DNS server combined with a reverse proxy_ used for devices that cannot set up proxies easily.
 
    For more information, please read [its README file](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy).
 
