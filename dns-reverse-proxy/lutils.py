@@ -203,7 +203,7 @@ class SogouManager(EventEmitter):
             ceil = 10
             if self.proxy_list.length <= ceil:
                 # for short proxy_list, try every one
-                mdepth = min(self.proxy_list.length, ceil/2)
+                mdepth = Math.min(self.proxy_list.length, ceil/2)
             else:
                 mdepth = int(self.proxy_list.length/2)
                 mdepth = Math.min(ceil, mdepth)
