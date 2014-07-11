@@ -51,9 +51,13 @@ if (process.env.SENTRY_ADDRESS) {
 
 local_port = process.env.PORT || 8888;
 var pac_file_content = null;
+var remote_proxy_obj = null;
 if (argv.proxy) {
-    var parsed_proxy = url.parse(argv.proxy);
-    pac_file_content = server_utils.generate_pac_file(parsed_proxy.host, parsed_proxy.protocol);
+    remote_proxy_obj = url.parse(argv.proxy);
+    pac_file_content = server_utils.generate_pac_file(remote_proxy_obj.host, remote_proxy_obj.protocol);
+} else if (process.env.PROXY_ADDR) {
+    remote_proxy_obj = url.parse(process.env.PROXY_ADDR);
+    pac_file_content = server_utils.generate_pac_file(remote_proxy_obj.host, remote_proxy_obj.protocol);
 } else {
     pac_file_content = 'function FindProxyForURL(url, host) {return "DIRECT";}';
 }
@@ -92,7 +96,7 @@ function http_req_handler(client_request, client_response) {
         client_response.end();
         return;
     }
-    var proxy_request_headers = server_utils.filtered_request_headers(client_request.headers);
+    var proxy_request_headers = server_utils.filter_request_headers(client_request.headers);
     proxy_request_headers.Host = target.host;
 
     var proxy_request_options = {
@@ -100,8 +104,8 @@ function http_req_handler(client_request, client_response) {
         method: client_request.method,
         headers: proxy_request_headers
     };
-    if (argv.proxy) {
-        proxy_request_options.proxy = argv.proxy;
+    if (remote_proxy_obj) {
+        proxy_request_options.proxy = remote_proxy_obj.href;
     }
     var proxy_request = request(proxy_request_options);
     client_request.pipe(proxy_request);

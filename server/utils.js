@@ -74,7 +74,7 @@ function is_valid_url(target_url) {
 }
 
 
-function filtered_request_headers(headers) {
+function filter_request_headers(headers) {
     var ret_headers = {};
 
     var field;
@@ -105,7 +105,7 @@ function filtered_request_headers(headers) {
 }
 
 
-function filtered_response_headers(headers) {
+function filter_response_headers(headers) {
     var res_headers = {};
 
     var field;
@@ -183,11 +183,12 @@ function static_responses(client_request, client_response, pac_file_content) {
 
 
 function generate_pac_file(proxy_addr_port, proxy_protocol) {
-    return '/*\n' +
-        ' * Installing/using this software, you agree that this software is\n' +
-        ' * only for study purposes and its authors and service providers  \n' +
-        ' * take no responsibilities for any consequences.\n' +
-        ' */\n' +
+    return 
+        '/*\n' +
+        '  Installing/using this software, you agree that this software is\n' +
+        '  only for study purposes and its authors and service providers  \n' +
+        '  take no responsibilities for any consequences.\n' +
+        '*/\n' +
         uglify.minify(
             shared_tools.urls2pac(
                 shared_urls.url_whitelist,
@@ -202,7 +203,7 @@ function generate_pac_file(proxy_addr_port, proxy_protocol) {
 
 exports.get_real_target = get_real_target;
 exports.is_valid_url = is_valid_url;
-exports.filtered_request_headers = filtered_request_headers;
-exports.filtered_response_headers = filtered_response_headers;
+exports.filter_request_headers = filter_request_headers;
+exports.filter_response_headers = filter_response_headers;
 exports.static_responses = static_responses;
 exports.generate_pac_file = generate_pac_file;

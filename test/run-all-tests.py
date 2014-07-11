@@ -47,8 +47,11 @@ def start_server():
     global server_process
     print 'To start the server, and wait for 3 seconds to set up...'
     sys.stdout.flush()
+    test_env = os.environ.copy()
+    test_env['PROXY_ADDR'] = 'http://proxy.uku.im:8888'
     server_process = subprocess.Popen(
-        ['node', '../server/server.js', '--proxy=http://proxy.uku.im:8888'])
+        ['node', '../server/server.js'],
+        env=test_env)
     time.sleep(3)
 
 
