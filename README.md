@@ -1,16 +1,16 @@
 # Unblock Youku
 
-This project contains four functionalities.
+This project contains three functionalities.
 
-1. _A Google Chrome extension_ helping users access their web services while travelling outside mainland China.
+1. A _Google Chrome extension_ helping users access their web services while travelling outside mainland China.
  
    You can find this extension on Chrome Web Store at [http://uku.im/chrome](http://uku.im/chrome)
 
-2. _A backend server_ to support the redirect mode of the Chrome extension.
+2. A Node.js based _backend server_ that supports the redirect mode of the Chrome extension.
 
    [![Build Status](https://secure.travis-ci.org/zhuzhuor/Unblock-Youku.png?branch=master)](https://travis-ci.org/zhuzhuor/Unblock-Youku) [![Dependency Status](https://gemnasium.com/zhuzhuor/Unblock-Youku.png)](https://gemnasium.com/zhuzhuor/Unblock-Youku)
 
-3. _A local DNS server_ for devices that cannot set up proxies freely.
+3. _A local DNS server combined with a reverse proxy_ used for devices that cannot set up proxies easily.
 
    For more information, please read [its README file](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy).
 
@@ -39,7 +39,7 @@ If you are interested in helping us translating the extension, or you want the e
 
 [@mozbugbox](https://github.com/mozbugbox) - Create [the DNS server combined with a reverse proxy server](https://github.com/zhuzhuor/Unblock-Youku/tree/master/dns-reverse-proxy)
 
-[Chiara De Liberato](http://www.chiaradeliberato.it/) - Italian and English translations
+[Chiara De Liberato](http://www.chiaradeliberato.it/) - Contribute Italian and English translations
 
 Please visit [this page for more contributors](http://uku.im/contributors), and [this page for our translators](http://uku.im/translators).
 

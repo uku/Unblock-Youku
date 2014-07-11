@@ -195,8 +195,7 @@ function static_responses(client_request, client_response, pac_file_content) {
 
 
 function generate_pac_file(proxy_addr_port, proxy_protocol) {
-    return 
-        '/*\n' +
+    return '/*\n' +
         '  Installing/using this software, you agree that this software is\n' +
         '  only for study purposes and its authors and service providers  \n' +
         '  take no responsibilities for any consequences.\n' +
