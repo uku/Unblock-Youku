@@ -2,7 +2,6 @@
     "#comment": "keys start with # are comments",
     "ip": "192.168.1.5",
     "#dns-host": "8.8.8.8",
-    "sogou-dns": "8.8.8.8",
-    "#sogou-network": "edu"
+    "proxy-dns": "8.8.8.8",
 }
 

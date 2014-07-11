@@ -5,7 +5,7 @@ fs = require("fs")
 net = require("net")
 
 dnsproxy = require("./dns-proxy")
-reversesogouproxy = require("./reverse-sogou-proxy")
+reverseproxyserver = require("./reverse-proxy-server")
 urllistmanager = require("./url-list-manager")
 lutils = require("./lutils")
 log = lutils.logger
@@ -152,8 +152,7 @@ class DroxyServer:
         http_proxy_options = {
                 "listen_port": options["http_port"],
                 "listen_address": "127.0.0.1",
-                "sogou_dns": options["sogou_dns"],
-                "sogou_network": options["sogou_network"],
+                "proxy_dns": options["proxy_dns"],
                 "http_rate_limit": int(options["http_rate_limit"]),
                 "proxy_list": None,
                 "acl": options["acl"],
@@ -212,7 +211,7 @@ class DroxyServer:
         target_ip = options["ext_ip"] or http_proxy_options["listen_address"]
         drouter = self.create_router(target_ip)
         dproxy = dnsproxy.createServer(dns_options, drouter)
-        hproxy = reversesogouproxy.createServer(http_proxy_options)
+        hproxy = reverseproxyserver.createServer(http_proxy_options)
         hproxy.set_public_ip_box(drouter.public_ip_box)
 
         # drop root priviledge if run as root
@@ -296,20 +295,16 @@ def parse_args():
                 "description"
                     : "remote dns host. default: first in /etc/resolv.conf",
                 },
-            "sogou-dns": {
+            "proxy-dns": {
                 "description"
-                    : "DNS used to lookup IP of sogou proxy servers",
-                },
-            "sogou-network": {
-                "description"
-                    : 'choose between "edu" and "dxt"',
-                "default": None,
+                    : "DNS used to lookup IP of proxy servers",
                 },
             "proxy-list": {
                 "description" : \
                     'Load user supplied proxy servers either ' +
                     'from a comma seperated list or ' +
                     'from a JSON file as a list of strings.',
+                "default": "proxy.uku.im:8888",
                 },
             "extra-url-list": {
                 "description"
@@ -403,17 +398,9 @@ def parse_args():
             del argv[akey]
     fix_keys(argv)
 
-    if argv["sogou_network"]:
-        sd = argv["sogou_network"]
-        if not (sd == "dxt" or sd == "edu"):
-            opt.showHelp()
-            log.error('Bad value for option --sogou-network %s',
-                    sd)
-            process.exit(code=2)
-
     if argv.help:
         opt.showHelp()
-        process.exit(code=0)
+        process.exit(0)
     return argv
 
 def main():

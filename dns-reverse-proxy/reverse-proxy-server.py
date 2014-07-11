@@ -1,11 +1,10 @@
 # vim:fileencoding=utf-8:sw=4:et:syntax=python
-# Reverse proxy server through the sogou proxy server
+# Reverse proxy server through remote proxy server
 
 httpProxy = require("http-proxy")
 http = require("http")
 EventEmitter = require("events").EventEmitter
 
-sogou = require('../shared/sogou')
 dns_proxy = require("./dns-proxy")
 lutils = require('./lutils')
 log = lutils.logger
@@ -21,21 +20,20 @@ MAX_ERROR_COUNT = {
 @external
 class EventEmitter:
     pass
-class ReverseSogouProxy(EventEmitter):
+class ReverseProxyServer(EventEmitter):
     def __init__(self, options):
         """
             options:
                 listen_port: dns proxy port. default: 80
                 listen_address: dns proxy address. default: 0.0.0.0
-                sogou_dns: dns used to lookup sogou server ip
-                sogou_network: sogou network: "dxt" or "edu"
+                proxy_dns: dns used to lookup proxy server ip
                 external_ip: optional public ip of a exit router
             events:
                 "listening": emit after server has been bound to listen port
         """
         self.options = options
         self.banned = {} # banned IP
-        self.sogou_renew_timeout = 10*60*1000
+        self.proxy_renew_timeout = 10*60*1000
         self.public_ip_box = None
         self.request_id = 1
 
@@ -55,42 +53,41 @@ class ReverseSogouProxy(EventEmitter):
             })
         self.rate_limiter.set_name("HTTP Proxy")
 
-        self.reset_sogou_flags()
-        self.setup_sogou_manager()
-        self.sogou_info = {"address": sogou.new_sogou_proxy_addr()}
+        self.reset_proxy_flags()
+        self.setup_proxy_manager()
+        self.proxy_info = {"address": self.proxy_manager.new_proxy_address()}
 
-    def setup_sogou_manager(self):
-        """Manage which sogou proxy server we choose"""
+    def setup_proxy_manager(self):
+        """Manage which proxy server we choose"""
         dns_resolver = None
-        if self.options["sogou_dns"]:
-            sg_dns = self.options["sogou_dns"]
-            log.info("Sogou proxy DNS solver:", sg_dns)
+        if self.options["proxy_dns"]:
+            sg_dns = self.options["proxy_dns"]
+            log.info("Proxy DNS solver:", sg_dns)
             dns_resolver = dns_proxy.createDnsResolver(sg_dns)
-        self.sogou_manager = lutils.createSogouManager(dns_resolver,
+        self.proxy_manager = lutils.createProxyManager(dns_resolver,
                 self.options["proxy_list"])
-        self.sogou_manager.sogou_network = self.options["sogou_network"]
 
         def _on_renew_address(addr_info):
-            log.info("renewed sogou server:", addr_info)
-            self.sogou_info = addr_info
-            self.reset_sogou_flags()
+            log.info("renewed proxy server:", addr_info)
+            self.proxy_info = addr_info
+            self.reset_proxy_flags()
         def _on_error(err):
-            self.in_changing_sogou = -1
-            log.error("renew sogou:", err)
-        self.sogou_manager.on("renew-address", _on_renew_address)
-        self.sogou_manager.on("error", _on_error)
+            self.in_changing_proxy = -1
+            log.error("renew proxy:", err)
+        self.proxy_manager.on("renew-address", _on_renew_address)
+        self.proxy_manager.on("error", _on_error)
 
-        self.renew_sogou_server(True)
+        self.renew_proxy_server(True)
 
-    def reset_sogou_flags(self):
-        """sogou server renew related flags"""
-        self.in_changing_sogou = -1 # time stamp to future upate
+    def reset_proxy_flags(self):
+        """proxy server renew related flags"""
+        self.in_changing_proxy = -1 # time stamp to future upate
         self.reset_count = 0
         self.refuse_count = 0
         self.timeout_count = 0
 
-    def renew_sogou_server(self, forced=False):
-        """Change to a new sogou proxy server"""
+    def renew_proxy_server(self, forced=False):
+        """Change to a new proxy server"""
         need_reset = forced
         for k in Object.keys(MAX_ERROR_COUNT):
             if getattr(self, k) > MAX_ERROR_COUNT[k]:
@@ -98,11 +95,11 @@ class ReverseSogouProxy(EventEmitter):
                 break
         if need_reset is False: return
 
-        if 0 < self.in_changing_sogou < Date.now():
+        if 0 < self.in_changing_proxy < Date.now():
             return
-        self.in_changing_sogou = Date.now() + self.sogou_renew_timeout
-        log.debug("changing sogou server...")
-        self.sogou_manager.renew_sogou_server()
+        self.in_changing_proxy = Date.now() + self.proxy_renew_timeout
+        log.debug("changing proxy server...")
+        self.proxy_manager.renew_proxy_server()
 
     def setup_proxy(self, options):
         """create the node proxy server instance"""
@@ -134,7 +131,7 @@ class ReverseSogouProxy(EventEmitter):
             log.error("HTTP Server clientError:", err, r_ip)
         def _on_error(err):
             log.error("HTTP Server Error:", err)
-            process.exit(code=2)
+            process.exit(2)
 
         server = http.createServer(on_request)
         server.on("connection", _on_connection)
@@ -176,7 +173,7 @@ class ReverseSogouProxy(EventEmitter):
             url = req.url
         to_use_proxy = lutils.is_valid_url(url)
 
-        #log.debug("sogou:", self.sogou_info)
+        #log.debug("proxy:", self.proxy_info)
         log.debug("do_proxy[%s] req.url:", self.request_id, url, to_use_proxy)
         req.headers["X-Droxy-SG"] = "" + to_use_proxy
         req.headers["X-Droxy-RID"] = "" + self.request_id
@@ -188,13 +185,13 @@ class ReverseSogouProxy(EventEmitter):
             forward_cookies = True
 
         if to_use_proxy:
-            si = self.sogou_info
-            sogou_host = si["ip"] or si["address"]
-            sogou_port = si["port"]
-            lutils.add_sogou_headers(req.headers, req.headers["host"])
+            si = self.proxy_info
+            proxy_host = si["ip"] or si["address"]
+            proxy_port = si["port"]
+            lutils.add_proxy_headers(req.headers, req.headers["host"])
             proxy_options = {
                     "target": {
-                        "host": sogou_host, "port": sogou_port,
+                        "host": proxy_host, "port": proxy_port,
                         #host: "localhost", port: 9010,
                     },
                     "toProxy": True,
@@ -241,36 +238,17 @@ class ReverseSogouProxy(EventEmitter):
             self.timeout_count += 1
         else:
             self.reset_count += 1 # unknown error
-        self.renew_sogou_server()
+        self.renew_proxy_server()
 
     def _on_proxy_response(self, res):
         #log.debug(res)
         req = res.req
-        to_use_proxy = int(req._headers["x-droxy-sg"])
+        #to_use_proxy = int(req._headers["x-droxy-sg"])
         req_id = int(req._headers["x-droxy-rid"])
-        mitm = False
-        if res.statusCode >= 400:
-            #log.debug("_on_proxy_response:", res)
-            via = res.headers["via"]
 
-            if not via:
-                via = res.headers["Via"]
-            if (to_use_proxy == "true" and
-                    (not via or via.indexOf("sogou-in.domain") < 0)):
-                # someone crapped on our request, mostly chinacache
-                mitm = True
         sock = res.socket
-        if mitm is True:
-            log.warn("We are fucked by man-in-the-middle[%d]:\n",
-                    req_id, res.headers, res.statusCode,
-                    sock.remoteAddress + ":" + sock.remotePort)
-            # 502: Bad Gateway
-            res.statusCode = 502
-            self.refuse_count += 1
-            self.renew_sogou_server()
-        else:
-            log.debug("_on_proxy_response[%d] headers:", req_id,
-                    res.headers, res.statusCode, sock.remoteAddress)
+        log.debug("_on_proxy_response[%d] headers:", req_id,
+                res.headers, res.statusCode, sock.remoteAddress)
 
     def _handle_unknown_host(self, req, res):
         """In case we see an request with unknown/un-routed "host" """
@@ -290,7 +268,7 @@ class ReverseSogouProxy(EventEmitter):
 
     def _on_listening(self):
         addr = self.server.address()
-        log.info("Sogou proxy listens on %s:%d",
+        log.info("proxy listens on %s:%d",
                 addr.address, addr.port)
         self.emit("listening")
 
@@ -303,15 +281,15 @@ class ReverseSogouProxy(EventEmitter):
 
         self.server.listen(self.proxy_port, self.proxy_host, _on_listen)
 
-        # change sogou server periodically
+        # change proxy server periodically
         def on_renew_timeout():
-            self.renew_sogou_server(True)
-        sogou_renew_timer = setInterval(on_renew_timeout,
-                self.sogou_renew_timeout)
-        sogou_renew_timer.unref()
+            self.renew_proxy_server(True)
+        proxy_renew_timer = setInterval(on_renew_timeout,
+                self.proxy_renew_timeout)
+        proxy_renew_timer.unref()
 
 def createServer(options):
-    s = ReverseSogouProxy(options)
+    s = ReverseProxyServer(options)
     return s
 
 def main():
@@ -325,13 +303,13 @@ def main():
 
     run_local_proxy()
     options = {"listen_port":8080, "listen_address":"127.0.0.1",
-            "sogou_dns": "8.8.4.4"}
-    s = ReverseSogouProxy(options)
+            "proxy_dns": "8.8.4.4"}
+    s = ReverseProxyServer(options)
     s.start()
 
     client_options = { "host": "127.0.0.1", "port": 8080,
         "path": "http://httpbin.org/ip", "headers": { "Host": "httpbin.org" } }
-    # wait a few sec to get a valid sogou proxy ip first
+    # wait a few sec to get a valid proxy ip first
     log.info("wait for a while...")
     def on_client_start():
         log.info("start download...")
@@ -344,5 +322,5 @@ def main():
 if require.main is JS("module"):
     main()
 
-exports.ReverseSogouProxy = ReverseSogouProxy
+exports.ReverseProxyServer = ReverseProxyServer
 exports.createServer = createServer
