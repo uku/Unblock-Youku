@@ -6,7 +6,7 @@ proxy server (droxy).
 When pointing your DNS resolver to `droxy`, droxy will redirect _some_ domain
 names to itself. The droxy will then be able to transparently proxy the HTTP
 requests to the __redirected domain__ through the builtin HTTP proxy server.
-The builtin HTTP proxy will go through sogou proxy server by default.
+The builtin HTTP proxy will go through Chinese proxy server by default.
 
 # Disclaimer #
 
@@ -98,7 +98,7 @@ Options can be save/load from a config file
 ```
 
 Now you can set the DNS of your computer to the local IP running the dns
-reverse proxy, and let sogou work its magic.
+reverse proxy, and let proxy server work its magic.
 
 ```
 $ nodejs droxy.js -h
@@ -109,9 +109,8 @@ Usage:
 Options:
   --ip               local IP address to listen on        [default: "0.0.0.0"]
   --dns-host         remote dns host. default: first in /etc/resolv.conf      
-  --sogou-dns        DNS used to lookup IP of sogou proxy servers
+  --proxy-dns        DNS used to lookup IP of proxy servers
                                                                [default: null]
-  --sogou-network    choose between "edu" and "dxt"            [default: null]
   --proxy-list       Load user supplied proxy servers either from a comma
                      seperated list or from a JSON file as a list of strings.
                                                                [default: null]

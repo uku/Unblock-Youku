@@ -929,7 +929,7 @@ def main():
             cmd = cmd_prefix + qs.pop()
             console.log("$", cmd)
             childp.exec(cmd, rerun)
-        #else: process.exit(code=0)
+        #else: process.exit(0)
     rerun()
 
     # test dns resolver
