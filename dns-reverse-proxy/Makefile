@@ -19,7 +19,7 @@ endif
 
 JS_TARGET = dns-proxy.js \
 	    droxy.js \
-	    reverse-sogou-proxy.js \
+	    reverse-proxy-server.js \
 	    lutils.js \
 	    url-list-manager.js \
 
