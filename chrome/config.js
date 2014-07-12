@@ -41,15 +41,6 @@ unblock_youku.header_extra_url_list = [
 unblock_youku.ip_addr = new_random_ip();
 console.log('ip addr: ' + unblock_youku.ip_addr);
 
-unblock_youku.version = chrome.runtime.getManifest().version;
-// the lastest version to show NEW on the icon; it's usually a big update with new features
-unblock_youku.lastest_new_version = '2.6.0.0';
-get_storage('previous_new_version', function(version) {
-    if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
-        chrome.browserAction.setBadgeText({text: 'NEW'});
-    }
-});
-
 
 // ====== Configuration Functions ======
 function set_mode_name(mode_name, callback) {
@@ -257,6 +248,15 @@ function setup_storage_monitor() {
 // ====== Initialization ======
 document.addEventListener("DOMContentLoaded", function() {
     setup_storage_monitor();
+
+    unblock_youku.version = chrome.runtime.getManifest().version;
+    // the lastest version to show NEW on the icon; it's usually a big update with new features
+    unblock_youku.lastest_new_version = '2.6.0.0';
+    get_storage('previous_new_version', function(version) {
+        if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
+            chrome.browserAction.setBadgeText({text: 'NEW'});
+        }
+    });
 
     get_mode_name(function(current_mode_name) {
         setup_mode_settings(current_mode_name);

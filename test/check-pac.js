@@ -15,7 +15,7 @@ eval(crx_pac_content);
 /* jshint ignore:end */
 
 function test_url(need_proxy, url) {
-    console.log(url);
+    // console.log(url);
     var hostname = url_parse(url).hostname;
     if (need_proxy) {
         assert.equal(

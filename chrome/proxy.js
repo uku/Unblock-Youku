@@ -22,8 +22,8 @@
 "use strict";
 
 
-function setup_pac_data(proxy_domain) {
-    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain, 'HTTPS');
+function setup_pac_data(proxy_protocol, proxy_domain) {
+    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain, proxy_protocol);
     // console.log(pac_data);
     var proxy_config = {
         mode: 'pac_script',
@@ -43,78 +43,18 @@ function setup_pac_data(proxy_domain) {
 }
 
 
-function setup_proxy(depth) {  // depth for recursion
-    if (typeof depth === 'undefined') {
-        depth = 0;  // recursion depth
-        console.group('to set up proxy');
-    }
+function setup_proxy() {
+    console.group('to set up proxy');
 
-    var test_server = 'proxy.mainland.io:993';
-    // var test_server = 'proxy.uku.im:8888';
-    setup_pac_data(test_server);
-    console.log('using experimental server: ' + test_server);
-    ga_report_event('Proxy Server Selection', test_server, 0.1);
+    var proxy_server_proc = 'HTTPS';
+    var proxy_server_addr = 'proxy.mainland.io:993';
+    setup_pac_data(proxy_server_proc, proxy_server_addr);
+    console.log('using the proxy server: ' + proxy_server_proc + ' ' + proxy_server_addr);
+    ga_report_event('Proxy Server Selection', proxy_server_proc + ' ' + proxy_server_addr, 0.1);
+
     console.groupEnd();
-
-    /*
-    var proxy_addr = new_sogou_proxy_addr();
-    console.log('using proxy: ' + proxy_addr);
-    setup_pac_data(proxy_addr);  // should set up PAC already
-
-    console.log('to check if the proxy server is avaiable: ' + proxy_addr);
-    console.log((depth + 1) + '-th time to test proxy servers');
-    var xhr = new XMLHttpRequest();
-
-    // test timeout
-    var xhr_timer = setTimeout(function() {
-        xhr.abort();
-        console.warn(proxy_addr + ' TIMEOUT!');
-        ga_report_timeout('Proxy Server Timeout', proxy_addr);
-        get_mode_name(function(current_mode_name) {
-            if (current_mode_name === 'normal') {
-                // if (depth < 31) {
-                if (depth < 3) {
-                    setup_proxy(depth + 1); // simply recursive
-                } else {
-                    console.warn('have reached the max retrial times of setup_proxy, so abort');
-                    
-                    // experimental
-                    var test_server = 'proxy.mainland.io:8888';
-                    console.log('using experimental server: ' + test_server);
-                    setup_pac_data(test_server);
-                    ga_report_event('Proxy Server Selection', test_server, 0.1);
-
-                    console.groupEnd();
-                }
-            } else {
-                console.warn('not in normal mode anymore, so abort the retrial');
-                console.groupEnd();
-            }
-        });
-    }, 3000);  // 3s
-
-    // http://goo.gl/ktYcx
-    // but still can't get rid of the annoying message "Failed to load resource"
-    xhr.onerror = function(e) {
-        console.error('xhr error: ' + e.target.status);
-    };
-
-    // xhr.open('GET', 'http://httpbin.org/delay/13');
-    // xhr.open('GET', 'http://fakedomainname');
-    xhr.open('GET', 'http://' + proxy_addr);
-    xhr.timeout = 4000; // 4s
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 400) {
-            clearTimeout(xhr_timer);
-            console.log('the proxy server seems to be working fine: ' + proxy_addr);
-            ga_report_event('Proxy Server Selection', proxy_addr, 0.1);
-
-            console.groupEnd();
-        }
-    };
-    xhr.send();
-    */
 }
+
 
 function clear_proxy() {
     var proxy_config = {

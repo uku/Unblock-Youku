@@ -48,7 +48,9 @@ def start_server():
     print 'To start the server, and wait for 3 seconds to set up...'
     sys.stdout.flush()
     test_env = os.environ.copy()
+    # test_env['PROXY_ADDR'] = 'https://proxy.mainland.io:993'
     test_env['PROXY_ADDR'] = 'http://proxy.uku.im:8888'
+    # test_env['PAC_PROXY_ADDR'] = 'http://proxy.uku.im:8888'
     server_process = subprocess.Popen(
         ['node', '../server/server.js'],
         env=test_env)
@@ -78,8 +80,12 @@ def run_all_tests():
     num_failed = 0
     num_passed = 0
     for file_name in os.listdir('.'):
-        if file_name.startswith('test-') and file_name.endswith('.js'):
-            command = ['phantomjs', file_name]
+        if (file_name.startswith('test-') or file_name.startswith('check-')) \
+                and file_name.endswith('.js'):
+            if (file_name.startswith('test-')):
+                command = ['phantomjs', file_name]
+            else:
+                command = ['node', file_name]
             print
             print ' '.join(command)
             sys.stdout.flush()

@@ -87,7 +87,7 @@ function filter_request_headers(headers) {
             } else if (field === 'user-agent') {
                 if (headers['user-agent'].indexOf('CloudFront') !== -1 ||
                         headers['user-agent'].indexOf('CloudFlare') !== -1) {
-                    ret_headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) ' + 
+                    ret_headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) ' +
                         'AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31';
                 } else {
                     ret_headers['User-Agent'] = headers['user-agent'];
@@ -159,8 +159,12 @@ function static_responses(client_request, client_response, pac_file_content) {
     }
 
     if (client_request.url === '/proxy.pac') {
+        var content_type = 'application/x-ns-proxy-autoconfig';
+        if (client_request.headers['user-agent'].indexOf('PhantomJS') !== -1) {
+            content_type = 'text/plain';
+        }
         client_response.writeHead(200, {
-            'Content-Type': 'application/x-ns-proxy-autoconfig',
+            'Content-Type': content_type,
             'Content-Length': pac_file_content.length.toString(),
             'Cache-Control': 'public, max-age=14400'
         });

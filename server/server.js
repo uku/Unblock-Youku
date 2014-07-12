@@ -28,6 +28,7 @@ http.globalAgent.maxSockets = Infinity;
 
 var argv = require('optimist')
     .string('proxy')   // remote proxy address, such as http://123.45.67.89:8888
+    .string('pac_proxy')  // the proxy address used in the PAC file; default to be the same as --proxy
     .boolean('nolog')  // do not show network logs
     .argv
 ;
@@ -49,19 +50,22 @@ if (process.env.SENTRY_ADDRESS) {
 } 
 
 
-local_port = process.env.PORT || 8888;
+var local_port = process.env.PORT || 8888;
+if ((!argv.proxy) && process.env.PROXY_ADDR) {
+    argv.proxy = process.env.PROXY_ADDR;
+}
+if ((!argv.pac_proxy) && (!process.env.PAC_PROXY_ADDR) && argv.proxy) {
+    argv.pac_proxy = argv.proxy;
+}
 var pac_file_content = null;
-var remote_proxy_obj = null;
-if (argv.proxy) {
-    remote_proxy_obj = url.parse(argv.proxy);
-    pac_file_content = server_utils.generate_pac_file(remote_proxy_obj.host, remote_proxy_obj.protocol);
-} else if (process.env.PROXY_ADDR) {
-    remote_proxy_obj = url.parse(process.env.PROXY_ADDR);
-    pac_file_content = server_utils.generate_pac_file(remote_proxy_obj.host, remote_proxy_obj.protocol);
+var pac_proxy_obj = null;
+if (argv.pac_proxy) {
+    pac_proxy_obj = url.parse(argv.pac_proxy);
+    pac_file_content = server_utils.generate_pac_file(pac_proxy_obj.host, pac_proxy_obj.protocol);
 } else {
     pac_file_content = 'function FindProxyForURL(url, host) {return "DIRECT";}';
 }
-console.log(pac_file_content);
+// console.log(pac_file_content);
 
 
 function http_req_handler(client_request, client_response) {
@@ -104,8 +108,8 @@ function http_req_handler(client_request, client_response) {
         method: client_request.method,
         headers: proxy_request_headers
     };
-    if (remote_proxy_obj) {
-        proxy_request_options.proxy = remote_proxy_obj.href;
+    if (argv.proxy) {
+        proxy_request_options.proxy = argv.proxy;
     }
     var proxy_request = request(proxy_request_options);
     client_request.pipe(proxy_request);

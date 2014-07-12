@@ -22,7 +22,7 @@
 
 
 function header_modifier(details) {
-    console.log('Modify headers of ' + details.url);
+    console.log('modify headers of ' + details.url);
 
     details.requestHeaders.push({
         name: 'X-Forwarded-For',
