@@ -6,5 +6,6 @@
 *.bak
 *.log
 
+.idea/
 node_modules/
 crx/

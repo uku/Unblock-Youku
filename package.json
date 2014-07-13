@@ -1,11 +1,12 @@
 {
   "name": "ub.uku.js",
+  "version": "2.0.0",
   "dependencies": {
     "colors": "*",
-    "optimist": "0.6.x",
-    "uglify-js": "2.4.x",
-    "raven": "0.6.x",
-    "request": "2.37.x"
+    "nomnom": "1.8.x",
+    "request": "2.37.x",
+    "validator": "3.16.x",
+    "uglify-js": "2.4.x"
   },
   "scripts": {
     "start": "node server/server.js",

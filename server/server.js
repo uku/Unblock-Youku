@@ -21,55 +21,86 @@
 var net = require('net');
 var url = require('url');
 var util = require('util');
-var http = require('http');
 var cluster = require('cluster');
+var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
-
-var argv = require('optimist')
-    .string('proxy')   // remote proxy address, such as http://123.45.67.89:8888
-    .string('pac_proxy')  // the proxy address used in the PAC file; default to be the same as --proxy
-    .boolean('nolog')  // do not show network logs
-    .argv
-;
 var colors = require('colors');
 var request = require('request');
-
+var validator = require('validator');
 
 var shared_tools = require('../shared/tools');
 var server_utils = require('./utils');
 
 
-var raven = null;
-var raven_client = null;
-if (process.env.SENTRY_ADDRESS) {
-    raven = require('raven');
-    raven_client = new raven.Client(process.env.SENTRY_ADDRESS);
-    raven_client.patchGlobal();
-    raven_client.captureMessage('Sentry is running...');
-} 
+function check_url_format(str) {
+    if (!validator.isURL(str, {
+        protocols: ['http', 'https'],
+        require_tld: true,
+        require_protocol: true
+    })) {
+        return 'Input Error: Invalid URL format'.red;
+    }
+//    return;
+}
 
+var opts = require("nomnom")
+    // .help('Run a redirect server for the Chrome extension')
+    .option('nolog', {
+        flag: true,
+        help: 'Do not print request logs'
+    })
+    .option('proxy', {
+        type: 'string',
+        metavar: 'HTTP://IP_ADDRESS:PORT',
+        help: 'Send requests through a remote proxy',
+        callback: check_url_format
+    })
+    .option('pac_proxy', {
+        type: 'string',
+        help: 'Use a different proxy in the PAC file',
+        metavar: 'HTTP://IP_ADDRESS:PORT',
+        callback: check_url_format
+    })
+    .parse();
+// console.log(opts);
 
 var local_port = process.env.PORT || 8888;
-if ((!argv.proxy) && process.env.PROXY_ADDR) {
-    argv.proxy = process.env.PROXY_ADDR;
+if ((!opts.proxy) && process.env.PROXY_ADDR) {
+    opts.proxy = process.env.PROXY_ADDR;
 }
-if ((!argv.pac_proxy) && (!process.env.PAC_PROXY_ADDR) && argv.proxy) {
-    argv.pac_proxy = argv.proxy;
+if (!opts.pac_proxy) {
+    if (process.env.PAC_PROXY_ADDR) {
+        opts.pac_proxy = process.env.PAC_PROXY_ADDR;
+    } else if (opts.proxy) {
+        opts.pac_proxy = opts.proxy;
+    }
 }
+
+if ((opts.proxy && (check_url_format(opts.proxy) !== undefined))
+        || (opts.pac_proxy && (check_url_format(opts.pac_proxy) !== undefined))) {
+    util.error('ENV Error: Invalid URL format'.red);
+    process.exit(400);
+}
+//console.log(opts);
+
 var pac_file_content = null;
 var pac_proxy_obj = null;
-if (argv.pac_proxy) {
-    pac_proxy_obj = url.parse(argv.pac_proxy);
+if (opts.pac_proxy) {
+    pac_proxy_obj = url.parse(opts.pac_proxy);
+    if (!pac_proxy_obj.host || !pac_proxy_obj.protocol) {
+        util.error('Invalid URL format parsed'.red);
+        process.exit(401);
+    }
     pac_file_content = server_utils.generate_pac_file(pac_proxy_obj.host, pac_proxy_obj.protocol);
 } else {
     pac_file_content = 'function FindProxyForURL(url, host) {return "DIRECT";}';
 }
-// console.log(pac_file_content);
+//console.log(pac_file_content);
 
 
 function http_req_handler(client_request, client_response) {
-    if (!argv.nolog) {
+    if (!opts.nolog) {
         console.log(
                 '[ub.uku.js] '
                 + client_request.connection.remoteAddress + ': '
@@ -92,7 +123,6 @@ function http_req_handler(client_request, client_response) {
     }
 
     // access control
-    var proxy_request_options;
     if (!server_utils.is_valid_url(target.href)) {
         client_response.writeHead(403, {
             'Cache-Control': 'public, max-age=14400'
@@ -108,23 +138,26 @@ function http_req_handler(client_request, client_response) {
         method: client_request.method,
         headers: proxy_request_headers
     };
-    if (argv.proxy) {
-        proxy_request_options.proxy = argv.proxy;
+    if (opts.proxy) {
+        proxy_request_options.proxy = opts.proxy;
     }
     var proxy_request = request(proxy_request_options);
     client_request.pipe(proxy_request);
     proxy_request.pipe(client_response);
 
-    /*
-    client_request.on('error', function(err) {
-        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
-        proxy_request.end();  // is this correct?
-    });
-    client_response.on('error', function(err) {
-        util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
-        proxy_request.end();
-    });
-    */
+
+//    client_request.on('error', function(err) {
+//        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
+//        proxy_request.end();
+//    });
+//    client_response.on('error', function(err) {
+//        util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
+//        proxy_request.end();
+//    });
+//    proxy_request.on('error', function(err) {
+//        util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
+//        proxy_request.end();
+//    });
 }
 
 
@@ -143,14 +176,17 @@ if (cluster.isMaster) {
 
     cluster.on('listening', function(worker, addr_port) {
         // use ub.uku.js as keyword for searching in log files
-        util.log('[ub.uku.js] Worker ' + worker.process.pid + ' is now connected to ' + addr_port.address + ':' + addr_port.port);
+        util.log('[ub.uku.js] Worker ' + worker.process.pid
+            + ' is now connected to ' + addr_port.address + ':' + addr_port.port);
     });
 
     cluster.on('exit', function(worker, code, signal) {
         if (signal) {
-            util.log('[ub.uku.js] Worker ' + worker.process.pid + ' was killed by signal: ' + signal);
+            util.log('[ub.uku.js] Worker ' + worker.process.pid
+                + ' was killed by signal: ' + signal);
         } else if (code !== 0) {
-            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited with error code: ' + code);
+            util.error('[ub.uku.js] Worker ' + worker.process.pid
+                + ' exited with error code: ' + code);
             // respawn a worker process when one dies
             cluster.fork();
         } else {
@@ -159,8 +195,8 @@ if (cluster.isMaster) {
     });
 
     console.log('The redirect server is running...'.green);
-    if (argv.proxy) {
-        console.log(('Using the remote proxy: ' + argv.proxy).green);
+    if (opts.proxy) {
+        console.log(('Using the remote proxy: ' + opts.proxy).green);
     } else {
         console.log('Running locally without remote proxies.'.green);
     }
@@ -180,9 +216,5 @@ if (cluster.isMaster) {
 
 process.on('uncaughtException', function(err) {
     util.error('[ub.uku.js] Caught uncaughtException: ' + err, err.stack);
-    if (raven_client !== null) {
-        raven_client.captureError(err);
-    } 
     process.exit(213);
 });
-
