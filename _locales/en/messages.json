@@ -30,7 +30,7 @@
     "message": "Redirect"
   },
   "mode_redirect_disabled": {
-    "message": "Redirect Mode is not available due to <a href=\"https://github.com/zhuzhuor/Unblock-Youku/issues/209\" target=\"_blank\">Flash bug in Chrome</a>"
+    "message": "Redirect Mode is not available due to a bug of Flash player in Chrome. For more details, please see http://uku.im/flash</a>"
   },
   "mode_lite_description": {
     "message": "Fast, but applicable to only <abbr title=\"Tudou, Xiami, Ku6 and Xunlei\">few websites</abbr>."

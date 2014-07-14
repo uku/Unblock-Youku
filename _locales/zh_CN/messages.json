@@ -30,7 +30,7 @@
     "message": "转发模式"
   },
   "mode_redirect_disabled": {
-    "message": "因为 <a href=\"https://github.com/zhuzhuor/Unblock-Youku/issues/209\" target=\"_blank\">Chrome 浏览器中 Flash 的 bug</a>，转发模式不可用"
+    "message": "因为 Chrome 浏览器中 Flash 播放器的一个 bug，转发模式不可用，详情请阅读 http://uku.im/flash"
   },
   "mode_lite_description": {
     "message": "连接速度最快，但只对<abbr title=\"土豆、虾米、酷六、迅雷看看\">土豆等个别网站</abbr>起效"

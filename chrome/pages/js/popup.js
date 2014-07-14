@@ -86,8 +86,11 @@ $(document).ready(function() {
     if(!is_opera()) {
         $('#redirect').addClass('disabled');
         $('#input_redirect').attr('disabled', true);
+
         // $('#buttons').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
+        // $('#input_redirect').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
         $('.mode_redirect_desc').parents('tr').addClass('text-muted').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
+
         // if current mode is redirect, change to normal mode
         background.get_mode_name(function(current_mode_name) {
             if(current_mode_name === 'redirect') {
