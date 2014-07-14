@@ -40,7 +40,8 @@ function get_real_target(req_path) {
 
         // fix possible padding errors
         // real_url += (new Array((4 - real_url.length % 4) % 4 + 1)).join('=');
-        for (var i = 0; i < (4 - real_url.length % 4) % 4; i++) {
+        var i;
+        for (i = 0; i < (4 - real_url.length % 4) % 4; i++) {
             real_url += '=';
         }
 
@@ -56,12 +57,13 @@ function get_real_target(req_path) {
 
 
 function is_valid_url(target_url) {
-    for (var i = 0; i < shared_urls.url_regex_whitelist.length; i++) {
+    var i;
+    for (i = 0; i < shared_urls.url_regex_whitelist.length; i++) {
         if (shared_urls.url_regex_whitelist[i].test(target_url)) {
             return false;
         }
     }
-    for (var i = 0; i < shared_urls.url_regex_list.length; i++) {
+    for (i = 0; i < shared_urls.url_regex_list.length; i++) {
         if (shared_urls.url_regex_list[i].test(target_url)) {
             return true;
         }
@@ -160,7 +162,8 @@ function static_responses(client_request, client_response, pac_file_content) {
 
     if (client_request.url === '/proxy.pac') {
         var content_type = 'application/x-ns-proxy-autoconfig';
-        if (client_request.headers['user-agent'].indexOf('PhantomJS') !== -1) {
+        if (client_request.headers['user-agent'] !== undefined &&
+                client_request.headers['user-agent'].indexOf('PhantomJS') !== -1) {
             content_type = 'text/plain';
         }
         client_response.writeHead(200, {
