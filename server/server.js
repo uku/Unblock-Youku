@@ -21,6 +21,7 @@
 var net = require('net');
 var url = require('url');
 var util = require('util');
+var domain = require('domain');
 var cluster = require('cluster');
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
@@ -41,7 +42,7 @@ function check_url_format(str) {
     })) {
         return 'Input Error: Invalid URL format'.red;
     }
-//    return;
+//    return;  // return nothing
 }
 
 var opts = require("nomnom")
@@ -146,18 +147,21 @@ function http_req_handler(client_request, client_response) {
     proxy_request.pipe(client_response);
 
 
-//    client_request.on('error', function(err) {
-//        util.error('[ub.uku.js] client_request error: (' + err.code + ') ' + err.message, err.stack);
-//        proxy_request.end();
-//    });
-//    client_response.on('error', function(err) {
-//        util.error('[ub.uku.js] client_response error: (' + err.code + ') ' + err.message, err.stack);
-//        proxy_request.end();
-//    });
-//    proxy_request.on('error', function(err) {
-//        util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, err.stack);
-//        proxy_request.end();
-//    });
+    var error_domain = domain.create();
+    error_domain.add(client_request);
+    error_domain.add(client_response);
+    error_domain.add(proxy_request);
+    // don't know how to handle errors...
+    error_domain.on('error', function(err) {
+        util.error('[ub.uku.js] Error in domain: (' + err.code + ') ' + err.message, err.stack);
+        try {
+            client_response.writeHead(500);
+            client_response.end('Error occurred, sorry.');
+        } catch (er) {
+            util.error('[ub.uku.js] Error sending 500', err, client_request.url);
+        }
+        error_domain.dispose();
+    });
 }
 
 
