@@ -145,23 +145,34 @@ function http_req_handler(client_request, client_response) {
     var proxy_request = request(proxy_request_options);
     client_request.pipe(proxy_request);
     proxy_request.pipe(client_response);
-
-
-    var error_domain = domain.create();
-    error_domain.add(client_request);
-    error_domain.add(client_response);
-    error_domain.add(proxy_request);
-    // don't know how to handle errors...
-    error_domain.on('error', function(err) {
-        util.error('[ub.uku.js] Error in domain: (' + err.code + ') ' + err.message, err.stack);
+    proxy_request.on('error', function(err) {
+        util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, client_request.url, err.stack);
+        client_request.unpipe(proxy_request);
+        proxy_request.unpipe(client_response);
         try {
             client_response.writeHead(500);
             client_response.end('Error occurred, sorry.');
         } catch (er) {
             util.error('[ub.uku.js] Error sending 500', err, client_request.url);
         }
-        error_domain.dispose();
     });
+
+
+//    var error_domain = domain.create();
+//    error_domain.add(client_request);
+//    error_domain.add(client_response);
+//    error_domain.add(proxy_request);
+//    // don't know how to handle errors...
+//    error_domain.on('error', function(err) {
+//        util.error('[ub.uku.js] Error in domain: (' + err.code + ') ' + err.message, err.stack);
+//        try {
+//            client_response.writeHead(500);
+//            client_response.end('Error occurred, sorry.');
+//        } catch (er) {
+//            util.error('[ub.uku.js] Error sending 500', err, client_request.url);
+//        }
+//        error_domain.dispose();
+//    });
 }
 
 
