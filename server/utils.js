@@ -89,8 +89,8 @@ function filter_request_headers(headers) {
             } else if (field === 'user-agent') {
                 if (headers['user-agent'].indexOf('CloudFront') !== -1 ||
                         headers['user-agent'].indexOf('CloudFlare') !== -1) {
-                    ret_headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) ' +
-                        'AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31';
+                    ret_headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) ' +
+                        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36';
                 } else {
                     ret_headers['User-Agent'] = headers['user-agent'];
                 }
@@ -129,8 +129,8 @@ function filter_response_headers(headers) {
             }
         }
     }
-    res_headers['Cache-Control'] = 'public, max-age=3600';
-    res_headers.Server = '; DROP TABLE servertypes; --';
+    res_headers['cache-control'] = 'public, max-age=3600';
+    res_headers.server = '; DROP TABLE servertypes; --';
 
     return res_headers;
 }
