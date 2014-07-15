@@ -26,6 +26,10 @@ var cluster = require('cluster');
 var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
+// mikeal/request might have a bug
+// always obtain TLS errors when proxying over https
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 var colors = require('colors');
 var request = require('request');
 var validator = require('validator');
