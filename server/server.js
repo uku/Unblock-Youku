@@ -61,6 +61,12 @@ var opts = require("nomnom")
         help: 'Send requests through a remote proxy',
         callback: check_url_format
     })
+    .option('bak_proxy', {
+        type: 'string',
+        help: 'Set another proxy server for backup',
+        metavar: 'HTTP://IP_ADDRESS:PORT',
+        callback: check_url_format
+    })
     .option('pac_proxy', {
         type: 'string',
         help: 'Use a different proxy in the PAC file',
@@ -74,6 +80,9 @@ var local_port = process.env.PORT || 8888;
 if ((!opts.proxy) && process.env.PROXY_ADDR) {
     opts.proxy = process.env.PROXY_ADDR;
 }
+if ((!opts.bak_proxy) && process.env.BAK_PROXY_ADDR) {
+    opts.bak_proxy = process.env.BAK_PROXY_ADDR;
+}
 if (!opts.pac_proxy) {
     if (process.env.PAC_PROXY_ADDR) {
         opts.pac_proxy = process.env.PAC_PROXY_ADDR;
@@ -82,7 +91,10 @@ if (!opts.pac_proxy) {
     }
 }
 
+//opts.proxy = 'http://abc.com:8888';
+
 if ((opts.proxy && (check_url_format(opts.proxy) !== undefined))
+        || (opts.bak_proxy && (check_url_format(opts.bak_proxy) !== undefined))
         || (opts.pac_proxy && (check_url_format(opts.pac_proxy) !== undefined))) {
     util.error('ENV Error: Invalid URL format'.red);
     process.exit(400);
@@ -149,24 +161,46 @@ function http_req_handler(client_request, client_response) {
         proxy_request_options.proxy = opts.proxy;
     }
 
+    function handle_proxy_request_error() {
+        try {
+            client_response.writeHead(500);
+            client_response.end('Error occurred, sorry.');
+        } catch (er) {
+            util.error('[ub.uku.js] Error sending 500', er, client_request.url);
+        }
+    }
+
+    function handle_proxy_response_data(response, payload) {
+        var filtered_headers = server_utils.filter_response_headers(response.headers);
+        filtered_headers['content-length'] = payload.length;
+        client_response.writeHead(response.statusCode, filtered_headers);
+        client_response.end(payload);
+    }
+
     request(proxy_request_options, function(err, resp, body) {
         if (err) {
-            util.error('[ub.uku.js] proxy_request error: (' + err.code + ') ' + err.message, client_request.url, err.stack);
-            try {
-                client_response.writeHead(500);
-                client_response.end('Error occurred, sorry.');
-            } catch (er) {
-                util.error('[ub.uku.js] Error sending 500', er, client_request.url);
+            util.error('[ub.uku.js] first proxy_request error: (' + err.code + ') ' + err.message, client_request.url);
+            if (opts.bak_proxy) {  // retry the request
+                setTimeout(function() {    // run it in 1s
+                    proxy_request_options.proxy = opts.bak_proxy;
+                    request(proxy_request_options, function(err, resp, body) {
+                        if (err) {
+                            util.error('[ub.uku.js] second proxy_request error: (' + err.code + ') ' + err.message, client_request.url, err.stack);
+                            handle_proxy_request_error();
+
+                        } else {
+                            handle_proxy_response_data(resp, body);
+                        }
+                    });
+                }, 1000);
+
+            } else {
+                handle_proxy_request_error();
             }
 
-            return;
+        } else {
+            handle_proxy_response_data(resp, body);
         }
-
-        var filtered_headers = server_utils.filter_response_headers(resp.headers);
-        filtered_headers['content-length'] = body.length;
-//        console.log(filtered_headers);
-        client_response.writeHead(resp.statusCode, filtered_headers);
-        client_response.end(body);
     });
 }
 
@@ -209,6 +243,12 @@ if (cluster.isMaster) {
         console.log(('Using the remote proxy: ' + opts.proxy).green);
     } else {
         console.log('Running locally without remote proxies.'.green);
+    }
+    if (opts.bak_proxy) {
+        console.log(('Using the backup proxy: ' + opts.bak_proxy).green);
+    }
+    if (opts.pac_proxy) {
+        console.log(('The PAC file uses the proxy: ' + opts.bak_proxy).green);
     }
 
 } else if (cluster.isWorker) {

@@ -49,8 +49,8 @@ def start_server():
     sys.stdout.flush()
     test_env = os.environ.copy()
     test_env['PROXY_ADDR'] = 'https://proxy.mainland.io:993'
-    # test_env['PROXY_ADDR'] = 'http://proxy.uku.im:8888'
-    # test_env['PAC_PROXY_ADDR'] = 'http://proxy.uku.im:8888'
+    test_env['BAK_PROXY_ADDR'] = 'http://proxy.uku.im:8888'
+    test_env['PAC_PROXY_ADDR'] = 'http://proxy.uku.im:8888'
     server_process = subprocess.Popen(
         ['node', '../server/server.js'],
         env=test_env)
