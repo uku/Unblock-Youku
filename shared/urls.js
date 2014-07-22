@@ -1,5 +1,4 @@
 /*
- * Allow you smoothly surf on many websites blocking non-mainland visitors.
  * Copyright (C) 2012 - 2013  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify

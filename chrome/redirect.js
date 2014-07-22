@@ -1,5 +1,4 @@
 /*
- * Allow you smoothly surf on many websites blocking non-mainland visitors.
  * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,13 +17,8 @@
 
 /*jslint browser: true */
 /*global chrome: false, unblock_youku: false, btoa: false */
-/*global ga_report_error */
+/*global ga_report_error: false, string_starts_with: false */
 "use strict";
-
-
-function urlsafe_b64encode(str) {
-    return btoa(str).replace('+', '-').replace('/', '_');
-}
 
 
 function http_redirector(details) {
@@ -59,7 +53,11 @@ function http_redirector(details) {
     }
 
     //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + urlsafe_b64encode(details.url);
-    redirect_url = 'http://' + backend_server + '?url=' + urlsafe_b64encode(details.url);
+    if (string_starts_with(details.url, 'http://')) {
+        redirect_url = 'http://' + backend_server + '/http/' + details.url.substring('http://'.length);
+    } else if (string_starts_with(details.url, 'https://')) {
+        redirect_url = 'http://' + backend_server + '/https/' + details.url.substring('https://'.length);
+    }
     console.log('redirect url: ' + redirect_url);
 
     if (redirect_url !== null) {
@@ -79,7 +77,7 @@ function check_redirect_server(server_addr, success_callback, failure_callback) 
         failure_callback('Timeout');
     }, 10000);  // 10s
 
-    xhr.open('GET', 'http://' + server_addr.match(/^(.[^:\/]+)/)[1] + '/status', true);
+    xhr.open('GET', 'http://' + server_addr.match(/^(.[^\/]+)/)[1] + '/status', true);
     xhr.timeout = 12000; // 12s
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {

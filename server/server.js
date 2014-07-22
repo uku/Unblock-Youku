@@ -247,7 +247,7 @@ if (cluster.isMaster) {
         console.log(('Using the backup proxy: ' + opts.bak_proxy).green);
     }
     if (opts.pac_proxy) {
-        console.log(('The PAC file uses the proxy: ' + opts.bak_proxy).green);
+        console.log(('The PAC file uses the proxy: ' + opts.pac_proxy).green);
     }
 
 } else if (cluster.isWorker) {
