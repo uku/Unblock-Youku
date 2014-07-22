@@ -32,26 +32,37 @@ var to_title_case = shared_tools.to_title_case;
 
 function get_real_target(req_path) {
     var real_target = {};
+    var real_url = null;
 
-    var real_url = querystring.parse(url.parse(req_path).query).url;
-    if (real_url) {
-        // to use urlsafe_b64encode
-        real_url = real_url.replace('-', '+').replace('_', '/');
+    if (string_starts_with(req_path, '/proxy/http/')) {
+        real_url = 'http://' + req_path.substring('/proxy/http/'.length);
+    } else if (string_starts_with(req_path, '/proxy/https/')) {
+        real_url = 'https://' + req_path.substring('/proxy/https/'.length);
+    } else {
+        real_url = querystring.parse(url.parse(req_path).query).url;
+        if (real_url) {
+            // to use urlsafe_b64encode
+            real_url = real_url.replace('-', '+').replace('_', '/');
 
-        // fix possible padding errors
-        // real_url += (new Array((4 - real_url.length % 4) % 4 + 1)).join('=');
-        var i;
-        for (i = 0; i < (4 - real_url.length % 4) % 4; i++) {
-            real_url += '=';
+            // fix possible padding errors
+            // real_url += (new Array((4 - real_url.length % 4) % 4 + 1)).join('=');
+            var i;
+            for (i = 0; i < (4 - real_url.length % 4) % 4; i++) {
+                real_url += '=';
+            }
+
+            var buf = new Buffer(real_url, 'base64');
+            real_url = buf.toString();
         }
+    }
 
-        var buf = new Buffer(real_url, 'base64');
-        real_url = buf.toString();
+    if (real_url) {
         real_target = url.parse(real_url);
+        if (!real_target.port) {
+            real_target.port = 80;
+        }
     }
-    if (!real_target.port) {
-        real_target.port = 80;
-    }
+
     return real_target;
 }
 
