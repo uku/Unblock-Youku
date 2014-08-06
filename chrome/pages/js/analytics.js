@@ -53,7 +53,7 @@ function ga_collect_data(type, data) {
 
 function ga_report_event(event_name, event_desc, collection_rate) {
     "use strict";
-    if (typeof collection_rate === 'number' || Math.random() > collection_rate) {
+    if (typeof collection_rate !== 'undefined' && Math.random() > collection_rate) {
         // reduce data points
         return;
     }
@@ -65,12 +65,13 @@ function ga_report_event(event_name, event_desc, collection_rate) {
 
 
 function ga_report_ratio(ratio_name, ratio_value) {
-    ga_report_event(ratio_name, ratio_value, 0.01);
+    // ga_report_event(ratio_name, ratio_value, 0.1);
+    ga_report_event(ratio_name, ratio_value, 1.0);
 }
 
 
 function ga_report_timeout(timeout_type, timeout_server) {
-    ga_report_event(timeout_type, timeout_server, 0.01);
+    ga_report_event(timeout_type, timeout_server, 0.1);
 }
 
 
