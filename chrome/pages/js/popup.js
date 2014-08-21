@@ -40,8 +40,8 @@ function set_i18n_text() {
     $('span#support_checkbox_label').html(get_msg('support_checkbox_label'));
 }
 
-function is_opera() {
-    return !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+function is_flash_bug_fixed() {
+    return !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) >= 38;
 }
 
 
@@ -80,9 +80,9 @@ $(document).ready(function() {
         }
     });
 
-    // check whether the browser is Opera, to get around Flash bug in Chrome
+    // check whether the browser is Opera, or Chrome version >= 38, to get around Flash bug in Chrome
     // https://github.com/zhuzhuor/Unblock-Youku/issues/209
-    if(!is_opera()) {
+    if(!is_flash_bug_fixed()) {
         $('#redirect').addClass('disabled');
         $('#input_redirect').attr('disabled', true);
 
