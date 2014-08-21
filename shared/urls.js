@@ -127,8 +127,8 @@ unblock_youku.common_urls = [
 // only for chrome extension
 unblock_youku.chrome_extra_urls = [
     'http://www.tudou.com/programs/view/*',
-    // 'http://www.tudou.com/albumplay/*',
-    // 'http://www.tudou.com/listplay/*',
+    'http://www.tudou.com/albumplay/*',
+    'http://www.tudou.com/listplay/*',
 
     // 'http://live.video.sina.com.cn/room/*',
     // 'http://edge.v.iask.com/*',  // may be large files
