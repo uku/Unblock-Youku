@@ -33,8 +33,8 @@ unblock_youku.backup_server = 'bak.yōukù.com/proxy';
 unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
 unblock_youku.redirect_url_list = unblock_youku.common_urls;
 unblock_youku.header_extra_url_list = [
-    'http://web-play.pptv.com/*',
-    'http://web-play.pplive.cn/*',
+    // 'http://web-play.pptv.com/*',
+    // 'http://web-play.pplive.cn/*',
     'http://live.gslb.letv.com/*',
     'http://ac.qq.com/*',
     'http://*.ssports.com/*',
