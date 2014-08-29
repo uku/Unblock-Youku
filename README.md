@@ -1,4 +1,4 @@
-# Unblock Youku
+# Unblock Youku  [![Gitter chat](https://badges.gitter.im/zhuzhuor/Unblock-Youku.png)](https://gitter.im/zhuzhuor/Unblock-Youku)
 
 This project contains three functionalities.
 
