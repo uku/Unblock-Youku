@@ -39,6 +39,8 @@ unblock_youku.header_extra_url_list = [
     'http://ac.qq.com/*',
     'http://*.ssports.com/*',
     'http://ssports.com/*',
+    'http://www.bilibili.com/*',
+    'http://interface.bilibili.com/*',
     'http://*.xiami.com/*',  // xiami is blocked in HK and TW
     'http://*.ku6.com/*',
     'http://kandian.com/player/getEpgInfo*'  // !!!
