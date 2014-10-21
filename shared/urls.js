@@ -237,6 +237,7 @@ unblock_youku.server_extra_urls = [
     'http://www.xiami.com/web/spark*',
     'http://www.xiami.com/web/*?*xiamitoken=*',
     'http://spark.api.xiami.com/api?*method=AuthIp*',
+    'http://spark.api.xiami.com/api?*method=Start.init*',
     'http://spark.api.xiami.com/api?*method=Songs.getTrackDetail*',
     'http://spark.api.xiami.com/api?*method=Songs.detail*',
     // for PC Clients only
