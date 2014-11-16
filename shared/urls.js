@@ -226,6 +226,7 @@ unblock_youku.server_extra_urls = [
     'http://3g.music.qq.com/*',
     'http://mqqplayer.3g.qq.com/*',
     'http://proxy.music.qq.com/*',
+    'http://proxymc.qq.com/*',
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
