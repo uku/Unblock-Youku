@@ -125,7 +125,7 @@ unblock_youku.common_urls = [
     'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
-    'http://211.151.157.15/*',
+    'http://211.151.157.15/*'
 ];
 
 // only for chrome extension
