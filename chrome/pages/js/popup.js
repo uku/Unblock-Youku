@@ -74,9 +74,11 @@ $(document).ready(function() {
             system_info += ' (' + current_mode_name + ', ' + locale + '); ';
             system_info += navigator.userAgent;
             console.log(system_info);
+            system_info = encodeURIComponent(system_info).replace(/%2F/g, '/');  // NOTICEME
+            console.log(system_info);
 
             var feedback_url = $('#feedback a');
-            feedback_url.prop('href', feedback_url.prop('href') + '/def/field13=' + encodeURIComponent(system_info));
+            feedback_url.prop('href', feedback_url.prop('href') + '/def/field13=' + system_info);
         }
     });
 
