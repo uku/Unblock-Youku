@@ -12,10 +12,10 @@
     "message": "是的，我愿意支持支持这个软件"
   },
   "support_message_no": {
-    "message": "您只需开启这个选项来支持我们，无需其它。您无需付费<br>或捐款，也不会有恼人的植入广告。<a href=\"http://ub.uku.im/support_us\" target=\"_blank\">更多信息请访问这里</a>"
+    "message": "您只需开启这个选项来支持我们，无需其它。您无需付费<br>或捐款，也不会有恼人的植入广告。<a href=\"http://uku.im/support_us\" target=\"_blank\">更多信息请访问这里</a>"
   },
   "support_message_yes": {
-    "message": "非常感谢！您的支持就是我们前进的动力！<br>此功能由 <a href=\"http://ub.uku.im/support_us\" target=\"_blank\">VigLink</a> 提供技术支持"
+    "message": "非常感谢！您的支持就是我们前进的动力！<br>此功能由 <a href=\"http://uku.im/support_us\" target=\"_blank\">VigLink</a> 提供技术支持"
   },
   "mode_select": {
     "message": "选择程序运行模式"
@@ -42,13 +42,13 @@
     "message": "连接速度较慢，但可以与系统代理设置同时使用"
   },
   "help": {
-    "message": "关于上述运行模式的详细介绍，<a href=\"http://ub.uku.im/modes\" target=\"_blank\">请点击这里查看</a>"
+    "message": "关于上述运行模式的详细介绍，<a href=\"http://uku.im/modes\" target=\"_blank\">请点击这里查看</a>"
   },
   "feedback": {
-    "message": "如遇到问题或有任何建议，<a href=\"http://ub.uku.im/feedback\" target=\"_blank\">欢迎联系我们</a>"
+    "message": "如遇到问题或有任何建议，<a href=\"http://uku.im/feedback\" target=\"_blank\">欢迎联系我们</a>"
   },
   "rating": {
-    "message": "如您觉得这个扩展好用，<a href=\"http://ub.uku.im/reviews\" target=\"_blank\">请帮我们打分</a>"
+    "message": "如您觉得这个扩展好用，<a href=\"http://uku.im/reviews\" target=\"_blank\">请帮我们打分</a>"
   },
   "sharing": {
     "message": "欢迎分享至"

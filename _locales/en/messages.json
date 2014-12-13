@@ -12,10 +12,10 @@
     "message": "Yes, I want to support this software."
   },
   "support_message_no": {
-    "message": "You only need to enable this to support us. Nothing else.<br>We are not going to show ads to annoy you, you don't need to pay us for anything, and we don't want your donation.<br><a href=\"http://ub.uku.im/support_us\" target=\"_blank\">For more information, please visit here.</a>"
+    "message": "You only need to enable this to support us. Nothing else.<br>We are not going to show ads to annoy you, you don't need to pay us for anything, and we don't want your donation.<br><a href=\"http://uku.im/support_us\" target=\"_blank\">For more information, please visit here.</a>"
   },
   "support_message_yes": {
-    "message": "Thank you! Your support is greatly appreciated!<br>This functionality is powered by <a href=\"http://ub.uku.im/support_us\" target=\"_blank\">VigLink</a>."
+    "message": "Thank you! Your support is greatly appreciated!<br>This functionality is powered by <a href=\"http://uku.im/support_us\" target=\"_blank\">VigLink</a>."
   },
   "mode_select": {
     "message": "Select Operation Mode"
@@ -42,13 +42,13 @@
     "message": "Slow, but compatible with other proxy settings."
   },
   "help": {
-    "message": "For more information about different modes, you can <a href=\"http://ub.uku.im/modes\" target=\"_blank\">read this</a>."
+    "message": "For more information about different modes, you can <a href=\"http://uku.im/modes\" target=\"_blank\">read this</a>."
   },
   "feedback": {
-    "message": "If you have any questions, please don't hesitate to <a href=\"http://ub.uku.im/feedback\" target=\"_blank\">contact us</a>."
+    "message": "If you have any questions, please don't hesitate to <a href=\"http://uku.im/feedback\" target=\"_blank\">contact us</a>."
   },
   "rating": {
-    "message": "If you find this extension helpful, <a href=\"http://ub.uku.im/reviews\" target=\"_blank\">please help us to rate it</a>."
+    "message": "If you find this extension helpful, <a href=\"http://uku.im/reviews\" target=\"_blank\">please help us to rate it</a>."
   },
   "sharing": {
     "message": "Welcome to share it via"
