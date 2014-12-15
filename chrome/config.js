@@ -59,7 +59,7 @@ function set_mode_name(mode_name, callback) {
         ga_report_error('Unexpected Error', err_msg);
     }
 
-    if (mode_name === 'lite' || mode_name === 'redirect') {
+    if (mode_name === 'off' || mode_name === 'redirect') {
         set_storage('unblock_youku_mode', mode_name, callback);
     } else {
         set_storage('unblock_youku_mode', 'normal', callback);
@@ -75,7 +75,7 @@ function get_mode_name(callback) {
 
     get_storage('unblock_youku_mode', function(current_mode) {
         if (typeof current_mode === 'undefined' || (
-                current_mode !== 'lite'    &&
+                current_mode !== 'off'    &&
                 current_mode !== 'normal'  &&
                 current_mode !== 'redirect')) {
             set_mode_name('normal', function() {
@@ -89,10 +89,7 @@ function get_mode_name(callback) {
 
 function clear_mode_settings(mode_name) {
     switch (mode_name) {
-    case 'lite':
-        // clear_timezone();
-        clear_header();
-        console.log('cleared settings for lite');
+    case 'off':
         break;
     case 'redirect':
         clear_redirect();
@@ -116,9 +113,8 @@ function clear_mode_settings(mode_name) {
 
 function setup_mode_settings(mode_name) {
     switch (mode_name) {
-    case 'lite':
-        setup_header();
-        // setup_timezone();
+    case 'off':
+        chrome.browserAction.setBadgeText({text: 'OFF'});
         break;
     case 'redirect':
         setup_redirect();
