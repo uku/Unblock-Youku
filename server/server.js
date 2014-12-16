@@ -124,7 +124,7 @@ function http_req_handler(client_request, client_response) {
                 + client_request.method + ' ' + client_request.url.underline);
     }
 
-    if (client_request.url === '/proxy.pac'
+    if ((client_request.url === '/proxy.pac' || client_request.url === '/pac.pac')
             || (!shared_tools.string_starts_with(client_request.url, '/proxy'))) {
         server_utils.static_responses(client_request, client_response, pac_file_content);
     }

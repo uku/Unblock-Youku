@@ -1,6 +1,6 @@
 var page = require('webpage').create();
 
-var test_url = 'http://127.0.0.1:8888/proxy.pac';
+var test_url = 'http://127.0.0.1:8888/pac.pac';
 
 page.open(test_url, function(status) {
     if (status !== 'success') {

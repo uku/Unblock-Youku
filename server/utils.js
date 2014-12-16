@@ -170,7 +170,7 @@ function static_responses(client_request, client_response, pac_file_content) {
         return;
     }
 
-    if (client_request.url === '/proxy.pac') {
+    if (client_request.url === '/proxy.pac' || client_request.url === '/pac.pac') {
         var content_type = 'application/x-ns-proxy-autoconfig';
         if (client_request.headers['user-agent'] !== undefined &&
                 client_request.headers['user-agent'].indexOf('PhantomJS') !== -1) {
