@@ -35,6 +35,7 @@ unblock_youku.redirect_url_list = unblock_youku.common_urls;
 unblock_youku.header_extra_url_list = [
     // 'http://web-play.pptv.com/*',
     // 'http://web-play.pplive.cn/*',
+    'http://v.api.hunantv.com/*',
     'http://live.gslb.letv.com/*',
     'http://ac.qq.com/*',
     'http://*.ssports.com/*',
