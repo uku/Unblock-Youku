@@ -183,6 +183,7 @@ unblock_youku.server_whitelist_urls = [
 unblock_youku.server_extra_urls = [
     // for Mobile apps    // Video apps
     'http://a.play.api.3g.youku.com/common/v3/play?*',
+    'http://i.play.api.3g.youku.com/common/v3/play?*',
     'http://i.play.api.3g.youku.com/common/v3/hasadv/play?*',
     'http://api.3g.youku.com/layout*',
     'http://api.3g.youku.com/v3/play/address*',
