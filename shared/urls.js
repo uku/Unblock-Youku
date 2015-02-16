@@ -72,6 +72,7 @@ unblock_youku.common_urls = [
     'http://bobo.video.qq.com/getvinfo*',
     'http://flvs.video.qq.com/getvinfo*',
     'http://bkvv.video.qq.com/getvinfo*',
+    'http://info.zb.qq.com/?*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
@@ -124,7 +125,6 @@ unblock_youku.common_urls = [
     'http://vdn.live.cntv.cn/api2/liveHtml5.do?channel=pa://cctv_p2p_hdbtv6*',
     'http://vip.sports.cntv.cn/check.do*',
     'http://vip.sports.cntv.cn/play.do*',
-    'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
     'http://211.151.157.15/*'
 ];
