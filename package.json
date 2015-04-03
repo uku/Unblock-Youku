@@ -4,8 +4,8 @@
   "dependencies": {
     "colors": "*",
     "nomnom": "1.8.x",
-    "request": "2.53.x",
-    "validator": "3.28.x",
+    "request": "2.54.x",
+    "validator": "3.37.x",
     "uglify-js": "2.4.x"
   },
   "scripts": {
