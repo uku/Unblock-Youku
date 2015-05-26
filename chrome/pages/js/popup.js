@@ -24,8 +24,9 @@ function set_i18n_text() {
 
     $('div#mode_select strong').html(get_msg('mode_select'));
 
-    $('span.mode_lite_name').html(get_msg('mode_lite'));
-    $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
+    // $('span.mode_off_name').html(get_msg('mode_lite'));
+    $('span.mode_off_name').html('Off');
+    // $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
     $('span.mode_normal_name').html(get_msg('mode_normal'));
     $('span.mode_normal_desc').html(get_msg('mode_normal_description'));
     $('span.mode_redirect_name').html(get_msg('mode_redirect'));
@@ -54,8 +55,8 @@ $(document).ready(function() {
     // set default button display
     background.get_mode_name(function(current_mode_name) {
         switch (current_mode_name) {
-            case 'lite':
-                $('label#lite').addClass('active');
+            case 'off':
+                $('label#off').addClass('active');
                 break;
             case 'redirect':
                 $('label#redirect').addClass('active');
@@ -138,9 +139,9 @@ $(document).ready(function() {
     // $('div#version').html('Unblock Youku </i> ' + background.unblock_youku.version);
 
     // button actions
-    $('input#input_lite').change(function() {
-        console.log('to change mode to lite');
-        background.change_mode('lite');
+    $('input#input_off').change(function() {
+        console.log('to change mode to off');
+        background.change_mode('off');
     });
     $('input#input_normal').change(function() {
         console.log('to change mode to normal');
