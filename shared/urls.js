@@ -40,6 +40,7 @@ unblock_youku.common_urls = [
     'http://cache.video.qiyi.com/vms?*',
     'http://cache.vip.qiyi.com/vms?*',
     'http://cache.video.qiyi.com/vp/*/*/?src=*',
+    'http://cache.video.qiyi.com/vps?*'
 
     // cause oversea servers unusable?
     // 'http://interface.bilibili.tv/player*',
