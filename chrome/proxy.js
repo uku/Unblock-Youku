@@ -47,6 +47,8 @@ function setup_proxy() {
 
     var proxy_server_proc = 'HTTPS';
     var proxy_server_addr = 'proxy.mainland.io:993';
+    // proxy_server_proc = 'SOCKS5';
+    // proxy_server_addr = '127.0.0.1:1080';
     setup_pac_data(proxy_server_proc, proxy_server_addr);
     console.log('using the proxy server: ' + proxy_server_proc + ' ' + proxy_server_addr);
     ga_report_event('Proxy Server Selection', proxy_server_proc + ' ' + proxy_server_addr, 0.1);

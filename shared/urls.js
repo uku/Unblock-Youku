@@ -22,6 +22,7 @@ var unblock_youku = unblock_youku || {};  // namespace
 unblock_youku.common_urls = [
     'http://v.youku.com/player/*',
     'http://api.youku.com/player/*',
+    'http://play.youku.com/play/get.json*',
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
