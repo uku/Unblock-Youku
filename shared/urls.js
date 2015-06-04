@@ -37,6 +37,7 @@ unblock_youku.common_urls = [
     'http://hot.vrs.letv.com/*',
     //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/v.*',
+    'http://data.video.qiyi.com/videos/*',
     // 'http://nl.rcd.iqiyi.com/apis/urc/*',
     'http://cache.video.qiyi.com/vms?*',
     'http://cache.vip.qiyi.com/vms?*',
