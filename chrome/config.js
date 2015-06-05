@@ -286,5 +286,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     setup_extra_header();
+    // setup_extra_redirector();
 });
 
