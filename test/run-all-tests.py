@@ -110,7 +110,22 @@ def run_all_tests():
     return num_failed
 
 
-if __name__ == '__main__':
+def extra_checks():
+    with open('../chrome/proxy.js', 'r') as f:
+        for line in f:
+            line = line.lower().strip()
+            if ('proxy_server' in line and '127.0.0.1' in line) or \
+                    ('proxy_server' in line and 'socks' in line):
+                if not line.startswith('//'):
+                    red_alert('The debug server is still in use!')
+                    return False
+    return True
+
+
+def main():
+    if not extra_checks():
+        sys.exit(-2)
+
     exit_code = -1
     try:
         start_server()
@@ -118,3 +133,7 @@ if __name__ == '__main__':
     finally:
         stop_server()
     sys.exit(exit_code)
+
+
+if __name__ == '__main__':
+    main()
