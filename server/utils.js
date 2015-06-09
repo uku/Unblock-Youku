@@ -203,11 +203,23 @@ function static_responses(client_request, client_response, pac_file_content) {
         return;
     }
 
+    if (client_request.url === '/regex') {
+        var regex_list = shared_urls.produce_regex_list(true);
+        var regex_text = regex_list.join('\n');
+
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': regex_text.length.toString(),
+            'Cache-Control': 'public, max-age=3600'
+        });
+        client_response.end(regex_text);
+        return;
+    }
+
     client_response.writeHead(403, {
         'Cache-Control': 'public, max-age=14400'
     });
     client_response.end();
-    return;
 }
 
 

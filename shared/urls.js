@@ -151,7 +151,7 @@ unblock_youku.chrome_extra_urls = [
     'http://aidbak.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
     'http://paybak.video.qq.com/fcgi-bin/paylimit*',
-    'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*',
+    'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*'
     // 'https://www.amazon.cn/gp/mas/order/ref*',
     // 'https://www.amazon.cn/gp/digital/fiona/payment-checkout/ref*',
     // 'https://www.amazon.cn/gp/aw/kindle/order.html*',
@@ -279,7 +279,7 @@ unblock_youku.server_extra_urls = [
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
     'http://210.129.145.150/*',
-    'http://182.16.230.98/*', //Updated on Jan. 3, for new DNS of apple tv.
+    'http://182.16.230.98/*' //Updated on Jan. 3, for new DNS of apple tv.
 ];
 
 
@@ -307,6 +307,29 @@ function urls2regexs(url_list) {
 }
 
 
+function produce_regex_list(for_pac_server) {
+    var squid_url_list = unblock_youku.common_urls.concat(
+        unblock_youku.chrome_extra_urls
+    );
+    if (for_pac_server === true) {
+        squid_url_list = squid_url_list.concat(
+            unblock_youku.server_extra_urls
+        );
+    }
+
+    var squid_regex_list = urls2regexs(squid_url_list);
+    var i, single_str;
+
+    var ret_list = [];
+    for (i = 0; i < squid_regex_list.length; i++) {
+        single_str = squid_regex_list[i].toString();
+        ret_list.push(single_str.substring(1, single_str.length - 2));
+    }
+
+    return ret_list;
+}
+
+
 // also export as a node.js module
 var exports = exports || {};
 exports.urls2regexs = urls2regexs;
@@ -315,25 +338,22 @@ exports.crx_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_ext
 exports.url_regex_list = urls2regexs(exports.url_list);
 exports.url_whitelist = unblock_youku.server_whitelist_urls;
 exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);
+exports.produce_regex_list = produce_regex_list;
 
 
 (function() {
     // http://stackoverflow.com/a/5197219
     // http://stackoverflow.com/a/6398335
     if (typeof module !== 'undefined' && module.exports && require.main === module) {
-        var squid_url_list = unblock_youku.common_urls.concat(
-            unblock_youku.chrome_extra_urls
-        );
+        var squid_regex_list;
         if (typeof process !== 'undefined' && process.argv[2] === 'server') {
-            squid_url_list = squid_url_list.concat(
-                unblock_youku.server_extra_urls
-            );
+            squid_regex_list = produce_regex_list(true);
+        } else {
+            squid_regex_list = produce_regex_list(false);
         }
-        var squid_regex_list = urls2regexs(squid_url_list);
-        var i, single_str;
-        for (i = 0; i < squid_regex_list.length; i++) {
-            single_str = squid_regex_list[i].toString();
-            console.log(single_str.substring(1, single_str.length - 2));
+
+        for (var i = 0; i < squid_regex_list.length; i++) {
+            console.log(squid_regex_list[i]);
         }
     }
 }());
