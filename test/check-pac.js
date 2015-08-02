@@ -19,7 +19,7 @@ function test_url(need_proxy, url) {
     var hostname = url_parse(url).hostname;
     if (need_proxy) {
         assert.equal(
-                'PROXY ' + proxy_str,
+                'PROXY ' + proxy_str + '; DIRECT',
                 FindProxyForURL(url, hostname)
         );
     } else {

@@ -212,12 +212,10 @@ function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
     }
 
     var txt = [
-        // "(function() {",
-        // "",
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
         // "var _proxy_str = 'PROXY " + proxy_server + "';",
-        "var _proxy_str = '" + proxy_protocol + " "  + proxy_server + "';",
+        "var _proxy_str = '" + proxy_protocol + " "  + proxy_server + "; DIRECT';",
         "",
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
@@ -254,9 +252,6 @@ function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
         "    return _find_proxy(_https_map, host, url, 8);",  // 'https://'.length
         "  return 'DIRECT';",
         "}",
-        // "",
-        // "window.FindProxyForURL = FindProxyForURL;",
-        // "}());"
     ].join("\n") + "\n";
 
     // console.log('==================');
