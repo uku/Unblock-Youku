@@ -46,7 +46,7 @@ function setup_proxy() {
     console.group('to set up proxy');
 
     var proxy_server_proc = 'HTTPS';
-    var proxy_server_addr = 'proxy.mainland.io:993';
+    var proxy_server_addr = 'secure.uku.im:993';
     // proxy_server_proc = 'SOCKS5';  // DEBUG
     // proxy_server_addr = '127.0.0.1:1080';  // DEBUG
     setup_pac_data(proxy_server_proc, proxy_server_addr);
