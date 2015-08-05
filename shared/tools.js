@@ -196,26 +196,38 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
 }
 
 
-function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
+function urls2pac(url_whitelist, url_list,
+                  proxy_server_1, proxy_protocol_1,
+                  proxy_server_2, proxy_protocol_2) {
     "use strict";
     var http_map_str = gen_url_map('http', url_whitelist, url_list);
     var https_map_str = gen_url_map('https', url_whitelist, url_list);
 
-    if (typeof proxy_protocol === 'undefined') {
-        proxy_protocol = 'PROXY';
+    if (typeof proxy_protocol_1 === 'undefined') {
+        proxy_protocol_1 = 'PROXY';
     }
-    proxy_protocol = proxy_protocol.replace(/:/g,'');
-    proxy_protocol = proxy_protocol.replace(/\//g,'');
-    proxy_protocol = proxy_protocol.toUpperCase();
-    if (proxy_protocol === 'HTTP') {
-        proxy_protocol = 'PROXY';
+    proxy_protocol_1 = proxy_protocol_1.replace(/:/g,'');
+    proxy_protocol_1 = proxy_protocol_1.replace(/\//g,'');
+    proxy_protocol_1 = proxy_protocol_1.toUpperCase();
+    if (proxy_protocol_1 === 'HTTP') {
+        proxy_protocol_1 = 'PROXY';
+    }
+
+    if (typeof proxy_protocol_2 === 'undefined') {
+        proxy_protocol_2 = 'PROXY';
+    }
+    proxy_protocol_2 = proxy_protocol_2.replace(/:/g,'');
+    proxy_protocol_2 = proxy_protocol_2.replace(/\//g,'');
+    proxy_protocol_2 = proxy_protocol_2.toUpperCase();
+    if (proxy_protocol_2 === 'HTTP') {
+        proxy_protocol_2 = 'PROXY';
     }
 
     var txt = [
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
         // "var _proxy_str = 'PROXY " + proxy_server + "';",
-        "var _proxy_str = '" + proxy_protocol + " "  + proxy_server + "; DIRECT';",
+        "var _proxy_str = '" + proxy_protocol_1 + " "  + proxy_server_1 + "; " + proxy_protocol_2 + " "  + proxy_server_2 + "; DIRECT';",
         "",
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
@@ -254,9 +266,9 @@ function urls2pac(url_whitelist, url_list, proxy_server, proxy_protocol) {
         "}",
     ].join("\n") + "\n";
 
-    // console.log('==================');
-    // console.log(txt);
-    // console.log('==================');
+    console.log('==================');
+    console.log(txt);
+    console.log('==================');
 
     return txt;
 }

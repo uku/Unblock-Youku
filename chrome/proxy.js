@@ -21,8 +21,11 @@
 "use strict";
 
 
-function setup_pac_data(proxy_protocol, proxy_domain) {
-    var pac_data = urls2pac([], unblock_youku.normal_url_list, proxy_domain, proxy_protocol);
+function setup_pac_data(proxy_prot_1, proxy_addr_1,
+                        proxy_prot_2, proxy_addr_2) {
+    var pac_data = urls2pac([], unblock_youku.normal_url_list,
+                            proxy_addr_1, proxy_prot_1,
+                            proxy_addr_2, proxy_prot_2);
     // console.log(pac_data);
     var proxy_config = {
         mode: 'pac_script',
@@ -47,9 +50,12 @@ function setup_proxy() {
 
     var proxy_server_proc = 'HTTPS';
     var proxy_server_addr = 'secure.uku.im:993';
+    var backup_proxy_server_proc = 'HTTPS';
+    var backup_proxy_server_addr = 'proxy.mainland.io:993';
     // proxy_server_proc = 'SOCKS5';  // DEBUG
     // proxy_server_addr = '127.0.0.1:1080';  // DEBUG
-    setup_pac_data(proxy_server_proc, proxy_server_addr);
+    setup_pac_data(proxy_server_proc, proxy_server_addr,
+                   backup_proxy_server_proc, backup_proxy_server_addr);
     console.log('using the proxy server: ' + proxy_server_proc + ' ' + proxy_server_addr);
     ga_report_event('Proxy Server Selection', proxy_server_proc + ' ' + proxy_server_addr, 0.1);
 
