@@ -205,29 +205,38 @@ function urls2pac(url_whitelist, url_list,
 
     if (typeof proxy_protocol_1 === 'undefined') {
         proxy_protocol_1 = 'PROXY';
-    }
-    proxy_protocol_1 = proxy_protocol_1.replace(/:/g,'');
-    proxy_protocol_1 = proxy_protocol_1.replace(/\//g,'');
-    proxy_protocol_1 = proxy_protocol_1.toUpperCase();
-    if (proxy_protocol_1 === 'HTTP') {
-        proxy_protocol_1 = 'PROXY';
+    } else {
+        proxy_protocol_1 = proxy_protocol_1.replace(/:/g,'');
+        proxy_protocol_1 = proxy_protocol_1.replace(/\//g,'');
+        proxy_protocol_1 = proxy_protocol_1.toUpperCase();
+        if (proxy_protocol_1 === 'HTTP') {
+            proxy_protocol_1 = 'PROXY';
+        }
     }
 
-    if (typeof proxy_protocol_2 === 'undefined') {
-        proxy_protocol_2 = 'PROXY';
+    var _proxy_str = proxy_protocol_1 + " " + proxy_server_1 + "; ";
+
+    if (typeof proxy_server_2 !== 'undefined') {
+        if (typeof proxy_protocol_2 === 'undefined') {
+            proxy_protocol_2 = 'PROXY';
+        }
+        proxy_protocol_2 = proxy_protocol_2.replace(/:/g,'');
+        proxy_protocol_2 = proxy_protocol_2.replace(/\//g,'');
+        proxy_protocol_2 = proxy_protocol_2.toUpperCase();
+        if (proxy_protocol_2 === 'HTTP') {
+            proxy_protocol_2 = 'PROXY';
+        }
+
+        _proxy_str += proxy_protocol_2 + " " + proxy_server_2 + "; ";
     }
-    proxy_protocol_2 = proxy_protocol_2.replace(/:/g,'');
-    proxy_protocol_2 = proxy_protocol_2.replace(/\//g,'');
-    proxy_protocol_2 = proxy_protocol_2.toUpperCase();
-    if (proxy_protocol_2 === 'HTTP') {
-        proxy_protocol_2 = 'PROXY';
-    }
+
+    _proxy_str += "DIRECT;";
 
     var txt = [
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
         // "var _proxy_str = 'PROXY " + proxy_server + "';",
-        "var _proxy_str = '" + proxy_protocol_1 + " "  + proxy_server_1 + "; " + proxy_protocol_2 + " "  + proxy_server_2 + "; DIRECT';",
+        "var _proxy_str = '" + _proxy_str + "';",
         "",
         "function _check_regex_list(regex_list, str) {",
         "  var i;",
@@ -266,9 +275,9 @@ function urls2pac(url_whitelist, url_list,
         "}",
     ].join("\n") + "\n";
 
-    // console.log('==================');
-    // console.log(txt);
-    // console.log('==================');
+    console.log('==================');
+    console.log(txt);
+    console.log('==================');
 
     return txt;
 }
