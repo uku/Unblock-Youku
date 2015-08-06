@@ -275,9 +275,9 @@ function urls2pac(url_whitelist, url_list,
         "}",
     ].join("\n") + "\n";
 
-    console.log('==================');
-    console.log(txt);
-    console.log('==================');
+    // console.log('==================');
+    // console.log(txt);
+    // console.log('==================');
 
     return txt;
 }
