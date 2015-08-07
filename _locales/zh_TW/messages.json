@@ -5,20 +5,11 @@
   "popup_title": {
     "message": "Unblock Youku 設定"
   },
-  "support_title": {
-    "message": "我們需要您的支持"
-  },
-  "support_checkbox_label": {
-    "message": "是的，我願意支持支持這個軟體"
-  },
-  "support_message_no": {
-    "message": "您只需開啟這個選項來支持我們，無需其它。您無需付費<br>或捐款，也不會有惱人的植入廣告。<a href=\"http://uku.im/support_us\" target=\"_blank\">更多訊息請訪問這裏</a>"
-  },
-  "support_message_yes": {
-    "message": "非常感謝！您的支持就是我們前進的動力！<br>此功能由 <a href=\"http://uku.im/support_us\" target=\"_blank\">VigLink</a> 提供技術支持"
+  "social_title": {
+    "message": "歡迎關註我們"
   },
   "mode_select": {
-    "message": "選擇程式執行模式"
+    "message": "程式執行模式"
   },
   "mode_lite": {
     "message": "精簡模式"

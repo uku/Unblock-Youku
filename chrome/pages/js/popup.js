@@ -22,6 +22,8 @@ function set_i18n_text() {
     "use strict";
     var get_msg = chrome.i18n.getMessage;
 
+    $('div#social strong').html(get_msg('social_title'));
+
     $('div#mode_select strong').html(get_msg('mode_select'));
 
     $('span.mode_lite_name').html(get_msg('mode_lite'));
@@ -34,10 +36,6 @@ function set_i18n_text() {
     $('div#help_text').html(get_msg('help'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
-    $('span#sharing_text').html(get_msg('sharing'));
-    
-    $('div#support_title strong').html(get_msg('support_title'));
-    $('span#support_checkbox_label').html(get_msg('support_checkbox_label'));
 }
 
 function is_flash_bug_fixed() {
@@ -100,33 +98,33 @@ $(document).ready(function() {
         });
     }
 
-    var pre_heart_icon = '<i class="fa fa-heart" style="color: PaleVioletRed;"></i>&nbsp;';
-
-    background.get_storage('support_us', function(option) {
-        if (option === 'yes') {
-            $('#support_checkbox input').prop('checked', true);
-            $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
-        } else {
-            $('#support_checkbox input').prop('checked', false);
-            $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
-        }
-    });
-
-    $('#support_checkbox input').click(function() {
-        if ($('#support_checkbox input').prop('checked')) {
-            background.set_storage('support_us', 'yes', function() {
-                $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
-                console.log('change to support us');
-                ga_report_event('Change Support', 'Yes');
-            });
-        } else {
-            background.set_storage('support_us', 'no', function() {
-                $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
-                console.log('change to not support us');
-                ga_report_event('Change Support', 'No');
-            });
-        }
-    });
+    //var pre_heart_icon = '<i class="fa fa-heart" style="color: PaleVioletRed;"></i>&nbsp;';
+    //
+    //background.get_storage('support_us', function(option) {
+    //    if (option === 'yes') {
+    //        $('#support_checkbox input').prop('checked', true);
+    //        $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
+    //    } else {
+    //        $('#support_checkbox input').prop('checked', false);
+    //        $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
+    //    }
+    //});
+    //
+    //$('#support_checkbox input').click(function() {
+    //    if ($('#support_checkbox input').prop('checked')) {
+    //        background.set_storage('support_us', 'yes', function() {
+    //            $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
+    //            console.log('change to support us');
+    //            ga_report_event('Change Support', 'Yes');
+    //        });
+    //    } else {
+    //        background.set_storage('support_us', 'no', function() {
+    //            $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
+    //            console.log('change to not support us');
+    //            ga_report_event('Change Support', 'No');
+    //        });
+    //    }
+    //});
 
     chrome.browserAction.setBadgeText({text: ''});  // clear the text NEW
     background.get_storage('previous_new_version', function(version) {
@@ -135,7 +133,7 @@ $(document).ready(function() {
         }
     });
 
-    // $('div#version').html('Unblock Youku </i> ' + background.unblock_youku.version);
+    $('div#version small').html('Unblock Youku v' + background.unblock_youku.version);
 
     // button actions
     $('input#input_lite').change(function() {
@@ -150,7 +148,7 @@ $(document).ready(function() {
         console.log('to change mode to redirect');
         background.change_mode('redirect');
     });
-	
+
     var my_date = new Date();
     if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();

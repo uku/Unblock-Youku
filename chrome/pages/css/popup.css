@@ -17,24 +17,22 @@
 
 
 body {
-    width: 33em;
+    width: 34em;
     display: block;
     position: relative;
 }
 
-div.wrapper {
+div#wrapper {
     margin: 10px;
     padding: 10px;
 }
 
-/* support us section */
-div#support_checkbox, div#support_message {
-    margin-top: 10px;
+/* social networks */
+div#social-networks {
+    margin: 15px auto;
+    font-size: 110%;
 }
 
-div#support_message {
-    line-height: 150%;
-}
 
 /* mode setting section */
 div#setting {
@@ -49,6 +47,7 @@ div#buttons {
 
 div#setting_description tr:last-child {
     border-bottom: 1px solid #DDDDDD !important;
+    border-bottom: 1px solid #DDDDDD !important;
 }
 
 div.text_block {
@@ -61,19 +60,9 @@ div#rating {
     display: none;
 }
 
-/*
-span.icon {
-    vertical-align: text-bottom;
-    margin: 0 1px;
-}
-*/
-
-div#sharing a:hover {
-    text-decoration: none;
-}
 
 div#version {
     margin-top: 15px;
     text-align: center;
-    display: none;
 }
+

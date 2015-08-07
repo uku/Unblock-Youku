@@ -1,96 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <title>Popup Page for Unblock Youku</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-3.0.0.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome-4.0.0.css">
-        <link rel="stylesheet" type="text/css" href="css/popup.css" />
-        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap-3.0.0.min.js"></script>
-        <script type="text/javascript" src="js/popup.js"></script>
-        <script type="text/javascript" src="js/analytics.js"></script>
-    </head>
-    <body>
-        <div class="wrapper">
-            <div id="support">
-                <div id="support_title"><strong></strong></div>
-                <div id="support_checkbox" class="text-center">
-                    <form action="#" class="form-inline">
-                        <input type="checkbox">&nbsp;&nbsp;<span id="support_checkbox_label"></span>
-                    </form>
-                    <div id="support_message"></div>
-                </div>
-            </div>
-            <div id="setting">
-                <div>
-                    <div id="mode_select"><strong></strong></div>
-                    <div class="text-center">
-                        <div class="btn-group" data-toggle="buttons" id="buttons">
-                            <label class="btn btn-default" id="lite">
-                                <input type="radio" name="options" id="input_lite"><span class="mode_lite_name"></span>
-                            </label>
-                            <label class="btn btn-default" id="normal">
-                                <input type="radio" name="options" id="input_normal"><span class="mode_normal_name"></span>
-                            </label>
-                            <label class="btn btn-default" id="redirect">
-                                <input type="radio" name="options" id="input_redirect"><span class="mode_redirect_name"></span>
-                            </label>
-                        </div>
+<head>
+    <meta charset="utf-8">
+    <title>Popup Page for Unblock Youku</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome-4.4.0.min.css">
+    <link rel="stylesheet" type="text/css" href="css/popup.css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-3.3.5.min.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/analytics.js"></script>
+</head>
+<body>
+    <div id="wrapper" class="container-fluid">
+        <div id="social">
+            <div><strong>Please Follow Us</strong>  <span class="label label-success">NEW</span></div>
+            <div id="social-networks">
+                <div class="row">
+                    <div class="col-xs-5 text-right">Weibo</div>
+                    <div class="col-xs-7 text-left">
+                        <a href="http://weibo.com/ubuku" target="_blank">
+                            <i class="fa fa-weibo"></i> @Unblock_Youku
+                        </a>
                     </div>
                 </div>
-                <div id="setting_description">
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr>
-                                <td><span class="mode_lite_name"></span></td>
-                                <td><span class="mode_lite_desc"></span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="mode_normal_name"></span></td>
-                                <td><span class="mode_normal_desc"></span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="mode_redirect_name"></span></td>
-                                <td><span class="mode_redirect_desc"></span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="text_block" id="help_text"></div>
+                <div class="row">
+                    <div class="col-xs-5 text-right">Twitter</div>
+                    <div class="col-xs-7 text-left">
+                        <a id="test" href="https://twitter.com/Unblock_Youku" target="_blank">
+                            <i class="fa fa-twitter"></i> @Unblock_Youku
+                        </a>
+                    </div>
                 </div>
-                <div class="text_block" id="feedback"></div>    
-                <div class="text_block" id="rating"></div>
-                <div class="text_block" id="sharing">
-                    <span id="sharing_text"></span>
-                    <span class="icon">
-                        <a href="http://uku.im/share2weibo" target="_blank">
-                            <i class="fa fa-weibo"></i>
+                <div class="row">
+                    <div class="col-xs-5 text-right">Facebook</div>
+                    <div class="col-xs-7 text-left">
+                        <a href="https://fb.com/uku.im" target="_blank">
+                            <i class="fa fa-facebook-square"></i> https://fb.com/uku.im
                         </a>
-                    </span>
-                    <span class="icon">
-                        <a href="http://uku.im/share2renren" target="_blank">
-                            <i class="fa fa-renren"></i>
-                        </a>
-                    </span>
-                    <span class="icon">
-                        <a href="http://uku.im/share2twitter" target="_blank">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                    </span>
-                    <span class="icon">
-                        <a href="http://uku.im/share2facebook" target="_blank">
-                            <i class="fa fa-facebook-square"></i>
-                        </a>
-                    </span>
-                    <span class="icon">
-                        <a href="http://uku.im/share2plus" target="_blank">
-                            <i class="fa fa-google-plus-square"></i>
-                        </a>
-                    </span>
-                </div>  <!-- sharing -->
-            </div>  <!-- setting -->
-            <div id="version" class="muted"></div>
-        </div>  <!-- wrapper -->
-    </body>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="setting">
+            <div>
+                <div id="mode_select"><strong></strong></div>
+                <div class="text-center">
+                    <div class="btn-group" data-toggle="buttons" id="buttons">
+                        <label class="btn btn-default" id="lite">
+                            <input type="radio" name="options" id="input_lite"><span class="mode_lite_name"></span>
+                        </label>
+                        <label class="btn btn-default" id="normal">
+                            <input type="radio" name="options" id="input_normal"><span class="mode_normal_name"></span>
+                        </label>
+                        <label class="btn btn-default" id="redirect">
+                            <input type="radio" name="options" id="input_redirect"><span class="mode_redirect_name"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="setting_description">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td><span class="mode_lite_name"></span></td>
+                            <td><span class="mode_lite_desc"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="mode_normal_name"></span></td>
+                            <td><span class="mode_normal_desc"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="mode_redirect_name"></span></td>
+                            <td><span class="mode_redirect_desc"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text_block" id="help_text"></div>
+            </div>
+            <div class="text_block" id="feedback"></div>
+            <div class="text_block" id="rating"></div>
+        </div>  <!-- setting -->
+        <div id="version" class="text-muted"><small></small></div>
+    </div>  <!-- wrapper -->
+</body>
 </html>
 
