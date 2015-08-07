@@ -40,39 +40,3 @@ function set_storage(key, value, callback) {
 function remove_storage(key, callback) {
     chrome.storage.sync.remove(key, callback);
 }
-
-
-/* 
-(function migrate_storage(list_keys) {
-    var old_keys = [];
-    var i;
-    for (i = 0; i < list_keys.length; i++) {
-        var key = list_keys[i];
-        if (typeof localStorage[key] !== 'undefined') {
-            old_keys.push(key);
-        }
-    }
-
-    try {
-        chrome.storage.sync.get(old_keys, function(items) {
-            var settings = {};
-            var i;
-            for (i = 0; i < old_keys.length; i++) {
-                var key = old_keys[i];
-                if (typeof items[key] === 'undefined') {
-                    settings[key] = localStorage[key];
-                }
-            }
-            if (Object.keys(settings).length > 0) {  // learnt from http://goo.gl/uMfJ0
-                chrome.storage.sync.set(settings, function() {
-                    console.log('migrated old settings as follows');
-                    console.log(settings);
-                });
-            }
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}(['unblock_youku_mode', 'custom_server', 'test']));
-*/
-

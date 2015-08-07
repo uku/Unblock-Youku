@@ -230,16 +230,6 @@ function storage_monitor(changes, area) {
             }
         }
     }
-
-    if (typeof changes.support_us !== 'undefined') {
-        var support_change = changes.support_us;
-
-        if (typeof support_change.newValue !== 'undefined' && support_change.newValue === 'yes') {
-            change_browser_icon('heart');
-        } else {
-            change_browser_icon('regular');
-        }
-    }
 }
 
 
@@ -260,9 +250,11 @@ document.addEventListener("DOMContentLoaded", function() {
     setup_storage_monitor();
 
     unblock_youku.version = chrome.runtime.getManifest().version;
+    
     // the lastest version to show NEW on the icon; it's usually a big update with new features
-    unblock_youku.lastest_new_version = '2.6.0.0';
+    unblock_youku.lastest_new_version = '2.8.0.1';
     get_storage('previous_new_version', function(version) {
+        // previous_new_version will be set by the popup page once the page is opened
         if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
             chrome.browserAction.setBadgeText({text: 'NEW'});
         }
@@ -274,15 +266,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ga_report_ratio('Init Mode', current_mode_name);
         ga_report_ratio('Version', unblock_youku.version);
 
-        get_storage('support_us', function(option) {
-            if (option === 'yes') {
-                change_browser_icon('heart');
-                ga_report_ratio('Init Support', 'Yes');
-            } else {
-                change_browser_icon('regular');
-                ga_report_ratio('Init Support', 'No');
-            }
-        });
+        change_browser_icon('regular');  // set the icon once everything is done
     });
 
     setup_extra_header();
