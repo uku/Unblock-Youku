@@ -38,9 +38,7 @@ function setup_pac_data(proxy_prot_1, proxy_addr_1,
             value: proxy_config,
             scope: 'regular'
         },
-        function() {
-            return;
-        }
+        function() {}
     );
 }
 
@@ -52,8 +50,14 @@ function setup_proxy() {
     var proxy_server_addr = 'secure.uku.im:993';
     var backup_proxy_server_proc = 'HTTPS';
     var backup_proxy_server_addr = 'proxy.mainland.io:993';
-    // proxy_server_proc = 'SOCKS5';  // DEBUG
-    // proxy_server_addr = '127.0.0.1:1080';  // DEBUG
+
+    /* DEBUG -- BEGIN */
+    //proxy_server_proc = 'SOCKS5';
+    //proxy_server_addr = '127.0.0.1:1080';
+    //backup_proxy_server_proc = 'SOCKS5';
+    //backup_proxy_server_addr = '127.0.0.1:1080';
+    /* DEBUG -- END */
+
     setup_pac_data(proxy_server_proc, proxy_server_addr,
                    backup_proxy_server_proc, backup_proxy_server_addr);
     console.log('using the proxy server: ' + proxy_server_proc + ' ' + proxy_server_addr);

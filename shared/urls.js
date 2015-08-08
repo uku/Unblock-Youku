@@ -107,6 +107,7 @@ unblock_youku.common_urls = [
     'http://wtv.v.iask.com/*.m3u8*',
     'http://wtv.v.iask.com/mcdn.php',
     'http://video.sina.com.cn/interface/l/u/getFocusStatus.php*',
+    'http://wtv.v.iask.com/player/ovs1_idc_list.php*',
 
     //'http://kandian.com/player/getEpgInfo*',  // !!!
     //'http://cdn.kandian.com/*',
