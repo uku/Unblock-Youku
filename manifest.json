@@ -44,6 +44,11 @@
     "matches": ["http://play.baidu.com/*"],
     "css": ["chrome/content/play.baidu.css"],
     "all_frames": true
+  }, {
+    "matches": ["http://music.163.com/*"],
+    "js": ["chrome/content/music.163.js"],
+    "run_at": "document_end",
+    "all_frames": true
   }],
   "default_locale": "en"
 }
