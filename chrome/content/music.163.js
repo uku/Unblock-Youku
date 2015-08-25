@@ -22,6 +22,6 @@ var s = document.createElement('script');
 s.type = 'text/javascript';
 s.innerText = ' \
     (function() { \
-        window.GAboard=window.contentFrame.GAbroad = false; \
+        window.GAbroad=window.contentFrame.GAbroad = false; \
     }());';
 document.body.appendChild(s);
