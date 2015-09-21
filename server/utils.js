@@ -113,6 +113,7 @@ function filter_request_headers(headers) {
         }
     }
 
+    ret_headers['Accept-Encoding'] = 'deflate';
     return ret_headers;
 }
 

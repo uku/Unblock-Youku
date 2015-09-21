@@ -52,10 +52,10 @@ function setup_proxy() {
     var backup_proxy_server_addr = 'proxy.mainland.io:993';
 
     /* DEBUG -- BEGIN */
-    //proxy_server_proc = 'SOCKS5';
-    //proxy_server_addr = '127.0.0.1:1080';
-    //backup_proxy_server_proc = 'SOCKS5';
-    //backup_proxy_server_addr = '127.0.0.1:1080';
+    // proxy_server_proc = 'SOCKS5';
+    // proxy_server_addr = '127.0.0.1:1080';
+    // backup_proxy_server_proc = 'SOCKS5';
+    // backup_proxy_server_addr = '127.0.0.1:1080';
     /* DEBUG -- END */
 
     setup_pac_data(proxy_server_proc, proxy_server_addr,

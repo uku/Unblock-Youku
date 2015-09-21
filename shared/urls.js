@@ -80,7 +80,7 @@ unblock_youku.common_urls = [
     'http://flvs.video.qq.com/getvinfo*',
     'http://bkvv.video.qq.com/getvinfo*',
     'http://info.zb.qq.com/?*',
-    'http://qzs.qq.com/tecentvideo_v1/script/hash/*',
+    'http://qzs.qq.com/tencentvideo_v1/*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
