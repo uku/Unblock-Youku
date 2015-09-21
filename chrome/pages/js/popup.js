@@ -38,11 +38,6 @@ function set_i18n_text() {
     $('div#rating').html(get_msg('rating'));
 }
 
-function is_flash_bug_fixed() {
-    return !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0 || parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) >= 38;
-}
-
-
 $(document).ready(function() {
     "use strict";
     set_i18n_text();
@@ -63,68 +58,23 @@ $(document).ready(function() {
                 break;
         }
 
-        // append system info to the wufoo feedback link
-        // such as extension version, chrome version, and os type
-        var locale = navigator.language.substr(0, 2);
-        if (locale === 'en' || locale === 'zh') {
-            // jQuery.browser is not always accurate
-            var system_info = 'Unblock Youku ' + background.unblock_youku.version;
-            system_info += ' (' + current_mode_name + ', ' + locale + '); ';
-            system_info += navigator.userAgent;
-            console.log(system_info);
-            system_info = encodeURIComponent(system_info).replace(/%2F/g, '/');  // NOTICEME
-            console.log(system_info);
+        // // append system info to the wufoo feedback link
+        // // such as extension version, chrome version, and os type
+        // var locale = navigator.language.substr(0, 2);
+        // if (locale === 'en' || locale === 'zh') {
+        //     // jQuery.browser is not always accurate
+        //     var system_info = 'Unblock Youku ' + background.unblock_youku.version;
+        //     system_info += ' (' + current_mode_name + ', ' + locale + '); ';
+        //     system_info += navigator.userAgent;
+        //     console.log(system_info);
+        //     system_info = encodeURIComponent(system_info).replace(/%2F/g, '/');  // NOTICEME
+        //     console.log(system_info);
 
-            var feedback_url = $('#feedback a');
-            feedback_url.prop('href', feedback_url.prop('href') + '/def/field13=' + system_info);
-        }
+        //     var feedback_url = $('#feedback a');
+        //     feedback_url.prop('href', feedback_url.prop('href') + '/def/field13=' + system_info);
+        // }
     });
 
-    // check whether the browser is Opera, or Chrome version >= 38, to get around Flash bug in Chrome
-    // https://github.com/zhuzhuor/Unblock-Youku/issues/209
-    if(!is_flash_bug_fixed()) {
-        $('#redirect').addClass('disabled');
-        $('#input_redirect').attr('disabled', true);
-
-        // $('#buttons').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
-        // $('#input_redirect').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
-        $('.mode_redirect_desc').parents('tr').addClass('text-muted').tooltip({html: true, title: chrome.i18n.getMessage('mode_redirect_disabled')});
-
-        // if current mode is redirect, change to normal mode
-        background.get_mode_name(function(current_mode_name) {
-            if(current_mode_name === 'redirect') {
-                $('#normal').click();
-            }
-        });
-    }
-
-    //var pre_heart_icon = '<i class="fa fa-heart" style="color: PaleVioletRed;"></i>&nbsp;';
-    //
-    //background.get_storage('support_us', function(option) {
-    //    if (option === 'yes') {
-    //        $('#support_checkbox input').prop('checked', true);
-    //        $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
-    //    } else {
-    //        $('#support_checkbox input').prop('checked', false);
-    //        $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
-    //    }
-    //});
-    //
-    //$('#support_checkbox input').click(function() {
-    //    if ($('#support_checkbox input').prop('checked')) {
-    //        background.set_storage('support_us', 'yes', function() {
-    //            $('div#support_message').html(pre_heart_icon + chrome.i18n.getMessage('support_message_yes'));
-    //            console.log('change to support us');
-    //            ga_report_event('Change Support', 'Yes');
-    //        });
-    //    } else {
-    //        background.set_storage('support_us', 'no', function() {
-    //            $('div#support_message').html(chrome.i18n.getMessage('support_message_no'));
-    //            console.log('change to not support us');
-    //            ga_report_event('Change Support', 'No');
-    //        });
-    //    }
-    //});
 
     chrome.browserAction.setBadgeText({text: ''});  // clear the text NEW
     background.get_storage('previous_new_version', function(version) {
