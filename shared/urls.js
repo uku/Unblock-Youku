@@ -26,7 +26,7 @@ unblock_youku.common_urls = [
     'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
-    'http://www.tudou.com/outplay/goto/getTvcCode*',
+    'http://www.tudou.com/outplay/goto/*',
     'http://www.tudou.com/tvp/alist.action*',
     'http://s.plcloud.music.qq.com/fcgi-bin/p.fcg*',
     'http://i.y.qq.com/s.plcloud/fcgi-bin/p.fcg*',
