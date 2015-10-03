@@ -227,6 +227,7 @@ unblock_youku.server_extra_urls = [
     'http://api.letv.com/getipgeo',
     'http://m.letv.com/api/geturl?*',
     'http://api.mob.app.letv.com/play*',
+    'http://static.api.sports.letv.com/*vod?*',
     'http://interface.bilibili.com/playurl?*',
     'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv5*',
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv5*',
