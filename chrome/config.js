@@ -244,6 +244,51 @@ function setup_storage_monitor() {
     }
 }
 
+var resolve_conflict = new Promise(function (resolve, reject) {
+    // remove matched wildcard rules from url_list
+    function remove_matched_rules(key) {
+        for (var i = unblock_youku.normal_url_list.length - 1; i >= 0; i--) {
+            if (unblock_youku.normal_url_list[i].indexOf(key) > -1) {
+                unblock_youku.normal_url_list.splice(i, 1);
+            }
+        }
+        for (var i = unblock_youku.redirect_url_list.length - 1; i >= 0; i--) {
+            if (unblock_youku.redirect_url_list[i].indexOf(key) > -1) {
+                unblock_youku.redirect_url_list.splice(i, 1);
+            }
+        }
+        for (var i = unblock_youku.header_extra_url_list.length - 1; i >= 0; i--) {
+            if (unblock_youku.header_extra_url_list[i].indexOf(key) > -1) {
+                unblock_youku.header_extra_url_list.splice(i, 1);
+            }
+        }
+    }
+
+    // let BilibiliHelper handles bilibili.com
+    var check_bilibili_helper = new Promise(function (resolve, reject) {
+        var img = document.createElement('img');
+        img.onload = function() {
+            // BilibiliHelper DOES exist
+            remove_matched_rules('bilibili.com/');
+            this.parentNode.removeChild(this);
+            resolve();
+        };
+        img.onerror = function() {
+            this.parentNode.removeChild(this);
+            reject();
+        };
+        // used a rather hacky test as we don't have 'management' permission
+        img.src = 'chrome-extension://kpbnombpnpcffllnianjibmpadjolanh/imgs/helper-neko.png';
+        document.body.appendChild(img);
+    });
+
+    check_bilibili_helper.then(function() {
+        console.log('resolved a conflict with bilibili helper');
+        resolve();
+    }, function() {
+        resolve();
+    });
+});
 
 // ====== Initialization ======
 document.addEventListener("DOMContentLoaded", function() {
@@ -253,23 +298,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // the latest version to show NEW on the icon; it's usually a big update with new features
     unblock_youku.lastest_new_version = '2.8.0.1';
-    get_storage('previous_new_version', function(version) {
-        // previous_new_version will be set by the popup page once the page is opened
-        if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
-            chrome.browserAction.setBadgeText({text: 'NEW'});
-        }
-    });
 
-    get_mode_name(function(current_mode_name) {
-        setup_mode_settings(current_mode_name);
+    resolve_conflict.then(function() {
+        get_storage('previous_new_version', function(version) {
+            // previous_new_version will be set by the popup page once the page is opened
+            if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {
+                chrome.browserAction.setBadgeText({text: 'NEW'});
+            }
+        });
 
-        ga_report_ratio('Init Mode', current_mode_name);
-        ga_report_ratio('Version', unblock_youku.version);
+        get_mode_name(function(current_mode_name) {
+            setup_mode_settings(current_mode_name);
 
-        change_browser_icon('regular');  // set the icon once everything is done
-    });
+            ga_report_ratio('Init Mode', current_mode_name);
+            ga_report_ratio('Version', unblock_youku.version);
 
-    setup_extra_header();
-    // setup_extra_redirector();
+            change_browser_icon('regular');  // set the icon once everything is done
+        });
+
+        setup_extra_header();
+        // setup_extra_redirector();
+    }, function() {});
 });
 
