@@ -63,6 +63,7 @@ unblock_youku.common_urls = [
     // 'http://123.125.123.80/*',
     // 'http://123.125.123.81/*',
     // 'http://123.125.123.82/*',
+    'http://122.72.82.31/*',
 
     'http://vv.video.qq.com/*',
     'http://vv.video.qq.com/getvinfo*',
