@@ -151,6 +151,7 @@ function http_req_handler(client_request, client_response) {
     var proxy_request_headers = server_utils.filter_request_headers(client_request.headers);
     proxy_request_headers.Host = target.host;
     var proxy_request_options = {
+        encoding: null, // disable auto `buffer.toString()` in package "request"
         url: target.href,
 //        url: 'http://httpbin.org/status/400',
         method: client_request.method,
@@ -171,7 +172,6 @@ function http_req_handler(client_request, client_response) {
 
     function handle_proxy_response_data(response, payload) {
         var filtered_headers = server_utils.filter_response_headers(response.headers);
-        filtered_headers['content-length'] = payload.length;
         client_response.writeHead(response.statusCode, filtered_headers);
         client_response.end(payload);
     }
