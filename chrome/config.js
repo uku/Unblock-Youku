@@ -286,6 +286,7 @@ var resolve_conflict = new Promise(function (resolve, reject) {
         console.log('resolved a conflict with bilibili helper');
         resolve();
     }, function() {
+        console.warn('*** the error above is harmless and you can ignore it with no worries ***');
         resolve();
     });
 });
