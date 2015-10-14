@@ -1,7 +1,0 @@
-{
-    "#comment": "keys start with # are comments",
-    "ip": "192.168.1.5",
-    "#dns-host": "8.8.8.8",
-    "proxy-dns": "8.8.8.8",
-}
-
