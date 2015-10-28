@@ -126,6 +126,7 @@ unblock_youku.common_urls = [
     'http://api.letv.com/mms/out/common/geturl*',
     'http://api.letv.com/geturl*',
     'http://api.letv.com/api/geturl*',
+    'http://api.www.letv.com/mms/out/video/playJson?*',
     'http://st.live.letv.com/live/*',
     'http://live.gslb.letv.com/gslb?*',
     'http://static.itv.letv.com/api*',
