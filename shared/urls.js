@@ -116,6 +116,7 @@ unblock_youku.common_urls = [
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-*',
+    'http://www.xiami.com/play?*',
 
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://*/vrs_flash.action*',
