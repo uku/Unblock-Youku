@@ -130,6 +130,7 @@ unblock_youku.common_urls = [
     'http://api.www.letv.com/mms/out/video/playJson?*',
     'http://st.live.letv.com/live/*',
     'http://live.gslb.letv.com/gslb?*',
+    'http://live.g3proxy.lecloud.com/gslb?*',
     'http://static.itv.letv.com/api*',
     'http://ip.apps.cntv.cn/js/player.do*',
     'http://vdn.apps.cntv.cn/api/get*',
