@@ -4,9 +4,9 @@
   "dependencies": {
     "colors": "*",
     "nomnom": "1.8.x",
-    "request": "2.65.x",
-    "validator": "4.2.x",
-    "uglify-js": "2.5.x"
+    "request": "2.67.x",
+    "validator": "4.3.x",
+    "uglify-js": "2.6.x"
   },
   "scripts": {
     "start": "node server/server.js",
