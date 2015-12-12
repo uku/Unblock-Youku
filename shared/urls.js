@@ -83,6 +83,7 @@ unblock_youku.common_urls = [
     'http://info.zb.qq.com/?*',
     'http://info.zb.video.qq.com/?*',
     'http://qzs.qq.com/tencentvideo_v1/*',
+    'http://ac.qq.com/Comic/comicInfo/id/*',
 
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
