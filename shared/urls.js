@@ -250,6 +250,7 @@ unblock_youku.server_extra_urls = [
     'http://mqqplayer.3g.qq.com/*',
     'http://proxy.music.qq.com/*',
     'http://proxymc.qq.com/*',
+    'http://*/base/fcgi-bin/getsession*',  //for ios qq music v5.8, issue #536
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
