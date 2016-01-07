@@ -48,8 +48,8 @@ function setup_proxy() {
 
     var proxy_server_proc = 'HTTPS';
     var proxy_server_addr = 'secure.uku.im:993';
-    var backup_proxy_server_proc = 'HTTPS';
-    var backup_proxy_server_addr = 'proxy.mainland.io:993';
+    var backup_proxy_server_proc = 'HTTP';
+    var backup_proxy_server_addr = 'proxy.uku.im:443';
 
     /* DEBUG -- BEGIN */
     // proxy_server_proc = 'SOCKS5';
