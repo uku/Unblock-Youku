@@ -46,10 +46,18 @@ function setup_pac_data(proxy_prot_1, proxy_addr_1,
 function setup_proxy() {
     console.group('to set up proxy');
 
-    var proxy_server_proc = 'HTTPS';
-    var proxy_server_addr = 'secure.uku.im:993';
-    var backup_proxy_server_proc = 'HTTP';
-    var backup_proxy_server_addr = 'proxy.uku.im:443';
+    var proxy_server_proc = unblock_youku.default_proxy_server_proc;
+    var proxy_server_addr = unblock_youku.default_proxy_server_addr;
+    var backup_proxy_server_proc = unblock_youku.backup_proxy_server_proc;
+    var backup_proxy_server_addr = unblock_youku.backup_proxy_server_addr;
+
+    if (typeof localStorage.custom_proxy_server_proc !== 'undefined'
+    && typeof localStorage.custom_proxy_server_addr !== 'undefined') {
+        proxy_server_proc = localStorage.custom_proxy_server_proc;
+        proxy_server_addr = localStorage.custom_proxy_server_addr;
+        backup_proxy_server_proc = localStorage.custom_proxy_server_proc;
+        backup_proxy_server_addr = localStorage.custom_proxy_server_addr;
+    }
 
     /* DEBUG -- BEGIN */
     // proxy_server_proc = 'SOCKS5';
