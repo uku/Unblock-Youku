@@ -26,9 +26,9 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 // only for redirect mode
-unblock_youku.default_server = 'www.yōukù.com/proxy';
-// unblock_youku.default_server = '127.0.0.1:8888/proxy';
-unblock_youku.backup_server = 'bak.yōukù.com/proxy';
+unblock_youku.default_redirect_server = 'www.yōukù.com/proxy';
+// unblock_youku.default_redirect_server = '127.0.0.1:8888/proxy';
+unblock_youku.backup_redirect_server = 'bak.yōukù.com/proxy';
 
 unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
 unblock_youku.redirect_url_list = unblock_youku.common_urls;
@@ -218,15 +218,15 @@ function storage_monitor(changes, area) {
         }
     }
 
-    if (typeof changes.custom_server !== 'undefined') {
-        var server_change = changes.custom_server;
+    if (typeof changes.custom_redirect_server !== 'undefined') {
+        var redirect_server_change = changes.custom_redirect_server;
         
-        if (typeof server_change.newValue !== 'undefined') {
+        if (typeof redirect_server_change.newValue !== 'undefined') {
             // have to use a localStorage cache for using in the blocking webRequest listener
-            localStorage.custom_server = server_change.newValue;
+            localStorage.custom_redirect_server = redirect_server_change.newValue;
         } else {
-            if (typeof localStorage.custom_server !== 'undefined') {
-                localStorage.removeItem('custom_server');
+            if (typeof localStorage.custom_redirect_server !== 'undefined') {
+                localStorage.removeItem('custom_redirect_server');
             }
         }
     }
