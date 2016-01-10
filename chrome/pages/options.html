@@ -6,31 +6,65 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.5.min.css"/>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-3.3.5.min.js"></script>
-    <script type="text/javascript" src="js/options.js"></script>
+    <script type="text/javascript" src="js/options-redirect.js"></script>
+    <script type="text/javascript" src="js/options-proxy.js"></script>
     <script type="text/javascript" src="js/analytics.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <form id="form_custom_server" action="#">
+                <form class="form-horizontal" id="form_custom_proxy_server" action="#">
+                    <legend class="form-group text-center" for="custom_proxy_enable">Custom backend server for Proxy Mode</legend>
+                    <div class="form-group input-group-lg">
+                        <label class="control-label col-md-2" for="custom_proxy_proc">Proc: </label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="custom_proxy_proc">
+                                <option>HTTP</option>
+                                <option>HTTPS</option>
+                                <option>SOCKS4</option>
+                                <option>SOCKS5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group input-group-lg">
+                        <label class="control-label col-md-2" for="custom_proxy_addr">Addr: </label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="custom_proxy_addr">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10 btn-group btn-group-lg text-center">
+                            <button type="button" class="btn btn-default" id="custom_proxy_enable">Enable</button>
+                            <button type="button" class="btn btn-default" id="custom_proxy_reset">Reset to Default</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-md-offset-2" id="proxy_message"></div>
+                <div class="col-md-offset-2" id="proxy_test_message"></div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <form id="form_custom_redirect_server" action="#">
                     <legend class="form-group text-center">Custom backend server for Redirect Mode</legend>
                     <div class="form-group">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">http://</span>
-                            <input class="form-control" id="custom_server" type="text">
+                            <input class="form-control" id="custom_redirect_server" type="text">
                             <span class="input-group-addon">?url=</span>
                         </div>
                     </div>
                     <div class="form-group text-center">
                         <div class="btn-group btn-group-lg">
-                            <button type="button" class="btn btn-default" id="test">Test</button>
-                            <button type="button" class="btn btn-default" id="save">Save</button>
-                            <button type="button" class="btn btn-default" id="reset">Reset to Default</button>
+                            <button type="button" class="btn btn-default" id="custom_redirect_test">Test</button>
+                            <button type="button" class="btn btn-default" id="custom_redirect_save">Save</button>
+                            <button type="button" class="btn btn-default" id="custom_redirect_reset">Reset to Default</button>
                         </div>
                     </div>
                 </form>
-                <div id="message"></div>
+                <div id="redirect_message"></div>
             </div>
         </div>
     </div>  <!-- container -->

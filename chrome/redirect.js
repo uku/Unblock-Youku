@@ -46,10 +46,10 @@ function http_redirector(details) {
     // }
 
     var backend_server;
-    if (typeof localStorage.custom_server === 'undefined') {
-        backend_server = unblock_youku.actual_server;
+    if (typeof localStorage.custom_redirect_server === 'undefined') {
+        backend_server = unblock_youku.actual_redirect_server;
     } else {
-        backend_server = localStorage.custom_server;
+        backend_server = localStorage.custom_redirect_server;
     }
 
     //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + urlsafe_b64encode(details.url);
@@ -116,14 +116,14 @@ function setup_redirect() {
         ga_report_error('Unexpected Error', err_msg);
     }
 
-    unblock_youku.actual_server = unblock_youku.default_server;
-    check_redirect_server(unblock_youku.actual_server, function() {
-        console.log('default_server seems to be working fine: ' + unblock_youku.actual_server);
+    unblock_youku.actual_redirect_server = unblock_youku.default_redirect_server;
+    check_redirect_server(unblock_youku.actual_redirect_server, function() {
+        console.log('default_redirect_server seems to be working fine: ' + unblock_youku.actual_redirect_server);
     }, function(err_msg) {
-        unblock_youku.actual_server = unblock_youku.backup_server;
-        console.warn('default_server error: ' + err_msg);
-        console.warn('changed to backup_server: ' + unblock_youku.actual_server);
-        ga_report_error('Redirect Server Error', unblock_youku.default_server + ': ' + err_msg);
+        unblock_youku.actual_redirect_server = unblock_youku.backup_redirect_server;
+        console.warn('default_redirect_server error: ' + err_msg);
+        console.warn('changed to backup_redirect_server: ' + unblock_youku.actual_redirect_server);
+        ga_report_error('Redirect Server Error', unblock_youku.default_redirect_server + ': ' + err_msg);
     });
 }
 

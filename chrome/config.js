@@ -25,10 +25,16 @@
 // ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
 
+// only for proxy mode
+unblock_youku.default_proxy_server_proc = 'HTTPS';
+unblock_youku.default_proxy_server_addr = 'secure.uku.im:993';
+unblock_youku.backup_proxy_server_proc = 'HTTPS';
+unblock_youku.backup_proxy_server_addr = 'proxy.mainland.io:993';
+
 // only for redirect mode
-unblock_youku.default_server = 'www.yōukù.com/proxy';
-// unblock_youku.default_server = '127.0.0.1:8888/proxy';
-unblock_youku.backup_server = 'bak.yōukù.com/proxy';
+unblock_youku.default_redirect_server = 'www.yōukù.com/proxy';
+// unblock_youku.default_redirect_server = '127.0.0.1:8888/proxy';
+unblock_youku.backup_redirect_server = 'bak.yōukù.com/proxy';
 
 unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
 unblock_youku.redirect_url_list = unblock_youku.common_urls;
@@ -218,15 +224,32 @@ function storage_monitor(changes, area) {
         }
     }
 
-    if (typeof changes.custom_server !== 'undefined') {
-        var server_change = changes.custom_server;
+    if (typeof changes.custom_redirect_server !== 'undefined') {
+        var redirect_server_change = changes.custom_redirect_server;
         
-        if (typeof server_change.newValue !== 'undefined') {
+        if (typeof redirect_server_change.newValue !== 'undefined') {
             // have to use a localStorage cache for using in the blocking webRequest listener
-            localStorage.custom_server = server_change.newValue;
+            localStorage.custom_redirect_server = redirect_server_change.newValue;
         } else {
-            if (typeof localStorage.custom_server !== 'undefined') {
-                localStorage.removeItem('custom_server');
+            if (typeof localStorage.custom_redirect_server !== 'undefined') {
+                localStorage.removeItem('custom_redirect_server');
+            }
+        }
+    }
+
+    if (typeof changes.custom_proxy_server !== 'undefined') {
+        var proxy_server_change = changes.custom_proxy_server;
+        if (typeof proxy_server_change.newValue !== 'undefined'
+        && typeof proxy_server_change.newValue.proc !== 'undefined'
+        && typeof proxy_server_change.newValue.addr !== 'undefined') {
+            localStorage.custom_proxy_server_proc = proxy_server_change.newValue.proc;
+            localStorage.custom_proxy_server_addr = proxy_server_change.newValue.addr;
+        } else {
+            if (typeof localStorage.custom_proxy_server_proc !== 'undefined') {
+                localStorage.removeItem('custom_proxy_server_proc');
+            }
+            if (typeof localStorage.custom_proxy_server_addr !== 'undefined') {
+                localStorage.removeItem('custom_proxy_server_addr');
             }
         }
     }
