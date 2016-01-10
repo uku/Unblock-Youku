@@ -15,40 +15,39 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <form class="form-horizontal" id="form_custom_proxy_server" action="#">
-                    <legend class="form-group text-center" for="custom_proxy_enable">Custom backend server for Proxy Mode</legend>
-                    <div class="form-group input-group-lg">
-                        <label class="control-label col-md-2" for="custom_proxy_proc">Proc: </label>
+                    <legend class="form-group text-center" for="custom_proxy_enable">Custom backend server for the Proxy Mode</legend>
+                    <div class="form-group form-group-lg">
+                        <label class="control-label col-md-2" for="custom_proxy_proc">Protocol: </label>
                         <div class="col-md-10">
                             <select class="form-control" id="custom_proxy_proc">
                                 <option>HTTP</option>
                                 <option>HTTPS</option>
-                                <option>SOCKS4</option>
                                 <option>SOCKS5</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group input-group-lg">
-                        <label class="control-label col-md-2" for="custom_proxy_addr">Addr: </label>
+                    <div class="form-group form-group-lg">
+                        <label class="control-label col-md-2" for="custom_proxy_addr">Address: </label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="custom_proxy_addr">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10 btn-group btn-group-lg text-center">
+                    <div class="form-group text-center">
+                        <div class="btn-group btn-group-lg">
                             <button type="button" class="btn btn-default" id="custom_proxy_enable">Enable</button>
                             <button type="button" class="btn btn-default" id="custom_proxy_reset">Reset to Default</button>
                         </div>
                     </div>
                 </form>
-                <div class="col-md-offset-2" id="proxy_message"></div>
-                <div class="col-md-offset-2" id="proxy_test_message"></div>
+                <div id="proxy_message"></div>
+                <div id="proxy_test_message"></div>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <form id="form_custom_redirect_server" action="#">
-                    <legend class="form-group text-center">Custom backend server for Redirect Mode</legend>
+                    <legend class="form-group text-center">Custom backend server for the Redirect Mode</legend>
                     <div class="form-group">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">http://</span>

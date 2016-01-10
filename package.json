@@ -5,7 +5,7 @@
     "colors": "*",
     "nomnom": "1.8.x",
     "request": "2.67.x",
-    "validator": "4.3.x",
+    "validator": "4.5.x",
     "uglify-js": "2.6.x"
   },
   "scripts": {

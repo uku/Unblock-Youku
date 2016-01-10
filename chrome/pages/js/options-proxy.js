@@ -1,6 +1,6 @@
 var background = background || chrome.extension.getBackgroundPage();
-var default_porxy_server_proc = background.unblock_youku.default_proxy_server_proc;
-var default_porxy_server_addr = background.unblock_youku.default_proxy_server_addr;
+var default_proxy_server_proc = background.unblock_youku.default_proxy_server_proc;
+var default_proxy_server_addr = background.unblock_youku.default_proxy_server_addr;
 
 function remove_custom_proxy_server(callback) {
     "use strict";
@@ -14,7 +14,7 @@ function get_custom_proxy_server(callback) {
         if (typeof server_info === 'undefined'
         || typeof server_info.proc === 'undefined'
         || typeof server_info.addr === 'undefined') {
-            callback(/*custom_enabled=*/false, default_porxy_server_proc, default_porxy_server_addr);
+            callback(/*custom_enabled=*/false, default_proxy_server_proc, default_proxy_server_addr);
         } else {
             callback(/*custom_enabled=*/true, server_info.proc, server_info.addr);
         }

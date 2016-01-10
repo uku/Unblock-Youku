@@ -159,13 +159,18 @@ function _change_browser_icon(option) {
     // hard-coded spring festivals
     var is_spring = false;
     switch (y) {
-        case 2014:  // Jan 31, 2014
-            if ((m === 1 && 20 <= d) || (m === 2 && d <= 10)) {
+        case 2016:  // February 8, 2016
+            if ((m === 1 && d >= 29) || (m === 2 && d <= 18)) {
                 is_spring = true;
             }
             break;
-        case 2015:  // Feb 19, 2015
-            if (m === 2 && (9 <= d && d <= 29)) {
+        case 2017:  // January 28
+            if ((m === 1 && d >= 18) || (m === 2 && d <= 7)) {
+                is_spring = true;
+            }
+            break;
+        case 2018:  // February 16
+            if (m === 2 && (6 <= d && d <= 26)) {
                 is_spring = true;
             }
             break;
@@ -240,8 +245,8 @@ function storage_monitor(changes, area) {
     if (typeof changes.custom_proxy_server !== 'undefined') {
         var proxy_server_change = changes.custom_proxy_server;
         if (typeof proxy_server_change.newValue !== 'undefined'
-        && typeof proxy_server_change.newValue.proc !== 'undefined'
-        && typeof proxy_server_change.newValue.addr !== 'undefined') {
+                && typeof proxy_server_change.newValue.proc !== 'undefined'
+                && typeof proxy_server_change.newValue.addr !== 'undefined') {
             localStorage.custom_proxy_server_proc = proxy_server_change.newValue.proc;
             localStorage.custom_proxy_server_addr = proxy_server_change.newValue.addr;
         } else {
