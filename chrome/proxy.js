@@ -17,7 +17,7 @@
 
 /*jshint devel:true, globalstrict: true */
 /*global chrome: false, unblock_youku: false, new_sogou_proxy_addr: false, urls2pac: false, get_mode_name: false */
-/*global ga_report_timeout: false, ga_report_error: false, ga_report_event: false */
+/*global ga_report_timeout: false, ga_report_error: false, ga_report_event: false, localStorage: false */
 "use strict";
 
 
@@ -52,7 +52,7 @@ function setup_proxy() {
     var backup_proxy_server_addr = unblock_youku.backup_proxy_server_addr;
 
     if (typeof localStorage.custom_proxy_server_proc !== 'undefined'
-    && typeof localStorage.custom_proxy_server_addr !== 'undefined') {
+            && typeof localStorage.custom_proxy_server_addr !== 'undefined') {
         proxy_server_proc = localStorage.custom_proxy_server_proc;
         proxy_server_addr = localStorage.custom_proxy_server_addr;
         backup_proxy_server_proc = localStorage.custom_proxy_server_proc;
@@ -62,8 +62,6 @@ function setup_proxy() {
     /* DEBUG -- BEGIN */
     // proxy_server_proc = 'SOCKS5';
     // proxy_server_addr = '127.0.0.1:1080';
-    // backup_proxy_server_proc = 'SOCKS5';
-    // backup_proxy_server_addr = '127.0.0.1:1080';
     /* DEBUG -- END */
 
     setup_pac_data(proxy_server_proc, proxy_server_addr,

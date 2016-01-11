@@ -28,8 +28,8 @@ var unblock_youku = unblock_youku || {};  // namespace
 // only for proxy mode
 unblock_youku.default_proxy_server_proc = 'HTTPS';
 unblock_youku.default_proxy_server_addr = 'secure.uku.im:993';
-unblock_youku.backup_proxy_server_proc = 'HTTPS';
-unblock_youku.backup_proxy_server_addr = 'proxy.mainland.io:993';
+unblock_youku.backup_proxy_server_proc = 'HTTP';
+unblock_youku.backup_proxy_server_addr = 'proxy.uku.im:443';
 
 // only for redirect mode
 unblock_youku.default_redirect_server = 'www.yōukù.com/proxy';
@@ -214,7 +214,7 @@ function change_browser_icon(option) {
 }
 
 
-// in case settings are changed (or synced) in background
+// Settings are changed asynchronously
 function storage_monitor(changes, area) {
     console.log('storage changes: ' + JSON.stringify(changes));
 
