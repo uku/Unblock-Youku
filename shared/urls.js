@@ -68,7 +68,7 @@ unblock_youku.common_urls = [
     'http://vv.video.qq.com/*',
     'http://vv.video.qq.com/getvinfo*',
     'http://vv.video.qq.com/getinfo*',
-    'http://vv.video.qq.com/geturl*',    
+    'http://vv.video.qq.com/geturl*',
     'http://tt.video.qq.com/getvinfo*',
     'http://ice.video.qq.com/getvinfo*',
     'http://tjsa.video.qq.com/getvinfo*',
@@ -120,7 +120,7 @@ unblock_youku.common_urls = [
     'http://www.xiami.com/play?*',
 
     'http://*.dpool.sina.com.cn/iplookup*',
-    'http://*/vrs_flash.action*',
+    // 'http://*/vrs_flash.action*', //This URL hijackable!
     // 'http://*/?prot=2&type=1*',
     // 'http://*/?prot=2&file=/*',
     'http://api.letv.com/streamblock*',
@@ -250,7 +250,8 @@ unblock_youku.server_extra_urls = [
     'http://mqqplayer.3g.qq.com/*',
     'http://proxy.music.qq.com/*',
     'http://proxymc.qq.com/*',
-    'http://*/base/fcgi-bin/getsession*',  //for ios qq music v5.8, issue #536
+    //Disable follow url because its hijackable.
+    // 'http://*/base/fcgi-bin/getsession*',  //for ios qq music v5.8, issue #536
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
