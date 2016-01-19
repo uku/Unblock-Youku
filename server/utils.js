@@ -78,9 +78,6 @@ function is_valid_url(target_url) {
             return true;
         }
     }
-    if ('http://httpbin.org' === target_url.slice(0, 18)) {
-        return true;
-    }
 
     return false;
 }
@@ -213,6 +210,19 @@ function static_responses(client_request, client_response, pac_file_content) {
             'Cache-Control': 'public, max-age=3600'
         });
         client_response.end(regex_text);
+        return;
+    }
+
+    if (client_request.url === '/chrome_regex') {
+        var chrome_regex_list = shared_urls.produce_regex_list(false);
+        var chrome_regex_text = chrome_regex_list.join('\n');
+
+        client_response.writeHead(200, {
+            'Content-Type': 'text/plain',
+            'Content-Length': chrome_regex_text.length.toString(),
+            'Cache-Control': 'public, max-age=60'
+        });
+        client_response.end(chrome_regex_text);
         return;
     }
 
