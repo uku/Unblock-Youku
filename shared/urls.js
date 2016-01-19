@@ -283,8 +283,6 @@ unblock_youku.server_extra_urls = [
     'https://123.126.99.39/*',//zw-n-openapi.youku.com
     'https://220.181.154.137/*',//zw-t-openapi.youku.com
 
-    'https://httpbin.org/*',  // for testing
-
     // for MiBox iCNTV Authentication
     'http://tms.is.ysten.com:8080/yst-tms/login.action?*',
     'http://chrome.2345.com/dianhua/mobileApi/check.php',
