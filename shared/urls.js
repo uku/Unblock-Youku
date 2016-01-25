@@ -45,24 +45,20 @@ unblock_youku.common_urls = [
     'http://cache.video.qiyi.com/vp/*/*/?src=*',
     'http://cache.video.qiyi.com/vps?*',
     'http://cache.video.qiyi.com/liven/*',
+    'http://iplocation.geo.qiyi.com/cityjson*',
     'http://v.api.hunantv.com/player/video*',
+    'http://acc.music.qq.com/base/fcgi-bin/getsession*',
+
+    'http://api.appsdk.soku.com/d/s?keyword=*',
+    'http://api.appsdk.soku.com/u/s?keyword=*',
+
+    'http://m*.music.126.net/*',
 
     // cause oversea servers unusable?
     // 'http://interface.bilibili.tv/player*',
+    'http://app.bilibili.com/bangumi/user_season_status?*',
+    'http://bangumi.bilibili.com/api/*',
 
-    // 'http://61.135.183.45/*',
-    // 'http://61.135.183.46/*',
-    // 'http://61.135.183.50/*',
-    // 'http://220.181.61.229/*',
-    // 'http://220.181.61.212/*',
-    // 'http://220.181.61.213/*',
-    // 'http://220.181.19.218/*',
-    // 'http://220.181.118.181/*',
-    // 'http://123.126.48.47/*',
-    // 'http://123.126.48.48/*',
-    // 'http://123.125.123.80/*',
-    // 'http://123.125.123.81/*',
-    // 'http://123.125.123.82/*',
     'http://122.72.82.31/*',
 
     'http://vv.video.qq.com/*',
@@ -151,6 +147,10 @@ unblock_youku.chrome_extra_urls = [
     'http://www.tudou.com/programs/view/*',
     'http://www.tudou.com/albumplay/*',
     'http://www.tudou.com/listplay/*',
+
+    'http://www.youku.com/show_page/*',
+    'http://v.youku.com/v_show/*',
+    'http://www.soku.com/search_video/*',
 
     // 'http://live.video.sina.com.cn/room/*',
     // 'http://edge.v.iask.com/*',  // may be large files
