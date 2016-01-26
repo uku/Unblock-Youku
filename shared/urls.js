@@ -52,8 +52,6 @@ unblock_youku.common_urls = [
     'http://api.appsdk.soku.com/d/s?keyword=*',
     'http://api.appsdk.soku.com/u/s?keyword=*',
 
-    'http://m*.music.126.net/*',
-
     // cause oversea servers unusable?
     // 'http://interface.bilibili.tv/player*',
     'http://app.bilibili.com/bangumi/user_season_status?*',

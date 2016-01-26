@@ -140,30 +140,29 @@ function clear_redirect() {
 }
 
 
+// extra sites to redirect
+/*
+function extra_http_redirector(details) {
+    var redirect_url = 'http://117.27.241.117/' + details.url.replace(/^.*\/\/[^\/]+/, '');
+    console.log('redirect url: ' + redirect_url);
+    return {redirectUrl: redirect_url};
+}
 
-// // extra sites to redirect
-// function extra_http_redirector(details) {
-//     if (details.url === 'http://netcncoversea.inter.iqiyi.com/crossdomain.xml') {
-//         var redirect_url = 'http://pac.uku.im/crossdomain.xml';
-//         console.log('redirect url: ' + redirect_url);
-//         return {redirectUrl: redirect_url};
-//     }
-// }
-
-// function setup_extra_redirector() {
-//     if (!chrome.webRequest.onBeforeRequest.hasListener(extra_http_redirector)) {
-//         chrome.webRequest.onBeforeRequest.addListener(
-//             extra_http_redirector,
-//             {
-//                 urls: ['http://netcncoversea.inter.iqiyi.com/crossdomain.xml']
-//             },
-//             ["blocking"]
-//         );
-//         console.log('extra_http_redirector is set');
-//     } else {
-//         var err_msg = 'extra_http_redirector is already there!';
-//         console.error(err_msg);
-//         ga_report_error('Unexpected Error', err_msg);
-//     }
-// }
+function setup_extra_redirector() {
+    if (!chrome.webRequest.onBeforeRequest.hasListener(extra_http_redirector)) {
+        chrome.webRequest.onBeforeRequest.addListener(
+            extra_http_redirector,
+            {
+                urls: ['http://*.music.126.net/*']
+            },
+            ["blocking"]
+        );
+        console.log('extra_http_redirector is set');
+    } else {
+        var err_msg = 'extra_http_redirector is already there!';
+        console.error(err_msg);
+        ga_report_error('Unexpected Error', err_msg);
+    }
+}
+*/
 
