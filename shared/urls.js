@@ -46,6 +46,7 @@ unblock_youku.common_urls = [
     'http://cache.video.qiyi.com/vps?*',
     'http://cache.video.qiyi.com/liven/*',
     'http://iplocation.geo.qiyi.com/cityjson*',
+    'http://*.cupid.iqiyi.com/*',
     'http://v.api.hunantv.com/player/video*',
     'http://acc.music.qq.com/base/fcgi-bin/getsession*',
 
