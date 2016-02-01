@@ -151,6 +151,8 @@ unblock_youku.chrome_extra_urls = [
     'http://v.youku.com/v_show/*',
     'http://www.soku.com/search_video/*',
 
+    'http://douban.fm/',  // without *
+
     // 'http://live.video.sina.com.cn/room/*',
     // 'http://edge.v.iask.com/*',  // may be large files
 
