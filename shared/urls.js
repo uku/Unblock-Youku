@@ -253,6 +253,14 @@ unblock_youku.server_extra_urls = [
     'http://proxymc.qq.com/*',
     //Disable follow url because its hijackable.
     // 'http://*/base/fcgi-bin/getsession*',  //for ios qq music v5.8, issue #536
+    'http://220.249.243.70/base/fcgi-bin/getsession*',
+    'http://117.185.116.152/base/fcgi-bin/getsession*',
+    'http://101.227.139.217/base/fcgi-bin/getsession*',
+    'http://59.37.96.220/base/fcgi-bin/getsession*',
+    'http://140.207.69.99/base/fcgi-bin/getsession*',
+    'http://103.7.31.186/base/fcgi-bin/getsession*',
+    'http://103.7.30.89/base/fcgi-bin/getsession*',
+    'http://182.254.34.151/base/fcgi-bin/getsession*', //temperary solutions for issue #536
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
