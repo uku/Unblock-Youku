@@ -43,5 +43,8 @@
   },
   "sharing": {
     "message": "Welcome to share it via"
+  },
+  "donation_url": {
+    "message": "https://www.uku.im/index.html"
   }
 }

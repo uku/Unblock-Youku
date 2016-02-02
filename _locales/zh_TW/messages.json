@@ -43,5 +43,8 @@
   },
   "sharing": {
     "message": "歡迎分享至"
+  },
+  "donation_url": {
+    "message": "https://www.uku.im/index_zht.html"
   }
 }
