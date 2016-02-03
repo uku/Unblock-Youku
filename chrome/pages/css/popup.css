@@ -27,7 +27,21 @@ div#wrapper {
     padding: 10px;
 }
 
+/* donation */
+#support_message {
+    margin-top: 10px;
+    line-height: 150%;
+}
+
+div#support_message {
+    line-height: 150%;
+}
+
 /* social networks */
+div#social {
+    margin-top: 15px;
+}
+
 div#social-networks {
     margin: 15px auto;
     font-size: 110%;

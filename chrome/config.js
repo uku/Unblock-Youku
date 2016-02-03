@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function() {
     unblock_youku.version = chrome.runtime.getManifest().version;
 
     // the latest version to show NEW on the icon; it's usually a big update with new features
-    unblock_youku.lastest_new_version = '2.8.0.1';
+    unblock_youku.lastest_new_version = '3.0.0.1';
     get_storage('previous_new_version', function(version) {
         // previous_new_version will be set by the popup page once the page is opened
         if (typeof version === 'undefined' || version !== unblock_youku.lastest_new_version) {

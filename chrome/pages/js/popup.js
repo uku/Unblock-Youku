@@ -22,6 +22,11 @@ function set_i18n_text() {
     "use strict";
     var get_msg = chrome.i18n.getMessage;
 
+    $('div#support strong').html(get_msg('support_title'));
+    $('p#support_message').html(get_msg('support_message'));
+    $('a#support_link').attr('href', get_msg('donation_url'));
+    $('button#support_button').html(get_msg('support_button'));
+
     $('div#social strong').html(get_msg('social_title'));
 
     $('div#mode_select strong').html(get_msg('mode_select'));

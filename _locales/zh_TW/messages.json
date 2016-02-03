@@ -46,5 +46,14 @@
   },
   "donation_url": {
     "message": "https://www.uku.im/index_zht.html"
+  },
+  "support_title": {
+    "message": "我們需要您的支持"
+  },
+  "support_message": {
+    "message": "請幫助 Unblock Youku 長久穩定和免費地運行下去"
+  },
+  "support_button": {
+    "message": "請支持我們"
   }
 }

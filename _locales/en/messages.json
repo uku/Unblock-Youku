@@ -46,5 +46,14 @@
   },
   "donation_url": {
     "message": "https://www.uku.im/index.html"
+  },
+  "support_title": {
+    "message": "We Need Your Support"
+  },
+  "support_message": {
+    "message": "Please support us to make Unblock Youku better."
+  },
+  "support_button": {
+    "message": "Please Support Us"
   }
 }
