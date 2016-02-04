@@ -110,5 +110,10 @@ $(document).ready(function() {
     } else if (my_date.getTime() > parseInt(localStorage.first_time, 10) + 1000 * 60 * 60 * 24 * 3) {
         $('div#rating').show(); // delay 3 days for the rating div to show up, hahaha
     }
+
+    $('#support_button').click(function() {
+        // Make sure the donation page is only shown once
+        background.localStorage.showed_donation_page = new Date().getTime();
+    });
 });
 

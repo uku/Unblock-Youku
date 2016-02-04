@@ -31,6 +31,11 @@ function is_around_spring_festival() {
 }
 
 function create_donation_tab() {
+    if (typeof localStorage.showed_donation_page !== 'undefined') {
+        // Make sure the page is only shown once
+        return;
+    }
+
     var donation_url = chrome.i18n.getMessage('donation_url');
 
     try {
@@ -54,9 +59,9 @@ function create_donation_tab() {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === 'install') {
         create_donation_tab();
-    } else if (details.reason === 'update') {
-        if (typeof localStorage.showed_donation_page === 'undefined') {
-            create_donation_tab();
-        }
     }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    create_donation_tab();
 });
