@@ -83,6 +83,8 @@ unblock_youku.common_urls = [
     'http://geo.js.kankan.xunlei.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
+    'http://tools.aplusapi.pptv.com/get_ppi?*',
+    'http://live.pptv.com/api/subject_list?*, 
     // 'http://c1.pptv.com/*',
     'http://dyn.ugc.pps.tv/*',
     'http://v.pps.tv/ugc/ajax/aj_html5_url.php*',
