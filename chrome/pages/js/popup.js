@@ -39,6 +39,7 @@ function set_i18n_text() {
     $('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
 
     $('div#help_text').html(get_msg('help'));
+    $('div#faq').html(get_msg('faq'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
 }
