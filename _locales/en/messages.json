@@ -35,6 +35,9 @@
   "help": {
     "message": "For more information about different modes, you can <a href=\"http://uku.im/modes\" target=\"_blank\">read this</a>."
   },
+  "faq": {
+    "message": "If you have encountered any issue, please refer to <a href=\"https://github.com/Unblocker/Unblock-Youku/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95-FAQ\" target=\"_blank\">FAQ</a>"
+  },
   "feedback": {
     "message": "If you have any questions, please don't hesitate to <a href=\"http://uku.im/feedback\" target=\"_blank\">contact us</a>."
   },
