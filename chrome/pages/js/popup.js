@@ -105,6 +105,9 @@ $(document).ready(function() {
         background.change_mode('redirect');
     });
 
+    // enable tooltip
+    $('#tooltip').tooltip();
+
     var my_date = new Date();
     if (typeof localStorage.first_time === 'undefined') {
         localStorage.first_time = my_date.getTime();
