@@ -295,6 +295,7 @@ function to_title_case(str) {
 
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
+exports.gen_url_map = gen_url_map;
 exports.urls2pac = urls2pac;
 exports.string_starts_with = string_starts_with;
 exports.to_title_case = to_title_case;
