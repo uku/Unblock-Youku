@@ -155,6 +155,17 @@ unblock_youku.chrome_extra_urls = [
     'http://www.soku.com/search_video/*',
 
     'http://douban.fm/',  // without *
+    'http://lixian.xunlei.com/',
+    'http://lixian.xunlei.com/img/*',
+    'http://lixian.xunlei.com/js/*',
+    'http://lixian.xunlei.com/login.html',
+    'http://dynamic.cloud.vip.xunlei.com/login*',
+    'http://dynamic.cloud.vip.xunlei.com/user_task*',
+    'http://dynamic.cloud.vip.xunlei.com/interface/*',
+    'http://cloud.vip.xunlei.com/*/css/*',
+    'http://cloud.vip.xunlei.com/*/js/*',
+    'http://cloud.vip.xunlei.com/*/img/*',
+    // 'http://vod.lixian.xunlei.com/*',
 
     // LETV https://github.com/Unblocker/Unblock-Youku/issues/590
     "http://36.110.222.105/*",
