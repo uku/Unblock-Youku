@@ -1,7 +1,8 @@
 sudo: false
 language: node_js
 node_js:
-    - "0.10"
-branches:
-    only:
-        - master
+  - "4"
+  - "5"
+script:
+  - npm run test:unit
+  - npm run test
