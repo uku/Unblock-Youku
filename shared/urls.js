@@ -153,6 +153,9 @@ unblock_youku.chrome_extra_urls = [
     'http://www.youku.com/show_page/*',
     'http://v.youku.com/v_show/*',
     'http://www.soku.com/search_video/*',
+    
+     'http://ac.qq.com/ComicView/index/id/*',
+     'http://ac.qq.com/Jump*',
 
     'http://douban.fm/',  // without *
     'http://lixian.xunlei.com/*',
