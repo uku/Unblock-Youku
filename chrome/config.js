@@ -308,6 +308,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
     setup_extra_header();
     // setup_extra_redirector();
-    setup_unblockcn_redirector();
 });
 

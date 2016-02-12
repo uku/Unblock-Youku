@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "3.0.0.8",
+  "version": "3.0.0.9",
   "manifest_version": 2,
   "minimum_chrome_version": "25.0",
   "description": "__MSG_description__",
@@ -49,6 +49,20 @@
   }, {
     "matches": ["http://music.163.com/*"],
     "js": ["chrome/content/music.163.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": [
+      "http://unblockcn.com/*",
+      "http://*.unblockcn.com/*",
+      "http://unblockyouku.cn/*",
+      "http://*.unblockyouku.cn/*",
+      "http://724sky.com/*",
+      "http://*.724sky.com/*",
+      "http://tieba.baidu.com/f?kw=unblockcn*",
+      "http://*.tieba.baidu.com/f?kw=unblockcn*"
+    ],
+    "js": ["chrome/content/unblockcn.js"],
     "run_at": "document_end",
     "all_frames": true
   }],
