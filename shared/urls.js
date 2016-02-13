@@ -18,7 +18,8 @@
 var unblock_youku = unblock_youku || {};  // namespace
 
 
-// for both chrome extension and server
+// For both chrome extension and server
+// Note: The redirect mode will only use this url list.
 unblock_youku.common_urls = [
     'http://v.youku.com/player/*',
     'http://api.youku.com/player/*',
@@ -144,7 +145,7 @@ unblock_youku.common_urls = [
     'http://211.151.157.15/*'
 ];
 
-// only for chrome extension
+// Note: The normal mode will take both common_urls and chrome_extra_urls.
 unblock_youku.chrome_extra_urls = [
     'http://www.tudou.com/programs/view/*',
     'http://www.tudou.com/albumplay/*',
@@ -157,7 +158,7 @@ unblock_youku.chrome_extra_urls = [
      'http://ac.qq.com/ComicView/index/id/*',
      'http://ac.qq.com/Jump*',
 
-    'http://douban.fm/',  // without *
+    'http://douban.fm/*',
     'http://lixian.xunlei.com/*',
     'http://lixian.vip.xunlei.com/*',
     'http://dynamic.cloud.vip.xunlei.com/*',
@@ -258,6 +259,7 @@ unblock_youku.server_whitelist_urls = [
     'http://*/ipad?file=/*'
 ];
 
+// Note: The PAC server will work on any url in common_urls, chrome_extra_urls, and server_extra_urls.
 unblock_youku.server_extra_urls = [
     // for Mobile apps    // Video apps
     'http://a.play.api.3g.youku.com/common/v3/play?*',
