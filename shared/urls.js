@@ -164,6 +164,7 @@ unblock_youku.chrome_extra_urls = [
     'http://dynamic.cloud.vip.xunlei.com/*',
     'http://cloud.vip.xunlei.com/*',
     // 'http://vod.lixian.xunlei.com/*',
+    'http://www.iqiyi.com/dongman/',
 
     // LETV https://github.com/Unblocker/Unblock-Youku/issues/590
     "http://36.110.222.105/*",
