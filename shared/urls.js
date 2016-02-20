@@ -119,6 +119,7 @@ unblock_youku.common_urls = [
     'http://www.xiami.com/play?*',
     'http://www.kugou.com/interface/geoip/checkip.php',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
+    'http://antiserver.kuwo.cn/anti.s?*',
 
     'http://*.dpool.sina.com.cn/iplookup*',
     // 'http://*/vrs_flash.action*', //This URL hijackable!
