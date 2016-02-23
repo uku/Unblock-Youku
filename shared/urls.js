@@ -49,6 +49,7 @@ unblock_youku.common_urls = [
     'http://iplocation.geo.qiyi.com/cityjson*',
     'http://*.cupid.iqiyi.com/*',
     'http://v.api.hunantv.com/player/video*',
+    'http://v.api.mgtv.com/player/video*',
     'http://acc.music.qq.com/base/fcgi-bin/getsession*',
 
     'http://api.appsdk.soku.com/d/s?keyword=*',
