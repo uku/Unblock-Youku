@@ -2,7 +2,7 @@
 
 非常感谢您的兴趣和支持！只有大家的支持和贡献才能使 Unblock Youku 项目长久地免费稳定地服务海外千千万万的朋友们。
 
-这个页面包含一些在技术上给 Unblock Youku 贡献的办法。也欢迎捐款来支持我们服务器的开销，[捐款请前往 Unblock Youku 主页 ](https://www.uku.im/donate_zhs.html)。
+这个页面包含一些在技术上给 Unblock Youku 贡献的办法。也欢迎捐款来支持我们服务器的开销，[捐款请前往 Unblock Youku 主页 ](https://www.uku.im/index_zhs.html)。
 
 ### 我在使用 Unblock Youku 时遇到了问题
 
