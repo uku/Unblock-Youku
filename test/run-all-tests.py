@@ -56,6 +56,29 @@ def start_server():
         env=test_env)
     time.sleep(3)
 
+def wait_server_open(server, port, timeout):
+    import socket
+    import errno
+    from time import time as now
+
+    # ending time for time out
+    end = now() + timeout
+
+    while True:
+        s = socket.socket()
+        try:
+            next_timeout = end - now() # check for timeout
+            if next_timeout < 0:
+                return False
+
+            s.connect((server, port))
+        except socket.error, err:
+            # if connection failed, try again
+            s.close()
+            continue
+        else:
+            s.close()
+            return True
 
 def stop_server():
     time.sleep(1)
@@ -129,7 +152,10 @@ def main():
     exit_code = -1
     try:
         start_server()
-        exit_code = run_all_tests()
+        if (wait_server_open('127.0.0.1', 8888, 20)): # time out in 20s
+            exit_code = run_all_tests()
+        else:
+            red_alert('Error open connection')
     finally:
         stop_server()
     sys.exit(exit_code)
