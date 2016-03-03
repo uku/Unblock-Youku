@@ -36,6 +36,7 @@ unblock_youku.common_urls = [
     'http://pad.tv.sohu.com/playinfo*',
     'http://my.tv.sohu.com/play/m3u8version.do*',
     'http://hot.vrs.letv.com/*',
+    'http://api.le.com/mms/out/video/*',
     //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/v.*',
     'http://data.video.qiyi.com/videos/*',
