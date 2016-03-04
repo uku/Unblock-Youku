@@ -266,6 +266,9 @@ function urls2pac(url_whitelist, url_list,
         "}",
         "",
         "function FindProxyForURL(url, host) {",  // host doesn't contain port
+        "  var iqiyi_regex = /^http:\\/\\/cache\\.video\\.qiyi\\.com\\/vms.*$/i;",
+        "  if (iqiyi_regex.test(url))",
+        "    return 'PROXY iqiyi.proxy.uku.im:8888; HTTPS secure.uku.im:993; DIRECT;';",  // Experiment for #612
         "  var prot = url.slice(0, 6);",
         "  if (prot === 'http:/')",
         "    return _find_proxy(_http_map, host, url, 7);",  // 'http://'.length
