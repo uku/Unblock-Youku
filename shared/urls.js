@@ -79,6 +79,7 @@ unblock_youku.common_urls = [
     'http://bobo.video.qq.com/getvinfo*',
     'http://flvs.video.qq.com/getvinfo*',
     'http://bkvv.video.qq.com/getvinfo*',
+    'http://h5vv.video.qq.com/getvinfo*',
     'http://info.zb.qq.com/?*',
     'http://info.zb.video.qq.com/?*',
     'http://qzs.qq.com/tencentvideo_v1/*',
