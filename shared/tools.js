@@ -235,7 +235,6 @@ function urls2pac(url_whitelist, url_list,
     var txt = [
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
-        // "var _proxy_str = 'PROXY " + proxy_server + "';",
         "var _proxy_str = '" + _proxy_str + "';",
         "",
         "function _check_regex_list(regex_list, str) {",
@@ -266,9 +265,6 @@ function urls2pac(url_whitelist, url_list,
         "}",
         "",
         "function FindProxyForURL(url, host) {",  // host doesn't contain port
-        "  var iqiyi_regex = /^http:\\/\\/cache\\.video\\.qiyi\\.com\\/vms.*$/i;",
-        "  if (iqiyi_regex.test(url))",
-        "    return 'PROXY iqiyi.proxy.uku.im:8888; HTTPS secure.uku.im:993; DIRECT;';",  // Experiment for #612
         "  var prot = url.slice(0, 6);",
         "  if (prot === 'http:/')",
         "    return _find_proxy(_http_map, host, url, 7);",  // 'http://'.length
