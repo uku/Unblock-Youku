@@ -96,7 +96,7 @@ if (!opts.pac_proxy) {
 if ((opts.proxy && (check_url_format(opts.proxy) !== undefined))
         || (opts.bak_proxy && (check_url_format(opts.bak_proxy) !== undefined))
         || (opts.pac_proxy && (check_url_format(opts.pac_proxy) !== undefined))) {
-    util.error('ENV Error: Invalid URL format'.red);
+    console.error('ENV Error: Invalid URL format'.red);
     process.exit(400);
 }
 //console.log(opts);
@@ -106,7 +106,7 @@ var pac_proxy_obj = null;
 if (opts.pac_proxy) {
     pac_proxy_obj = url.parse(opts.pac_proxy);
     if (!pac_proxy_obj.host || !pac_proxy_obj.protocol) {
-        util.error('Invalid URL format parsed'.red);
+        console.error('Invalid URL format parsed'.red);
         process.exit(401);
     }
     pac_file_content = server_utils.generate_pac_file(pac_proxy_obj.host, pac_proxy_obj.protocol);
@@ -166,7 +166,7 @@ function http_req_handler(client_request, client_response) {
             client_response.writeHead(500);
             client_response.end('Error occurred, sorry.');
         } catch (er) {
-            util.error('[ub.uku.js] Error sending 500', er, client_request.url);
+            console.error('[ub.uku.js] Error sending 500', er, client_request.url);
         }
     }
 
@@ -178,13 +178,13 @@ function http_req_handler(client_request, client_response) {
 
     request(proxy_request_options, function(err, resp, body) {
         if (err) {
-            util.error('[ub.uku.js] first proxy_request error: (' + err.code + ') ' + err.message, client_request.url);
+            console.error('[ub.uku.js] first proxy_request error: (' + err.code + ') ' + err.message, client_request.url);
             if (opts.bak_proxy) {  // retry the request
                 setTimeout(function() {    // run it in 1s
                     proxy_request_options.proxy = opts.bak_proxy;
                     request(proxy_request_options, function(err, resp, body) {
                         if (err) {
-                            util.error('[ub.uku.js] second proxy_request error: (' + err.code + ') ' + err.message, client_request.url, err.stack);
+                            console.error('[ub.uku.js] second proxy_request error: (' + err.code + ') ' + err.message, client_request.url, err.stack);
                             handle_proxy_request_error();
 
                         } else {
@@ -228,12 +228,12 @@ if (cluster.isMaster) {
             util.log('[ub.uku.js] Worker ' + worker.process.pid
                 + ' was killed by signal: ' + signal);
         } else if (code !== 0) {
-            util.error('[ub.uku.js] Worker ' + worker.process.pid
+            console.error('[ub.uku.js] Worker ' + worker.process.pid
                 + ' exited with error code: ' + code);
             // respawn a worker process when one dies
             cluster.fork();
         } else {
-            util.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited.');
+            console.error('[ub.uku.js] Worker ' + worker.process.pid + ' exited.');
         }
     });
 
@@ -256,7 +256,7 @@ if (cluster.isMaster) {
 
     ubuku_server.listen(local_port, '0.0.0.0').on('error', function(err) {
         if (err.code === 'EADDRINUSE') {
-            util.error('[ub.uku.js] Port number is already in use! Exiting now...');
+            console.error('[ub.uku.js] Port number is already in use! Exiting now...');
             process.exit();
         }
     });
@@ -264,6 +264,6 @@ if (cluster.isMaster) {
 
 
 process.on('uncaughtException', function(err) {
-    util.error('[ub.uku.js] Caught uncaughtException: ' + err, err.stack);
+    console.error('[ub.uku.js] Caught uncaughtException: ' + err, err.stack);
     process.exit(213);
 });
