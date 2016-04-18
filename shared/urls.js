@@ -327,6 +327,8 @@ unblock_youku.server_extra_urls = [
     // 'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv8*',
     // 'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdbtv6*',
     "http://vdn.live.cntv.cn/*",
+    "http://app.bilibili.com/*",
+    "https://app.bilibili.com/*",
 
     // Music apps
     'http://3g.music.qq.com/*',
