@@ -32,10 +32,12 @@ unblock_youku.backup_proxy_server_proc = 'HTTP';
 unblock_youku.backup_proxy_server_addr = 'proxy.uku.im:443';
 
 // === For debug - start ===
+/*
 unblock_youku.default_proxy_server_proc = 'SOCKS5';
 unblock_youku.default_proxy_server_addr = '127.0.0.1:1080';
 unblock_youku.backup_proxy_server_proc = 'SOCKS5';
 unblock_youku.backup_proxy_server_addr = '127.0.0.1:1080';
+*/
 // == For debug - end ===
 
 // only for redirect mode
