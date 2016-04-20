@@ -152,7 +152,7 @@ unblock_youku.common_urls = [
     'http://vip.sports.cntv.cn/check.do*',
     'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
-    'http://www.qie.tv',
+    'http://www.qie.tv/*',
     'http://211.151.157.15/*'
 ];
 
