@@ -303,6 +303,7 @@ unblock_youku.server_extra_urls = [
     'http://api.tv.sohu.com/mobile_user/device/clientconf.json?*',
     'http://access.tv.sohu.com/*',
     'http://iface.iqiyi.com/api/searchIface?*',
+    'http://iface.iqiyi.com/api/ip2area?*',
     'http://iface2.iqiyi.com/php/xyz/iface/*',
     'http://iface2.iqiyi.com/php/xyz/entry/galaxy.php?*',
     'http://iface2.iqiyi.com/php/xyz/entry/nebula.php?*',
