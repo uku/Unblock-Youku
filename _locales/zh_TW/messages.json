@@ -11,6 +11,9 @@
   "mode_select": {
     "message": "程式執行模式"
   },
+  "mode_off": {
+    "message": "關閉模式"
+  },
   "mode_lite": {
     "message": "精簡模式"
   },
@@ -22,6 +25,9 @@
   },
   "mode_redirect_disabled": {
     "message": "因為 Chrome 瀏覽器中 Flash 播放器的一個 bug，轉發模式不可用，詳情請閱讀 http://uku.im/flash"
+  },
+  "mode_off_description": {
+    "message": "關閉所有功能"
   },
   "mode_lite_description": {
     "message": "連線速度最快，但只對<abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"土豆、蝦米、酷六、迅雷看看\">土豆等個別網站</abbr>起效"

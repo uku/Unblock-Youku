@@ -95,3 +95,13 @@ function setup_extra_header() {
     }
 }
 
+function clear_extra_header() {
+    if (chrome.webRequest.onBeforeSendHeaders.hasListener(extra_header_modifier)) {
+        chrome.webRequest.onBeforeSendHeaders.removeListener(extra_header_modifier);
+        console.log('extra_header_modifier is removed');
+    } else {
+        var err_msg = 'extra_header_modifier is not there!';
+        console.error(err_msg);
+        ga_report_error('Unexpected Error', err_msg);
+    }
+}
