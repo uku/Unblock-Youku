@@ -64,6 +64,7 @@ unblock_youku.common_urls = [
     // 'http://interface.bilibili.tv/player*',
     'http://app.bilibili.com/bangumi/user_season_status?*',
     'http://bangumi.bilibili.com/api/*',
+    'http://interface.bilibili.com/playurl?*',
 
     'http://122.72.82.31/*',
     'http://211.151.158.155/*',
@@ -319,7 +320,6 @@ unblock_youku.server_extra_urls = [
     'http://m.letv.com/api/geturl?*',
     'http://api.mob.app.letv.com/play*',
     'http://static.api.sports.letv.com/*vod?*',
-    'http://interface.bilibili.com/playurl?*',
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv5*',
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv6*',
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv8*',
