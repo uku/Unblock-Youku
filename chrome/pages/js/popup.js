@@ -31,6 +31,8 @@ function set_i18n_text() {
 
     $('div#mode_select strong').html(get_msg('mode_select'));
 
+    $('span.mode_off_name').html(get_msg('mode_off'));
+    $('span.mode_off_desc').html(get_msg('mode_off_description'));
     $('span.mode_lite_name').html(get_msg('mode_lite'));
     $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
     $('span.mode_normal_name').html(get_msg('mode_normal'));
@@ -53,6 +55,9 @@ $(document).ready(function() {
     // set default button display
     background.get_mode_name(function(current_mode_name) {
         switch (current_mode_name) {
+            case 'off':
+                $('label#off').addClass('active');
+                break;
             case 'lite':
                 $('label#lite').addClass('active');
                 break;
@@ -92,6 +97,10 @@ $(document).ready(function() {
     $('div#version small').html('Unblock Youku v' + background.unblock_youku.version);
 
     // button actions
+    $('input#input_off').change(function() {
+        console.log('to change mode to off');
+        background.change_mode('off');
+    });
     $('input#input_lite').change(function() {
         console.log('to change mode to lite');
         background.change_mode('lite');

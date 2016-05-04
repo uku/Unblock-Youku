@@ -75,7 +75,7 @@ function set_mode_name(mode_name, callback) {
         ga_report_error('Unexpected Error', err_msg);
     }
 
-    if (mode_name === 'lite' || mode_name === 'redirect') {
+    if (mode_name === 'off' || mode_name === 'lite' || mode_name === 'redirect' ) {
         set_storage('unblock_youku_mode', mode_name, callback);
     } else {
         set_storage('unblock_youku_mode', 'normal', callback);
@@ -91,6 +91,7 @@ function get_mode_name(callback) {
 
     get_storage('unblock_youku_mode', function(current_mode) {
         if (typeof current_mode === 'undefined' || (
+                current_mode !== 'off' &&
                 current_mode !== 'lite'    &&
                 current_mode !== 'normal'  &&
                 current_mode !== 'redirect')) {
@@ -105,19 +106,25 @@ function get_mode_name(callback) {
 
 function clear_mode_settings(mode_name) {
     switch (mode_name) {
+    case 'off':
+        console.log('cleared settings for off');
+        break;
     case 'lite':
         // clear_timezone();
         clear_header();
+        clear_extra_header();
         console.log('cleared settings for lite');
         break;
     case 'redirect':
         clear_redirect();
+        clear_extra_header();
         console.log('cleared settings for redirect');
         break;
     case 'normal':
         // clear_timezone();
         clear_proxy();
         clear_header();
+        clear_extra_header();
         console.log('cleared settings for normal');
         break;
     default:
@@ -132,14 +139,19 @@ function clear_mode_settings(mode_name) {
 
 function setup_mode_settings(mode_name) {
     switch (mode_name) {
+    case 'off':
+        break;
     case 'lite':
+        setup_extra_header();
         setup_header();
         // setup_timezone();
         break;
     case 'redirect':
+        setup_extra_header();
         setup_redirect();
         break;
     case 'normal':
+        setup_extra_header();
         setup_header();
         setup_proxy();
         // setup_timezone();
@@ -306,7 +318,6 @@ document.addEventListener("DOMContentLoaded", function() {
         change_browser_icon('regular');  // set the icon once everything is done
     });
 
-    setup_extra_header();
     // setup_extra_redirector();
 });
 
