@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
- * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
+ * Copyright (C) 2012 - 2016  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as

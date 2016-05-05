@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
+ * Copyright (C) 2012 - 2016  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -37,10 +37,10 @@ function set_i18n_text() {
     $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
     $('span.mode_normal_name').html(get_msg('mode_normal'));
     $('span.mode_normal_desc').html(get_msg('mode_normal_description'));
-    $('span.mode_redirect_name').html(get_msg('mode_redirect'));
-    $('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
+    //$('span.mode_redirect_name').html(get_msg('mode_redirect'));
+    //$('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
 
-    $('div#help_text').html(get_msg('help'));
+    //$('div#help_text').html(get_msg('help'));
     $('div#faq').html(get_msg('faq'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
@@ -109,10 +109,10 @@ $(document).ready(function() {
         console.log('to change mode to normal');
         background.change_mode('normal');
     });
-    $('input#input_redirect').change(function() {
-        console.log('to change mode to redirect');
-        background.change_mode('redirect');
-    });
+    //$('input#input_redirect').change(function() {
+    //    console.log('to change mode to redirect');
+    //    background.change_mode('redirect');
+    //});
 
     // enable tooltip
     $('#tooltip').tooltip();

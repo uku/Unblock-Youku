@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
+ * Copyright (C) 2012 - 2016  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,17 +18,6 @@
 /*global chrome: false, localStorage: false */
 "use strict";
 
-function is_around_spring_festival() {
-    var today = new Date();
-    var y = today.getFullYear();
-    var m = today.getMonth() + 1;
-    var d = today.getDate();
-
-    if (y === 2016 && m === 2 && d <= 10) {
-        return true;
-    }
-    return false;
-}
 
 function create_donation_tab() {
     if (typeof localStorage.showed_donation_page !== 'undefined') {
@@ -37,17 +26,6 @@ function create_donation_tab() {
     }
 
     var donation_url = chrome.i18n.getMessage('donation_url');
-
-    try {
-        if (is_around_spring_festival()) {
-            if (typeof chrome.i18n.getUILanguage !== 'undefined' && chrome.i18n.getUILanguage().toLowerCase() === 'zh-cn') {
-                donation_url = 'https://www.uku.im/chunwan2016.html';
-            }
-        }
-    } catch (err) {
-        console.log(err);
-    }
-
     chrome.tabs.create({
         url: donation_url
     });

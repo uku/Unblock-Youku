@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
+ * Copyright (C) 2012 - 2016  Bo Zhu  http://zhuzhu.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -75,7 +75,7 @@ function set_mode_name(mode_name, callback) {
         ga_report_error('Unexpected Error', err_msg);
     }
 
-    if (mode_name === 'off' || mode_name === 'lite' || mode_name === 'redirect' ) {
+    if (mode_name === 'off' || mode_name === 'lite') {
         set_storage('unblock_youku_mode', mode_name, callback);
     } else {
         set_storage('unblock_youku_mode', 'normal', callback);
@@ -92,9 +92,7 @@ function get_mode_name(callback) {
     get_storage('unblock_youku_mode', function(current_mode) {
         if (typeof current_mode === 'undefined' || (
                 current_mode !== 'off' &&
-                current_mode !== 'lite'    &&
-                current_mode !== 'normal'  &&
-                current_mode !== 'redirect')) {
+                current_mode !== 'lite' )) {
             set_mode_name('normal', function() {
                 callback('normal');
             });
@@ -140,20 +138,28 @@ function clear_mode_settings(mode_name) {
 function setup_mode_settings(mode_name) {
     switch (mode_name) {
     case 'off':
+        chrome.browserAction.setBadgeText({text: 'OFF'});
+        change_browser_icon('off');
         break;
     case 'lite':
         setup_extra_header();
         setup_header();
+        chrome.browserAction.setBadgeText({text: 'LITE'});
+        change_browser_icon('off');
         // setup_timezone();
         break;
     case 'redirect':
         setup_extra_header();
         setup_redirect();
+        chrome.browserAction.setBadgeText({text: ''});
+        change_browser_icon('off');
         break;
     case 'normal':
         setup_extra_header();
-        setup_header();
+        // setup_header();
         setup_proxy();
+        chrome.browserAction.setBadgeText({text: ''});
+        change_browser_icon('normal');
         // setup_timezone();
         break;
     default:
@@ -209,13 +215,14 @@ function _change_browser_icon(option) {
         return;
     }
     
-    if (option === 'heart') {
-        chrome.browserAction.setIcon({path: 'chrome/icons/icon19heart.png'});
-        chrome.browserAction.setTitle({title: 'Thank you! (Unblock Youku ' + unblock_youku.version + ')'});
-    } else {
-        chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
-        chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
+    if (option === 'off') {
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19gray.png'});
+        chrome.browserAction.setTitle({title: 'Unblock Youku is not running in the normal mode.'});
+        return;
     }
+
+    chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
+    chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
 }
 
 
@@ -314,8 +321,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         ga_report_ratio('Init Mode', current_mode_name);
         ga_report_ratio('Version', unblock_youku.version);
-
-        change_browser_icon('regular');  // set the icon once everything is done
     });
 
     // setup_extra_redirector();
