@@ -238,8 +238,9 @@ function urls2pac(url_whitelist, url_list,
         "var _proxy_str = '" + _proxy_str + "';",
         "",
         "function _check_regex_list(regex_list, str) {",
-        "  var i;",
-        "  for (i = 0; i < regex_list.length; i++)",
+        "  if (str.slice(0, 4) === ':80/')",
+        "    str = str.slice(3);",
+        "  for (var i = 0; i < regex_list.length; i++)",
         "    if (regex_list[i].test(str))",
         "      return true;",
         "  return false;",
@@ -274,9 +275,9 @@ function urls2pac(url_whitelist, url_list,
         "}",
     ].join("\n") + "\n";
 
-    // console.log('==================');
-    // console.log(txt);
-    // console.log('==================');
+    //console.log('==================');
+    //console.log(txt);
+    //console.log('==================');
 
     return txt;
 }
