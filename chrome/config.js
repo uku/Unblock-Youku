@@ -121,7 +121,7 @@ function clear_mode_settings(mode_name) {
     case 'normal':
         // clear_timezone();
         clear_proxy();
-        clear_header();
+        // clear_header();
         clear_extra_header();
         console.log('cleared settings for normal');
         break;

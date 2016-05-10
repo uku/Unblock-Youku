@@ -86,7 +86,6 @@ unblock_youku.common_urls = [
     'http://info.zb.qq.com/?*',
     'http://info.zb.video.qq.com/?*',
     'http://qzs.qq.com/tencentvideo_v1/*',
-    'http://ac.qq.com/Comic/comicInfo/id/*',
 
     'http://dispatcher.video.sina.com.cn/*',
     'http://geo.js.kankan.xunlei.com/*',
@@ -153,7 +152,6 @@ unblock_youku.common_urls = [
     'http://vip.sports.cntv.cn/check.do*',
     'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
-    'http://www.qie.tv/*',
     'http://211.151.157.15/*'
 ];
 
@@ -171,10 +169,11 @@ unblock_youku.chrome_extra_urls = [
     "http://*.api.tv.itc.cn/*",
     "http://api.tv.sohu.com/*",
     
-    'http://ac.qq.com/ComicView/index/id/*',
+    'http://ac.qq.com/Comic*',
     'http://ac.qq.com/Jump*',
     "http://live.api.hunantv.com/pc/getSourceById*",
     "http://mobile.api.hunantv.com/*",
+    'http://www.qie.tv/*',
 
     'http://douban.fm/*',
     'http://lixian.xunlei.com/*',
