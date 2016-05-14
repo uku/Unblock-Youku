@@ -176,7 +176,7 @@ unblock_youku.chrome_extra_urls = [
     'http://www.qie.tv/*',
 
     'http://douban.fm/*',
-    'https://douban.fm',
+    'https://douban.fm/*',
     'http://lixian.xunlei.com/*',
     'http://lixian.vip.xunlei.com/*',
     'http://dynamic.cloud.vip.xunlei.com/*',
