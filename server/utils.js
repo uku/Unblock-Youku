@@ -15,6 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+'use strict';
 
 var url = require('url');
 var util = require('util');
@@ -68,13 +69,13 @@ function get_real_target(req_path) {
 
 function is_valid_url(target_url) {
     var i;
-    for (i = 0; i < shared_urls.url_regex_whitelist.length; i++) {
-        if (shared_urls.url_regex_whitelist[i].test(target_url)) {
+    for (i = 0; i < shared_urls.regex_crx_bypass_urls.length; i++) {
+        if (shared_urls.regex_crx_bypass_urls[i].test(target_url)) {
             return false;
         }
     }
-    for (i = 0; i < shared_urls.url_regex_list.length; i++) {
-        if (shared_urls.url_regex_list[i].test(target_url)) {
+    for (i = 0; i < shared_urls.regex_crx_urls.length; i++) {
+        if (shared_urls.regex_crx_urls[i].test(target_url)) {
             return true;
         }
     }
@@ -101,9 +102,9 @@ function filter_request_headers(headers) {
                 } else {
                     ret_headers['User-Agent'] = headers['user-agent'];
                 }
-            } else if (field !== 'cookie'
-                    && field !== 'via'
-                    && (!string_starts_with(field, 'x-'))) {
+            } else if (field !== 'cookie' &&
+                       field !== 'via' &&
+                       (!string_starts_with(field, 'x-'))) {
                 // in case some servers do not recognize lower-case headers, such as hacker news
                 ret_headers[to_title_case(field)] = headers[field];
             }
@@ -124,14 +125,14 @@ function filter_response_headers(headers) {
                 if (field === 'proxy-connection') {
                     res_headers.Connection = headers['proxy-connection'];
                 }
-            } else if (field !== 'set-cookie'
-                    && field !== 'cache-control'
-                    && field !== 'expires'
-                    && field !== 'pragma'
-                    && field !== 'age'
-                    && field !== 'via'
-                    && field !== 'server'
-                    && (!string_starts_with(field, 'x-'))) {
+            } else if (field !== 'set-cookie' &&
+                       field !== 'cache-control' &&
+                       field !== 'expires' &&
+                       field !== 'pragma' &&
+                       field !== 'age' &&
+                       field !== 'via' &&
+                       field !== 'server' &&
+                       (!string_starts_with(field, 'x-'))) {
                 res_headers[field] = headers[field];
             }
         }
@@ -201,7 +202,7 @@ function static_responses(client_request, client_response, pac_file_content) {
     }
 
     if (client_request.url === '/regex') {
-        var regex_list = shared_urls.produce_regex_list(true);
+        var regex_list = shared_urls.produce_squid_regex_list(true /* for PAC proxy */);
         var regex_text = regex_list.join('\n');
 
         client_response.writeHead(200, {
@@ -214,7 +215,7 @@ function static_responses(client_request, client_response, pac_file_content) {
     }
 
     if (client_request.url === '/chrome_regex') {
-        var chrome_regex_list = shared_urls.produce_regex_list(false);
+        var chrome_regex_list = shared_urls.produce_squid_regex_list(false /* for Chrome proxy */);
         var chrome_regex_text = chrome_regex_list.join('\n');
 
         client_response.writeHead(200, {
@@ -241,12 +242,12 @@ function generate_pac_file(proxy_addr_port, proxy_protocol) {
         '*/\n' +
         uglify.minify(
             shared_tools.urls2pac(
-                shared_urls.url_whitelist,
-                shared_urls.url_list,
+                shared_urls.pac_bypass_urls,
+                shared_urls.pac_urls,
                 proxy_addr_port,
                 proxy_protocol
             ),
-            {fromString: true,}
+            {fromString: true}
         ).code;
 }
 

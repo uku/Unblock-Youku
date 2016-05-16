@@ -40,7 +40,7 @@ function setup_header() {
         chrome.webRequest.onBeforeSendHeaders.addListener(
             header_modifier,
             {
-                urls: unblock_youku.normal_url_list
+                urls: unblock_youku.header_urls
             },
             ['requestHeaders', 'blocking']
         );
@@ -59,48 +59,6 @@ function clear_header() {
         console.log('header_modifier is removed');
     } else {
         var err_msg = 'header_modifier is not there!';
-        console.error(err_msg);
-        ga_report_error('Unexpected Error', err_msg);
-    }
-}
-
-
-// extra sites to handle
-function extra_header_modifier(details) {
-    details.requestHeaders.push({
-        name: 'X-Forwarded-For',
-        value: unblock_youku.ip_addr
-    }, {
-        name: 'Client-IP',
-        value: unblock_youku.ip_addr
-    });
-
-    return {requestHeaders: details.requestHeaders};
-}
-
-function setup_extra_header() {
-    if (!chrome.webRequest.onBeforeSendHeaders.hasListener(extra_header_modifier)) {
-        chrome.webRequest.onBeforeSendHeaders.addListener(
-            extra_header_modifier,
-            {
-                urls: unblock_youku.header_extra_url_list
-            },
-            ['requestHeaders', 'blocking']
-        );
-        console.log('extra_header_modifier is set');
-    } else {
-        var err_msg = 'extra_header_modifer is already there!';
-        console.error(err_msg);
-        ga_report_error('Unexpected Error', err_msg);
-    }
-}
-
-function clear_extra_header() {
-    if (chrome.webRequest.onBeforeSendHeaders.hasListener(extra_header_modifier)) {
-        chrome.webRequest.onBeforeSendHeaders.removeListener(extra_header_modifier);
-        console.log('extra_header_modifier is removed');
-    } else {
-        var err_msg = 'extra_header_modifier is not there!';
         console.error(err_msg);
         ga_report_error('Unexpected Error', err_msg);
     }

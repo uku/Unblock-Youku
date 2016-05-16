@@ -105,7 +105,7 @@ function setup_redirect() {
         chrome.webRequest.onBeforeRequest.addListener(
             http_redirector,
             {
-                urls: unblock_youku.redirect_url_list
+                urls: unblock_youku.redirect_urls
             },
             ["blocking"]
         );

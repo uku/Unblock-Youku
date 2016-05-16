@@ -15,12 +15,43 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var unblock_youku = unblock_youku || {};  // namespace
+var unblock_youku = unblock_youku || {};
+
+/*
+ PLEASE READ THIS FIRST!
+
+ This file contains several lists of URLs, which are used in different unblock modes:
+
+ - The (non-proxy) lite mode of our Chrome extension will use:
+   - header_urls, and
+   - redirect_urls.
+ - The (default) standard mode will use:
+   - header_urls,
+   - redirect_urls, and
+   - chrome_proxy_urls.
+ - The PAC service (for iOS/Android) will use all lists:
+   - header_urls,
+   - redirect_urls,
+   - chrome_proxy_urls, and
+   - pac_proxy_urls.
+ */
 
 
-// For both chrome extension and server
-// Note: The redirect mode will only use this url list.
-unblock_youku.common_urls = [
+// Just changing headers of these URLs will be sufficient.
+unblock_youku.header_urls = [
+    'http://v.api.hunantv.com/*',
+    'http://live.gslb.letv.com/*',
+    'http://ac.qq.com/*',
+    'http://*.ssports.com/*',
+    'http://ssports.com/*',
+    'http://ssports.smgbb.cn/*',
+    'http://www.bilibili.com/*',
+    'http://interface.bilibili.com/*',
+    'http://kandian.com/player/getEpgInfo*'
+];
+
+// These URLs can work with the redirect functionality (mainly used in Flash players).
+unblock_youku.redirect_urls = [
     'http://v.youku.com/player/*',
     'http://api.youku.com/player/*',
     'http://play.youku.com/play/get.json*',
@@ -42,11 +73,6 @@ unblock_youku.common_urls = [
     'http://data.video.qiyi.com/videos/*',
     'http://data.video.qiyi.com/*/videos/*',
     // 'http://nl.rcd.iqiyi.com/apis/urc/*',
-    // 'http://cache.video.qiyi.com/vms?*',
-    // 'http://cache.vip.qiyi.com/vms?*',
-    // 'http://cache.video.qiyi.com/vp/*/*/?src=*',
-    // 'http://cache.video.qiyi.com/vps?*',
-    // 'http://cache.video.qiyi.com/liven/*',
     'http://cache.video.qiyi.com/*',
     'http://cache.vip.qiyi.com/*',
     'http://iplocation.geo.qiyi.com/cityjson*',
@@ -56,15 +82,10 @@ unblock_youku.common_urls = [
     'http://v.api.mgtv.com/player/video*',
     'http://acc.music.qq.com/base/fcgi-bin/getsession*',
 
-    // 'http://api.appsdk.soku.com/d/s?keyword=*',
-    // 'http://api.appsdk.soku.com/u/s?keyword=*',
     'http://api.appsdk.soku.com/*',
 
-    // cause oversea servers unusable?
-    // 'http://interface.bilibili.tv/player*',
     'http://app.bilibili.com/bangumi/user_season_status?*',
     'http://bangumi.bilibili.com/api/*',
-    'http://interface.bilibili.com/playurl?*',
 
     'http://122.72.82.31/*',
     'http://211.151.158.155/*',
@@ -92,7 +113,7 @@ unblock_youku.common_urls = [
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
     'http://tools.aplusapi.pptv.com/get_ppi?*',
-    'http://live.pptv.com/api/subject_list?*', 
+    'http://live.pptv.com/api/subject_list?*',
     // 'http://c1.pptv.com/*',
     'http://dyn.ugc.pps.tv/*',
     'http://v.pps.tv/ugc/ajax/aj_html5_url.php*',
@@ -122,15 +143,12 @@ unblock_youku.common_urls = [
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-*',
-    'http://www.xiami.com/play?*',
+    // 'http://www.xiami.com/play?*',
     'http://www.kugou.com/interface/geoip/*',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
     'http://antiserver.kuwo.cn/anti.s?*',
 
     'http://*.dpool.sina.com.cn/iplookup*',
-    // 'http://*/vrs_flash.action*', //This URL hijackable!
-    // 'http://*/?prot=2&type=1*',
-    // 'http://*/?prot=2&file=/*',
     'http://api.letv.com/streamblock*',
     'http://api.letv.com/mms/out/video/play*',
     'http://api.www.letv.com/mms/out/video/playJson?*',
@@ -155,8 +173,9 @@ unblock_youku.common_urls = [
     'http://211.151.157.15/*'
 ];
 
-// Note: The normal mode will take both common_urls and chrome_extra_urls.
-unblock_youku.chrome_extra_urls = [
+
+// These URLs have to go through a proxy (for our Chrome extension).
+unblock_youku.chrome_proxy_urls = [
     'http://www.tudou.com/programs/view/*',
     'http://www.tudou.com/albumplay/*',
     'http://www.tudou.com/listplay/*',
@@ -168,7 +187,6 @@ unblock_youku.chrome_extra_urls = [
     'http://search.api.3g.tudou.com/*',
     "http://*.api.tv.itc.cn/*",
     "http://api.tv.sohu.com/*",
-    
     'http://ac.qq.com/Comic*',
     'http://ac.qq.com/Jump*',
     "http://live.api.hunantv.com/pc/getSourceById*",
@@ -243,10 +261,10 @@ unblock_youku.chrome_extra_urls = [
     'http://aidbak.video.qq.com/fcgi-bin/userip?*',
     'http://pay.video.qq.com/fcgi-bin/paylimit*',
     'http://paybak.video.qq.com/fcgi-bin/paylimit*',
-    'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*'
-    // 'https://www.amazon.cn/gp/mas/order/ref*',
-    // 'https://www.amazon.cn/gp/digital/fiona/payment-checkout/ref*',
-    // 'https://www.amazon.cn/gp/aw/kindle/order.html*',
+    'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*',
+
+    'http://music.163.com/eapi/v3/playlist/*',
+    'http://music.163.com/eapi/pl/*'
 
     // 'http://play.baidu.com/*',
     // 'http://zhangmenshiting.baidu.com/*',
@@ -271,18 +289,17 @@ unblock_youku.chrome_extra_urls = [
     // 'http://www.imanhua.com/comic/*',
     // 'http://imanhua.com/v2*',
     // 'http://www.imanhua.com/v2*'
+].concat(unblock_youku.redirect_urls);  // Notice this
+
+
+// These URLs will not go through proxy servers (for our Chrome extension).
+unblock_youku.chrome_proxy_bypass_urls = [
+    // Empty for now
 ];
 
-// only for server
 
-unblock_youku.server_whitelist_urls = [
-    // those does not need to go through proxy
-    'http://*/ipad?file=/*'
-];
-
-// Note: The PAC server will work on any url in common_urls, chrome_extra_urls, and server_extra_urls.
-unblock_youku.server_extra_urls = [
-    // for Mobile apps    // Video apps
+// These URLs are for other software, such as iOS/Android Apps and TV boxes.
+unblock_youku.pac_proxy_urls = [
     'http://a.play.api.3g.youku.com/common/v3/play?*',
     'http://i.play.api.3g.youku.com/common/v3/play?*',
     'http://i.play.api.3g.youku.com/common/v3/hasadv/play?*',
@@ -385,8 +402,14 @@ unblock_youku.server_extra_urls = [
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
     'http://210.129.145.150/*',
-    'http://182.16.230.98/*' //Updated on Jan. 3, for new DNS of apple tv.
-];
+    'http://182.16.230.98/*' // Updated on Jan. 3, for new DNS of apple tv.
+].concat(unblock_youku.chrome_proxy_urls, unblock_youku.header_urls);  // Notice this.
+
+
+// These URLs will not go through proxy servers (for our PAC service).
+unblock_youku.pac_proxy_bypass_urls = [
+    'http://*/ipad?file=/*'
+].concat(unblock_youku.chrome_proxy_bypass_urls);
 
 
 function urls2regexs(url_list) {
@@ -394,9 +417,8 @@ function urls2regexs(url_list) {
 
     var regex_list = [];
 
-    var i, re_str;
-    for (i = 0; i < url_list.length; i++) {
-        re_str = url_list[i];
+    for (var i = 0; i < url_list.length; i++) {
+        var re_str = url_list[i];
         // escape all possibly problematic symbols
         // http://stackoverflow.com/a/6969486/1766096
         re_str = re_str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
@@ -413,14 +435,12 @@ function urls2regexs(url_list) {
 }
 
 
-function produce_regex_list(for_pac_server) {
-    var squid_url_list = unblock_youku.common_urls.concat(
-        unblock_youku.chrome_extra_urls
-    );
+function produce_squid_regex_list(for_pac_server) {
+    'use strict';
+
+    var squid_url_list = unblock_youku.chrome_proxy_urls;
     if (for_pac_server === true) {
-        squid_url_list = squid_url_list.concat(
-            unblock_youku.server_extra_urls
-        );
+        squid_url_list = unblock_youku.pac_proxy_urls;
     }
 
     var squid_regex_list = urls2regexs(squid_url_list);
@@ -436,26 +456,29 @@ function produce_regex_list(for_pac_server) {
 }
 
 
-// also export as a node.js module
+// Also export as a node.js module
 var exports = exports || {};
-exports.urls2regexs = urls2regexs;
-exports.url_list = unblock_youku.common_urls.concat(unblock_youku.server_extra_urls);
-exports.crx_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
-exports.url_regex_list = urls2regexs(exports.url_list);
-exports.url_whitelist = unblock_youku.server_whitelist_urls;
-exports.url_regex_whitelist = urls2regexs(exports.url_whitelist);
-exports.produce_regex_list = produce_regex_list;
+
+exports.regex_crx_urls = urls2regexs(unblock_youku.chrome_proxy_urls);
+exports.regex_crx_bypass_urls = urls2regexs(unblock_youku.chrome_proxy_bypass_urls);
+
+exports.pac_urls = unblock_youku.pac_proxy_urls;
+exports.pac_bypass_urls = unblock_youku.pac_proxy_bypass_urls;
+
+exports.produce_squid_regex_list = produce_squid_regex_list;
 
 
-(function() {
+(function () {
+    'use strict';
+
     // http://stackoverflow.com/a/5197219
     // http://stackoverflow.com/a/6398335
     if (typeof module !== 'undefined' && module.exports && require.main === module) {
         var squid_regex_list;
-        if (typeof process !== 'undefined' && process.argv[2] === 'server') {
-            squid_regex_list = produce_regex_list(true);
+        if (typeof process !== 'undefined' && process.argv[2] === 'PAC') {
+            squid_regex_list = produce_squid_regex_list(true /* for PAC service */);
         } else {
-            squid_regex_list = produce_regex_list(false);
+            squid_regex_list = produce_squid_regex_list(false /* for Chrome proxy */);
         }
 
         for (var i = 0; i < squid_regex_list.length; i++) {
