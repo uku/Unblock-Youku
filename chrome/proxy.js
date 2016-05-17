@@ -20,30 +20,31 @@
 /*global ga_report_timeout: false, ga_report_error: false, ga_report_event: false, localStorage: false */
 "use strict";
 
-
-function setup_pac_data(proxy_prot_1, proxy_addr_1,
-                        proxy_prot_2, proxy_addr_2) {
-    var pac_data = urls2pac([], unblock_youku.normal_url_list,
-                            proxy_addr_1, proxy_prot_1,
-                            proxy_addr_2, proxy_prot_2);
-    // console.log(pac_data);
-    var proxy_config = {
-        mode: 'pac_script',
-        pacScript: {
-            data: pac_data
-        }
-    };
-    chrome.proxy.settings.set(
-        {
-            value: proxy_config,
-            scope: 'regular'
-        },
-        function() {}
-    );
-}
-
-
 function setup_proxy() {
+    function setup_pac_data(proxy_prot_1, proxy_addr_1,
+                            proxy_prot_2, proxy_addr_2) {
+        var pac_data = urls2pac(
+            unblock_youku.chrome_proxy_bypass_urls,
+            unblock_youku.chrome_proxy_urls,
+            proxy_addr_1, proxy_prot_1,
+            proxy_addr_2, proxy_prot_2);
+        // console.log(pac_data);
+        var proxy_config = {
+            mode: 'pac_script',
+            pacScript: {
+                data: pac_data
+            }
+        };
+        chrome.proxy.settings.set(
+            {
+                value: proxy_config,
+                scope: 'regular'
+            },
+            function() {}
+        );
+    }
+
+
     console.group('to set up proxy');
 
     var proxy_server_proc = unblock_youku.default_proxy_server_proc;
@@ -51,8 +52,8 @@ function setup_proxy() {
     var backup_proxy_server_proc = unblock_youku.backup_proxy_server_proc;
     var backup_proxy_server_addr = unblock_youku.backup_proxy_server_addr;
 
-    if (typeof localStorage.custom_proxy_server_proc !== 'undefined'
-            && typeof localStorage.custom_proxy_server_addr !== 'undefined') {
+    if (typeof localStorage.custom_proxy_server_proc !== 'undefined' &&
+            typeof localStorage.custom_proxy_server_addr !== 'undefined') {
         proxy_server_proc = localStorage.custom_proxy_server_proc;
         proxy_server_addr = localStorage.custom_proxy_server_addr;
         backup_proxy_server_proc = localStorage.custom_proxy_server_proc;
@@ -83,9 +84,7 @@ function clear_proxy() {
             value: proxy_config,
             scope: 'regular'
         },
-        function() {
-            return;
-        }
+        function() {}
     );
     
     console.log('proxy is removed (changed to system setting)');

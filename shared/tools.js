@@ -57,14 +57,12 @@ function _parse_url(url_str) {
         sep_idx = colon_idx;
     }
 
-    var urlobj = {
+    return {
         protocol: protocol,
         // the parameter in FindProxyForURL only doesn't contain port numbers
         hostname: url_str.slice(0, sep_idx),
         portpath: url_str.slice(sep_idx)
     };
-
-    return urlobj;
 }
 // console.log(parse_url('http://test.com'));
 // console.log(parse_url('http://test.com:123));
@@ -80,8 +78,59 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
         },
         proxy: {
             any: []
-        },
+        }
     };
+
+    function stringify(map_obj) {
+        var white_map = map_obj.white;
+        var proxy_map = map_obj.proxy;
+
+        var res_str = [
+                "{",
+                "  'white': {"
+            ].join("\n") + "\n";
+        res_str += stringify_patterns(white_map);
+
+        res_str += [
+                "  },",
+                "  'proxy': {"
+            ].join("\n") + "\n";
+        res_str += stringify_patterns(proxy_map);
+
+        res_str += [
+            "  }",
+            "}"
+        ].join("\n");
+
+        return res_str;
+    }
+
+    function stringify_patterns(hostname_map) {
+        var res_str = "";
+        var i, patterns = null;
+
+        for (var hostname in hostname_map) {
+            if (hostname_map.hasOwnProperty(hostname)) {
+                res_str += "    '" + hostname + "': [";
+                patterns = hostname_map[hostname];
+
+                if (patterns.length === 0) {
+                    res_str += "],\n";
+
+                } else {
+                    res_str += "\n";
+                    for (i = 0; i < patterns.length; i++) {
+                        res_str += "      " + patterns[i] + ",\n";
+                    }
+                    res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
+                    res_str += "    ],\n";
+                }
+            }
+        }
+        res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
+
+        return res_str;
+    }
 
     function add_patterns(map_obj, ulist) {
         var i, uobj, hostname, portpath;
@@ -128,71 +177,13 @@ function gen_url_map(protocol, white_ulist, proxy_ulist) {
             }  // if
         }  // for
     }
+
+
     add_patterns(url_map.white, white_ulist);
     add_patterns(url_map.proxy, proxy_ulist);
 
-    // this cannot remove the quotes around regex
-    // RegExp.prototype.toJSON = function() {
-    //     return this.toString();
-    // };
-    // return JSON.stringify(url_map, null, "  ");
-
-
     // console.log(stringify(url_map));
     return stringify(url_map);
-
-
-    function stringify(map_obj) {
-        var white_map = map_obj.white;
-        var proxy_map = map_obj.proxy;
-
-        var res_str = [
-            "{",
-            "  'white': {",
-        ].join("\n") + "\n";
-        res_str += stringify_patterns(white_map);
-
-        res_str += [
-            "  },",
-            "  'proxy': {",
-        ].join("\n") + "\n";
-        res_str += stringify_patterns(proxy_map);
-
-        res_str += [
-            "  }",
-            "}"
-        ].join("\n");
-
-        return res_str;
-    }
-
-
-    function stringify_patterns(hostname_map) {
-        var res_str = "";
-        var i, patterns = null;
-
-        for (var hostname in hostname_map) {
-            if (hostname_map.hasOwnProperty(hostname)) {
-                res_str += "    '" + hostname + "': [";
-                patterns = hostname_map[hostname];
-
-                if (patterns.length === 0) {
-                    res_str += "],\n";
-
-                } else {
-                    res_str += "\n";
-                    for (i = 0; i < patterns.length; i++) {
-                        res_str += "      " + patterns[i] + ",\n";
-                    }
-                    res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
-                    res_str += "    ],\n";
-                }
-            }
-        }
-        res_str = res_str.slice(0, -2) + '\n';  // remove the last ,
-
-        return res_str;
-    }
 }
 
 
@@ -232,7 +223,7 @@ function urls2pac(url_whitelist, url_list,
 
     _proxy_str += "DIRECT;";
 
-    var txt = [
+    return [
         "var _http_map = " + http_map_str + ";",
         "var _https_map = " + https_map_str + ";",
         "var _proxy_str = '" + _proxy_str + "';",
@@ -272,14 +263,8 @@ function urls2pac(url_whitelist, url_list,
         "  else if (prot === 'https:')",
         "    return _find_proxy(_https_map, host, url, 8);",  // 'https://'.length
         "  return 'DIRECT';",
-        "}",
+        "}"
     ].join("\n") + "\n";
-
-    //console.log('==================');
-    //console.log(txt);
-    //console.log('==================');
-
-    return txt;
 }
 
 
@@ -295,16 +280,17 @@ function to_title_case(str) {
 
 var exports = exports || {};
 exports.new_random_ip = new_random_ip;
-exports.gen_url_map = gen_url_map;
 exports.urls2pac = urls2pac;
 exports.string_starts_with = string_starts_with;
 exports.to_title_case = to_title_case;
 
 
 (function() {
+    "use strict";
+
     if (typeof module !== 'undefined' && module.exports && require.main === module) {
-        var crx_url_list = require('./urls').crx_url_list;
-        var pac_content = urls2pac([], crx_url_list, 'localhost:8888');
+        var shared_urls = require('./urls');
+        var pac_content = urls2pac(shared_urls.pac_bypass_urls, shared_urls.pac_urls, 'localhost:8888');
         console.log(pac_content);
     }
 }());

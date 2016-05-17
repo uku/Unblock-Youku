@@ -18,28 +18,16 @@
     "message": "Lite"
   },
   "mode_normal": {
-    "message": "Normal"
-  },
-  "mode_redirect": {
-    "message": "Redirect"
-  },
-  "mode_redirect_disabled": {
-    "message": "Redirect Mode is not available due to a bug of Flash player in Chrome. For more details, please see http://uku.im/flash</a>"
+    "message": "Standard"
   },
   "mode_off_description": {
-    "message": "Disable all Unblock Youku functionalities."
+    "message": "Disables all Unblock Youku functionalities."
   },
   "mode_lite_description": {
-    "message": "Fast, but applicable to <abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Bilibili\">only few websites</abbr>."
+    "message": "Applies to <abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"E.g., Bilibili\">only few websites</abbr>, but can work with other proxy settings or software."
   },
   "mode_normal_description": {
-    "message": "Recommended. Applicable to the most websites."
-  },
-  "mode_redirect_description": {
-    "message": "Slow, but compatible with other proxy settings."
-  },
-  "help": {
-    "message": "For more information about different modes, you can <a href=\"http://uku.im/modes\" target=\"_blank\">read this</a>."
+    "message": "<strong>Recommended</strong>. Fast, and applicable to most websites."
   },
   "faq": {
     "message": "If you have encountered any issue, please refer to <a href=\"http://uku.im/faq\" target=\"_blank\">the FAQ</a>."
@@ -63,6 +51,6 @@
     "message": "Please support us to make Unblock Youku better."
   },
   "support_button": {
-    "message": "Please Support Us"
+    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Please Support Us"
   }
 }

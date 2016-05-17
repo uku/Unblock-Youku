@@ -45,24 +45,6 @@ unblock_youku.default_redirect_server = 'www.yōukù.com/proxy';
 // unblock_youku.default_redirect_server = '127.0.0.1:8888/proxy';
 unblock_youku.backup_redirect_server = 'bak.yōukù.com/proxy';
 
-unblock_youku.normal_url_list = unblock_youku.common_urls.concat(unblock_youku.chrome_extra_urls);
-unblock_youku.redirect_url_list = unblock_youku.common_urls;
-unblock_youku.header_extra_url_list = [
-    // 'http://web-play.pptv.com/*',
-    // 'http://web-play.pplive.cn/*',
-    'http://v.api.hunantv.com/*',
-    'http://live.gslb.letv.com/*',
-    'http://ac.qq.com/*',
-    'http://*.ssports.com/*',
-    'http://ssports.com/*',
-    'http://ssports.smgbb.cn/*',
-    'http://www.bilibili.com/*',
-    'http://interface.bilibili.com/*',
-    'http://*.xiami.com/*',  // xiami is blocked in HK and TW
-    'http://*.ku6.com/*',
-    'http://kandian.com/player/getEpgInfo*'  // !!!
-];
-
 unblock_youku.ip_addr = new_random_ip();
 console.log('ip addr: ' + unblock_youku.ip_addr);
 
@@ -108,21 +90,13 @@ function clear_mode_settings(mode_name) {
         console.log('cleared settings for off');
         break;
     case 'lite':
-        // clear_timezone();
         clear_header();
-        clear_extra_header();
+        clear_redirect();
         console.log('cleared settings for lite');
         break;
-    case 'redirect':
-        clear_redirect();
-        clear_extra_header();
-        console.log('cleared settings for redirect');
-        break;
     case 'normal':
-        // clear_timezone();
+        clear_header();
         clear_proxy();
-        // clear_header();
-        clear_extra_header();
         console.log('cleared settings for normal');
         break;
     default:
@@ -142,25 +116,16 @@ function setup_mode_settings(mode_name) {
         change_browser_icon('off');
         break;
     case 'lite':
-        setup_extra_header();
         setup_header();
-        chrome.browserAction.setBadgeText({text: 'LITE'});
-        change_browser_icon('off');
-        // setup_timezone();
-        break;
-    case 'redirect':
-        setup_extra_header();
         setup_redirect();
-        chrome.browserAction.setBadgeText({text: ''});
+        chrome.browserAction.setBadgeText({text: 'LITE'});
         change_browser_icon('off');
         break;
     case 'normal':
-        setup_extra_header();
-        // setup_header();
+        setup_header();
         setup_proxy();
         chrome.browserAction.setBadgeText({text: ''});
         change_browser_icon('normal');
-        // setup_timezone();
         break;
     default:
         var err_msg = 'setup_mode_settings: should never come here';
@@ -177,56 +142,55 @@ function change_mode(new_mode_name) {
     // the storage change listener would take care about the setting changes
 }
 
-function _change_browser_icon(option) {
-    var today = new Date();
-    var y = today.getFullYear();
-    var d = today.getDate();
-    var m = today.getMonth() + 1;
-
-    // hard-coded spring festivals
-    var is_spring = false;
-    switch (y) {
-        case 2016:  // February 8, 2016
-            if ((m === 1 && d >= 29) || (m === 2 && d <= 18)) {
-                is_spring = true;
-            }
-            break;
-        case 2017:  // January 28
-            if ((m === 1 && d >= 18) || (m === 2 && d <= 7)) {
-                is_spring = true;
-            }
-            break;
-        case 2018:  // February 16
-            if (m === 2 && (6 <= d && d <= 26)) {
-                is_spring = true;
-            }
-            break;
-    }
-    if (is_spring) {
-        chrome.browserAction.setIcon({path: 'chrome/icons/icon19spring.png'});
-        chrome.browserAction.setTitle({title: 'Happy Spring Festival! (Unblock Youku ' + unblock_youku.version + ')'});
-        return;
-    }
-
-    // christmas
-    if (m === 12 && d >= 15) {
-        chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
-        chrome.browserAction.setTitle({title: 'Merry Christmas! (Unblock Youku ' + unblock_youku.version + ')'});
-        return;
-    }
-    
-    if (option === 'off') {
-        chrome.browserAction.setIcon({path: 'chrome/icons/icon19gray.png'});
-        chrome.browserAction.setTitle({title: 'Unblock Youku is not running in the normal mode.'});
-        return;
-    }
-
-    chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
-    chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
-}
-
-
 function change_browser_icon(option) {
+    function _change_browser_icon(option) {
+        var today = new Date();
+        var y = today.getFullYear();
+        var d = today.getDate();
+        var m = today.getMonth() + 1;
+
+        // hard-coded spring festivals
+        var is_spring = false;
+        switch (y) {
+            case 2016:  // February 8, 2016
+                if ((m === 1 && d >= 29) || (m === 2 && d <= 18)) {
+                    is_spring = true;
+                }
+                break;
+            case 2017:  // January 28, 2017
+                if ((m === 1 && d >= 18) || (m === 2 && d <= 7)) {
+                    is_spring = true;
+                }
+                break;
+            case 2018:  // February 16, 2018
+                if (m === 2 && (6 <= d && d <= 26)) {
+                    is_spring = true;
+                }
+                break;
+        }
+        if (is_spring) {
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19spring.png'});
+            chrome.browserAction.setTitle({title: 'Happy Spring Festival! (Unblock Youku ' + unblock_youku.version + ')'});
+            return;
+        }
+
+        // christmas
+        if (m === 12 && d >= 15) {
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19xmas.png'});
+            chrome.browserAction.setTitle({title: 'Merry Christmas! (Unblock Youku ' + unblock_youku.version + ')'});
+            return;
+        }
+
+        if (option === 'off') {
+            chrome.browserAction.setIcon({path: 'chrome/icons/icon19gray.png'});
+            chrome.browserAction.setTitle({title: 'Unblock Youku is not running in the normal mode.'});
+            return;
+        }
+
+        chrome.browserAction.setIcon({path: 'chrome/icons/icon19.png'});
+        chrome.browserAction.setTitle({title: 'Unblock Youku ' + unblock_youku.version});
+    }
+
     // check chrome.storage before changing icons
     // the mode should already be set in previous get_mode_name()
     get_storage('unblock_youku_mode', function(current_mode) {
@@ -238,7 +202,6 @@ function change_browser_icon(option) {
             ga_report_error('Unexpected Error', err_msg);
         }
     });
-
 }
 
 
@@ -325,4 +288,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // setup_extra_redirector();
 });
-

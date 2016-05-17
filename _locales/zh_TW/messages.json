@@ -18,28 +18,16 @@
     "message": "精簡模式"
   },
   "mode_normal": {
-    "message": "普通模式"
-  },
-  "mode_redirect": {
-    "message": "重新導向模式"
-  },
-  "mode_redirect_disabled": {
-    "message": "因為 Chrome 瀏覽器中 Flash 播放器的一個 bug，轉發模式不可用，詳情請閱讀 http://uku.im/flash"
+    "message": "標準模式"
   },
   "mode_off_description": {
     "message": "關閉 Unblock Youku 所有功能"
   },
   "mode_lite_description": {
-    "message": "連線速度最快，但只對<abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Bilibili\">個別網站</abbr>起效"
+    "message": "僅對<abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"例如 Bilibili\">個別網站</abbr>起效，但可與其它代理同時使用"
   },
   "mode_normal_description": {
-    "message": "推薦使用。連線速度較快，支援網站數量最多"
-  },
-  "mode_redirect_description": {
-    "message": "連線速度較慢，但可以與系統代理設定同時使用"
-  },
-  "help": {
-    "message": "關於上述執行模式的詳細介紹，<a href=\"http://uku.im/modes\" target=\"_blank\">請點擊這裡檢視</a>"
+    "message": "<strong>推薦使用</strong>。連線速度較快，支援網站數量最多"
   },
   "faq": {
     "message": "如果您在使用過程中遇到任何問題，<a href=\"http://uku.im/faq\" target=\"_blank\">請查看 FAQ</a>"
@@ -63,6 +51,6 @@
     "message": "請幫助 Unblock Youku 長久穩定和免費地運行下去"
   },
   "support_button": {
-    "message": "請支持我們"
+    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> 請支持我們"
   }
 }
