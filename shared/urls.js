@@ -175,7 +175,7 @@ unblock_youku.redirect_urls = [
 
 
 // These URLs have to go through a proxy (for our Chrome extension).
-unblock_youku.chrome_proxy_urls = [
+unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://www.tudou.com/programs/view/*',
     'http://www.tudou.com/albumplay/*',
     'http://www.tudou.com/listplay/*',
@@ -290,7 +290,7 @@ unblock_youku.chrome_proxy_urls = [
     // 'http://www.imanhua.com/comic/*',
     // 'http://imanhua.com/v2*',
     // 'http://www.imanhua.com/v2*'
-].concat(unblock_youku.redirect_urls);  // Notice this
+]);
 
 
 // These URLs will not go through proxy servers (for our Chrome extension).
@@ -300,7 +300,7 @@ unblock_youku.chrome_proxy_bypass_urls = [
 
 
 // These URLs are for other software, such as iOS/Android Apps and TV boxes.
-unblock_youku.pac_proxy_urls = [
+unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_youku.header_urls, [
     'http://a.play.api.3g.youku.com/common/v3/play?*',
     'http://i.play.api.3g.youku.com/common/v3/play?*',
     'http://i.play.api.3g.youku.com/common/v3/hasadv/play?*',
@@ -404,13 +404,13 @@ unblock_youku.pac_proxy_urls = [
     'http://118.244.244.124/*',
     'http://210.129.145.150/*',
     'http://182.16.230.98/*' // Updated on Jan. 3, for new DNS of apple tv.
-].concat(unblock_youku.chrome_proxy_urls, unblock_youku.header_urls);  // Notice this.
+]);
 
 
 // These URLs will not go through proxy servers (for our PAC service).
-unblock_youku.pac_proxy_bypass_urls = [
+unblock_youku.pac_proxy_bypass_urls = unblock_youku.chrome_proxy_bypass_urls.concat([
     'http://*/ipad?file=/*'
-].concat(unblock_youku.chrome_proxy_bypass_urls);
+]);
 
 
 function urls2regexs(url_list) {
