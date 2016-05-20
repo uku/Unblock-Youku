@@ -143,7 +143,7 @@ unblock_youku.redirect_urls = [
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-*',
-    // 'http://www.xiami.com/play?*',
+    'http://www.xiami.com/play?*',
     'http://www.kugou.com/interface/geoip/*',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
     'http://antiserver.kuwo.cn/anti.s?*',
