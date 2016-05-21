@@ -264,8 +264,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://paybak.video.qq.com/fcgi-bin/paylimit*',
     'http://chrome.2345.com/dianhua/index.php?m=call&f=check&*',
 
-    'http://music.163.com/eapi/v3/playlist/*',
-    'http://music.163.com/eapi/pl/*'
+    'http://music.163.com/eapi/*',
 
     // 'http://play.baidu.com/*',
     // 'http://zhangmenshiting.baidu.com/*',
