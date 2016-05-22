@@ -24,7 +24,7 @@
     "message": "关闭 Unblock Youku 所有功能"
   },
   "mode_lite_description": {
-    "message": "仅对<abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"例如 Bilibili\">个别网站</abbr>起效，但可与其它代理程序同时使用"
+    "message": "仅对个别网站起效，但可与其它代理程序同时使用"
   },
   "mode_normal_description": {
     "message": "<strong>推荐使用</strong>。连接速度较快，支持网站数量最多"

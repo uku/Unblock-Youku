@@ -45,8 +45,7 @@ unblock_youku.header_urls = [
     'http://*.ssports.com/*',
     'http://ssports.com/*',
     'http://ssports.smgbb.cn/*',
-    'http://www.bilibili.com/*',
-    'http://interface.bilibili.com/*',
+    // 'http://www.bilibili.com/*',
     'http://kandian.com/player/getEpgInfo*'
 ];
 
@@ -192,6 +191,8 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     "http://live.api.hunantv.com/pc/getSourceById*",
     "http://mobile.api.hunantv.com/*",
     'http://www.qie.tv/*',
+    'http://www.bilibili.com/video/*',
+    'http://interface.bilibili.com/*',
 
     'http://douban.fm/*',
     'https://douban.fm/*',

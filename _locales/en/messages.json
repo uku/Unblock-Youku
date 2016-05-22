@@ -24,7 +24,7 @@
     "message": "Disables all Unblock Youku functionalities."
   },
   "mode_lite_description": {
-    "message": "Applies to <abbr id=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"E.g., Bilibili\">only few websites</abbr>, but can work with other proxy settings or software."
+    "message": "Applies to only few websites, but can work with other proxy settings or software."
   },
   "mode_normal_description": {
     "message": "<strong>Recommended</strong>. Fast, and applicable to most websites."
