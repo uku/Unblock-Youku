@@ -45,7 +45,7 @@ unblock_youku.header_urls = [
     'http://*.ssports.com/*',
     'http://ssports.com/*',
     'http://ssports.smgbb.cn/*',
-    // 'http://www.bilibili.com/*',
+    'http://www.bilibili.com/*',
     'http://kandian.com/player/getEpgInfo*'
 ];
 
