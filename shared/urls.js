@@ -109,7 +109,7 @@ unblock_youku.redirect_urls = [
     'http://qzs.qq.com/tencentvideo_v1/*',
 
     'http://dispatcher.video.sina.com.cn/*',
-    'http://geo.js.kankan.xunlei.com/*',
+    'http://geo.js.kankan.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
     'http://tools.aplusapi.pptv.com/get_ppi?*',
@@ -121,7 +121,7 @@ unblock_youku.redirect_urls = [
     'http://ipservice.163.com/*',
     'http://so.open.163.com/open/info.htm*',
     'http://zb.s.qq.com/*',
-    'http://ip.kankan.xunlei.com/*',
+    'http://ip.kankan.com/*',
     'http://vxml.56.com/json/*',
 
     'http://music.sina.com.cn/yueku/intro/*',
