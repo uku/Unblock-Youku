@@ -143,7 +143,6 @@ unblock_youku.redirect_urls = [
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-*',
-    'http://www.xiami.com/*',
     'http://www.kugou.com/interface/geoip/*',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
     'http://antiserver.kuwo.cn/anti.s?*',
@@ -197,6 +196,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
 
     'http://douban.fm/*',
     'https://douban.fm/*',
+    'http://www.xiami.com/*',
     'http://lixian.xunlei.com/*',
     'http://lixian.vip.xunlei.com/*',
     'http://dynamic.cloud.vip.xunlei.com/*',
