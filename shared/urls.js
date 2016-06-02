@@ -109,7 +109,7 @@ unblock_youku.redirect_urls = [
     'http://qzs.qq.com/tencentvideo_v1/*',
 
     'http://dispatcher.video.sina.com.cn/*',
-    'http://geo.js.kankan.xunlei.com/*',
+    'http://geo.js.kankan.com/*',
     'http://web-play.pptv.com/*',
     'http://web-play.pplive.cn/*',
     'http://tools.aplusapi.pptv.com/get_ppi?*',
@@ -121,7 +121,7 @@ unblock_youku.redirect_urls = [
     'http://ipservice.163.com/*',
     'http://so.open.163.com/open/info.htm*',
     'http://zb.s.qq.com/*',
-    'http://ip.kankan.xunlei.com/*',
+    'http://ip.kankan.com/*',
     'http://vxml.56.com/json/*',
 
     'http://music.sina.com.cn/yueku/intro/*',
@@ -143,7 +143,6 @@ unblock_youku.redirect_urls = [
     //'http://cdn.kandian.com/*',
     'http://www.yinyuetai.com/insite/*',
     'http://www.yinyuetai.com/main/get-*',
-    'http://www.xiami.com/play?*',
     'http://www.kugou.com/interface/geoip/*',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
     'http://antiserver.kuwo.cn/anti.s?*',
@@ -197,6 +196,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
 
     'http://douban.fm/*',
     'https://douban.fm/*',
+    'http://www.xiami.com/*',
     'http://lixian.xunlei.com/*',
     'http://lixian.vip.xunlei.com/*',
     'http://dynamic.cloud.vip.xunlei.com/*',
