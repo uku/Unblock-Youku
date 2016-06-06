@@ -422,14 +422,17 @@ function urls2regexs(url_list) {
 
     for (var i = 0; i < url_list.length; i++) {
         var re_str = url_list[i];
-        // escape all possibly problematic symbols
+
+        // Escape all possibly problematic symbols
         // http://stackoverflow.com/a/6969486/1766096
         re_str = re_str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&');
         re_str = re_str.replace(/\*/g, '.*');
+
         // make the first * matches only domain names or ip addresses
         // just as http://developer.chrome.com/extensions/match_patterns.html
         re_str = re_str.replace(/^http:\\\/\\\/\.\*/i, 'http:\\/\\/[^\/]*');
         re_str = re_str.replace(/^https:\\\/\\\/\.\*/i, 'https:\\/\\/[^\/]*');
+
         regex_list.push(new RegExp('^' + re_str + '$', 'i'));
     }
 
@@ -449,10 +452,18 @@ function produce_squid_regex_list(for_pac_server) {
     var squid_regex_list = urls2regexs(squid_url_list);
     var i, single_str;
 
+    var regex_to_extract_https_domain = /^\^https:\\\/\\\/([^:]+)\\\//i;
+
     var ret_list = [];
     for (i = 0; i < squid_regex_list.length; i++) {
         single_str = squid_regex_list[i].toString();
-        ret_list.push(single_str.substring(1, single_str.length - 2));
+        single_str = single_str.substring(1, single_str.length - 2);
+
+        if (single_str.match(regex_to_extract_https_domain)) {
+            single_str = '^' + single_str.match(regex_to_extract_https_domain)[1] + ':443';
+        }
+
+        ret_list.push(single_str);
     }
 
     return ret_list;
@@ -461,10 +472,10 @@ function produce_squid_regex_list(for_pac_server) {
 
 // Also export as a node.js module
 var exports = exports || {};
-
+// Exported for the redirect server
 exports.regex_crx_urls = urls2regexs(unblock_youku.chrome_proxy_urls);
 exports.regex_crx_bypass_urls = urls2regexs(unblock_youku.chrome_proxy_bypass_urls);
-
+// Exported for generating the PAC file
 exports.pac_urls = unblock_youku.pac_proxy_urls;
 exports.pac_bypass_urls = unblock_youku.pac_proxy_bypass_urls;
 

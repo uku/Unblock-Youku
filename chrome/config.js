@@ -27,9 +27,9 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 // only for proxy mode
 unblock_youku.default_proxy_server_proc = 'HTTPS';
-unblock_youku.default_proxy_server_addr = 'secure.uku.im:993';
-unblock_youku.backup_proxy_server_proc = 'HTTP';
-unblock_youku.backup_proxy_server_addr = 'proxy.uku.im:443';
+unblock_youku.default_proxy_server_addr = 'secure.uku.im:8443';
+unblock_youku.backup_proxy_server_proc = 'HTTPS';
+unblock_youku.backup_proxy_server_addr = 'secure.uku.im:993';
 
 // === For debug - start ===
 /*
