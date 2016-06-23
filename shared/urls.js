@@ -411,8 +411,24 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
 
 // These URLs will not go through proxy servers (for our PAC service).
 unblock_youku.pac_proxy_bypass_urls = unblock_youku.chrome_proxy_bypass_urls.concat([
-    'http://*/ipad?file=/*'
+    // 'http://*/ipad?file=/*'  // Not useful anymore for iOS
 ]);
+
+
+(function() {
+    // Remove all path info from unblock_youku.pac_proxy_urls due to the latest iOS update
+    // See https://bbs.uku.im/t/43
+    "use strict";
+
+    var new_list = [];
+    var regex_to_extract_domain = /^https?:\/\/[^\/]*/i;
+
+    for (var i = 0; i < unblock_youku.pac_proxy_urls.length; i++) {
+        new_list.push(unblock_youku.pac_proxy_urls[i].match(regex_to_extract_domain)[0] + '/*');
+    }
+
+    unblock_youku.pac_proxy_urls = new_list;
+}());
 
 
 function urls2regexs(url_list) {
