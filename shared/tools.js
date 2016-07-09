@@ -64,10 +64,10 @@ function _parse_url(url_str) {
         portpath: url_str.slice(sep_idx)
     };
 }
-// console.log(parse_url('http://test.com'));
-// console.log(parse_url('http://test.com:123));
-// console.log(parse_url('http://test.com/path));
-// console.log(parse_url('http://test.com:123/path));
+// console.log(_parse_url('http://test.com'));
+// console.log(_parse_url('http://test.com:123'));
+// console.log(_parse_url('http://test.com/path'));
+// console.log(_parse_url('http://test.com:123/path'));
 
 
 function gen_url_map(protocol, white_ulist, proxy_ulist) {
