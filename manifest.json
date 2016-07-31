@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "3.2.0",
+  "version": "3.3.6",
   "manifest_version": 2,
   "minimum_chrome_version": "25.0",
   "description": "__MSG_description__",
@@ -37,34 +37,36 @@
     "default_popup": "chrome/pages/popup.html"
   },
   "options_page": "chrome/pages/options.html",
-  "content_scripts": [{
-    "matches": ["http://www.tudou.com/*"],
-    "js": ["chrome/content/tudou.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }, {
-    "matches": ["http://play.baidu.com/*"],
-    "css": ["chrome/content/play.baidu.css"],
-    "all_frames": true
-  }, {
-    "matches": ["http://music.163.com/*"],
-    "js": ["chrome/content/music.163.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }, {
-    "matches": [
-      "http://unblockcn.com/*",
-      "http://*.unblockcn.com/*",
-      "http://unblockyouku.cn/*",
-      "http://*.unblockyouku.cn/*",
-      "http://724sky.com/*",
-      "http://*.724sky.com/*",
-      "http://tieba.baidu.com/f?kw=unblockcn*",
-      "http://*.tieba.baidu.com/f?kw=unblockcn*"
-    ],
-    "js": ["chrome/content/unblockcn.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }],
+  "content_scripts": [
+    {
+      "matches": ["http://www.tudou.com/*"],
+      "js": ["chrome/content/tudou.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }, {
+      "matches": ["http://play.baidu.com/*"],
+      "css": ["chrome/content/play.baidu.css"],
+      "all_frames": true
+    }, {
+      "matches": ["http://music.163.com/*"],
+      "js": ["chrome/content/music.163.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }, {
+      "matches": [
+        "http://unblockcn.com/*",
+        "http://*.unblockcn.com/*",
+        "http://unblockyouku.cn/*",
+        "http://*.unblockyouku.cn/*",
+        "http://724sky.com/*",
+        "http://*.724sky.com/*",
+        "http://tieba.baidu.com/f?kw=unblockcn*",
+        "http://*.tieba.baidu.com/f?kw=unblockcn*"
+      ],
+      "js": ["chrome/content/unblockcn.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "default_locale": "en"
 }

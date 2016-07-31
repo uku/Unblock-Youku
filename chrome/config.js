@@ -27,9 +27,9 @@ var unblock_youku = unblock_youku || {};  // namespace
 
 // only for proxy mode
 unblock_youku.default_proxy_server_proc = 'HTTPS';
-unblock_youku.default_proxy_server_addr = 'secure.uku.im:993';
-unblock_youku.backup_proxy_server_proc = 'HTTP';
-unblock_youku.backup_proxy_server_addr = 'proxy.uku.im:443';
+unblock_youku.default_proxy_server_addr = 'secure.uku.im:8443';
+unblock_youku.backup_proxy_server_proc = 'HTTPS';
+unblock_youku.backup_proxy_server_addr = 'secure.uku.im:993';
 
 // === For debug - start ===
 /*
@@ -113,12 +113,14 @@ function setup_mode_settings(mode_name) {
     switch (mode_name) {
     case 'off':
         chrome.browserAction.setBadgeText({text: 'OFF'});
+        chrome.browserAction.setTitle({title: 'Unblock Youku has been turned off.'});
         change_browser_icon('off');
         break;
     case 'lite':
         setup_header();
         setup_redirect();
         chrome.browserAction.setBadgeText({text: 'LITE'});
+        chrome.browserAction.setTitle({title: 'Unblock Youku is running in the lite mode.'});
         change_browser_icon('off');
         break;
     case 'normal':
@@ -183,7 +185,6 @@ function change_browser_icon(option) {
 
         if (option === 'off') {
             chrome.browserAction.setIcon({path: 'chrome/icons/icon19gray.png'});
-            chrome.browserAction.setTitle({title: 'Unblock Youku is not running in the normal mode.'});
             return;
         }
 
