@@ -64,6 +64,7 @@ unblock_youku.redirect_urls = [
     'http://www.tudou.com/tvp/alist.action*',
     'http://s.plcloud.music.qq.com/fcgi-bin/p.fcg*',
     'http://i.y.qq.com/s.plcloud/fcgi-bin/p.fcg*',
+    'http://c.y.qq.com/splcloud/fcgi-bin/p.fcg?*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://pad.tv.sohu.com/playinfo*',
