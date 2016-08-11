@@ -66,6 +66,7 @@ unblock_youku.redirect_urls = [
     'http://i.y.qq.com/s.plcloud/fcgi-bin/p.fcg*',
     'http://i.y.qq.com/v8/fcg-bin/*',
     'http://c.y.qq.com/*/fcgi-bin/*',
+    'http://c.y.qq.com/qzone/fcg-bin/*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://pad.tv.sohu.com/playinfo*',
