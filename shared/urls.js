@@ -176,7 +176,7 @@ unblock_youku.redirect_urls = [
     'http://ip.apps.cntv.cn/js/player.do*',
     'http://vdn.apps.cntv.cn/api/get*',
     'http://vdn.live.cntv.cn/api2/*',
-    // 'http://cctv1.vtime.cntv.cloudcdn.net/cache/*',
+    'http://cctv1.vtime.cntv.cloudcdn.net/cache/*',
     'http://cctv5.vtime.cntv.cloudcdn.net/cache/*',
     'http://cctv5plus.vtime.cntv.cloudcdn.net/cache/*',
     'http://cctv13.vtime.cntv.cloudcdn.net/cache/*',
