@@ -57,6 +57,7 @@ unblock_youku.redirect_urls = [
     'http://api.youku.com/player/*',
     'http://play.youku.com/play/get.json*',
     'http://play-dxk.youku.com/play/get.json*',
+    'http://play-ali.youku.com/play/get.json*',
     // 'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
