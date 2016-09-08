@@ -97,9 +97,8 @@ unblock_youku.redirect_urls = [
 
     'http://api.appsdk.soku.com/*',
 
-    'http://app.bilibili.com/bangumi/user_season_status?*',
-    'http://bangumi.bilibili.com/api/*',
-    'http://bangumi.bilibili.com/web_api/*',
+    'http://app.bilibili.com/bangumi/*',
+    'http://bangumi.bilibili.com/*',
 
     'http://122.72.82.31/*',
     'http://211.151.158.155/*',
