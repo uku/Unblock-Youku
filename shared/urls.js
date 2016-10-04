@@ -68,6 +68,7 @@ unblock_youku.redirect_urls = [
     'http://i.y.qq.com/*/fcgi-bin/*',
     'http://c.y.qq.com/*/fcg-bin/*',
     'http://c.y.qq.com/*/fcgi-bin/*',
+    'http://api.unipay.qq.com/cgi-bin/get_pay_info.fcg?*',
     'http://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://pad.tv.sohu.com/playinfo*',
