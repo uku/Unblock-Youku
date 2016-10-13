@@ -389,6 +389,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
     'http://mobi.kuwo.cn/*',
+    'http://nmobi.kuwo.cn/*',
     'http://mobilefeedback.kugou.com/*',
     'http://tingapi.ting.baidu.com/v1/restserver/ting?*method=baidu.ting.song*',
     'http://music.baidu.com/data/music/links?*',
