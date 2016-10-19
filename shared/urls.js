@@ -367,9 +367,11 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     // 'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv6*',
     // 'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdcctv8*',
     // 'http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdbtv6*',
-    "http://vdn.live.cntv.cn/*",
-    "http://app.bilibili.com/*",
-    "https://app.bilibili.com/*",
+    'http://vdn.live.cntv.cn/*',
+    'http://app.bilibili.com/*',
+    'https://app.bilibili.com/*',
+    'http://bangumi.bilibili.com/api/*',
+ 
 
     // Music apps
     'http://3g.music.qq.com/*',
