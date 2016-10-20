@@ -371,6 +371,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://app.bilibili.com/*',
     'https://app.bilibili.com/*',
     'http://bangumi.bilibili.com/api/*',
+    'http://data.bilibili.com/*',
  
 
     // Music apps
