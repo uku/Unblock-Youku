@@ -36,6 +36,14 @@ var unblock_youku = unblock_youku || {};
    - pac_proxy_urls.
  */
 
+/*
+ * Note that the HTTPS URLs must NOT have any path portions.
+ *
+ * For example:
+ * - Wrong: https://example.com/abc/*
+ * - Right: https://example.com/*
+ */
+
 
 // Just changing headers of these URLs will be sufficient.
 unblock_youku.header_urls = [
@@ -211,6 +219,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://www.bilibili.com/video/*',
     'http://interface.bilibili.com/*',
     'https://interface.bilibili.com/*',
+    'https://bangumi.bilibili.com/*',
     // 'http://live-play.acgvideo.com/live/*',
     'http://m10.music.126.net/*', //for the testing of netease music
 
