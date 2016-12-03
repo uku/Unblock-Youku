@@ -329,7 +329,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
 
 // These URLs will not go through proxy servers (for our Chrome extension).
 unblock_youku.chrome_proxy_bypass_urls = [
-    // Empty for now
+    'http://bangumi.bilibili.com/index/ding-count.json',
 ];
 
 
