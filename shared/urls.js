@@ -76,6 +76,7 @@ unblock_youku.redirect_urls = [
     'http://i.y.qq.com/*/fcgi-bin/*',
     'http://c.y.qq.com/*/fcg-bin/*',
     'http://c.y.qq.com/*/fcgi-bin/*',
+    'https://c.y.qq.com/*',
     'http://api.unipay.qq.com/cgi-bin/get_pay_info.fcg?*',
     'https://api.unipay.qq.com/*',
     'http://hot.vrs.sohu.com/*',
