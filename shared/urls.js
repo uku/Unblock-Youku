@@ -406,6 +406,14 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://103.7.31.186/base/fcgi-bin/getsession*',
     'http://103.7.30.89/base/fcgi-bin/getsession*',
     'http://182.254.34.151/base/fcgi-bin/getsession*', //temperary solutions for issue #536
+    'http://223.167.82.139/base/fcgi-bin/getsession*',
+    'http://101.227.169.200/base/fcgi-bin/getsession*',
+    'http://182.254.11.174/base/fcgi-bin/getsession*',
+    'http://183.192.192.139/base/fcgi-bin/getsession*',
+    'http://163.177.90.61/base/fcgi-bin/getsession*',
+    'http://14.18.245.250/base/fcgi-bin/getsession*',
+    'http://183.232.126.23/base/fcgi-bin/getsession*',
+    'http://182.254.4.234/base/fcgi-bin/getsession*', //another fix for QQ music in #731
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
