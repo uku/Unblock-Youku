@@ -376,6 +376,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://m.letv.com/api/geturl?*',
     'http://api.mob.app.letv.com/play*',
     'http://static.api.sports.letv.com/*vod?*',
+    'http://player-pc.le.com/mms/out/video/*',
     'http://api.itv.letv.com/iptv/api/new/video/play/get.json?*', //for letv TV boxes
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv5*',
     'http://vdn.apps.cntv.cn/api/getLiveUrlCommonApi.do?pa://cctv_p2p_hdcctv6*',
