@@ -87,6 +87,7 @@ unblock_youku.redirect_urls = [
     'http://hot.vrs.letv.com/*',
     'http://api.le.com/mms/out/video/*',
     'http://player.pc.le.com/mms/out/video/*',
+    'http://player.pc.le.com/crossdomain.xml',
     //'http://g3.letv.cn/*',
     'http://data.video.qiyi.com/v.*',
     'http://data.video.qiyi.com/videos/*',
