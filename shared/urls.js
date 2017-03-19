@@ -71,6 +71,7 @@ unblock_youku.redirect_urls = [
     'http://list.youku.com/show/episode?*',
     'http://v.youku.com/page/playlist/*',
     'http://ups.youku.com/ups/get.json*',
+    'https://ups.youku.com/',
      // 'http://v2.tudou.com/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
