@@ -183,7 +183,7 @@ unblock_youku.redirect_urls = [
     'http://www.kugou.com/interface/geoip/*',
     'http://www.kuwo.cn/yy/PlayCheckIp?callback=checkIpCallback&_=*',
     'http://antiserver.kuwo.cn/anti.s?*',
-
+    'http://ipcheck.kuwo.cn/ip_check.kuwo*',
     'http://*.dpool.sina.com.cn/iplookup*',
     'http://api.letv.com/streamblock*',
     'http://api.letv.com/mms/out/video/play*',
@@ -422,6 +422,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://183.232.126.23/base/fcgi-bin/getsession*',
     'http://183.232.119.198/base/fcgi-bin/getsession*',
     'http://182.254.4.234/base/fcgi-bin/getsession*', //another fix for QQ music in #731
+    'http://203.205.151.23/base/fcgi-bin/getsession*',
     'http://ip2.kugou.com/check/isCn/*',
     'http://ip.kugou.com/check/isCn/*',
     'http://client.api.ttpod.com/global*',
