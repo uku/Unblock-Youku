@@ -424,7 +424,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://182.254.4.234/base/fcgi-bin/getsession*', //another fix for QQ music in #731
     'http://203.205.151.23/base/fcgi-bin/getsession*',
     'http://ip2.kugou.com/check/isCn/*',
-    'http://ip.kugou.com/check/isCn/*',
+    'http://ip.kugou.com/check/iscn*',
     'http://client.api.ttpod.com/global*',
     'http://mobi.kuwo.cn/*',
     'http://nmobi.kuwo.cn/*',
