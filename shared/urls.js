@@ -76,6 +76,7 @@ unblock_youku.redirect_urls = [
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
     'http://www.tudou.com/outplay/goto/*',
+    'http://v2.tudou.com/f?*',
     'http://www.tudou.com/tvp/alist.action*',
     'http://s.plcloud.music.qq.com/fcgi-bin/p.fcg*',
     'http://i.y.qq.com/*/fcg-bin/*',
