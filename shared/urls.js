@@ -231,6 +231,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     "http://mobile.api.hunantv.com/*",
     'http://www.qie.tv/*',
     'http://www.bilibili.com/video/*',
+    'https://www.bilibili.com/*',
     'http://interface.bilibili.com/*',
     'https://interface.bilibili.com/*',
     'https://bangumi.bilibili.com/*',
