@@ -105,6 +105,7 @@ unblock_youku.redirect_urls = [
     'http://cache.video.qiyi.com/*',
     'http://cache.vip.iqiyi.com/*',
     'http://cache.video.iqiyi.com/*',
+    'https://cache.video.iqiyi.com/*',
     'http://iplocation.geo.qiyi.com/cityjson*',
     'http://iplocation.geo.iqiyi.com/cityjson*',
     'http://*.cupid.iqiyi.com/*',
