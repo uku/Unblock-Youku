@@ -62,6 +62,7 @@ unblock_youku.header_urls = [
 // These URLs can work with the redirect functionality (mainly used in Flash players).
 unblock_youku.redirect_urls = [
     'http://v.youku.com/player/*',
+    'http://pl-ali.youku.com/*',
     'http://api.youku.com/player/*',
     'http://play.youku.com/play/get.json*',
     'http://play-dxk.youku.com/play/get.json*',
