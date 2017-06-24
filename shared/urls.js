@@ -75,6 +75,7 @@ unblock_youku.redirect_urls = [
     'http://ups.youku.com/ups/get.json*',
     'https://ups.youku.com/',
      // 'http://v2.tudou.com/*',
+    'http://video.tudou.com/v/*',
     'http://www.tudou.com/a/*',
     'http://www.tudou.com/v/*',
     'http://www.tudou.com/outplay/goto/*',
