@@ -151,6 +151,8 @@ unblock_youku.redirect_urls = [
     'http://dispatcher.video.sina.com.cn/*',
     'http://geo.js.kankan.com/*',
     'http://web-play.pptv.com/*',
+    'http://v.pptv.com/show/*',
+    'https://ppi.api.pptv.com/*',
     'http://web-play.pplive.cn/*',
     'http://tools.aplusapi.pptv.com/get_ppi?*',
     'http://live.pptv.com/api/subject_list?*',
