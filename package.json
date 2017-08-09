@@ -15,7 +15,7 @@
     "test:unit:watch": "npm run test:unit -- --watch"
   },
   "engines": {
-    "node": "4.4.x",
+    "node": "4.8.x",
     "npm": "1.4.x"
   },
   "repository": {
