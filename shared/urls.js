@@ -553,6 +553,31 @@ function produce_squid_regex_list(for_pac_server) {
     return ret_list;
 }
 
+function produce_dnsmasq_url_list() {
+    'use strict';
+
+    var url_list = unblock_youku.chrome_proxy_urls;
+    var dnsmasq_url_list = [];
+
+    for (var i = 0; i < url_list.length; i++) {
+        var re_str = url_list[i];
+        re_str = re_str.match(/^(?:http?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/i)[0]
+        re_str = re_str.replace('https://', '');
+        re_str = re_str.replace('http://', '');
+        re_str = re_str.replace('*.', '');
+
+        var non_ip = re_str.match(/[^.\s]+\.(com|cn|net)/);
+        if (non_ip) {
+            re_str = non_ip[0];
+        }
+
+        dnsmasq_url_list.push(re_str);
+    }
+
+    var dnsmasq_url_set = new Set(dnsmasq_url_list);
+    return dnsmasq_url_set;
+}
+
 
 // Also export as a node.js module
 var exports = exports || {};
@@ -572,9 +597,16 @@ exports.produce_squid_regex_list = produce_squid_regex_list;
     // http://stackoverflow.com/a/5197219
     // http://stackoverflow.com/a/6398335
     if (typeof module !== 'undefined' && module.exports && require.main === module) {
-        var squid_regex_list;
+        var squid_regex_list = [];
         if (typeof process !== 'undefined' && process.argv[2] === 'PAC') {
             squid_regex_list = produce_squid_regex_list(true /* for PAC service */);
+        } else if(typeof process !== 'undefined' && process.argv[2] === 'dnsmasq') {
+            var dnsmasq_url_list = produce_dnsmasq_url_list();
+            for (let item of dnsmasq_url_list) {
+                console.log('server=/' + item + '/158.69.209.100');
+                console.log('server=/' + item + '/45.32.72.192');
+                console.log('server=/' + item + '/45.63.69.42');
+            }
         } else {
             squid_regex_list = produce_squid_regex_list(false /* for Chrome proxy */);
         }
