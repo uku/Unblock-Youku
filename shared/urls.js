@@ -150,6 +150,8 @@ unblock_youku.redirect_urls = [
     'https://info.zb.video.qq.com/*',
     'http://qzs.qq.com/tencentvideo_v1/*',
     'https://qzs.qq.com/*',
+    'https://vd.l.qq.com/*',
+    'https://vi.l.qq.com/*',
 
     'http://dispatcher.video.sina.com.cn/*',
     'http://geo.js.kankan.com/*',
