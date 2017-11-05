@@ -116,7 +116,9 @@ unblock_youku.redirect_urls = [
     'http://v.api.hunantv.com/player/video*',
     'http://mobile.api.hunantv.com/v5/video/getSource*',
     'http://v.api.mgtv.com/player/video*',
+    'https://v.api.mgtv.com/*',
     'http://pcweb.api.mgtv.com/player/video*',
+    'https://pcweb.api.mgtv.com/*',
     'http://acc.music.qq.com/base/fcgi-bin/getsession*',
     'http://182.254.116.117/*',
 
