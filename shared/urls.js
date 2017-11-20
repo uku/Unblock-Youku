@@ -90,6 +90,7 @@ unblock_youku.redirect_urls = [
     'http://api.unipay.qq.com/cgi-bin/get_pay_info.fcg?*',
     'https://api.unipay.qq.com/*',
     'http://hot.vrs.sohu.com/*',
+    'https://hot.vrs.sohu.com/*',
     'http://live.tv.sohu.com/live/player*',
     'http://pad.tv.sohu.com/playinfo*',
     'http://my.tv.sohu.com/play/m3u8version.do*',
