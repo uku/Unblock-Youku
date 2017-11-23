@@ -7,9 +7,8 @@ page.open(test_url, function(status) {
         console.error('Failed in downloading crossdomain.xml...');
         phantom.exit(1);
     } else {
-        // console.log(page.content);
-        if (page.content !== // '<?xml version="1.0" encoding="UTF-8"?>' + // without the first line?
-                '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>') {
+        var expected = '<cross-domain-policy><allow-access-from domain="*"/></cross-domain-policy>';
+        if (page.content.indexOf(expected) == -1) {
             console.error("crossdomain.xml file isn't correct!");
             phantom.exit(2);
         } else {
