@@ -4,8 +4,8 @@
   "dependencies": {
     "colors": "*",
     "nomnom": "1.8.x",
-    "request": "2.73.x",
-    "validator": "5.4.x",
+    "request": "2.83.x",
+    "validator": "9.1.x",
     "uglify-js": "2.7.x"
   },
   "scripts": {
@@ -15,8 +15,8 @@
     "test:unit:watch": "npm run test:unit -- --watch"
   },
   "engines": {
-    "node": "4.8.x",
-    "npm": "1.4.x"
+    "node": "8.9.x",
+    "npm": "5.5.x"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,12 @@
   },
   "license": "AGPL-3.0",
   "devDependencies": {
-    "babel-core": "^6.4.5",
+    "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.3.13",
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
-    "eslint-plugin-react":"^4.2.3",
     "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3",
     "mocha": "^2.4.5"
   }
 }

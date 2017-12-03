@@ -9,3 +9,4 @@
 .idea/
 node_modules/
 crx/
+package-lock.json

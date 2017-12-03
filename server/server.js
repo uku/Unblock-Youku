@@ -113,7 +113,7 @@ if (opts.pac_proxy) {
 } else {
     pac_file_content = 'function FindProxyForURL(url, host) {return "DIRECT";}';
 }
-//console.log(pac_file_content);
+// console.log(pac_file_content);
 
 
 function http_req_handler(client_request, client_response) {
