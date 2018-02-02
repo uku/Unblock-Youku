@@ -411,7 +411,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'https://app.bilibili.com/*',
     'http://bangumi.bilibili.com/api/*',
     'http://data.bilibili.com/*',
- 
+
 
     // Music apps
     'http://3g.music.qq.com/*',
@@ -478,7 +478,11 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://180.153.225.136/*',
     'http://118.244.244.124/*',
     'http://210.129.145.150/*',
-    'http://182.16.230.98/*' // Updated on Jan. 3, for new DNS of apple tv.
+    'http://182.16.230.98/*', // Updated on Jan. 3, for new DNS of apple tv.
+
+    // for NeteaseMusic on iOS
+    'http://103.65.41.126/eapi/*',
+    'http://103.65.41.125/eapi/*'
 ]);
 
 
