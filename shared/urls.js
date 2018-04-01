@@ -56,6 +56,7 @@ unblock_youku.header_urls = [
     'http://www.bilibili.com/*',
     'http://interface.bilibili.com/*',
     'http://bangumi.bilibili.com/*',
+    'https://pstream.api.mgtv.com/*',
     'http://kandian.com/player/getEpgInfo*'
 ];
 
