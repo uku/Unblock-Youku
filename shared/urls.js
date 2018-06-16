@@ -64,7 +64,9 @@ unblock_youku.header_urls = [
 
 // These URLs can work with the redirect functionality (mainly used in Flash players).
 unblock_youku.redirect_urls = [
+    'https://dmd-fifa-h5-ikuweb.youku.com/*',
     'http://acs.youku.com/*',
+    'https://acs.youku.com/*',
     'http://v.youku.com/player/*',
     'http://pl-ali.youku.com/*',
     'http://list.youku.com/category/*',
@@ -79,7 +81,6 @@ unblock_youku.redirect_urls = [
     'http://ups.youku.com/ups/get.json*',
     'https://ups.youku.com/',
     'https://v.youku.com/*',
-    'https://acs.youku.com/*',
     // 'http://v2.tudou.com/*',
     'http://video.tudou.com/v/*',
     'http://www.tudou.com/a/*',
