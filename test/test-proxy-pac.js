@@ -9,7 +9,7 @@ page.open(test_url, function(status) {
     } else {
         // console.log(page.content);
         if (page.content.indexOf('FindProxyForURL') === -1 ||
-            page.content.indexOf('v.youku.com') === -1) {
+            page.content.indexOf('youku.com') === -1) {
             console.error("PAC file is invalid...");
             phantom.exit(2);
         } else {
