@@ -268,6 +268,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://cloud.vip.xunlei.com/*',
     // 'http://vod.lixian.xunlei.com/*',
     'http://www.iqiyi.com/dongman/',
+    'https://www.iqiyi.com/',
 
     // LETV https://github.com/Unblocker/Unblock-Youku/issues/590
     "http://36.110.222.105/*",
