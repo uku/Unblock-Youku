@@ -151,6 +151,7 @@ unblock_youku.redirect_urls = [
     // 'http://bkvv.video.qq.com/get*',
     // 'http://h5vv.video.qq.com/get*',
     'http://*.video.qq.com/get*',
+    'http://*.video.qq.com/fcgi-bin/*',
     'https://*.video.qq.com/*',
     'http://info.zb.qq.com/?*',
     'https://info.zb.qq.com/*',
