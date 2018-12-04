@@ -241,7 +241,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://www.tudou.com/listplay/*',
 
     'http://www.youku.com/show_page/*',
-    // 'http://v.youku.com/v_show/*',
+    'http://v.youku.com/v_show/*',
     'http://www.soku.com/search_video/*',
     'http://search.api.3g.youku.com/*',
     'http://search.api.3g.tudou.com/*',
