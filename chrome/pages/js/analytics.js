@@ -89,6 +89,6 @@ function ga_report_error(error_name, error_desc) {
 window.onerror = function(message, file, line) {
     "use strict";
     var msg = file + '(' + line + '): ' + message;
-    console.error(msg);
+    // console.error(msg);
     ga_report_error('Unknown Error', msg);
 };

@@ -256,8 +256,11 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://www.qie.tv/*',
     'http://www.bilibili.com/video/*',
     'https://www.bilibili.com/*',
+    'http://api.bilibili.com/*',
+    'https://api.bilibili.com/*',
     'http://interface.bilibili.com/*',
     'https://interface.bilibili.com/*',
+    'http://bangumi.bilibili.com/api/*',
     'https://bangumi.bilibili.com/*',
     // 'http://live-play.acgvideo.com/live/*',
     'http://m10.music.126.net/*', //for the testing of netease music
@@ -421,7 +424,6 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
     'http://app.bilibili.com/*',
     'https://app.bilibili.com/*',
     'http://bangumi.bilibili.com/api/*',
-    'http://data.bilibili.com/*',
 
 
     // Music apps
