@@ -85,6 +85,7 @@ unblock_youku.redirect_urls = [
     'http://player.aplus.pptv.com/*',
     'http://api.aixifan.com/plays/*',
     'http://www.acfun.cn/video/getVideo*',
+    'https://www.acfun.cn/*',
     'https://v.youku.com/*',
     // 'http://v2.tudou.com/*',
     'http://video.tudou.com/v/*',
