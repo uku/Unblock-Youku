@@ -124,7 +124,7 @@ function setup_mode_settings(mode_name) {
         change_browser_icon('off');
         break;
     case 'normal':
-        setup_header();
+        // setup_header();
         setup_proxy();
         chrome.browserAction.setBadgeText({text: ''});
         change_browser_icon('normal');

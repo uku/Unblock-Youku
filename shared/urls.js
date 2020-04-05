@@ -86,7 +86,7 @@ unblock_youku.redirect_urls = [
     'http://api.aixifan.com/plays/*',
     'http://www.acfun.cn/video/getVideo*',
     'https://www.acfun.cn/*',
-    'https://v.youku.com/*',
+    // 'https://v.youku.com/*',
     // 'http://v2.tudou.com/*',
     'http://video.tudou.com/v/*',
     'http://www.tudou.com/a/*',
