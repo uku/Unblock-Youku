@@ -1,6 +1,6 @@
 {
   "name": "Unblock Youku",
-  "version": "3.8.12",
+  "version": "3.9.0",
   "manifest_version": 2,
   "minimum_chrome_version": "25.0",
   "description": "__MSG_description__",
@@ -14,7 +14,6 @@
     "webRequest",
     "webRequestBlocking",
     "storage",
-    "tabs",
     "http://*/*",
     "https://*/*"
   ],
@@ -27,8 +26,7 @@
       "chrome/header.js",
       "chrome/proxy.js",
       "chrome/redirect.js",
-      "chrome/config.js",
-      "chrome/donation.js"
+      "chrome/config.js"
     ]
   },
   "browser_action": {
