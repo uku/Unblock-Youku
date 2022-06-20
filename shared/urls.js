@@ -496,7 +496,10 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
 
     // for NeteaseMusic on iOS
     'http://103.65.41.126/eapi/*',
-    'http://103.65.41.125/eapi/*'
+    'http://103.65.41.125/eapi/*',
+ 
+    // for development purposes
+    'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
 ]);
 
 
