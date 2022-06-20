@@ -363,7 +363,10 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     // 'http://imanhua.com/comic/*',
     // 'http://www.imanhua.com/comic/*',
     // 'http://imanhua.com/v2*',
-    // 'http://www.imanhua.com/v2*'
+    // 'http://www.imanhua.com/v2*',
+ 
+    // for development purposes
+    'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
 ]);
 
 
@@ -496,10 +499,7 @@ unblock_youku.pac_proxy_urls = unblock_youku.chrome_proxy_urls.concat(unblock_yo
 
     // for NeteaseMusic on iOS
     'http://103.65.41.126/eapi/*',
-    'http://103.65.41.125/eapi/*',
- 
-    // for development purposes
-    'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
+    'http://103.65.41.125/eapi/*'
 ]);
 
 
