@@ -366,7 +366,8 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     // 'http://www.imanhua.com/v2*',
  
     // for development purposes
-    'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
+    'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*',
+    'https://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
 ]);
 
 
