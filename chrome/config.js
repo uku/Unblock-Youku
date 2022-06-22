@@ -32,12 +32,12 @@ unblock_youku.backup_proxy_server_proc = 'HTTPS';
 unblock_youku.backup_proxy_server_addr = 'secure.uku.im:993';
 
 // === For debug - start ===
-// /*
+/*
 unblock_youku.default_proxy_server_proc = 'SOCKS5';
 unblock_youku.default_proxy_server_addr = '127.0.0.1:1086';
 unblock_youku.backup_proxy_server_proc = 'SOCKS5';
 unblock_youku.backup_proxy_server_addr = '127.0.0.1:1086';
-// */
+*/
 // == For debug - end ===
 
 // only for redirect mode
