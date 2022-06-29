@@ -592,23 +592,3 @@ exports.pac_urls = unblock_youku.pac_proxy_urls;
 exports.pac_bypass_urls = unblock_youku.pac_proxy_bypass_urls;
 
 exports.produce_squid_regex_list = produce_squid_regex_list;
-
-
-(function () {
-    'use strict';
-
-    // http://stackoverflow.com/a/5197219
-    // http://stackoverflow.com/a/6398335
-    if (typeof module !== 'undefined' && module.exports && require.main === module) {
-        var squid_regex_list;
-        if (typeof process !== 'undefined' && process.argv[2] === 'PAC') {
-            squid_regex_list = produce_squid_regex_list(true /* for PAC service */);
-        } else {
-            squid_regex_list = produce_squid_regex_list(false /* for Chrome proxy */);
-        }
-
-        for (var i = 0; i < squid_regex_list.length; i++) {
-            console.log(squid_regex_list[i]);
-        }
-    }
-}());
