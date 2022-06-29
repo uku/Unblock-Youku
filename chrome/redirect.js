@@ -36,15 +36,6 @@ function http_redirector(details) {
         return {redirectUrl: redirect_url};
     }
 
-    // if (details.url.slice(0, 18) === 'http://v.youku.com') {
-    //     // remove random number to improve cache hitrate
-    //     details.url = details.url.replace(/&ran=[0-9]*|ran=[0-9]*&/gi, '');
-    // } else if (details.url.slice(0, 23) === 'http://hot.vrs.sohu.com') {
-    //     details.url = details.url.replace(/&t=0\.[0-9]*|t=0\.[0-9]*&/gi, '');
-    // } else if (details.url.slice(0, 23) === 'http://hot.vrs.letv.com') {
-    //     details.url = details.url.replace(/&tn=0\.[0-9]*|tn=0\.[0-9]*&/gi, '');
-    // }
-
     var backend_server;
     if (typeof localStorage.custom_redirect_server === 'undefined') {
         backend_server = unblock_youku.actual_redirect_server;
@@ -52,7 +43,6 @@ function http_redirector(details) {
         backend_server = localStorage.custom_redirect_server;
     }
 
-    //var redirect_url = 'http://127.0.0.1.xip.io:8080/?url=' + urlsafe_b64encode(details.url);
     if (string_starts_with(details.url, 'http://')) {
         redirect_url = 'http://' + backend_server + '/http/' + details.url.substring('http://'.length);
     } else if (string_starts_with(details.url, 'https://')) {
@@ -138,31 +128,3 @@ function clear_redirect() {
         ga_report_error('Unexpected Error', err_msg);
     }
 }
-
-
-// extra sites to redirect
-/*
-function extra_http_redirector(details) {
-    var redirect_url = 'http://117.27.241.117/' + details.url.replace(/^.*\/\/[^\/]+/, '');
-    console.log('redirect url: ' + redirect_url);
-    return {redirectUrl: redirect_url};
-}
-
-function setup_extra_redirector() {
-    if (!chrome.webRequest.onBeforeRequest.hasListener(extra_http_redirector)) {
-        chrome.webRequest.onBeforeRequest.addListener(
-            extra_http_redirector,
-            {
-                urls: ['http://*.music.126.net/*']
-            },
-            ["blocking"]
-        );
-        console.log('extra_http_redirector is set');
-    } else {
-        var err_msg = 'extra_http_redirector is already there!';
-        console.error(err_msg);
-        ga_report_error('Unexpected Error', err_msg);
-    }
-}
-*/
-

@@ -15,10 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*jslint browser: true */
-/*global chrome: false, get_storage: false, set_storage: false, new_random_ip: false */
-/*global setup_redirect: false, setup_header: false, setup_proxy: false, setup_timezone: false, setup_extra_header: false */
-/*global clear_redirect: false, clear_header: false, clear_proxy: false, clear_timezone: false */
+/*global setup_redirect: false, setup_header: false, setup_proxy: false */
+/*global clear_redirect: false, clear_header: false, clear_proxy: false */
 /*global ga_report_event: false, ga_report_ratio: false, ga_report_error: false */
 "use strict";
 
@@ -276,6 +274,4 @@ document.addEventListener("DOMContentLoaded", function() {
         ga_report_ratio('Init Mode', current_mode_name);
         ga_report_ratio('Version', unblock_youku.version);
     });
-
-    // setup_extra_redirector();
 });

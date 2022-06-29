@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false, unblock_youku: false */
+/*global unblock_youku: false */
 /*global ga_report_error: false */
 "use strict";
 

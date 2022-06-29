@@ -15,14 +15,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false, localStorage: false */
-"use strict";
+'use strict';
 
 
 function create_donation_tab() {
-    var donation_url = chrome.i18n.getMessage('donation_url');
+    const donation_url = chrome.i18n.getMessage('donation_url');
     chrome.tabs.create({
-        url: donation_url
+        url: donation_url,
     });
 }
 

@@ -1,18 +1,15 @@
 {
   "name": "ub.uku.js",
-  "version": "2.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "colors": "*",
     "nomnom": "1.8.x",
     "request": "2.83.x",
-    "validator": "9.1.x",
-    "uglify-js": "2.7.x"
+    "uglify-js": "2.7.x",
+    "validator": "9.1.x"
   },
   "scripts": {
-    "start": "node server/server.js",
-    "test": "python test/run-all-tests.py",
-    "test:unit": "_mocha unit_test/**/*-tests.js -r babel-core/register",
-    "test:unit:watch": "npm run test:unit -- --watch"
+    "start": "node server/server.js"
   },
   "engines": {
     "node": "8.9.x",
@@ -24,12 +21,6 @@
   },
   "license": "AGPL-3.0",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-es2015": "^6.3.13",
-    "chai": "^3.5.0",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-react": "^4.2.3",
-    "mocha": "^2.4.5"
+    "eslint": "^8.18.0"
   }
 }
