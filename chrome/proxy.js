@@ -60,11 +60,6 @@ function setup_proxy() {
         backup_proxy_server_addr = localStorage.custom_proxy_server_addr;
     }
 
-    /* DEBUG -- BEGIN */
-    // proxy_server_proc = 'SOCKS5';
-    // proxy_server_addr = '127.0.0.1:1080';
-    /* DEBUG -- END */
-
     setup_pac_data(proxy_server_proc, proxy_server_addr,
                    backup_proxy_server_proc, backup_proxy_server_addr);
     console.log('using the proxy server: ' + proxy_server_proc + ' ' + proxy_server_addr);

@@ -45,12 +45,12 @@
     "message": "https://www.uku.im/index.html"
   },
   "support_title": {
-    "message": "我们需要您的支持"
+    "message": "我们需要您的捐款"
   },
   "support_message": {
     "message": "请帮助 Unblock Youku 长久稳定和免费地运行下去"
   },
   "support_button": {
-    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> 请支持我们"
+    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> 向我们捐款 <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>"
   }
 }

@@ -45,12 +45,12 @@
     "message": "https://www.uku.im/index.html"
   },
   "support_title": {
-    "message": "We Need Your Support"
+    "message": "We Need Your Donation"
   },
   "support_message": {
-    "message": "Please support us to make Unblock Youku better."
+    "message": "Please donate to us to make Unblock Youku more usable."
   },
   "support_button": {
-    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Please Support Us"
+    "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Donate to us <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>"
   }
 }

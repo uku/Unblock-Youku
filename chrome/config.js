@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global setup_redirect: false, setup_header: false, setup_proxy: false */
+/*global setup_header: false, setup_proxy: false */
 /*global clear_redirect: false, clear_header: false, clear_proxy: false */
 /*global ga_report_event: false, ga_report_ratio: false, ga_report_error: false */
 "use strict";
@@ -23,18 +23,15 @@
 // ====== Constant and Variable Settings ======
 var unblock_youku = unblock_youku || {};  // namespace
 
-// only for proxy mode
+// Default proxy server settings
 unblock_youku.default_proxy_server_proc = 'HTTPS';
 unblock_youku.default_proxy_server_addr = 'secure.uku.im:8443';
 unblock_youku.backup_proxy_server_proc = 'HTTPS';
 unblock_youku.backup_proxy_server_addr = 'secure.uku.im:993';
 
-// only for redirect mode
-unblock_youku.default_redirect_server = 'www.yōukù.com/proxy';
-unblock_youku.backup_redirect_server = 'bak.yōukù.com/proxy';
 
 unblock_youku.ip_addr = new_random_ip();
-console.log('ip addr: ' + unblock_youku.ip_addr);
+console.log('generated random ip addr: ' + unblock_youku.ip_addr);
 
 
 // ====== Configuration Functions ======
@@ -45,7 +42,7 @@ function set_mode_name(mode_name, callback) {
         ga_report_error('Unexpected Error', err_msg);
     }
 
-    if (mode_name === 'off' || mode_name === 'lite') {
+    if (mode_name === 'off') {
         set_storage('unblock_youku_mode', mode_name, callback);
     } else {
         set_storage('unblock_youku_mode', 'normal', callback);
@@ -60,10 +57,8 @@ function get_mode_name(callback) {
     }
 
     get_storage('unblock_youku_mode', function(current_mode) {
-        if (typeof current_mode === 'undefined' || (
-                current_mode !== 'off' &&
-                current_mode !== 'lite' )) {
-            set_mode_name('normal', function() {
+        if (typeof current_mode === 'undefined' || current_mode !== 'off') {
+            set_mode_name('normal', function () {
                 callback('normal');
             });
         } else {
@@ -74,24 +69,20 @@ function get_mode_name(callback) {
 
 function clear_mode_settings(mode_name) {
     switch (mode_name) {
-    case 'off':
-        console.log('cleared settings for off');
-        break;
-    case 'lite':
-        clear_header();
-        clear_redirect();
-        console.log('cleared settings for lite');
-        break;
-    case 'normal':
-        clear_header();
-        clear_proxy();
-        console.log('cleared settings for normal');
-        break;
-    default:
-        var err_msg = 'clear_mode_settings: should never come here';
-        console.error(err_msg);
-        ga_report_error('Unexpected Error', err_msg);
-        break;
+        case 'off':
+            console.log('cleared settings for off');
+            break;
+        case 'normal':
+            clear_header();
+            clear_redirect();
+            clear_proxy();
+            console.log('cleared settings for normal');
+            break;
+        default:
+            var err_msg = 'clear_mode_settings: should never come here';
+            console.error(err_msg);
+            ga_report_error('Unexpected Error', err_msg);
+            break;
     }
 
     console.log('cleared the settings for the mode: ' + mode_name);
@@ -99,29 +90,27 @@ function clear_mode_settings(mode_name) {
 
 function setup_mode_settings(mode_name) {
     switch (mode_name) {
-    case 'off':
-        chrome.browserAction.setBadgeText({text: 'OFF'});
-        chrome.browserAction.setTitle({title: 'Unblock Youku has been turned off.'});
-        change_browser_icon('off');
-        break;
-    case 'lite':
-        setup_header();
-        setup_redirect();
-        chrome.browserAction.setBadgeText({text: 'LITE'});
-        chrome.browserAction.setTitle({title: 'Unblock Youku is running in the lite mode.'});
-        change_browser_icon('off');
-        break;
-    case 'normal':
-        // setup_header();
-        setup_proxy();
-        chrome.browserAction.setBadgeText({text: ''});
-        change_browser_icon('normal');
-        break;
-    default:
-        var err_msg = 'setup_mode_settings: should never come here';
-        console.error(err_msg);
-        ga_report_error('Unexpected Error', err_msg);
-        break;
+        case 'off':
+            chrome.browserAction.setBadgeText({ text: 'OFF' });
+            chrome.browserAction.setTitle({ title: 'Unblock Youku has been turned off.' });
+            change_browser_icon('off');
+            break;
+        case 'lite':
+            set_mode_name('normal', function() {
+                console.log('migrate lite mode to normal mode');
+            });
+            // fall through
+        case 'normal':
+            setup_header();
+            setup_proxy();
+            chrome.browserAction.setBadgeText({ text: '' });
+            change_browser_icon('normal');
+            break;
+        default:
+            var err_msg = 'setup_mode_settings: should never come here';
+            console.error(err_msg);
+            ga_report_error('Unexpected Error', err_msg);
+            break;
     }
 
     console.log('initialized the settings for the mode: ' + mode_name);
@@ -139,23 +128,23 @@ function change_browser_icon(option) {
         var d = today.getDate();
         var m = today.getMonth() + 1;
 
-        // hard-coded spring festivals
+        // hard-coded spring festival dates
         var is_spring = false;
         switch (y) {
-            case 2016:  // February 8, 2016
-                if ((m === 1 && d >= 29) || (m === 2 && d <= 18)) {
-                    is_spring = true;
-                }
+            case 2023:  // Jan. 22, 2023
+                is_spring = m === 1;
                 break;
-            case 2017:  // January 28, 2017
-                if ((m === 1 && d >= 18) || (m === 2 && d <= 7)) {
-                    is_spring = true;
-                }
+            case 2024:  // Feb. 10, 2024
+                is_spring = m === 2;
                 break;
-            case 2018:  // February 16, 2018
-                if (m === 2 && (6 <= d && d <= 26)) {
-                    is_spring = true;
-                }
+            case 2025:  // Jan. 29, 2025
+                is_spring = m === 1;
+                break;
+            case 2026:  // Feb. 17, 2026
+                is_spring = m === 2;
+                break;
+            case 2027:  // Feb.  7, 2027
+                is_spring = m === 2;
                 break;
         }
         if (is_spring) {
@@ -206,19 +195,6 @@ function storage_monitor(changes, area) {
             clear_mode_settings(mode_change.oldValue);
             setup_mode_settings(mode_change.newValue);
             ga_report_event('Change Mode', mode_change.oldValue + ' -> ' + mode_change.newValue);
-        }
-    }
-
-    if (typeof changes.custom_redirect_server !== 'undefined') {
-        var redirect_server_change = changes.custom_redirect_server;
-        
-        if (typeof redirect_server_change.newValue !== 'undefined') {
-            // have to use a localStorage cache for using in the blocking webRequest listener
-            localStorage.custom_redirect_server = redirect_server_change.newValue;
-        } else {
-            if (typeof localStorage.custom_redirect_server !== 'undefined') {
-                localStorage.removeItem('custom_redirect_server');
-            }
         }
     }
 

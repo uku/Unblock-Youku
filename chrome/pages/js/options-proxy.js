@@ -15,8 +15,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome: false, $: false, localStorage: false */
-
 var background = background || chrome.extension.getBackgroundPage();
 var default_proxy_server_proc = background.unblock_youku.default_proxy_server_proc;
 var default_proxy_server_addr = background.unblock_youku.default_proxy_server_addr;
@@ -79,6 +77,7 @@ function get_custom_proxy_server(callback) {
 
 function test_custom_proxy_server(callback) {
     "use strict";
+    // TODO: Change this URL to a new one. It stopped working a while ago.
     var test_url = 'http://ipservice.163.com/isFromMainland';
     show_proxy_test_message('info', 'Testing connection & Unblock...');
     $.get(test_url, function(data) {
@@ -131,12 +130,12 @@ $(document).ready(function() {
                     background.setup_proxy();
                     $('#custom_proxy_reset').attr('disabled', false);
                     show_proxy_message('info', 'Enabled custom proxy server.');
-                    test_custom_proxy_server();
+                    // test_custom_proxy_server();
                 } else {
                     background.set_mode_name('normal', function() {
                         $('#custom_proxy_reset').attr("disabled", false);
                         show_proxy_message('warning', 'Enabled custom proxy server, and changed to proxy mode.');
-                        test_custom_proxy_server();
+                        // test_custom_proxy_server();
                     });
                 }
             });
@@ -154,14 +153,14 @@ $(document).ready(function() {
                     $('#custom_proxy_addr').attr('disabled', false);
                     $('#custom_proxy_enable').attr('disabled', false);
                     show_proxy_message('warning', 'Reset custom proxy server.');
-                    test_custom_proxy_server();
+                    // test_custom_proxy_server();
                 } else {
                     background.set_mode_name('normal', function() {
                         $('#custom_proxy_proc').attr('disabled', false);
                         $('#custom_proxy_addr').attr('disabled', false);
                         $('#custom_proxy_enable').attr('disabled', false);
                         show_proxy_message('warning', 'Reset custom proxy server, and changed to proxy mode.');
-                        test_custom_proxy_server();
+                        // test_custom_proxy_server();
                     });
                 }
             });

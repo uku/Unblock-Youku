@@ -15,8 +15,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*jslint browser: true */
-/*global $: false, chrome: false, ga_report_event: false */
 
 function set_i18n_text() {
     "use strict";
@@ -33,14 +31,9 @@ function set_i18n_text() {
 
     $('span.mode_off_name').html(get_msg('mode_off'));
     $('span.mode_off_desc').html(get_msg('mode_off_description'));
-    $('span.mode_lite_name').html(get_msg('mode_lite'));
-    $('span.mode_lite_desc').html(get_msg('mode_lite_description'));
     $('span.mode_normal_name').html(get_msg('mode_normal'));
     $('span.mode_normal_desc').html(get_msg('mode_normal_description'));
-    //$('span.mode_redirect_name').html(get_msg('mode_redirect'));
-    //$('span.mode_redirect_desc').html(get_msg('mode_redirect_description'));
 
-    //$('div#help_text').html(get_msg('help'));
     $('div#faq').html(get_msg('faq'));
     $('div#feedback').html(get_msg('feedback'));
     $('div#rating').html(get_msg('rating'));
@@ -57,12 +50,6 @@ $(document).ready(function() {
         switch (current_mode_name) {
             case 'off':
                 $('label#off').addClass('active');
-                break;
-            case 'lite':
-                $('label#lite').addClass('active');
-                break;
-            case 'redirect':
-                $('label#redirect').addClass('active');
                 break;
             default:
                 $('label#normal').addClass('active');
@@ -85,32 +72,12 @@ $(document).ready(function() {
         console.log('to change mode to off');
         background.change_mode('off');
     });
-    $('input#input_lite').change(function() {
-        console.log('to change mode to lite');
-        background.change_mode('lite');
-    });
     $('input#input_normal').change(function() {
         console.log('to change mode to normal');
         background.change_mode('normal');
     });
-    //$('input#input_redirect').change(function() {
-    //    console.log('to change mode to redirect');
-    //    background.change_mode('redirect');
-    //});
 
     // enable tooltip
     $('#tooltip').tooltip();
-
-    var my_date = new Date();
-    if (typeof localStorage.first_time === 'undefined') {
-        localStorage.first_time = my_date.getTime();
-    } else if (my_date.getTime() > parseInt(localStorage.first_time, 10) + 1000 * 60 * 60 * 24 * 3) {
-        $('div#rating').show(); // delay 3 days for the rating div to show up, hahaha
-    }
-
-    $('#support_button').click(function() {
-        // Make sure the donation page is only shown once
-        background.localStorage.showed_donation_page = new Date().getTime();
-    });
 });
 

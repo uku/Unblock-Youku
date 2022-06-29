@@ -18,25 +18,6 @@
 var unblock_youku = unblock_youku || {};
 
 /*
- PLEASE READ THIS FIRST!
-
- This file contains several lists of URLs, which are used in different unblock modes:
-
- - The (non-proxy) lite mode of our Chrome extension will use:
-   - header_urls, and
-   - redirect_urls.
- - The (default) standard mode will use:
-   - header_urls,
-   - redirect_urls, and
-   - chrome_proxy_urls.
- - The PAC service (for iOS/Android) will use all lists:
-   - header_urls,
-   - redirect_urls,
-   - chrome_proxy_urls, and
-   - pac_proxy_urls.
- */
-
-/*
  * Note that the HTTPS URLs must NOT have any path portions.
  *
  * For example:
@@ -45,25 +26,17 @@ var unblock_youku = unblock_youku || {};
  */
 
 
-// Just changing headers of these URLs will be sufficient.
+// The HTTP headers of these URLs will be modified.
 unblock_youku.header_urls = [
-    'http://v.api.hunantv.com/*',
-    'http://live.gslb.letv.com/*',
-    'http://ac.qq.com/*',
     'http://*.ssports.com/*',
     'http://ssports.com/*',
     'http://ssports.smgbb.cn/*',
-    'http://www.bilibili.com/*',
-    'http://interface.bilibili.com/*',
-    'http://bangumi.bilibili.com/*',
     'https://pstream.api.mgtv.com/*',
     'http://kandian.com/player/getEpgInfo*',
-    'http://u.y.qq.com/cgi-bin/*',
-    'https://u.y.qq.com/*'
 ];
 
-// These URLs can work with the redirect functionality (mainly used in Flash players).
-unblock_youku.redirect_urls = [
+// These URLs will go through a proxy.
+unblock_youku.chrome_proxy_urls = [
     'https://dmd-fifajs-h5-ikuweb.youku.com/*',
     'https://dmd-fifa-h5-ikuweb.youku.com/*',
     'http://acs.youku.com/*',
@@ -233,12 +206,8 @@ unblock_youku.redirect_urls = [
     'http://vip.sports.cntv.cn/check.do*',
     'http://vip.sports.cntv.cn/play.do*',
     'http://vip.sports.cntv.cn/servlets/encryptvideopath.do*',
-    'http://211.151.157.15/*'
-];
+    'http://211.151.157.15/*',
 
-
-// These URLs have to go through a proxy (for our Chrome extension).
-unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     'http://www.tudou.com/programs/view/*',
     'http://www.tudou.com/albumplay/*',
     'http://www.tudou.com/listplay/*',
@@ -369,7 +338,7 @@ unblock_youku.chrome_proxy_urls = unblock_youku.redirect_urls.concat([
     // for development purposes
     'http://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*',
     'https://flask-test-iwauxcyxjb.cn-hangzhou.fcapp.run/*'
-]);
+];
 
 
 // These URLs will not go through proxy servers (for our Chrome extension).

@@ -3,6 +3,7 @@
         "browser": true,
         "webextensions": true,
         "node": true,
+        "jquery": true,
         "es2021": true
     },
     "extends": [
