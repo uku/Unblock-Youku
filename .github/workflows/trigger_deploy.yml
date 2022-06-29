@@ -1,0 +1,18 @@
+name: Trigger the deployment action in another repo
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  trigger_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send the Repository Dispatch event
+        uses: peter-evans/repository-dispatch@v2.0.0
+        with:
+          token: "::add-mask::${{ secrets.TRIGGER_ACTION_ACCESS_TOKEN }}"
+          repository: "::add-mask::${{ secrets.DEPLOYMENT_ACTION_REPO }}"
+          event-type: unblock-youku
