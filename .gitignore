@@ -7,6 +7,8 @@
 *.log
 
 .idea/
+.vscode/
 node_modules/
-crx/
 package-lock.json
+crx/
+dist/
