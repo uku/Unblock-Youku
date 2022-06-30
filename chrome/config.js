@@ -72,6 +72,11 @@ function clear_mode_settings(mode_name) {
         case 'off':
             console.log('cleared settings for off');
             break;
+        case 'lite':
+            clear_header();
+            clear_redirect();
+            console.log('cleared settings for lite');
+            break;
         case 'normal':
             clear_header();
             clear_redirect();
