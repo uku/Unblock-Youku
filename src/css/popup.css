@@ -1,21 +1,3 @@
-/*
- * Copyright (C) 2012 - 2014  Bo Zhu  http://zhuzhu.org
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-
 body {
     width: 32em;
     display: block;
@@ -47,7 +29,6 @@ div#social-networks {
     font-size: 110%;
 }
 
-
 /* mode setting section */
 div#setting {
     margin-top: 15px;
@@ -56,7 +37,7 @@ div#setting {
 div#buttons {
     margin: 15px auto;
     clear: both;
-	display: inline-block;
+    display: inline-block;
 }
 
 div#setting_description tr:last-child {
@@ -70,13 +51,7 @@ div.text_block {
 }
 
 /* extra info and links */
-div#rating {
-    display: none;
-}
-
-
 div#version {
     margin-top: 15px;
     text-align: center;
 }
-

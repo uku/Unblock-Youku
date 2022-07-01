@@ -1,26 +1,15 @@
 {
-  "name": "ub.uku.js",
-  "version": "0.0.1",
-  "dependencies": {
-    "colors": "*",
-    "nomnom": "1.8.x",
-    "request": "2.83.x",
-    "uglify-js": "2.7.x",
-    "validator": "9.1.x"
-  },
-  "scripts": {
-    "start": "node server/server.js"
-  },
-  "engines": {
-    "node": "8.9.x",
-    "npm": "5.5.x"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zhuzhuor/Unblock-Youku.git"
-  },
   "license": "AGPL-3.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"
+  },
+  "type": "module",
   "devDependencies": {
-    "eslint": "^8.18.0"
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.3",
+    "eslint-plugin-promise": "^6.0.0"
   }
 }

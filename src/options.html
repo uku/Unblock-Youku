@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Options for Unblock Youku</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.5.min.css"/>
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.3.5.min.js"></script>
-    <script type="text/javascript" src="js/options-proxy.js"></script>
-    <script type="text/javascript" src="js/analytics.js"></script>
+    <link rel="stylesheet" type="text/css" href="third_party/css/bootstrap-3.3.5.min.css" />
+    <script type="text/javascript" src="third_party/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="third_party/js/bootstrap-3.3.5.min.js"></script>
+    <script type="module" src="options.mjs"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <form class="form-horizontal" id="form_custom_proxy_server" action="#">
-                    <legend class="form-group text-center" for="custom_proxy_enable">Custom backend server for the Proxy Mode</legend>
+                    <legend class="form-group text-center" for="custom_proxy_enable">Custom backend server for the Proxy
+                        Mode</legend>
                     <div class="form-group form-group-lg">
                         <label class="control-label col-md-2" for="custom_proxy_proc">Protocol: </label>
                         <div class="col-md-10">
@@ -34,7 +36,8 @@
                     <div class="form-group text-center">
                         <div class="btn-group btn-group-lg">
                             <button type="button" class="btn btn-default" id="custom_proxy_enable">Enable</button>
-                            <button type="button" class="btn btn-default" id="custom_proxy_reset">Reset to Default</button>
+                            <button type="button" class="btn btn-default" id="custom_proxy_reset">Reset to
+                                Default</button>
                         </div>
                     </div>
                 </form>
@@ -42,7 +45,7 @@
                 <div id="proxy_test_message"></div>
             </div>
         </div>
-    </div>  <!-- container -->
+    </div> <!-- container -->
 </body>
-</html>
 
+</html>

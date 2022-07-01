@@ -1,71 +1,32 @@
 {
   "name": "Unblock Youku",
-  "version": "3.10.0",
-  "manifest_version": 2,
-  "minimum_chrome_version": "80.0",
+  "version": "4.0.0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "96.0",
+  "default_locale": "en",
   "description": "__MSG_description__",
   "icons": {
-    "16": "chrome/icons/icon16.png",
-    "48": "chrome/icons/icon48.png",
-    "128": "chrome/icons/icon128.png"
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
+  "background": {
+    "service_worker": "src/background.mjs",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Unblock Youku isn't working properly! Visit http://uku.im/faq for solutions.",
+    "default_icon": "icons/icon19gray.png",
+    "default_popup": "src/popup.html"
+  },
+  "options_page": "src/options.html",
   "permissions": [
     "proxy",
-    "webRequest",
-    "webRequestBlocking",
-    "storage",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+  "host_permissions": [
     "http://*/*",
     "https://*/*"
-  ],
-  "background": {
-    "scripts": [
-      "shared/urls.js",
-      "shared/tools.js",
-      "chrome/pages/js/analytics.js",
-      "chrome/storage.js",
-      "chrome/header.js",
-      "chrome/proxy.js",
-      "chrome/redirect.js",
-      "chrome/config.js",
-      "chrome/donation.js"
-    ]
-  },
-  "browser_action": {
-    "default_title": "Unblock Youku isn't working properly! Visit http://uku.im/faq for solutions.",
-    "default_icon": "chrome/icons/icon19gray.png",
-    "default_popup": "chrome/pages/popup.html"
-  },
-  "options_page": "chrome/pages/options.html",
-  "content_scripts": [
-    {
-      "matches": ["http://www.tudou.com/*"],
-      "js": ["chrome/content/tudou.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }, {
-      "matches": ["http://play.baidu.com/*"],
-      "css": ["chrome/content/play.baidu.css"],
-      "all_frames": true
-    }, {
-      "matches": ["http://music.163.com/*"],
-      "js": ["chrome/content/music.163.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }, {
-      "matches": [
-        "http://unblockcn.com/*",
-        "http://*.unblockcn.com/*",
-        "http://unblockyouku.cn/*",
-        "http://*.unblockyouku.cn/*",
-        "http://724sky.com/*",
-        "http://*.724sky.com/*",
-        "http://tieba.baidu.com/f?kw=unblockcn*",
-        "http://*.tieba.baidu.com/f?kw=unblockcn*"
-      ],
-      "js": ["chrome/content/unblockcn.js"],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
-  "default_locale": "en"
+  ]
 }

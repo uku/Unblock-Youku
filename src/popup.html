@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Popup Page for Unblock Youku</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.5.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/font-awesome-4.4.0.min.css">
+    <link rel="stylesheet" type="text/css" href="third_party/css/bootstrap-3.3.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="third_party/css/font-awesome-4.4.0.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css" />
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-3.3.5.min.js"></script>
-    <script type="text/javascript" src="js/popup.js"></script>
-    <script type="text/javascript" src="js/analytics.js"></script>
+    <script type="text/javascript" src="third_party/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="third_party/js/bootstrap-3.3.5.min.js"></script>
+    <script type="module" src="popup.mjs"></script>
 </head>
+
 <body>
     <div id="wrapper" class="container-fluid">
         <div id="support">
-            <div><strong></strong>  <span class="label label-success">NEW</span></div>
+            <div><strong></strong> <span class="label label-success">NEW</span></div>
             <div class="text-center">
                 <p id="support_message"></p>
-                <a href="https://www.uku.im/index.html" target="_blank" id="support_link"><button type="button" class="btn btn-danger"
-                        id="support_button"></button></a>
+                <a href="https://www.uku.im/index.html" target="_blank" id="support_link"><button type="button"
+                        class="btn btn-danger" id="support_button"></button></a>
             </div>
         </div>
         <div id="social">
@@ -66,9 +67,9 @@
             </div>
             <div class="text_block" id="faq"></div>
             <div class="text_block" id="feedback"></div>
-        </div>  <!-- setting -->
+        </div> <!-- setting -->
         <div id="version" class="text-muted"><small></small></div>
-    </div>  <!-- wrapper -->
+    </div> <!-- wrapper -->
 </body>
-</html>
 
+</html>
