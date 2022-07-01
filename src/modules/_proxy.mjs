@@ -15,12 +15,11 @@ async function setPacScript(
   console.log('To set up proxy...');
 
   const pacScript = urls2pac(
-      PROXY_BYPASS_URLS,
-      PROXY_URLS,
-      defaultProxyAddress, defaultProxyProtocol,
-      backupProxyAddress, backupProxyProtocol);
+      PROXY_BYPASS_URLS, PROXY_URLS,
+      defaultProxyProtocol, defaultProxyAddress,
+      backupProxyProtocol, backupProxyAddress);
 
-  console.group('Printing PAC script content:');
+  console.groupCollapsed('Printing PAC script content...');
   console.log(pacScript);
   console.groupEnd();
 

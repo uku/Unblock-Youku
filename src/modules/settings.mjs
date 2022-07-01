@@ -47,15 +47,16 @@ async function applyModeSettings(mode) {
 
   const customProxy = await getCustomProxy();
   if (typeof customProxy === 'undefined' ||
-      typeof customProxy.protocol === 'undefined' ||
-      typeof customProxy.address === 'undefined') {
+      typeof customProxy.proc === 'undefined' ||
+      typeof customProxy.addr === 'undefined') {
     await Proxy.setDefaultProxy();
   } else {
-    await Proxy.setCustomProxy(customProxy.protocol, customProxy.address);
+    await Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
   }
   // TODO: Set header modifier
   Icon.setIcon(Modes.NORMAL);
 }
+
 
 // ================================================================
 // Function called by background.js:
@@ -101,11 +102,10 @@ export async function setNewMode(mode) {
 //   1. Remove the custom proxy server configs from storage
 //   2. Change mode to use proxy, and apply settings with the default proxy server
 
-
 export async function setCustomProxy(customProxyProtocol, customProxyAddress) {
   await Storage.setItem(CUSTOM_PROXY_STORAGE_KEY, {
-    protocol: customProxyProtocol,
-    address: customProxyAddress,
+    proc: customProxyProtocol,
+    addr: customProxyAddress,
   });
   await setNewMode(Modes.NORMAL); // Change the mode to use the proxy right away
   console.log(

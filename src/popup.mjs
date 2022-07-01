@@ -3,7 +3,8 @@ import * as Settings from './modules/settings.mjs';
 import * as Icon from './modules/_icon.mjs';
 
 
-function setTranslatedTexts() {
+// Set the translated texts for the options page
+(function() {
   const getMsg = chrome.i18n.getMessage;
 
   $('div#support strong').html(getMsg('support_title'));
@@ -23,40 +24,39 @@ function setTranslatedTexts() {
   $('div#faq').html(getMsg('faq'));
   $('div#feedback').html(getMsg('feedback'));
   $('div#rating').html(getMsg('rating'));
-}
+})();
 
 
-$(document).ready(function() {
-  setTranslatedTexts();
-
-  // Set default button display
-  Settings.getCurrentMode().then((mode) => {
-    switch (mode) {
-      case Modes.OFF:
-        $('label#off').addClass('active');
-        break;
-      default:
-        $('label#normal').addClass('active');
-        break;
-    }
-  });
-
-  // Add version number to the footer
-  $('div#version small').html('Unblock Youku v' + chrome.runtime.getManifest().version);
-  // Clear the text on the browser icon after the user has clicked on the icon
-  Icon.clearIconText();
-
-  // Set up button actions
-  $('input#input_off').change(function() {
-    console.group('Clicked on the button to change the mode to OFF...');
-    Settings.setNewMode(Modes.OFF).then(console.groupEnd);
-  });
-  $('input#input_normal').change(function() {
-    console.group('Clicked on the button to change the mode to NORMAL...');
-    Settings.setNewMode(Modes.NORMAL).then(console.groupEnd);
-  });
-
-  // Enable tooltip
-  $('#tooltip').tooltip();
+// Preselect the default button
+Settings.getCurrentMode().then((mode) => {
+  switch (mode) {
+    case Modes.OFF:
+      $('label#off').addClass('active');
+      break;
+    default:
+      $('label#normal').addClass('active');
+      break;
+  }
 });
+
+
+// Add version number to the footer
+$('div#version small').html('Unblock Youku v' + chrome.runtime.getManifest().version);
+// Clear the text on the browser icon after the user has clicked on the icon
+Icon.clearIconText();
+
+
+// Set up button actions
+$('input#input_off').change(function() {
+  console.group('Clicked on the button to change the mode to OFF...');
+  Settings.setNewMode(Modes.OFF).then(console.groupEnd);
+});
+$('input#input_normal').change(function() {
+  console.group('Clicked on the button to change the mode to NORMAL...');
+  Settings.setNewMode(Modes.NORMAL).then(console.groupEnd);
+});
+
+
+// Enable tooltip
+$('#tooltip').tooltip();
 
