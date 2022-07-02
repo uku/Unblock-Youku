@@ -12,16 +12,16 @@ import {urls2pac} from './_url_utils.mjs';
 
 async function setPacScript(
     defaultProxyProtocol, defaultProxyAddress, backupProxyProtocol, backupProxyAddress) {
-  console.log('To set up proxy...');
+  console.log('To generate and set the PAC script');
 
   const pacScript = urls2pac(
       PROXY_BYPASS_URLS, PROXY_URLS,
       defaultProxyProtocol, defaultProxyAddress,
       backupProxyProtocol, backupProxyAddress);
 
-  console.groupCollapsed('Printing PAC script content...');
-  console.log(pacScript);
-  console.groupEnd();
+  // console.groupCollapsed('Printing PAC script content...');
+  // console.log(pacScript);
+  // console.groupEnd();
 
   await chrome.proxy.settings.set({
     value: {
@@ -33,7 +33,7 @@ async function setPacScript(
     scope: 'regular',
   });
   console.log(
-      'Successfully set the proxy server: ' + defaultProxyProtocol + ' ' + defaultProxyAddress);
+      'Successfully set the PAC script with: ' + defaultProxyProtocol + ' ' + defaultProxyAddress);
 }
 
 
@@ -63,7 +63,15 @@ export async function clearProxy() {
 }
 
 
-chrome.proxy.onProxyError.addListener(function(details) {
-  console.error('Received errors from onProxyError:');
-  console.error(details);
-});
+function logProxyError(details) {
+  console.error('Received errors from onProxyError:\n' + JSON.stringify(details, null, 2));
+}
+
+console.log('Setting up proxy.onProxyError listener for debugging purposes');
+// NOTE: Need to first check if the listener is already set; otherwise
+// service_worker.mjs, popup.mjs, and options.mjs may set it multiple times
+if (chrome.proxy.onProxyError.hasListener(logProxyError)) {
+  console.log('The proxy.onProxyError listener is already set, so it won\'t be set again');
+} else {
+  chrome.proxy.onProxyError.addListener(logProxyError);
+}

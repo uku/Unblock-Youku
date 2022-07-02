@@ -1,6 +1,7 @@
 import {Modes} from './modes.mjs';
 import * as Storage from './_storage.mjs';
 import * as Proxy from './_proxy.mjs';
+import * as Header from './_header.mjs';
 import * as Icon from './_icon.mjs';
 
 
@@ -28,33 +29,32 @@ export function getCustomProxy() {
 }
 
 
-// Clear all settings regardless of the current mode
-// Note: Make sure a Promise is returned so that the caller can wait for it
-function clearAllSettings() {
-  return Promise.all([
-    Proxy.clearProxy(),
-    // Header.clearHeaderModifier(),
-  ]);
-}
-
-// Apply the settings for the given mode
-// Note: Make sure a Promise is returned so that the caller can wait for it
+// Clear any previous settings and apply new settings for the given mode.
+// Note:
+// * The function should be idempotent so it can be called multiple times.
+// * Make sure a Promise is returned so that the caller can wait for it.
 async function applyModeSettings(mode) {
   if (mode === Modes.OFF) {
-    Icon.setIcon(Modes.OFF);
-    return; // Do nothing else
-  }
-
-  const customProxy = await getCustomProxy();
-  if (typeof customProxy === 'undefined' ||
+    return Promise.all([
+      Proxy.clearProxy(),
+      Header.clearHeaderModifier(),
+      Icon.setIcon(Modes.OFF),
+    ]);
+  } else {
+    // 1. Set proxy
+    const customProxy = await getCustomProxy();
+    if (typeof customProxy === 'undefined' ||
       typeof customProxy.proc === 'undefined' ||
       typeof customProxy.addr === 'undefined') {
-    await Proxy.setDefaultProxy();
-  } else {
-    await Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
+      await Proxy.setDefaultProxy();
+    } else {
+      await Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
+    }
+    // 2. Set header modifier
+    await Header.setHeaderModifier();
+    // 3. Set icon
+    Icon.setIcon(Modes.NORMAL);
   }
-  // TODO: Set header modifier
-  Icon.setIcon(Modes.NORMAL);
 }
 
 
@@ -74,12 +74,10 @@ export async function loadCurrentSettings() {
 // ================================================================
 // Function called by popup.js:
 // * setNewMode()
-//   1. Tear down the settings of the old mode
-//   2. Set up the mode settings for the new mode
-//   3. Save the new mode into storage
+//   1. Set up the mode settings for the new mode
+//   2. Save the new mode into storage
 
 export async function setNewMode(mode) {
-  await clearAllSettings();
   await applyModeSettings(mode);
   await Storage.setItem(MODE_STORAGE_KEY, mode);
 

@@ -1,3 +1,5 @@
+import './modules/crash_report.mjs';
+
 import {Modes} from './modules/modes.mjs';
 import * as Settings from './modules/settings.mjs';
 import * as Icon from './modules/_icon.mjs';
@@ -59,4 +61,3 @@ $('input#input_normal').change(function() {
 
 // Enable tooltip
 $('#tooltip').tooltip();
-

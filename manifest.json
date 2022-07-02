@@ -2,7 +2,7 @@
   "name": "Unblock Youku",
   "version": "4.0.0",
   "manifest_version": 3,
-  "minimum_chrome_version": "96.0",
+  "minimum_chrome_version": "103.0",
   "default_locale": "en",
   "description": "__MSG_description__",
   "icons": {
@@ -20,7 +20,7 @@
     "https://*/*"
   ],
   "background": {
-    "service_worker": "src/background.mjs",
+    "service_worker": "src/service_worker.mjs",
     "type": "module"
   },
   "action": {

@@ -1,3 +1,5 @@
+import './modules/crash_report.mjs';
+
 import * as Settings from './modules/settings.mjs';
 import {DEFAULT_PROXY_PROTOCOL, DEFAULT_PROXY_ADDRESS} from './configs/servers.mjs';
 
@@ -99,8 +101,6 @@ $('#custom_proxy_enable').click(function() {
     showProxyMessage(
         'warning', 'Set the custom proxy server, and changed mode to use proxy');
 
-    console.log('Successfully set the custom proxy server to ' +
-          customProxyProtocol + ' ' + customProxyAddress);
     console.groupEnd();
   });
 });
@@ -118,7 +118,6 @@ $('#custom_proxy_reset').click(function() {
     $('#custom_proxy_enable').attr('disabled', false);
     showProxyMessage('warning', 'Reset custom proxy server, and changed mode to use proxy');
 
-    console.log('Successfully reset the custom proxy server');
     console.groupEnd();
   });
 });

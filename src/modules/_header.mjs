@@ -3,8 +3,10 @@
  */
 
 
+import {HEADER_URLS} from '../configs/urls.mjs';
+
+
 function newRandomIp() {
-  'use strict';
   let ipAddr = '220.181.111.';
   // ipAddr += Math.floor(Math.random() * 255) + '.';
   ipAddr += Math.floor(Math.random() * 254 + 1); // 1 ~ 254
@@ -12,46 +14,54 @@ function newRandomIp() {
 }
 
 const RANDOM_IP = newRandomIp();
-// TODO: Store in local storage, and change everytime the chrome is restarted.
 
 
-function headerModifier(details) {
-  console.log('modify headers of ' + details.url);
+// The header modifying rules may be applied to the following types of requests
+const RESOURCE_TYPES = [
+  'main_frame', 'sub_frame', 'script', 'object', 'xmlhttprequest', 'media', 'websocket', 'other'];
 
-  details.requestHeaders.push({
-    name: 'X-Forwarded-For',
-    value: RANDOM_IP,
-  }, {
-    name: 'Client-IP',
-    value: RANDOM_IP,
+export async function setHeaderModifier() {
+  // Alway clear the existing rules (if there are any) before apply new rules again.
+  // Otherwise the rule IDs may be duplicated and cause exceptions.
+  await clearHeaderModifier();
+
+  const rules = [];
+  for (let i = 0; i < HEADER_URLS.length; i++) {
+    const url = HEADER_URLS[i];
+    rules.push({
+      'id': i + 1, // id has to be larger than 0 and unique
+      'priority': 10,
+      'condition': {
+        urlFilter: url,
+        // Perhaps it is a bug in Chrome's declarativeNetRequest API:
+        //     Although reousrceTypes is an optional parameter, without setting it,
+        //     the rule will not be applied at all.
+        resourceTypes: RESOURCE_TYPES,
+      },
+      'action': {
+        type: 'modifyHeaders',
+        requestHeaders: [{
+          header: 'X-Forwarded-For',
+          operation: 'set',
+          value: RANDOM_IP,
+        }],
+      },
+    });
+  }
+
+  await chrome.declarativeNetRequest.updateDynamicRules({
+    addRules: rules,
   });
-
-  return {requestHeaders: details.requestHeaders};
+  console.log('Successfully set header modifying rules');
 }
 
 
-export function setHeaderModifier() {
-  if (!chrome.webRequest.onBeforeSendHeaders.hasListener(headerModifier)) {
-    // TODO: Fix this
-    // chrome.webRequest.onBeforeSendHeaders.addListener(
-    //     headerModifier,
-    //     {
-    //       urls: unblock_youku.header_urls,
-    //     },
-    //     ['requestHeaders', 'blocking'],
-    // );
-    console.log('header_modifier is successfully set');
-  } else {
-    console.error('header modifer is already there! So didn\'t set it again.');
-  }
-}
-
-
-export function clearHeaderModifier() {
-  if (chrome.webRequest.onBeforeSendHeaders.hasListener(headerModifier)) {
-    chrome.webRequest.onBeforeSendHeaders.removeListener(headerModifier);
-    console.log('header modifier is removed');
-  } else {
-    console.error('header modifier is not there!');
-  }
+export async function clearHeaderModifier() {
+  const enabledRules = await chrome.declarativeNetRequest.getDynamicRules();
+  const enabledRuleIds = enabledRules.map((rule) => rule.id);
+  console.log('Clearing header modifying rules with IDs: ' + enabledRuleIds);
+  await chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: enabledRuleIds,
+  });
+  console.log('Successfully cleared header modifying rules');
 }
