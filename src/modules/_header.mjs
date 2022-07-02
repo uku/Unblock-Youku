@@ -19,18 +19,37 @@ const RANDOM_IP = newRandomIp();
 // The header modifying rules may be applied to the following types of requests
 const RESOURCE_TYPES = [
   'main_frame', 'sub_frame', 'script', 'object', 'xmlhttprequest', 'media', 'websocket', 'other'];
+const RULE_PRIORITY = 10;
 
 export async function setHeaderModifier() {
   // Alway clear the existing rules (if there are any) before apply new rules again.
   // Otherwise the rule IDs may be duplicated and cause exceptions.
   await clearHeaderModifier();
 
-  const rules = [];
+  const rules = [{
+    'id': 1, // id has to be larger than 0
+    'priority': RULE_PRIORITY,
+    'condition': {
+      // For purposes of end-to-end testing
+      urlFilter: 'https://httpbin.org/headers',
+      // Restrict to main_frame request only
+      resourceTypes: ['main_frame'],
+    },
+    'action': {
+      type: 'modifyHeaders',
+      requestHeaders: [{
+        // 'X-Forwarded-For' won't show up on httpbin.org, so use a different header for testing
+        header: 'X-Unblock-Youku-Test',
+        operation: 'set',
+        value: RANDOM_IP,
+      }],
+    },
+  }];
   for (let i = 0; i < HEADER_URLS.length; i++) {
     const url = HEADER_URLS[i];
     rules.push({
-      'id': i + 1, // id has to be larger than 0 and unique
-      'priority': 10,
+      'id': i + 2, // id has to be unique
+      'priority': RULE_PRIORITY,
       'condition': {
         urlFilter: url,
         // Perhaps it is a bug in Chrome's declarativeNetRequest API:

@@ -19,6 +19,8 @@ const FILES_TO_BE_ZIPPED = [
 const EXCLUDED_FILE_PATTERNS = [
   // Using regex
   /.*_test\.js/i,
+  /.*\.test\.js/i,
+  /.*tests.*/i,
   /.*\.zip/i,
   /.*\.tar/i,
   /.*\.gz/i,

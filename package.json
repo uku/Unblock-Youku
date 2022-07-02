@@ -7,7 +7,8 @@
   },
   "scripts": {
     "zip": "node tools/create_zip.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "jest"
   },
   "devDependencies": {
     "archiver": "^5.3.1",
@@ -15,6 +16,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.3",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "jest": "^28.1.2",
+    "jest-puppeteer": "^6.1.0"
   }
 }

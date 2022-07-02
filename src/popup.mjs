@@ -51,11 +51,19 @@ Icon.clearIconText();
 // Set up button actions
 $('input#input_off').change(function() {
   console.group('Clicked on the button to change the mode to OFF...');
-  Settings.setNewMode(Modes.OFF).then(console.groupEnd);
+  Settings.setNewMode(Modes.OFF).then(() => {
+    // Don't change the console.log message, as it will be read by puppeteer tests
+    console.log('[E2E] Finished changing the mode to OFF');
+    console.groupEnd();
+  });
 });
 $('input#input_normal').change(function() {
   console.group('Clicked on the button to change the mode to NORMAL...');
-  Settings.setNewMode(Modes.NORMAL).then(console.groupEnd);
+  Settings.setNewMode(Modes.NORMAL).then(() => {
+    // Don't change the console.log message, as it will be read by puppeteer tests
+    console.log('[E2E] Finished changing the mode to NORMAL');
+    console.groupEnd();
+  });
 });
 
 
