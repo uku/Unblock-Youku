@@ -1,14 +1,16 @@
 .DS_Store
 *~
 *.swp
-*.zip
 *.pyc
 *.bak
 *.log
 
 .idea/
 .vscode/
+
 node_modules/
-package-lock.json
-crx/
 dist/
+
+*.zip
+*.gz
+*.tar

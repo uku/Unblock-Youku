@@ -1,11 +1,16 @@
 {
+  "name": "unblock-youku-dev-cli",
   "license": "AGPL-3.0",
   "engines": {
     "node": "18.x",
     "npm": "8.x"
   },
-  "type": "module",
+  "scripts": {
+    "zip": "node tools/create_zip.js",
+    "clean": "rm -rf dist"
+  },
   "devDependencies": {
+    "archiver": "^5.3.1",
     "eslint": "^8.18.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.26.0",
