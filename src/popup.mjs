@@ -52,15 +52,15 @@ Icon.clearIconText();
 $('input#input_off').change(function() {
   console.group('Clicked on the button to change the mode to OFF...');
   Settings.setNewMode(Modes.OFF).then(() => {
-    console.log('Finished changing the mode to OFF');
     console.groupEnd();
+    console.log('Finished changing the mode to OFF');
   });
 });
 $('input#input_normal').change(function() {
   console.group('Clicked on the button to change the mode to NORMAL...');
   Settings.setNewMode(Modes.NORMAL).then(() => {
-    console.log('Finished changing the mode to NORMAL');
     console.groupEnd();
+    console.log('Finished changing the mode to NORMAL');
   });
 });
 

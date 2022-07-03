@@ -33,7 +33,7 @@ export function getCustomProxy() {
 // Note:
 // * The function should be idempotent so it can be called multiple times.
 // * Make sure a Promise is returned so that the caller can wait for it.
-async function applyModeSettings(mode) {
+function applyModeSettings(mode) {
   if (mode === Modes.OFF) {
     return Promise.all([
       Proxy.clearProxy(),
@@ -41,19 +41,21 @@ async function applyModeSettings(mode) {
       Icon.setIcon(Modes.OFF),
     ]);
   } else {
-    // 1. Set proxy
-    const customProxy = await getCustomProxy();
-    if (typeof customProxy === 'undefined' ||
+    const setProxy = async () => {
+      const customProxy = await getCustomProxy();
+      if (typeof customProxy === 'undefined' ||
       typeof customProxy.proc === 'undefined' ||
       typeof customProxy.addr === 'undefined') {
-      await Proxy.setDefaultProxy();
-    } else {
-      await Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
-    }
-    // 2. Set header modifier
-    await Header.setHeaderModifier();
-    // 3. Set icon
-    Icon.setIcon(Modes.NORMAL);
+        return Proxy.setDefaultProxy();
+      } else {
+        return Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
+      }
+    };
+    return Promise.all([
+      setProxy(),
+      Header.setHeaderModifier(),
+      Icon.setIcon(Modes.NORMAL),
+    ]);
   }
 }
 
@@ -78,8 +80,10 @@ export async function loadCurrentSettings() {
 //   2. Save the new mode into storage
 
 export async function setNewMode(mode) {
-  await applyModeSettings(mode);
-  await Storage.setItem(MODE_STORAGE_KEY, mode);
+  await Promise.all([
+    applyModeSettings(mode),
+    Storage.setItem(MODE_STORAGE_KEY, mode),
+  ]);
 
   // Set this one-time text when the user changes the mode
   if (mode == Modes.OFF) {

@@ -6,6 +6,7 @@
     "npm": "8.x"
   },
   "scripts": {
+    "lint": "eslint ./ --ext .js,.mjs,.ts,.tsx",
     "clean": "rm -rf dist",
     "test": "npm run clean && node tools/create_zip.js && unzip -q dist/upload_to_chrome_store.zip -d dist/unzipped_chrome_extension && jest --verbose"
   },

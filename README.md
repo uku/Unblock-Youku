@@ -20,4 +20,6 @@ Update URL and server configs under the folder `src/configs/`.
 
 Run `npm ci` to install dependencies exactly as they are listed in the package-lock.json file.
 
-Run `npm run test` to create a zip file for uploading and testing.
+Run `npm run lint` to check the coding style of all source code.
+
+Run `npm run test` to _create a zip file for uploading to Chrome Web Store_ and run tests against it.

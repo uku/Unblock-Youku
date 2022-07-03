@@ -87,7 +87,7 @@ function getAllFilesFromList(folder, fileList) {
       if (shouldBeZipped(filePath)) {
         result.push(filePath);
       } else {
-        console.log('Excluding file: ' + filePath);
+        console.log('Excluding file from zipping: ' + filePath);
       }
     } else {
       result.push(...getAllFilesFromList(filePath, fs.readdirSync(filePath)));

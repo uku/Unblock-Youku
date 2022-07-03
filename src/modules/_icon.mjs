@@ -49,7 +49,7 @@ export function setIcon(mode) {
   }
 
   if (isSpring()) {
-    chrome.action.setIcon({path: ICON_RELATIVE_PATH + 'icon19xmas.png'});
+    chrome.action.setIcon({path: ICON_RELATIVE_PATH + 'icon19spring.png'});
     chrome.action.setTitle(
         {title: 'Happy Spring Festival! (Unblock Youku ' +
             chrome.runtime.getManifest().version + ')'});

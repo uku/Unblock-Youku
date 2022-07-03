@@ -21,5 +21,8 @@
                 "code": 100
             }
         ]
-    }
+    },
+    "ignorePatterns": [
+        "**/third_party/**"
+    ]
 }

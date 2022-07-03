@@ -102,6 +102,7 @@ $('#custom_proxy_enable').click(function() {
         'warning', 'Set the custom proxy server, and changed mode to use proxy');
 
     console.groupEnd();
+    console.log('Finished setting the custom proxy');
   });
 });
 
@@ -119,6 +120,7 @@ $('#custom_proxy_reset').click(function() {
     showProxyMessage('warning', 'Reset custom proxy server, and changed mode to use proxy');
 
     console.groupEnd();
+    console.log('Finished clearing the custom proxy');
   });
 });
 
