@@ -1,4 +1,4 @@
-jest.setTimeout(60000); // in milliseconds
+jest.setTimeout(90000); // in milliseconds
 
 const EXTENSION_INIT_WAIT_TIME = 3000;
 const HEADER_TEST_URL = 'https://httpbin.org/headers';

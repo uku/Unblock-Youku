@@ -12,4 +12,12 @@ The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0
 
 ## Credits
 
-Please visit [this page](http://uku.im/contributors) for an updated list of our contributors.
+Please visit [this page](http://uku.im/contributors) for an up-to-date list of our contributors.
+
+## Developmeent
+
+Update URL and server configs under the folder `src/configs/`.
+
+Run `npm ci` to install dependencies exactly as they are listed in the package-lock.json file.
+
+Run `npm run test` to create a zip file for uploading and testing.

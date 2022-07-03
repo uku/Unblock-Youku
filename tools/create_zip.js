@@ -21,19 +21,19 @@ const FILES_TO_BE_ZIPPED = [
 ];
 const EXCLUDED_FILE_PATTERNS = [
   // Using regex
-  /.*_test\.js/i,
-  /.*\.test\.js/i,
-  /.*tests.*/i,
-  /.*\.zip/i,
-  /.*\.tar/i,
-  /.*\.gz/i,
-  /.*node_modules.*/i,
-  /.*\.DS_Store/i,
-  /.*~/i,
-  /.*\.swp/i,
-  /.*\.pyc/i,
-  /.*\.bak/i,
-  /.*\.log/i,
+  /_test\./i,
+  /\.test\./i,
+  /tests/i,
+  /node_modules/i,
+  /\.DS_Store/i,
+  /\.zip$/i,
+  /\.tar$/i,
+  /\.gz$/i,
+  /~$/i,
+  /\.swp$/i,
+  /\.pyc$/i,
+  /\.bak$/i,
+  /\.log$/i,
 ];
 
 
