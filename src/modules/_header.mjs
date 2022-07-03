@@ -53,7 +53,7 @@ export async function setHeaderModifier() {
       'condition': {
         urlFilter: url,
         // Perhaps it is a bug in Chrome's declarativeNetRequest API:
-        //     Although reousrceTypes is an optional parameter, without setting it,
+        //     Although resourceTypes is an optional parameter, without setting it,
         //     the rule will not be applied at all.
         resourceTypes: RESOURCE_TYPES,
       },

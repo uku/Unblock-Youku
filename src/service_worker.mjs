@@ -10,8 +10,7 @@ import * as Settings from './modules/settings.mjs';
 function initializeExtension() {
   console.group('To intialize the extension...');
   Settings.loadCurrentSettings().then(() => {
-    // Don't change the console.log message, as it will be read by puppeteer tests
-    console.log('[E2E] Finished initializing the chrome extension');
+    console.log('Finished initializing the chrome extension');
     console.groupEnd();
   });
 }

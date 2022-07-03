@@ -3,7 +3,7 @@
  */
 
 
-function _parseUrl(urlStr) {
+function parseUrl(urlStr) {
   let protocol = null;
   if (urlStr.startsWith('http://')) {
     urlStr = urlStr.slice('http://'.length);
@@ -35,10 +35,6 @@ function _parseUrl(urlStr) {
     portpath: urlStr.slice(sepIdx),
   };
 }
-// console.log(_parse_url('http://test.com'));
-// console.log(_parse_url('http://test.com:123'));
-// console.log(_parse_url('http://test.com/path'));
-// console.log(_parse_url('http://test.com:123/path'));
 
 
 function genUrlMap(protocol, whiteUrlList, proxyUrlList) {
@@ -105,7 +101,7 @@ function genUrlMap(protocol, whiteUrlList, proxyUrlList) {
     let i; let uobj; let hostname; let portpath;
     let key; let val;
     for (i = 0; i < ulist.length; i++) {
-      uobj = _parseUrl(ulist[i]);
+      uobj = parseUrl(ulist[i]);
       if (uobj === null) {
         console.error('Invalid URL pattern: ' + ulist[i]);
         continue;

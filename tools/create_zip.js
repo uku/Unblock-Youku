@@ -1,3 +1,6 @@
+// NOTE: Please don't use this file directly. Instead. use `npm run test` to
+// create the zip file, which also runs tests against the code in the zip file.
+
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
