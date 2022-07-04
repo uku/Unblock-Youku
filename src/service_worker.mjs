@@ -8,7 +8,7 @@ import * as Settings from './modules/settings.mjs';
 
 
 function initializeExtension() {
-  console.group('To intialize the extension...');
+  console.group('To initialize the extension...');
   Settings.loadCurrentSettings().then(() => {
     console.groupEnd();
     console.log('Finished initializing the chrome extension');
