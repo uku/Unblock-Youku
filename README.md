@@ -1,6 +1,6 @@
 # Unblock Youku
 
- A Chrome extension helping users access their web services while travelling outside mainland China. You can find this extension on Chrome Web Store at [http://uku.im/chrome](http://uku.im/chrome).
+ A Chrome extension helping users access their web services while traveling outside mainland China. You can find this extension on Chrome Web Store at [http://uku.im/chrome](http://uku.im/chrome).
 
 ## Disclaimer
 

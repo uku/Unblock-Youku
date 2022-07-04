@@ -1,8 +1,5 @@
 import {urls2pac} from './_url_utils.mjs';
 
-// urlWhitelist, urlList,
-//     proxyProtocol1, proxyAddress1,
-//     proxyProtocol2, proxyAddress2) {
 
 const TEST_PROXY_PROTOCOL_1 = 'HTTPS';
 const TEST_PROXY_ADDRESS_1 = 'proxy.example.com';
