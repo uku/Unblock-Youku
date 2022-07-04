@@ -14,7 +14,7 @@ The source code is released under [AGPL v3](http://www.gnu.org/licenses/agpl-3.0
 
 Please visit [this page](http://uku.im/contributors) for an up-to-date list of our contributors.
 
-## Developmeent
+## Development
 
 Update URL and server configs under the folder `src/configs/`.
 
@@ -22,4 +22,4 @@ Run `npm ci` to install dependencies exactly as they are listed in the package-l
 
 Run `npm run lint` to check the coding style of all source code.
 
-Run `npm run test` to _create a zip file for uploading to Chrome Web Store_ and run tests against it.
+Run `npm run test` to create a zip file for uploading to Chrome Web Store and run tests against it.
