@@ -1,7 +1,7 @@
 import './modules/crash_report.mjs';
 
 import * as Settings from './modules/settings.mjs';
-import {DEFAULT_PROXY_PROTOCOL, DEFAULT_PROXY_ADDRESS} from './configs/servers.mjs';
+import {DEFAULT_PROXY_PROTOCOL, DEFAULT_PROXY_ADDRESS} from '../configs/servers.mjs';
 
 
 function showProxyMessage(type, content) {

@@ -3,10 +3,10 @@
  */
 
 
-import {PROXY_BYPASS_URLS, PROXY_URLS} from '../configs/urls.mjs';
+import {PROXY_BYPASS_URLS, PROXY_URLS} from '../../configs/urls.mjs';
 import {
   DEFAULT_PROXY_PROTOCOL, DEFAULT_PROXY_ADDRESS, BACKUP_PROXY_PROTOCOL, BACKUP_PROXY_ADDRESS}
-  from '../configs/servers.mjs';
+  from '../../configs/servers.mjs';
 import {urls2pac} from './_url_utils.mjs';
 
 

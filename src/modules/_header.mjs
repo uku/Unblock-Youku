@@ -3,7 +3,7 @@
  */
 
 
-import {HEADER_URLS} from '../configs/urls.mjs';
+import {HEADER_URLS} from '../../configs/urls.mjs';
 
 
 function newRandomIp() {

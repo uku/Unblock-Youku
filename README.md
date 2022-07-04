@@ -16,10 +16,12 @@ Please visit [this page](http://uku.im/contributors) for an up-to-date list of o
 
 ## Development
 
-Update URL and server configs under the folder `src/configs/`.
+Update URLs and server configs under the folder `configs/`.
 
 Run `npm ci` to install dependencies exactly as they are listed in the package-lock.json file.
 
 Run `npm run lint` to check the coding style of all source code.
 
 Run `npm run test` to create a zip file for uploading to Chrome Web Store and run tests against it.
+
+Change `headerless` in `jest-puppeteer.config.js` to `false` to see the browser UI while the tests are running.

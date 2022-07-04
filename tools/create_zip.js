@@ -7,16 +7,14 @@ const archiver = require('archiver');
 
 
 const TOP_FOLDER_LOCATION = path.join(__dirname, '../');
-const SERVER_CONFIG_FILE_LOCATION = path.join(
-    TOP_FOLDER_LOCATION, 'src/configs/servers.mjs');
-const OUTPUT_ZIP_FILE_LOCATION = path.join(
-    TOP_FOLDER_LOCATION, 'dist/upload_to_chrome_store.zip');
+const OUTPUT_ZIP_FILE_LOCATION = path.join(TOP_FOLDER_LOCATION, 'dist/upload_to_chrome_store.zip');
 
 const FILES_TO_BE_ZIPPED = [
   'manifest.json',
-  'src',
-  'icons',
   '_locales',
+  'configs',
+  'icons',
+  'src',
   'COPYING.txt',
 ];
 const EXCLUDED_FILE_PATTERNS = [
@@ -36,13 +34,6 @@ const EXCLUDED_FILE_PATTERNS = [
   /\.log$/i,
 ];
 
-
-// Do some sanity checks before we start
-const serverConfig = fs.readFileSync(SERVER_CONFIG_FILE_LOCATION, 'utf8');
-if (serverConfig.includes('localhost') || serverConfig.includes('127.0.0.1')) {
-  console.error('ERROR: Remove 127.0.0.1 / localhost from servers.mjs and try again');
-  process.exit(-1);
-}
 
 // Make sure the output folder exists
 fs.mkdirSync(path.dirname(OUTPUT_ZIP_FILE_LOCATION), {recursive: true});

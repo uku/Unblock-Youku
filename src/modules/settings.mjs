@@ -44,8 +44,8 @@ function applyModeSettings(mode) {
     const setProxy = async () => {
       const customProxy = await getCustomProxy();
       if (typeof customProxy === 'undefined' ||
-      typeof customProxy.proc === 'undefined' ||
-      typeof customProxy.addr === 'undefined') {
+          typeof customProxy.proc === 'undefined' ||
+          typeof customProxy.addr === 'undefined') {
         return Proxy.setDefaultProxy();
       } else {
         return Proxy.setCustomProxy(customProxy.proc, customProxy.addr);
