@@ -52,5 +52,17 @@
   },
   "support_button": {
     "message": "<i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Donate to us <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>"
+  },
+  "learn_rift_button":{
+    "message": "Learn More"
+  },
+  "rift_intro_message":{
+    "message": "Unblock Youku is now offering RIFT VPN for your phone, enjoy your favorite TV shows and music anytime, anywhere."
+  },
+  "rift_scan_message":{
+    "message": "Scan the QR code to download Android app: "
+  },
+  "rift_qr_title":{
+    "message": "Want to use it on your phone? "
   }
 }

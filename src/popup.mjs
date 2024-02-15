@@ -8,9 +8,12 @@ import * as Icon from './modules/_icon.mjs';
 // Set the translated texts for the options page
 (function() {
   const getMsg = chrome.i18n.getMessage;
-
+  $('div#rift_qr strong').html(getMsg('rift_qr_title'));
   $('div#support strong').html(getMsg('support_title'));
   $('p#support_message').html(getMsg('support_message'));
+  $('button#learn_rift_button').html(getMsg('learn_rift_button'));
+  $('p#rift_intro_message').html(getMsg('rift_intro_message'));
+  $('p#rift_scan_message').html(getMsg('rift_scan_message'));
   $('a#support_link').attr('href', getMsg('donation_url'));
   $('button#support_button').html(getMsg('support_button'));
 

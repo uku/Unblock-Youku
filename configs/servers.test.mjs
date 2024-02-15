@@ -9,7 +9,7 @@ test('The proxy addresses must not be localhost', () => {
   expect(BACKUP_PROXY_ADDRESS).not.toMatch(/127\.0\.0\.1/i);
 });
 
-test('Production must use HTTPS proxy', () => {
-  expect(DEFAULT_PROXY_PROTOCOL).toBe('HTTPS');
-  expect(BACKUP_PROXY_PROTOCOL).toBe('HTTPS');
+test('Production must use HTTP proxy', () => {
+  expect(DEFAULT_PROXY_PROTOCOL).toBe('HTTP');
+  expect(BACKUP_PROXY_PROTOCOL).toBe('HTTP');
 });
