@@ -60,7 +60,10 @@
     "message": "Unblock Youku is now offering RIFT VPN for your phone, enjoy your favorite TV shows and music anytime, anywhere."
   },
   "rift_scan_message":{
-    "message": "Scan the QR code to download Android app: "
+    "message": "Scan for Android"
+  },
+  "rift_scan_ios_message":{
+    "message": "Scan for iOS"
   },
   "rift_qr_title":{
     "message": "Want to use it on your phone? "

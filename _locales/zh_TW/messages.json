@@ -60,7 +60,10 @@
     "message": "Unblock Youku 现在为您的手机提供 RIFT VPN，随时随地畅享您喜爱的电视节目和音乐。"
   },
   "rift_scan_message": {
-    "message": "扫描二维码下载安卓应用："
+    "message": "掃描下載安卓應用: "
+  },
+  "rift_scan_ios_message":{
+    "message": "掃描下載iOS應用: "
   },
   "rift_qr_title": {
     "message": "想在手机上使用 Unblock Youku？"

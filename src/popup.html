@@ -15,13 +15,26 @@
 
 <body>
     <div id="wrapper" class="container-fluid">
-        <div id="rift_qr">
+        <div id="qr_codes_container" style="text-align: left;">
+            <!-- Rift VPN QR code for general use -->
             <div><strong></strong><span class="label label-success">NEW</span></div>
-            <div class="text-center" style="margin-top:20px;margin-bottom:20px;">
-                <p id="rift_scan_message"></p>
-                <img src="img/rift-vpn-qr.png" alt="Rift VPN QR code">
+
+            <!-- Container for QR codes displayed side by side -->
+            <div style="display: flex; justify-content: space-around; align-items: flex-start; margin-top: 20px;">
+                <!-- Rift VPN QR code for general use -->
+                <div id="rift_qr" class="text-center">
+                    <p id="rift_scan_message"></p>
+                    <img src="img/rift-vpn-qr.png" alt="Rift VPN QR code" style="width: auto; height: 140px;">
+                </div>
+                
+                <!-- iOS-specific Rift VPN QR code -->
+                <div id="rift_ios_qr" class="text-center">
+                    <p id="rift_scan_ios_message"></p>
+                    <img src="img/rift-vpn-qr-ios.jpg" alt="Rift VPN iOS QR code" style="width: auto; height: 140px;">
+                </div>
             </div>
         </div>
+        
 
         <div id="intro" class="text-center"style="margin-top:20px;margin-bottom:20px;">
             <p id="rift_intro_message"></p>
