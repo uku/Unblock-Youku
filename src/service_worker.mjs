@@ -24,6 +24,12 @@ chrome.runtime.onInstalled.addListener(function(details) {
       url: chrome.i18n.getMessage('donation_url'),
     });
   }
+  // show the donation page when the extension is updated
+  else if (details.reason === 'update') {
+    chrome.tabs.create({
+      url: chrome.i18n.getMessage('donation_url'),
+    });
+  }
 
   // Initialize the extension
   initializeExtension();
